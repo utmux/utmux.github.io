@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="u换成X拔就是n-1的卡方分布   自由度为n-1的t分布              第六章          这个题目已经给出样本值了，所以能够解出具体的值来。   仅数一的内容估计量的评判标准   能否依概率收敛要采用大数定律来进行判断。一致估计作为重点内容 这里A不对的原因     第七章区间估计假设检验  获得置信区间的步骤 建立统计量 确定置信区间（纯粹看图像对称）     假设检验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="概率论4">
+<meta property="og:url" content="https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="u换成X拔就是n-1的卡方分布   自由度为n-1的t分布              第六章          这个题目已经给出样本值了，所以能够解出具体的值来。   仅数一的内容估计量的评判标准   能否依概率收敛要采用大数定律来进行判断。一致估计作为重点内容 这里A不对的原因     第七章区间估计假设检验  获得置信区间的步骤 建立统计量 确定置信区间（纯粹看图像对称）     假设检验">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/KNEArfnh8XmdCHe.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/MLvyH62ztQE7iPB.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/n8cuTHRXJ4q3CGp.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/vjSGakpm2HF6B14.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/RCpETnK7GIrN4Z5.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/iK14AIpO9dXt7Sa.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/tCZa5zeo8IW1UGw.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/IlvtQSAwjqD7T38.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/A7sSBM6NY4jRFmx.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/EzgQtkoWMaTG7mS.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/HjnkpJc1dOfUgDY.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/XNwsm5cvaLGWgiz.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/4NGWQJBE8PcLyCM.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/fBt2hVXnpwIdSkl.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/8UXnZfJGWoupecR.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/dpNviuaqbCmJYoO.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/vs157nL2WfcHyZk.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502161224751.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502161519540.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502161701067.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502161815022.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502163047191.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502163328277.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502163421193.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502163600417.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502163707149.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502164451562.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502164735205.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502165043409.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502165353897.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502165429191.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502165444937.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502165843321.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502170234916.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502170330331.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502170741915.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502170831710.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502172551302.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502183012774.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502183209656.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502183346078.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502183531903.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502183540261.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502184133513.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502184139639.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502184357124.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502184655414.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502184752726.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502184832684.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502184944980.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502185013812.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502185150232.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502185303719.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502185435771.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502185720756.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502185847235.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502185950053.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502190503193.png">
+<meta property="og:image" content="https://nampsec.github.io/post_img/study/image-20220502190857564.png">
+<meta property="article:published_time" content="2022-05-02T11:09:01.000Z">
+<meta property="article:modified_time" content="2024-01-03T07:10:12.662Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/01/03/KNEArfnh8XmdCHe.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>概率论4</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/05/02/exam/%E7%AC%AC%E5%85%AD%E7%AB%A0%E6%A0%B7%E6%9C%AC%E5%8D%B3%E6%A0%B7%E6%9C%AC%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E5%B8%83%E6%80%BB%E7%BB%93/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/05/01/life/%E6%88%91%E5%8F%91%E7%8E%B0%E5%81%9A%E4%BB%BB%E4%BD%95%E4%BA%8B%E6%83%85%E9%83%BD%E8%A6%81%E6%9C%89%E7%9B%AE%E6%A0%87/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&text=概率论4"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&title=概率论4"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&is_video=false&description=概率论4"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=概率论4&body=Check out this article: https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&title=概率论4"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&title=概率论4"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&title=概率论4"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&title=概率论4"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&name=概率论4&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&t=概率论4"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0"><span class="toc-number">1.</span> <span class="toc-text">第六章</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E9%A2%98%E7%9B%AE%E5%B7%B2%E7%BB%8F%E7%BB%99%E5%87%BA%E6%A0%B7%E6%9C%AC%E5%80%BC%E4%BA%86%EF%BC%8C%E6%89%80%E4%BB%A5%E8%83%BD%E5%A4%9F%E8%A7%A3%E5%87%BA%E5%85%B7%E4%BD%93%E7%9A%84%E5%80%BC%E6%9D%A5%E3%80%82"><span class="toc-number">1.1.</span> <span class="toc-text">这个题目已经给出样本值了，所以能够解出具体的值来。</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%85%E6%95%B0%E4%B8%80%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">仅数一的内容</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BC%B0%E8%AE%A1%E9%87%8F%E7%9A%84%E8%AF%84%E5%88%A4%E6%A0%87%E5%87%86"><span class="toc-number">2.1.</span> <span class="toc-text">估计量的评判标准</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%83%BD%E5%90%A6%E4%BE%9D%E6%A6%82%E7%8E%87%E6%94%B6%E6%95%9B%E8%A6%81%E9%87%87%E7%94%A8%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%E6%9D%A5%E8%BF%9B%E8%A1%8C%E5%88%A4%E6%96%AD%E3%80%82%E4%B8%80%E8%87%B4%E4%BC%B0%E8%AE%A1%E4%BD%9C%E4%B8%BA%E9%87%8D%E7%82%B9%E5%86%85%E5%AE%B9"><span class="toc-number">3.</span> <span class="toc-text">能否依概率收敛要采用大数定律来进行判断。一致估计作为重点内容</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0%E5%8C%BA%E9%97%B4%E4%BC%B0%E8%AE%A1%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C"><span class="toc-number">4.</span> <span class="toc-text">第七章区间估计假设检验</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%BB%9F%E8%AE%A1%E9%87%8F"><span class="toc-number">5.</span> <span class="toc-text">建立统计量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E7%BD%AE%E4%BF%A1%E5%8C%BA%E9%97%B4%EF%BC%88%E7%BA%AF%E7%B2%B9%E7%9C%8B%E5%9B%BE%E5%83%8F%E5%AF%B9%E7%A7%B0%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">确定置信区间（纯粹看图像对称）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C"><span class="toc-number">7.</span> <span class="toc-text">假设检验</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        概率论4
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-05-02T11:09:01.000Z" class="dt-published" itemprop="datePublished">2022-05-02</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/all-kinds-of-exams/">all_kinds_of_exams</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="https://s2.loli.net/2024/01/03/KNEArfnh8XmdCHe.png" alt="image-20220502150412967"></p>
+<p>u换成X拔就是n-1的卡方分布</p>
+<p><img src="https://s2.loli.net/2024/01/03/MLvyH62ztQE7iPB.png" alt="image-20220502150731154"></p>
+<p><img src="https://s2.loli.net/2024/01/03/n8cuTHRXJ4q3CGp.png" alt="image-20220502150920869"></p>
+<p>自由度为n-1的t分布</p>
+<p><img src="https://s2.loli.net/2024/01/03/vjSGakpm2HF6B14.png" alt="image-20220502151214097"></p>
+<p><img src="https://s2.loli.net/2024/01/03/RCpETnK7GIrN4Z5.png" alt="image-20220502151253768"></p>
+<p><img src="https://s2.loli.net/2024/01/03/iK14AIpO9dXt7Sa.png" alt="image-20220502151421483"></p>
+<p><img src="https://s2.loli.net/2024/01/03/tCZa5zeo8IW1UGw.png" alt="image-20220502152145435"></p>
+<p><img src="https://s2.loli.net/2024/01/03/IlvtQSAwjqD7T38.png" alt="image-20220502152401557"></p>
+<p><img src="https://s2.loli.net/2024/01/03/A7sSBM6NY4jRFmx.png" alt="image-20220502152738464"></p>
+<p><img src="https://s2.loli.net/2024/01/03/EzgQtkoWMaTG7mS.png" alt="image-20220502154659471"></p>
+<p><img src="https://s2.loli.net/2024/01/03/HjnkpJc1dOfUgDY.png" alt="image-20220502155119051"></p>
+<p><img src="https://s2.loli.net/2024/01/03/XNwsm5cvaLGWgiz.png" alt="image-20220502155300907"></p>
+<p><img src="https://s2.loli.net/2024/01/03/4NGWQJBE8PcLyCM.png" alt="image-20220502155712004"></p>
+<p><img src="https://s2.loli.net/2024/01/03/fBt2hVXnpwIdSkl.png" alt="image-20220502160048823"></p>
+<p><img src="https://s2.loli.net/2024/01/03/8UXnZfJGWoupecR.png" alt="image-20220502160331393"></p>
+<p><img src="https://s2.loli.net/2024/01/03/dpNviuaqbCmJYoO.png" alt="image-20220502160610336"></p>
+<h5 id="第六章"><a href="#第六章" class="headerlink" title="第六章"></a>第六章</h5><p><img src="https://s2.loli.net/2024/01/03/vs157nL2WfcHyZk.png" alt="image-20220502161011955"></p>
+<p><img src="/post_img/study/image-20220502161224751.png" alt="image-20220502161224751"></p>
+<p><img src="/post_img/study/image-20220502161519540.png" alt="image-20220502161519540"></p>
+<p><img src="/post_img/study/image-20220502161701067.png" alt="image-20220502161701067"></p>
+<p><img src="/post_img/study/image-20220502161815022.png" alt="image-20220502161815022"></p>
+<p><img src="/post_img/study/image-20220502163047191.png" alt="image-20220502163047191"></p>
+<p><img src="/post_img/study/image-20220502163328277.png" alt="image-20220502163328277"></p>
+<p><img src="/post_img/study/image-20220502163421193.png" alt="image-20220502163421193"></p>
+<p><img src="/post_img/study/image-20220502163600417.png" alt="image-20220502163600417"></p>
+<p><img src="/post_img/study/image-20220502163707149.png" alt="image-20220502163707149"></p>
+<h6 id="这个题目已经给出样本值了，所以能够解出具体的值来。"><a href="#这个题目已经给出样本值了，所以能够解出具体的值来。" class="headerlink" title="这个题目已经给出样本值了，所以能够解出具体的值来。"></a>这个题目已经给出样本值了，所以能够解出具体的值来。</h6><p><img src="/post_img/study/image-20220502164451562.png" alt="image-20220502164451562"></p>
+<p><img src="/post_img/study/image-20220502164735205.png" alt="image-20220502164735205"></p>
+<p><img src="/post_img/study/image-20220502165043409.png" alt="image-20220502165043409"></p>
+<h5 id="仅数一的内容"><a href="#仅数一的内容" class="headerlink" title="仅数一的内容"></a>仅数一的内容</h5><h6 id="估计量的评判标准"><a href="#估计量的评判标准" class="headerlink" title="估计量的评判标准"></a>估计量的评判标准</h6><p><img src="/post_img/study/image-20220502165353897.png" alt="image-20220502165353897"></p>
+<p><img src="/post_img/study/image-20220502165429191.png" alt="image-20220502165429191"></p>
+<p><img src="/post_img/study/image-20220502165444937.png" alt="image-20220502165444937"></p>
+<h5 id="能否依概率收敛要采用大数定律来进行判断。一致估计作为重点内容"><a href="#能否依概率收敛要采用大数定律来进行判断。一致估计作为重点内容" class="headerlink" title="能否依概率收敛要采用大数定律来进行判断。一致估计作为重点内容"></a>能否依概率收敛要采用大数定律来进行判断。一致估计作为重点内容</h5><p><img src="/post_img/study/image-20220502165843321.png" alt="image-20220502165843321"></p>
+<p>这里A不对的原因<img src="/post_img/study/image-20220502170234916.png" alt="image-20220502170234916"></p>
+<p><img src="/post_img/study/image-20220502170330331.png" alt="image-20220502170330331"></p>
+<p><img src="/post_img/study/image-20220502170741915.png" alt="image-20220502170741915"></p>
+<p><img src="/post_img/study/image-20220502170831710.png" alt="image-20220502170831710"></p>
+<p><img src="/post_img/study/image-20220502172551302.png" alt="image-20220502172551302"></p>
+<h5 id="第七章区间估计假设检验"><a href="#第七章区间估计假设检验" class="headerlink" title="第七章区间估计假设检验"></a>第七章区间估计假设检验</h5><p><img src="/post_img/study/image-20220502183012774.png" alt="image-20220502183012774"></p>
+<p><img src="/post_img/study/image-20220502183209656.png" alt="image-20220502183209656"></p>
+<p>获得置信区间的步骤</p>
+<h5 id="建立统计量"><a href="#建立统计量" class="headerlink" title="建立统计量"></a>建立统计量</h5><p><img src="/post_img/study/image-20220502183346078.png" alt="image-20220502183346078"></p>
+<h5 id="确定置信区间（纯粹看图像对称）"><a href="#确定置信区间（纯粹看图像对称）" class="headerlink" title="确定置信区间（纯粹看图像对称）"></a>确定置信区间（纯粹看图像对称）</h5><p><img src="/post_img/study/image-20220502183531903.png" alt="image-20220502183531903"></p>
+<p><img src="/post_img/study/image-20220502183540261.png" alt="image-20220502183540261"></p>
+<p><img src="/post_img/study/image-20220502184133513.png" alt="image-20220502184133513"></p>
+<p><img src="/post_img/study/image-20220502184139639.png" alt="image-20220502184139639"></p>
+<p><img src="/post_img/study/image-20220502184357124.png" alt="image-20220502184357124"></p>
+<h5 id="假设检验"><a href="#假设检验" class="headerlink" title="假设检验"></a>假设检验</h5><p><img src="/post_img/study/image-20220502184655414.png" alt="image-20220502184655414"></p>
+<p><img src="/post_img/study/image-20220502184752726.png" alt="image-20220502184752726"></p>
+<p><img src="/post_img/study/image-20220502184832684.png" alt="image-20220502184832684"></p>
+<p><img src="/post_img/study/image-20220502184944980.png" alt="image-20220502184944980"></p>
+<p><img src="/post_img/study/image-20220502185013812.png" alt="image-20220502185013812"></p>
+<p><img src="/post_img/study/image-20220502185150232.png" alt="image-20220502185150232"></p>
+<p><img src="/post_img/study/image-20220502185303719.png" alt="image-20220502185303719"></p>
+<p><img src="/post_img/study/image-20220502185435771.png" alt="image-20220502185435771"></p>
+<p><img src="/post_img/study/image-20220502185720756.png" alt="image-20220502185720756"></p>
+<p><img src="/post_img/study/image-20220502185847235.png" alt="image-20220502185847235"></p>
+<p><img src="/post_img/study/image-20220502185950053.png" alt="image-20220502185950053"></p>
+<p><img src="/post_img/study/image-20220502190503193.png" alt="image-20220502190503193"></p>
+<p><img src="/post_img/study/image-20220502190857564.png" alt="image-20220502190857564"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0"><span class="toc-number">1.</span> <span class="toc-text">第六章</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E9%A2%98%E7%9B%AE%E5%B7%B2%E7%BB%8F%E7%BB%99%E5%87%BA%E6%A0%B7%E6%9C%AC%E5%80%BC%E4%BA%86%EF%BC%8C%E6%89%80%E4%BB%A5%E8%83%BD%E5%A4%9F%E8%A7%A3%E5%87%BA%E5%85%B7%E4%BD%93%E7%9A%84%E5%80%BC%E6%9D%A5%E3%80%82"><span class="toc-number">1.1.</span> <span class="toc-text">这个题目已经给出样本值了，所以能够解出具体的值来。</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%85%E6%95%B0%E4%B8%80%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">仅数一的内容</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BC%B0%E8%AE%A1%E9%87%8F%E7%9A%84%E8%AF%84%E5%88%A4%E6%A0%87%E5%87%86"><span class="toc-number">2.1.</span> <span class="toc-text">估计量的评判标准</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%83%BD%E5%90%A6%E4%BE%9D%E6%A6%82%E7%8E%87%E6%94%B6%E6%95%9B%E8%A6%81%E9%87%87%E7%94%A8%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%E6%9D%A5%E8%BF%9B%E8%A1%8C%E5%88%A4%E6%96%AD%E3%80%82%E4%B8%80%E8%87%B4%E4%BC%B0%E8%AE%A1%E4%BD%9C%E4%B8%BA%E9%87%8D%E7%82%B9%E5%86%85%E5%AE%B9"><span class="toc-number">3.</span> <span class="toc-text">能否依概率收敛要采用大数定律来进行判断。一致估计作为重点内容</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0%E5%8C%BA%E9%97%B4%E4%BC%B0%E8%AE%A1%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C"><span class="toc-number">4.</span> <span class="toc-text">第七章区间估计假设检验</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%BB%9F%E8%AE%A1%E9%87%8F"><span class="toc-number">5.</span> <span class="toc-text">建立统计量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E7%BD%AE%E4%BF%A1%E5%8C%BA%E9%97%B4%EF%BC%88%E7%BA%AF%E7%B2%B9%E7%9C%8B%E5%9B%BE%E5%83%8F%E5%AF%B9%E7%A7%B0%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">确定置信区间（纯粹看图像对称）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C"><span class="toc-number">7.</span> <span class="toc-text">假设检验</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&text=概率论4"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&title=概率论4"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&is_video=false&description=概率论4"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=概率论4&body=Check out this article: https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&title=概率论4"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&title=概率论4"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&title=概率论4"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&title=概率论4"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&name=概率论4&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2022/05/02/exam/%E6%A6%82%E7%8E%87%E8%AE%BA4/&t=概率论4"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

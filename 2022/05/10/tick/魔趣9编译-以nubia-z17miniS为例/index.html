@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="魔趣9编译-以nubia-z17miniS为例前提我手头正好有个nubia Z17miniS ，看魔趣官网是有他的适配的，结果一看列表啥也没有，去archive查看历史网页发现最新的版本也就是20200327这个版本，在百度谷歌yandex找了一圈之后，功夫不负有心人，终于找到了一个疑似最新版的，体积却膨胀到914M了，这很不正常。按理说应该在500-700M之间，果然刷进去一看自带360全家桶和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="魔趣9编译-以nubia-z17miniS为例">
+<meta property="og:url" content="https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="魔趣9编译-以nubia-z17miniS为例前提我手头正好有个nubia Z17miniS ，看魔趣官网是有他的适配的，结果一看列表啥也没有，去archive查看历史网页发现最新的版本也就是20200327这个版本，在百度谷歌yandex找了一圈之后，功夫不负有心人，终于找到了一个疑似最新版的，体积却膨胀到914M了，这很不正常。按理说应该在500-700M之间，果然刷进去一看自带360全家桶和">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/vW4Ob89QlEghAHc.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/dlDwJGvMOkuNFs6.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/DHLE2sft96ga5nQ.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/1kEYzpl5mqDTeu7.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/6513ysKSl9OZex2.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/ElQTH2gFrmGAhCi.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/03/2rZtPwcpDBHbUjl.png">
+<meta property="article:published_time" content="2022-05-10T10:31:47.000Z">
+<meta property="article:modified_time" content="2024-01-03T02:43:25.809Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/01/03/vW4Ob89QlEghAHc.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>魔趣9编译-以nubia-z17miniS为例</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/05/12/exam/5%E6%9C%8812%E6%97%A5%E5%AD%A6%E4%B9%A0%E6%83%85%E5%86%B5/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/05/09/tick/%E5%85%B3%E4%BA%8E%E5%90%8C%E6%AD%A5%E6%97%B6repo%E7%9A%84python%E7%89%88%E6%9C%AC%E7%9A%84%E6%9B%B4%E6%94%B9/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&text=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&title=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&is_video=false&description=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=魔趣9编译-以nubia-z17miniS为例&body=Check out this article: https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&title=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&title=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&title=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&title=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&name=魔趣9编译-以nubia-z17miniS为例&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&t=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">魔趣9编译-以nubia-z17miniS为例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-number">1.1.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%BE%E6%BA%90%E7%A0%81%E6%A0%91"><span class="toc-number">1.2.</span> <span class="toc-text">找源码树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B9%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">买服务器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96"><span class="toc-number">1.4.</span> <span class="toc-text">安装相关依赖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8C%82%E6%A2%AF%E5%AD%90"><span class="toc-number">1.5.</span> <span class="toc-text">挂梯子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E6%BA%90%E7%A0%81%E6%A0%91"><span class="toc-number">1.6.</span> <span class="toc-text">同步源码树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%B8%80"><span class="toc-number">1.7.</span> <span class="toc-text">错误一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%BA%8C"><span class="toc-number">1.8.</span> <span class="toc-text">错误二</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%B8%89"><span class="toc-number">1.9.</span> <span class="toc-text">错误三</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%9B%9B"><span class="toc-number">1.10.</span> <span class="toc-text">错误四</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%99%E8%AE%AD"><span class="toc-number">1.11.</span> <span class="toc-text">教训</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%88%90%E5%8A%9F"><span class="toc-number">1.12.</span> <span class="toc-text">成功</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">1.13.</span> <span class="toc-text">最后</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        魔趣9编译-以nubia-z17miniS为例
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-05-10T10:31:47.000Z" class="dt-published" itemprop="datePublished">2022-05-10</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/tick/">tick</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h4 id="魔趣9编译-以nubia-z17miniS为例"><a href="#魔趣9编译-以nubia-z17miniS为例" class="headerlink" title="魔趣9编译-以nubia-z17miniS为例"></a>魔趣9编译-以nubia-z17miniS为例</h4><h5 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h5><p>我手头正好有个nubia Z17miniS ，看魔趣官网是有他的适配的，结果一看列表啥也没有，去archive查看历史网页发现最新的版本也就是20200327这个版本，在百度谷歌yandex找了一圈之后，功夫不负有心人，终于找到了一个疑似最新版的，体积却膨胀到914M了，这很不正常。按理说应该在500-700M之间，果然刷进去一看自带360全家桶和2345，priv-app目录下有各种乱七八糟的库(还有个吊毛DDT软件，进去一看甚么狗屁傲陈)，我就想自己编译，毕竟作者已经将所有源码开源，这里记录下步骤。</p>
+<h5 id="找源码树"><a href="#找源码树" class="headerlink" title="找源码树"></a>找源码树</h5><p>这里作者已经给出了，我们一般需要3个(应该是)，我这里为例子：</p>
+<p>NX589J：<a target="_blank" rel="noopener" href="https://github.com/Cyborg2017/android_device_nubia_nx589j">https://github.com/Cyborg2017/android_device_nubia_nx589j</a><br>COMMON：<a target="_blank" rel="noopener" href="https://github.com/Cyborg2017/android_device_nubia_msm8976-common">https://github.com/Cyborg2017/android_device_nubia_msm8976-common</a><br>KERNEL：<a target="_blank" rel="noopener" href="https://github.com/nubia-development/android_kernel_nubia_msm8976">https://github.com/nubia-development/android_kernel_nubia_msm8976</a></p>
+<p>可以手动下载到对应目录下，其中下划线代表目录分隔符。我这里直接用作者的同步项目改一下，因为其已经将AOSP指向国内源了。</p>
+<h5 id="买服务器"><a href="#买服务器" class="headerlink" title="买服务器"></a>买服务器</h5><p>我在华为云上直接买了按量付费的服务器<img src="https://s2.loli.net/2024/01/03/vW4Ob89QlEghAHc.png" alt="image-20220510104404255"></p>
+<h5 id="安装相关依赖"><a href="#安装相关依赖" class="headerlink" title="安装相关依赖"></a>安装相关依赖</h5><p>参考<a target="_blank" rel="noopener" href="https://wiki.lineageos.org/devices/mido/build">编译指南</a></p>
+<h5 id="挂梯子"><a href="#挂梯子" class="headerlink" title="挂梯子"></a>挂梯子</h5><p>由于是国内的服务器，需要挂上梯子才能同步上一些源码，建议挂上梯子。具体方法不详细说。</p>
+<h5 id="同步源码树"><a href="#同步源码树" class="headerlink" title="同步源码树"></a>同步源码树</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">repo init -u https://github.com/NampSec/android-mokee.git -b mkp --depth=1</span><br><span class="line">repo sync -j4 </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2024/01/03/dlDwJGvMOkuNFs6.png" alt="image-20220510110535363"></p>
+<p>如果遇到repo的sys啥的错误，修改&#x2F;usr&#x2F;bin&#x2F;repo中的第一行为的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/python 改为 /usr/bin/python3</span><br></pre></td></tr></table></figure>
+
+<p>详细请查看我之前关于repo处理的文章</p>
+<p><img src="https://s2.loli.net/2024/01/03/DHLE2sft96ga5nQ.png" alt="image-20220510122133881"></p>
+<p>同步成功后</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> USE_CCACHE=1</span><br><span class="line"><span class="built_in">export</span> CCACHE_EXEC=/usr/bin/ccache</span><br><span class="line">ccache -M 30G    <span class="comment">#我这里只设置了30个G，因为下面开启了compression</span></span><br><span class="line">ccache -o compression=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> build/envsetup.sh</span><br><span class="line">lunch mk_nx589j-userdebug &amp;&amp; mka bacon</span><br></pre></td></tr></table></figure>
+
+<p>提取blob文件，参考<a target="_blank" rel="noopener" href="https://wiki.lineageos.org/extracting_blobs_from_zips">这里</a></p>
+<h5 id="错误一"><a href="#错误一" class="headerlink" title="错误一"></a>错误一</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vendor/nubia/msm8976-common/proprietary/recovery/root/sbin/qseecomd提示没有找到</span><br><span class="line">在GitHub上看到有人提取过，直接下载复制过来了</span><br></pre></td></tr></table></figure>
+
+<h5 id="错误二"><a href="#错误二" class="headerlink" title="错误二"></a>错误二</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$DEVICE must be set before including this script!</span><br><span class="line">加入下面这几个变量</span><br><span class="line">export DEVICE=nx589j</span><br><span class="line">export VENDOR=nubia</span><br><span class="line">export DEVICE_COMMON=msm8956-common</span><br></pre></td></tr></table></figure>
+
+<h5 id="错误三"><a href="#错误三" class="headerlink" title="错误三"></a>错误三</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Prebuilt apk found in PRODUCT_COPY_FILES: vendor/nubia/nx589j/proprietary/priv-app/NubiaCamera/NubiaCamera.apk:system/priv-app/NubiaCamera/NubiaCamera.apk,</span><br></pre></td></tr></table></figure>
+
+<p>找到build&#x2F;make&#x2F;core&#x2F;Makefile</p>
+<p>注释掉19行开始的这个判断</p>
+<h5 id="错误四"><a href="#错误四" class="headerlink" title="错误四"></a>错误四</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">drivers/built-in.o: In function `mdss_dsi_panel_power_off&#x27;:</span><br><span class="line">/root/out/target/product/nx589j/obj/KERNEL_OBJ/../../../../../../kernel/nubia/msm8976/drivers/video/msm/mdss/mdss_dsi.c:291: undefined reference to `nubia_wakeup_gesture&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>改了源代码还是报错，提示我-Wdeclaration-after-statement，在网上搜了下，貌似是开启了把警告当成错误的选项了，在scripts&#x2F;<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=gcc&spm=1001.2101.3001.7020">gcc</a>-wrapper.py将interpret_warning(line)注释掉即可。</p>
+<p>注释掉后还是kernel报错</p>
+<p>最后检查一遍kernel源码，将kernel源码回退到上一个版本，作者verified的版本，一次编译就通过了</p>
+<p>编译过程中遇到了下面这样的提示，不知道是怎么回事。</p>
+<p><img src="https://s2.loli.net/2024/01/03/1kEYzpl5mqDTeu7.png" alt="image-20220510173419644"></p>
+<p><img src="https://s2.loli.net/2024/01/03/6513ysKSl9OZex2.png" alt="image-20220510173439473"></p>
+<h5 id="教训"><a href="#教训" class="headerlink" title="教训"></a>教训</h5><p>编译到最后突然空间不足了，还好云服务器能够随时扩容，教训就是以后要用200G别用150G，数据不够用，切记切记。</p>
+<h5 id="成功"><a href="#成功" class="headerlink" title="成功"></a>成功</h5><p>成功截图如下</p>
+<p><img src="https://s2.loli.net/2024/01/03/ElQTH2gFrmGAhCi.png" alt="image-20220510183117035"></p>
+<p>刷机，开机<img src="https://s2.loli.net/2024/01/03/2rZtPwcpDBHbUjl.png" alt="image-20220510193355760"></p>
+<p>经过测试，开启双击亮屏貌似有点问题，相机还是老样子，即使用4：3 320 还是打不开，其他的都正常，对比之前移动叔叔下载的那个，提升巨大，那个玩意不知道甚么东西，哪怕把所有的流氓软件卸载了发热也很大，这个和安卓7差不多，冰凉冰凉。</p>
+<h5 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h5><p>这个手机本来就是个破手机，本来打算修改内核跑docker的，试了下编译安卓9，没想到成功了，从昨天下午到今天晚上，历时两天，不容易。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">魔趣9编译-以nubia-z17miniS为例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-number">1.1.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%BE%E6%BA%90%E7%A0%81%E6%A0%91"><span class="toc-number">1.2.</span> <span class="toc-text">找源码树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B9%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">买服务器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96"><span class="toc-number">1.4.</span> <span class="toc-text">安装相关依赖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8C%82%E6%A2%AF%E5%AD%90"><span class="toc-number">1.5.</span> <span class="toc-text">挂梯子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E6%BA%90%E7%A0%81%E6%A0%91"><span class="toc-number">1.6.</span> <span class="toc-text">同步源码树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%B8%80"><span class="toc-number">1.7.</span> <span class="toc-text">错误一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%BA%8C"><span class="toc-number">1.8.</span> <span class="toc-text">错误二</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%B8%89"><span class="toc-number">1.9.</span> <span class="toc-text">错误三</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%9B%9B"><span class="toc-number">1.10.</span> <span class="toc-text">错误四</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%99%E8%AE%AD"><span class="toc-number">1.11.</span> <span class="toc-text">教训</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%88%90%E5%8A%9F"><span class="toc-number">1.12.</span> <span class="toc-text">成功</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">1.13.</span> <span class="toc-text">最后</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&text=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&title=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&is_video=false&description=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=魔趣9编译-以nubia-z17miniS为例&body=Check out this article: https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&title=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&title=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&title=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&title=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&name=魔趣9编译-以nubia-z17miniS为例&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/&t=魔趣9编译-以nubia-z17miniS为例"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
