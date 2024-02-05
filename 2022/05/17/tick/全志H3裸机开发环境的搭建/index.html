@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="全志H3裸机开发环境的搭建，以Nanopi_NEO为例 前提摘要：我一直以来，想要在arm上进行裸机开发，前两天搞了很长时间都没有搞定。用sunxi-tool运行一直没有预期的反应。 机缘巧合之下，在GitHub上搜索项目发现了一个基于H3的裸机开发框架，今天晚上搞了一通，终于成功初始化了LED和串口，下面是演示图片： 效果图：  项目地址是：这里 使用方法： 12makemake install">
+    <meta name="description" content="全志H3裸机开发环境的搭建，以Nanopi_NEO为例 前提摘要： 我一直以来，想要在arm上进行裸机开发，前两天搞了很长时间都没有搞定。用sunxi-tool运行一直没有预期的反应。 机缘巧合之下，在GitHub上搜索项目发现了一个基于H3的裸机开发框架，今天晚上搞了一通，终于成功初始化了LED和串口，下面是演示图片： 效果图：   image-20220517220137932">
 <meta property="og:type" content="article">
 <meta property="og:title" content="全志H3裸机开发环境的搭建">
 <meta property="og:url" content="https://nampsec.github.io/2022/05/17/tick/%E5%85%A8%E5%BF%97H3%E8%A3%B8%E6%9C%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E6%90%AD%E5%BB%BA/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="全志H3裸机开发环境的搭建，以Nanopi_NEO为例 前提摘要：我一直以来，想要在arm上进行裸机开发，前两天搞了很长时间都没有搞定。用sunxi-tool运行一直没有预期的反应。 机缘巧合之下，在GitHub上搜索项目发现了一个基于H3的裸机开发框架，今天晚上搞了一通，终于成功初始化了LED和串口，下面是演示图片： 效果图：  项目地址是：这里 使用方法： 12makemake install">
+<meta property="og:description" content="全志H3裸机开发环境的搭建，以Nanopi_NEO为例 前提摘要： 我一直以来，想要在arm上进行裸机开发，前两天搞了很长时间都没有搞定。用sunxi-tool运行一直没有预期的反应。 机缘巧合之下，在GitHub上搜索项目发现了一个基于H3的裸机开发框架，今天晚上搞了一通，终于成功初始化了LED和串口，下面是演示图片： 效果图：   image-20220517220137932">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2024/01/03/FBIiPy8fYrw4ox5.png">
 <meta property="og:image" content="https://s2.loli.net/2024/01/03/KMh2cUiB4m8kXds.png">
@@ -69,7 +69,119 @@
 		</script>
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
 	
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body class="max-width mx-auto px3 ltr">    
       <div id="header-post">
@@ -129,7 +241,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E6%8F%90%E6%91%98%E8%A6%81%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">前提摘要：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%88%E6%9E%9C%E5%9B%BE%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">效果图：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%9B%BE%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">代码图：</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E6%8F%90%E6%91%98%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">前提摘要：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%88%E6%9E%9C%E5%9B%BE"><span class="toc-number">2.</span> <span class="toc-text">效果图：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%9B%BE"><span class="toc-number">3.</span> <span class="toc-text">代码图：</span></a></li></ol>
       </div>
     
   </span>
@@ -175,16 +287,27 @@
 
   <div class="content e-content" itemprop="articleBody">
     <p>全志H3裸机开发环境的搭建，以Nanopi_NEO为例</p>
-<h4 id="前提摘要："><a href="#前提摘要：" class="headerlink" title="前提摘要："></a>前提摘要：</h4><p>我一直以来，想要在arm上进行裸机开发，前两天搞了很长时间都没有搞定。用sunxi-tool运行一直没有预期的反应。</p>
+<h4 id="前提摘要">前提摘要：</h4>
+<p>我一直以来，想要在arm上进行裸机开发，前两天搞了很长时间都没有搞定。用sunxi-tool运行一直没有预期的反应。</p>
 <p>机缘巧合之下，在GitHub上搜索项目发现了一个基于H3的裸机开发框架，今天晚上搞了一通，终于成功初始化了LED和串口，下面是演示图片：</p>
-<h4 id="效果图："><a href="#效果图：" class="headerlink" title="效果图："></a>效果图：</h4><p><img src="https://s2.loli.net/2024/01/03/FBIiPy8fYrw4ox5.png" alt="image-20220517220137932"></p>
-<p><img src="https://s2.loli.net/2024/01/03/KMh2cUiB4m8kXds.png" alt="image-20220517220101205"></p>
+<h4 id="效果图">效果图：</h4>
+<figure>
+<img src="https://s2.loli.net/2024/01/03/FBIiPy8fYrw4ox5.png" alt="image-20220517220137932">
+<figcaption aria-hidden="true">image-20220517220137932</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/03/KMh2cUiB4m8kXds.png" alt="image-20220517220101205">
+<figcaption aria-hidden="true">image-20220517220101205</figcaption>
+</figure>
 <p>项目地址是：<a target="_blank" rel="noopener" href="https://github.com/NampSec/h3-bare-metal">这里</a></p>
 <p>使用方法：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-
 <p>spl初始化需要相关的uboot，可以去编译官方的主线uboot，也可以参考我的上一篇文章。</p>
-<h4 id="代码图："><a href="#代码图：" class="headerlink" title="代码图："></a>代码图：</h4><p><img src="https://s2.loli.net/2024/01/03/l2RxKoWtB68asic.png" alt="image-20220517215920925"></p>
+<h4 id="代码图">代码图：</h4>
+<figure>
+<img src="https://s2.loli.net/2024/01/03/l2RxKoWtB68asic.png" alt="image-20220517215920925">
+<figcaption aria-hidden="true">image-20220517215920925</figcaption>
+</figure>
 
   </div>
 </article>
@@ -214,7 +337,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E6%8F%90%E6%91%98%E8%A6%81%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">前提摘要：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%88%E6%9E%9C%E5%9B%BE%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">效果图：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%9B%BE%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">代码图：</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E6%8F%90%E6%91%98%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">前提摘要：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%88%E6%9E%9C%E5%9B%BE"><span class="toc-number">2.</span> <span class="toc-text">效果图：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%9B%BE"><span class="toc-number">3.</span> <span class="toc-text">代码图：</span></a></li></ol>
       </div>
     
 

@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="概率密度可以用其他，而分布函数不能用其他。      泊松分布最大值：                        考试的时候直接写答案，不用说明">
+    <meta name="description" content="image-20220420173130445    image-20220420173145365    image-20220420173236004    image-20220420173741551    image-20220420174643983    image-20220421095225638    image-2022">
 <meta property="og:type" content="article">
 <meta property="og:title" content="概率论错题">
 <meta property="og:url" content="https://nampsec.github.io/2022/04/26/exam/%E6%A6%82%E7%8E%87%E8%AE%BA%E9%94%99%E9%A2%98/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="概率密度可以用其他，而分布函数不能用其他。      泊松分布最大值：                        考试的时候直接写答案，不用说明">
+<meta property="og:description" content="image-20220420173130445    image-20220420173145365    image-20220420173236004    image-20220420173741551    image-20220420174643983    image-20220421095225638    image-2022">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2024/01/04/6PhZfNpJDFz2tM1.png">
 <meta property="og:image" content="https://s2.loli.net/2024/01/04/3sbtV5Bhkyugd1p.png">
@@ -113,7 +113,119 @@
 		</script>
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
 	
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body class="max-width mx-auto px3 ltr">    
       <div id="header-post">
@@ -212,56 +324,197 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p><img src="https://s2.loli.net/2024/01/04/6PhZfNpJDFz2tM1.png" alt="image-20220420173130445"></p>
-<p><img src="https://s2.loli.net/2024/01/04/3sbtV5Bhkyugd1p.png" alt="image-20220420173145365"></p>
-<p><img src="https://s2.loli.net/2024/01/04/oaEJsHQuNeWlDdz.png" alt="image-20220420173236004"></p>
-<p><img src="https://s2.loli.net/2024/01/04/Iy1JEpSRf6k7elZ.png" alt="image-20220420173741551"></p>
-<p><img src="https://s2.loli.net/2024/01/04/8uO1lFZRfDUCcgq.png" alt="image-20220420174643983"></p>
-<p><img src="https://s2.loli.net/2024/01/04/OwH1avsIfAxRnu3.png" alt="image-20220421095225638"></p>
-<p><img src="https://s2.loli.net/2024/01/04/2xihNlTArvqP3kI.png" alt="image-20220421152716050"></p>
-<p><img src="https://s2.loli.net/2024/01/04/hayjmn8MHCfTtc7.png" alt="image-20220421152848886"></p>
-<p><img src="https://s2.loli.net/2024/01/04/hKVc9Cu7DZ1En8R.png" alt="image-20220421153208744"></p>
-<p><img src="https://s2.loli.net/2024/01/04/hdfgU6AYRumOvKz.png" alt="image-20220421161717865"></p>
-<p><img src="https://s2.loli.net/2024/01/04/d8b9pNt2i7vyxZL.png" alt="image-20220421161746258"></p>
-<p><img src="https://s2.loli.net/2024/01/04/L8a9YxKHGqU1rMD.png" alt="image-20220421161831564"></p>
-<p><img src="https://s2.loli.net/2024/01/04/kADWGi2VEeQqIgC.png" alt="image-20220421162002110"></p>
-<p><img src="https://s2.loli.net/2024/01/04/Y3nMOtgJmK1kc9w.png" alt="image-20220421165319063"></p>
-<p><img src="https://s2.loli.net/2024/01/04/tklMOLsrmzqVGPy.png" alt="image-20220421165557205"></p>
-<p><img src="https://s2.loli.net/2024/01/04/KNH1t8bwjvVZ7Gz.png" alt="image-20220421171551901"></p>
-<p><img src="https://s2.loli.net/2024/01/04/z4sn1fKua6mJcNX.png" alt="image-20220421172605350"></p>
-<p><img src="https://s2.loli.net/2024/01/04/3Udr5mzu8Fjc6wi.png" alt="image-20220424095139225"></p>
+    <figure>
+<img src="https://s2.loli.net/2024/01/04/6PhZfNpJDFz2tM1.png" alt="image-20220420173130445">
+<figcaption aria-hidden="true">image-20220420173130445</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/3sbtV5Bhkyugd1p.png" alt="image-20220420173145365">
+<figcaption aria-hidden="true">image-20220420173145365</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/oaEJsHQuNeWlDdz.png" alt="image-20220420173236004">
+<figcaption aria-hidden="true">image-20220420173236004</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/Iy1JEpSRf6k7elZ.png" alt="image-20220420173741551">
+<figcaption aria-hidden="true">image-20220420173741551</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/8uO1lFZRfDUCcgq.png" alt="image-20220420174643983">
+<figcaption aria-hidden="true">image-20220420174643983</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/OwH1avsIfAxRnu3.png" alt="image-20220421095225638">
+<figcaption aria-hidden="true">image-20220421095225638</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/2xihNlTArvqP3kI.png" alt="image-20220421152716050">
+<figcaption aria-hidden="true">image-20220421152716050</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/hayjmn8MHCfTtc7.png" alt="image-20220421152848886">
+<figcaption aria-hidden="true">image-20220421152848886</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/hKVc9Cu7DZ1En8R.png" alt="image-20220421153208744">
+<figcaption aria-hidden="true">image-20220421153208744</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/hdfgU6AYRumOvKz.png" alt="image-20220421161717865">
+<figcaption aria-hidden="true">image-20220421161717865</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/d8b9pNt2i7vyxZL.png" alt="image-20220421161746258">
+<figcaption aria-hidden="true">image-20220421161746258</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/L8a9YxKHGqU1rMD.png" alt="image-20220421161831564">
+<figcaption aria-hidden="true">image-20220421161831564</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/kADWGi2VEeQqIgC.png" alt="image-20220421162002110">
+<figcaption aria-hidden="true">image-20220421162002110</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/Y3nMOtgJmK1kc9w.png" alt="image-20220421165319063">
+<figcaption aria-hidden="true">image-20220421165319063</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/tklMOLsrmzqVGPy.png" alt="image-20220421165557205">
+<figcaption aria-hidden="true">image-20220421165557205</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/KNH1t8bwjvVZ7Gz.png" alt="image-20220421171551901">
+<figcaption aria-hidden="true">image-20220421171551901</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/z4sn1fKua6mJcNX.png" alt="image-20220421172605350">
+<figcaption aria-hidden="true">image-20220421172605350</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/3Udr5mzu8Fjc6wi.png" alt="image-20220424095139225">
+<figcaption aria-hidden="true">image-20220424095139225</figcaption>
+</figure>
 <p>概率密度可以用其他，而分布函数不能用其他。</p>
-<p><img src="https://s2.loli.net/2024/01/04/izCTpglj8AxByU9.png" alt="image-20220424113342731"></p>
-<p><img src="https://s2.loli.net/2024/01/04/t5LDMUpN3Bu6lzh.png" alt="image-20220424204156893"></p>
-<p><img src="https://s2.loli.net/2024/01/04/gWtvXfObAm892i1.png" alt="image-20220424204447917"></p>
-<p><img src="https://s2.loli.net/2024/01/04/kULiPoJ3v6huraW.png" alt="image-20220424205053214"></p>
-<p><img src="https://s2.loli.net/2024/01/04/QVSj4HUkf37rFG1.png" alt="image-20220424205348913"></p>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/izCTpglj8AxByU9.png" alt="image-20220424113342731">
+<figcaption aria-hidden="true">image-20220424113342731</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/t5LDMUpN3Bu6lzh.png" alt="image-20220424204156893">
+<figcaption aria-hidden="true">image-20220424204156893</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/gWtvXfObAm892i1.png" alt="image-20220424204447917">
+<figcaption aria-hidden="true">image-20220424204447917</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/kULiPoJ3v6huraW.png" alt="image-20220424205053214">
+<figcaption aria-hidden="true">image-20220424205053214</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/QVSj4HUkf37rFG1.png" alt="image-20220424205348913">
+<figcaption aria-hidden="true">image-20220424205348913</figcaption>
+</figure>
 <p>泊松分布最大值：</p>
-<p><img src="https://s2.loli.net/2024/01/04/Yp5GnXdzLDr7Vmv.png" alt="image-20220424205510959"></p>
-<p><img src="https://s2.loli.net/2024/01/04/xRmesq5Pi1GKIOc.png" alt="image-20220424210043079"></p>
-<p><img src="https://s2.loli.net/2024/01/04/EWCAj2Mtpo6GPyV.png" alt="image-20220424210456550"></p>
-<p><img src="https://s2.loli.net/2024/01/04/WfyPkbx35hnswSj.png" alt="image-20220424210721759"></p>
-<p><img src="https://s2.loli.net/2024/01/04/WfBSALNudTUKFt3.png" alt="image-20220424210801509"></p>
-<p><img src="https://s2.loli.net/2024/01/04/3CEeYJfSHL7hIWd.png" alt="image-20220424211434393"></p>
-<p><img src="https://s2.loli.net/2024/01/04/gPBn5JWeK6z3T7u.png" alt="image-20220424212034795"></p>
-<p><img src="https://s2.loli.net/2024/01/04/5GCmOP6xHwEhaDg.png" alt="image-20220424213207740"></p>
-<p><img src="https://s2.loli.net/2024/01/04/yorPzXecTpB75xq.png" alt="image-20220424213411047"></p>
-<p><img src="https://s2.loli.net/2024/01/04/pCJfAi5HgdMKqOD.png" alt="image-20220424213650435"></p>
-<p><img src="https://s2.loli.net/2024/01/04/FhbqQ5KsyOzVfdp.png" alt="image-20220424215143345"></p>
-<p><img src="https://s2.loli.net/2024/01/04/fria9yH2MvGPtNm.png" alt="image-20220424215153287"></p>
-<p><img src="https://s2.loli.net/2024/01/04/2tlz5XGxyDBVAkP.png" alt="image-20220424215330437"></p>
-<p><img src="https://s2.loli.net/2024/01/04/unl9ieM4jWpsXG1.png" alt="image-20220424215500494"></p>
-<p><img src="https://s2.loli.net/2024/01/04/SMTKVUDClZz8ixR.png" alt="image-20220424215718987"></p>
-<p><img src="https://s2.loli.net/2024/01/04/EJij3u85TcPg9xa.png" alt="image-20220424215730480"></p>
-<p><img src="https://s2.loli.net/2024/01/04/NPQurXEJg8M71xz.png" alt="image-20220424215824704"></p>
-<p><img src="https://s2.loli.net/2024/01/04/TK6aNlI1ZBAWE5Q.png" alt="image-20220426102705993"></p>
-<p><img src="https://s2.loli.net/2024/01/04/8nlXZQIbYJ7caCH.png" alt="image-20220426103958014"></p>
-<p><img src="https://s2.loli.net/2024/01/04/dzqLEumKv8ik5OY.png" alt="image-20220426110203731"></p>
-<p><img src="https://s2.loli.net/2024/01/04/EUkMFdARqv42WmL.png" alt="image-20220426111534224"></p>
-<p><img src="https://s2.loli.net/2024/01/04/9ytGSczvxaF2m5Y.png" alt="image-20220426111835573"></p>
-<p><img src="https://s2.loli.net/2024/01/04/4er5KNkYHhMLO2q.png" alt="image-20220426111839883"></p>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/Yp5GnXdzLDr7Vmv.png" alt="image-20220424205510959">
+<figcaption aria-hidden="true">image-20220424205510959</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/xRmesq5Pi1GKIOc.png" alt="image-20220424210043079">
+<figcaption aria-hidden="true">image-20220424210043079</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/EWCAj2Mtpo6GPyV.png" alt="image-20220424210456550">
+<figcaption aria-hidden="true">image-20220424210456550</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/WfyPkbx35hnswSj.png" alt="image-20220424210721759">
+<figcaption aria-hidden="true">image-20220424210721759</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/WfBSALNudTUKFt3.png" alt="image-20220424210801509">
+<figcaption aria-hidden="true">image-20220424210801509</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/3CEeYJfSHL7hIWd.png" alt="image-20220424211434393">
+<figcaption aria-hidden="true">image-20220424211434393</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/gPBn5JWeK6z3T7u.png" alt="image-20220424212034795">
+<figcaption aria-hidden="true">image-20220424212034795</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/5GCmOP6xHwEhaDg.png" alt="image-20220424213207740">
+<figcaption aria-hidden="true">image-20220424213207740</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/yorPzXecTpB75xq.png" alt="image-20220424213411047">
+<figcaption aria-hidden="true">image-20220424213411047</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/pCJfAi5HgdMKqOD.png" alt="image-20220424213650435">
+<figcaption aria-hidden="true">image-20220424213650435</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/FhbqQ5KsyOzVfdp.png" alt="image-20220424215143345">
+<figcaption aria-hidden="true">image-20220424215143345</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/fria9yH2MvGPtNm.png" alt="image-20220424215153287">
+<figcaption aria-hidden="true">image-20220424215153287</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/2tlz5XGxyDBVAkP.png" alt="image-20220424215330437">
+<figcaption aria-hidden="true">image-20220424215330437</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/unl9ieM4jWpsXG1.png" alt="image-20220424215500494">
+<figcaption aria-hidden="true">image-20220424215500494</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/SMTKVUDClZz8ixR.png" alt="image-20220424215718987">
+<figcaption aria-hidden="true">image-20220424215718987</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/EJij3u85TcPg9xa.png" alt="image-20220424215730480">
+<figcaption aria-hidden="true">image-20220424215730480</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/NPQurXEJg8M71xz.png" alt="image-20220424215824704">
+<figcaption aria-hidden="true">image-20220424215824704</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/TK6aNlI1ZBAWE5Q.png" alt="image-20220426102705993">
+<figcaption aria-hidden="true">image-20220426102705993</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/8nlXZQIbYJ7caCH.png" alt="image-20220426103958014">
+<figcaption aria-hidden="true">image-20220426103958014</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/dzqLEumKv8ik5OY.png" alt="image-20220426110203731">
+<figcaption aria-hidden="true">image-20220426110203731</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/EUkMFdARqv42WmL.png" alt="image-20220426111534224">
+<figcaption aria-hidden="true">image-20220426111534224</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/9ytGSczvxaF2m5Y.png" alt="image-20220426111835573">
+<figcaption aria-hidden="true">image-20220426111835573</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/4er5KNkYHhMLO2q.png" alt="image-20220426111839883">
+<figcaption aria-hidden="true">image-20220426111839883</figcaption>
+</figure>
 <p>考试的时候直接写答案，不用说明</p>
-<p><img src="https://s2.loli.net/2024/01/04/3nu64cVZPzK8gvT.png" alt="image-20220426141509205"></p>
+<figure>
+<img src="https://s2.loli.net/2024/01/04/3nu64cVZPzK8gvT.png" alt="image-20220426141509205">
+<figcaption aria-hidden="true">image-20220426141509205</figcaption>
+</figure>
 
   </div>
 </article>

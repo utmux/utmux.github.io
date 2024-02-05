@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="魔趣9编译-以nubia-z17miniS为例前提我手头正好有个nubia Z17miniS ，看魔趣官网是有他的适配的，结果一看列表啥也没有，去archive查看历史网页发现最新的版本也就是20200327这个版本，在百度谷歌yandex找了一圈之后，功夫不负有心人，终于找到了一个疑似最新版的，体积却膨胀到914M了，这很不正常。按理说应该在500-700M之间，果然刷进去一看自带360全家桶和">
+    <meta name="description" content="魔趣9编译-以nubia-z17miniS为例 前提 我手头正好有个nubia Z17miniS ，看魔趣官网是有他的适配的，结果一看列表啥也没有，去archive查看历史网页发现最新的版本也就是20200327这个版本，在百度谷歌yandex找了一圈之后，功夫不负有心人，终于找到了一个疑似最新版的，体积却膨胀到914M了，这很不正常。按理说应该在500-700M之间，果然刷进去一看自带36">
 <meta property="og:type" content="article">
 <meta property="og:title" content="魔趣9编译-以nubia-z17miniS为例">
 <meta property="og:url" content="https://nampsec.github.io/2022/05/10/tick/%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="魔趣9编译-以nubia-z17miniS为例前提我手头正好有个nubia Z17miniS ，看魔趣官网是有他的适配的，结果一看列表啥也没有，去archive查看历史网页发现最新的版本也就是20200327这个版本，在百度谷歌yandex找了一圈之后，功夫不负有心人，终于找到了一个疑似最新版的，体积却膨胀到914M了，这很不正常。按理说应该在500-700M之间，果然刷进去一看自带360全家桶和">
+<meta property="og:description" content="魔趣9编译-以nubia-z17miniS为例 前提 我手头正好有个nubia Z17miniS ，看魔趣官网是有他的适配的，结果一看列表啥也没有，去archive查看历史网页发现最新的版本也就是20200327这个版本，在百度谷歌yandex找了一圈之后，功夫不负有心人，终于找到了一个疑似最新版的，体积却膨胀到914M了，这很不正常。按理说应该在500-700M之间，果然刷进去一看自带36">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2024/01/03/vW4Ob89QlEghAHc.png">
 <meta property="og:image" content="https://s2.loli.net/2024/01/03/dlDwJGvMOkuNFs6.png">
@@ -73,7 +73,119 @@
 		</script>
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
 	
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body class="max-width mx-auto px3 ltr">    
       <div id="header-post">
@@ -133,7 +245,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">魔趣9编译-以nubia-z17miniS为例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-number">1.1.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%BE%E6%BA%90%E7%A0%81%E6%A0%91"><span class="toc-number">1.2.</span> <span class="toc-text">找源码树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B9%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">买服务器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96"><span class="toc-number">1.4.</span> <span class="toc-text">安装相关依赖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8C%82%E6%A2%AF%E5%AD%90"><span class="toc-number">1.5.</span> <span class="toc-text">挂梯子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E6%BA%90%E7%A0%81%E6%A0%91"><span class="toc-number">1.6.</span> <span class="toc-text">同步源码树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%B8%80"><span class="toc-number">1.7.</span> <span class="toc-text">错误一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%BA%8C"><span class="toc-number">1.8.</span> <span class="toc-text">错误二</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%B8%89"><span class="toc-number">1.9.</span> <span class="toc-text">错误三</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%9B%9B"><span class="toc-number">1.10.</span> <span class="toc-text">错误四</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%99%E8%AE%AD"><span class="toc-number">1.11.</span> <span class="toc-text">教训</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%88%90%E5%8A%9F"><span class="toc-number">1.12.</span> <span class="toc-text">成功</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">1.13.</span> <span class="toc-text">最后</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17minis%E4%B8%BA%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">魔趣9编译-以nubia-z17miniS为例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-number">1.1.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%BE%E6%BA%90%E7%A0%81%E6%A0%91"><span class="toc-number">1.2.</span> <span class="toc-text">找源码树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B9%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">买服务器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96"><span class="toc-number">1.4.</span> <span class="toc-text">安装相关依赖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8C%82%E6%A2%AF%E5%AD%90"><span class="toc-number">1.5.</span> <span class="toc-text">挂梯子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E6%BA%90%E7%A0%81%E6%A0%91"><span class="toc-number">1.6.</span> <span class="toc-text">同步源码树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%B8%80"><span class="toc-number">1.7.</span> <span class="toc-text">错误一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%BA%8C"><span class="toc-number">1.8.</span> <span class="toc-text">错误二</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%B8%89"><span class="toc-number">1.9.</span> <span class="toc-text">错误三</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%9B%9B"><span class="toc-number">1.10.</span> <span class="toc-text">错误四</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%99%E8%AE%AD"><span class="toc-number">1.11.</span> <span class="toc-text">教训</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%88%90%E5%8A%9F"><span class="toc-number">1.12.</span> <span class="toc-text">成功</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">1.13.</span> <span class="toc-text">最后</span></a></li></ol></li></ol>
       </div>
     
   </span>
@@ -178,49 +290,74 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h4 id="魔趣9编译-以nubia-z17miniS为例"><a href="#魔趣9编译-以nubia-z17miniS为例" class="headerlink" title="魔趣9编译-以nubia-z17miniS为例"></a>魔趣9编译-以nubia-z17miniS为例</h4><h5 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h5><p>我手头正好有个nubia Z17miniS ，看魔趣官网是有他的适配的，结果一看列表啥也没有，去archive查看历史网页发现最新的版本也就是20200327这个版本，在百度谷歌yandex找了一圈之后，功夫不负有心人，终于找到了一个疑似最新版的，体积却膨胀到914M了，这很不正常。按理说应该在500-700M之间，果然刷进去一看自带360全家桶和2345，priv-app目录下有各种乱七八糟的库(还有个吊毛DDT软件，进去一看甚么狗屁傲陈)，我就想自己编译，毕竟作者已经将所有源码开源，这里记录下步骤。</p>
-<h5 id="找源码树"><a href="#找源码树" class="headerlink" title="找源码树"></a>找源码树</h5><p>这里作者已经给出了，我们一般需要3个(应该是)，我这里为例子：</p>
-<p>NX589J：<a target="_blank" rel="noopener" href="https://github.com/Cyborg2017/android_device_nubia_nx589j">https://github.com/Cyborg2017/android_device_nubia_nx589j</a><br>COMMON：<a target="_blank" rel="noopener" href="https://github.com/Cyborg2017/android_device_nubia_msm8976-common">https://github.com/Cyborg2017/android_device_nubia_msm8976-common</a><br>KERNEL：<a target="_blank" rel="noopener" href="https://github.com/nubia-development/android_kernel_nubia_msm8976">https://github.com/nubia-development/android_kernel_nubia_msm8976</a></p>
+    <h4 id="魔趣9编译-以nubia-z17minis为例">魔趣9编译-以nubia-z17miniS为例</h4>
+<h5 id="前提">前提</h5>
+<p>我手头正好有个nubia Z17miniS
+，看魔趣官网是有他的适配的，结果一看列表啥也没有，去archive查看历史网页发现最新的版本也就是20200327这个版本，在百度谷歌yandex找了一圈之后，功夫不负有心人，终于找到了一个疑似最新版的，体积却膨胀到914M了，这很不正常。按理说应该在500-700M之间，果然刷进去一看自带360全家桶和2345，priv-app目录下有各种乱七八糟的库(还有个吊毛DDT软件，进去一看甚么狗屁傲陈)，我就想自己编译，毕竟作者已经将所有源码开源，这里记录下步骤。</p>
+<h5 id="找源码树">找源码树</h5>
+<p>这里作者已经给出了，我们一般需要3个(应该是)，我这里为例子：</p>
+<p>NX589J：https://github.com/Cyborg2017/android_device_nubia_nx589j
+COMMON：https://github.com/Cyborg2017/android_device_nubia_msm8976-common
+KERNEL：https://github.com/nubia-development/android_kernel_nubia_msm8976</p>
 <p>可以手动下载到对应目录下，其中下划线代表目录分隔符。我这里直接用作者的同步项目改一下，因为其已经将AOSP指向国内源了。</p>
-<h5 id="买服务器"><a href="#买服务器" class="headerlink" title="买服务器"></a>买服务器</h5><p>我在华为云上直接买了按量付费的服务器<img src="https://s2.loli.net/2024/01/03/vW4Ob89QlEghAHc.png" alt="image-20220510104404255"></p>
-<h5 id="安装相关依赖"><a href="#安装相关依赖" class="headerlink" title="安装相关依赖"></a>安装相关依赖</h5><p>参考<a target="_blank" rel="noopener" href="https://wiki.lineageos.org/devices/mido/build">编译指南</a></p>
-<h5 id="挂梯子"><a href="#挂梯子" class="headerlink" title="挂梯子"></a>挂梯子</h5><p>由于是国内的服务器，需要挂上梯子才能同步上一些源码，建议挂上梯子。具体方法不详细说。</p>
-<h5 id="同步源码树"><a href="#同步源码树" class="headerlink" title="同步源码树"></a>同步源码树</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">repo init -u https://github.com/NampSec/android-mokee.git -b mkp --depth=1</span><br><span class="line">repo sync -j4 </span><br></pre></td></tr></table></figure>
-
-<p><img src="https://s2.loli.net/2024/01/03/dlDwJGvMOkuNFs6.png" alt="image-20220510110535363"></p>
-<p>如果遇到repo的sys啥的错误，修改&#x2F;usr&#x2F;bin&#x2F;repo中的第一行为的</p>
+<h5 id="买服务器">买服务器</h5>
+<p>我在华为云上直接买了按量付费的服务器<img src="https://s2.loli.net/2024/01/03/vW4Ob89QlEghAHc.png" alt="image-20220510104404255"></p>
+<h5 id="安装相关依赖">安装相关依赖</h5>
+<p>参考<a target="_blank" rel="noopener" href="https://wiki.lineageos.org/devices/mido/build">编译指南</a></p>
+<h5 id="挂梯子">挂梯子</h5>
+<p>由于是国内的服务器，需要挂上梯子才能同步上一些源码，建议挂上梯子。具体方法不详细说。</p>
+<h5 id="同步源码树">同步源码树</h5>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">repo init -u https://github.com/NampSec/android-mokee.git -b mkp --depth=1</span><br><span class="line">repo sync -j4 </span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/03/dlDwJGvMOkuNFs6.png" alt="image-20220510110535363">
+<figcaption aria-hidden="true">image-20220510110535363</figcaption>
+</figure>
+<p>如果遇到repo的sys啥的错误，修改/usr/bin/repo中的第一行为的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/python 改为 /usr/bin/python3</span><br></pre></td></tr></table></figure>
-
 <p>详细请查看我之前关于repo处理的文章</p>
-<p><img src="https://s2.loli.net/2024/01/03/DHLE2sft96ga5nQ.png" alt="image-20220510122133881"></p>
+<figure>
+<img src="https://s2.loli.net/2024/01/03/DHLE2sft96ga5nQ.png" alt="image-20220510122133881">
+<figcaption aria-hidden="true">image-20220510122133881</figcaption>
+</figure>
 <p>同步成功后</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> USE_CCACHE=1</span><br><span class="line"><span class="built_in">export</span> CCACHE_EXEC=/usr/bin/ccache</span><br><span class="line">ccache -M 30G    <span class="comment">#我这里只设置了30个G，因为下面开启了compression</span></span><br><span class="line">ccache -o compression=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> build/envsetup.sh</span><br><span class="line">lunch mk_nx589j-userdebug &amp;&amp; mka bacon</span><br></pre></td></tr></table></figure>
-
 <p>提取blob文件，参考<a target="_blank" rel="noopener" href="https://wiki.lineageos.org/extracting_blobs_from_zips">这里</a></p>
-<h5 id="错误一"><a href="#错误一" class="headerlink" title="错误一"></a>错误一</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vendor/nubia/msm8976-common/proprietary/recovery/root/sbin/qseecomd提示没有找到</span><br><span class="line">在GitHub上看到有人提取过，直接下载复制过来了</span><br></pre></td></tr></table></figure>
-
-<h5 id="错误二"><a href="#错误二" class="headerlink" title="错误二"></a>错误二</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$DEVICE must be set before including this script!</span><br><span class="line">加入下面这几个变量</span><br><span class="line">export DEVICE=nx589j</span><br><span class="line">export VENDOR=nubia</span><br><span class="line">export DEVICE_COMMON=msm8956-common</span><br></pre></td></tr></table></figure>
-
-<h5 id="错误三"><a href="#错误三" class="headerlink" title="错误三"></a>错误三</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Prebuilt apk found in PRODUCT_COPY_FILES: vendor/nubia/nx589j/proprietary/priv-app/NubiaCamera/NubiaCamera.apk:system/priv-app/NubiaCamera/NubiaCamera.apk,</span><br></pre></td></tr></table></figure>
-
-<p>找到build&#x2F;make&#x2F;core&#x2F;Makefile</p>
+<h5 id="错误一">错误一</h5>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vendor/nubia/msm8976-common/proprietary/recovery/root/sbin/qseecomd提示没有找到</span><br><span class="line">在GitHub上看到有人提取过，直接下载复制过来了</span><br></pre></td></tr></table></figure>
+<h5 id="错误二">错误二</h5>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$DEVICE must be set before including this script!</span><br><span class="line">加入下面这几个变量</span><br><span class="line">export DEVICE=nx589j</span><br><span class="line">export VENDOR=nubia</span><br><span class="line">export DEVICE_COMMON=msm8956-common</span><br></pre></td></tr></table></figure>
+<h5 id="错误三">错误三</h5>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Prebuilt apk found in PRODUCT_COPY_FILES: vendor/nubia/nx589j/proprietary/priv-app/NubiaCamera/NubiaCamera.apk:system/priv-app/NubiaCamera/NubiaCamera.apk,</span><br></pre></td></tr></table></figure>
+<p>找到build/make/core/Makefile</p>
 <p>注释掉19行开始的这个判断</p>
-<h5 id="错误四"><a href="#错误四" class="headerlink" title="错误四"></a>错误四</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">drivers/built-in.o: In function `mdss_dsi_panel_power_off&#x27;:</span><br><span class="line">/root/out/target/product/nx589j/obj/KERNEL_OBJ/../../../../../../kernel/nubia/msm8976/drivers/video/msm/mdss/mdss_dsi.c:291: undefined reference to `nubia_wakeup_gesture&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>改了源代码还是报错，提示我-Wdeclaration-after-statement，在网上搜了下，貌似是开启了把警告当成错误的选项了，在scripts&#x2F;<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=gcc&spm=1001.2101.3001.7020">gcc</a>-wrapper.py将interpret_warning(line)注释掉即可。</p>
+<h5 id="错误四">错误四</h5>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">drivers/built-in.o: In function `mdss_dsi_panel_power_off':</span><br><span class="line">/root/out/target/product/nx589j/obj/KERNEL_OBJ/../../../../../../kernel/nubia/msm8976/drivers/video/msm/mdss/mdss_dsi.c:291: undefined reference to `nubia_wakeup_gesture'</span><br></pre></td></tr></table></figure>
+<p>改了源代码还是报错，提示我-Wdeclaration-after-statement，在网上搜了下，貌似是开启了把警告当成错误的选项了，在scripts/<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=gcc&amp;spm=1001.2101.3001.7020">gcc</a>-wrapper.py将interpret_warning(line)注释掉即可。</p>
 <p>注释掉后还是kernel报错</p>
 <p>最后检查一遍kernel源码，将kernel源码回退到上一个版本，作者verified的版本，一次编译就通过了</p>
 <p>编译过程中遇到了下面这样的提示，不知道是怎么回事。</p>
-<p><img src="https://s2.loli.net/2024/01/03/1kEYzpl5mqDTeu7.png" alt="image-20220510173419644"></p>
-<p><img src="https://s2.loli.net/2024/01/03/6513ysKSl9OZex2.png" alt="image-20220510173439473"></p>
-<h5 id="教训"><a href="#教训" class="headerlink" title="教训"></a>教训</h5><p>编译到最后突然空间不足了，还好云服务器能够随时扩容，教训就是以后要用200G别用150G，数据不够用，切记切记。</p>
-<h5 id="成功"><a href="#成功" class="headerlink" title="成功"></a>成功</h5><p>成功截图如下</p>
-<p><img src="https://s2.loli.net/2024/01/03/ElQTH2gFrmGAhCi.png" alt="image-20220510183117035"></p>
+<figure>
+<img src="https://s2.loli.net/2024/01/03/1kEYzpl5mqDTeu7.png" alt="image-20220510173419644">
+<figcaption aria-hidden="true">image-20220510173419644</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2024/01/03/6513ysKSl9OZex2.png" alt="image-20220510173439473">
+<figcaption aria-hidden="true">image-20220510173439473</figcaption>
+</figure>
+<h5 id="教训">教训</h5>
+<p>编译到最后突然空间不足了，还好云服务器能够随时扩容，教训就是以后要用200G别用150G，数据不够用，切记切记。</p>
+<h5 id="成功">成功</h5>
+<p>成功截图如下</p>
+<figure>
+<img src="https://s2.loli.net/2024/01/03/ElQTH2gFrmGAhCi.png" alt="image-20220510183117035">
+<figcaption aria-hidden="true">image-20220510183117035</figcaption>
+</figure>
 <p>刷机，开机<img src="https://s2.loli.net/2024/01/03/2rZtPwcpDBHbUjl.png" alt="image-20220510193355760"></p>
-<p>经过测试，开启双击亮屏貌似有点问题，相机还是老样子，即使用4：3 320 还是打不开，其他的都正常，对比之前移动叔叔下载的那个，提升巨大，那个玩意不知道甚么东西，哪怕把所有的流氓软件卸载了发热也很大，这个和安卓7差不多，冰凉冰凉。</p>
-<h5 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h5><p>这个手机本来就是个破手机，本来打算修改内核跑docker的，试了下编译安卓9，没想到成功了，从昨天下午到今天晚上，历时两天，不容易。</p>
+<p>经过测试，开启双击亮屏貌似有点问题，相机还是老样子，即使用4：3 320
+还是打不开，其他的都正常，对比之前移动叔叔下载的那个，提升巨大，那个玩意不知道甚么东西，哪怕把所有的流氓软件卸载了发热也很大，这个和安卓7差不多，冰凉冰凉。</p>
+<h5 id="最后">最后</h5>
+<p>这个手机本来就是个破手机，本来打算修改内核跑docker的，试了下编译安卓9，没想到成功了，从昨天下午到今天晚上，历时两天，不容易。</p>
 
   </div>
 </article>
@@ -250,7 +387,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17miniS%E4%B8%BA%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">魔趣9编译-以nubia-z17miniS为例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-number">1.1.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%BE%E6%BA%90%E7%A0%81%E6%A0%91"><span class="toc-number">1.2.</span> <span class="toc-text">找源码树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B9%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">买服务器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96"><span class="toc-number">1.4.</span> <span class="toc-text">安装相关依赖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8C%82%E6%A2%AF%E5%AD%90"><span class="toc-number">1.5.</span> <span class="toc-text">挂梯子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E6%BA%90%E7%A0%81%E6%A0%91"><span class="toc-number">1.6.</span> <span class="toc-text">同步源码树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%B8%80"><span class="toc-number">1.7.</span> <span class="toc-text">错误一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%BA%8C"><span class="toc-number">1.8.</span> <span class="toc-text">错误二</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%B8%89"><span class="toc-number">1.9.</span> <span class="toc-text">错误三</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%9B%9B"><span class="toc-number">1.10.</span> <span class="toc-text">错误四</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%99%E8%AE%AD"><span class="toc-number">1.11.</span> <span class="toc-text">教训</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%88%90%E5%8A%9F"><span class="toc-number">1.12.</span> <span class="toc-text">成功</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">1.13.</span> <span class="toc-text">最后</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AD%94%E8%B6%A39%E7%BC%96%E8%AF%91-%E4%BB%A5nubia-z17minis%E4%B8%BA%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">魔趣9编译-以nubia-z17miniS为例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-number">1.1.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%BE%E6%BA%90%E7%A0%81%E6%A0%91"><span class="toc-number">1.2.</span> <span class="toc-text">找源码树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B9%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">买服务器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96"><span class="toc-number">1.4.</span> <span class="toc-text">安装相关依赖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8C%82%E6%A2%AF%E5%AD%90"><span class="toc-number">1.5.</span> <span class="toc-text">挂梯子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E6%BA%90%E7%A0%81%E6%A0%91"><span class="toc-number">1.6.</span> <span class="toc-text">同步源码树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%B8%80"><span class="toc-number">1.7.</span> <span class="toc-text">错误一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%BA%8C"><span class="toc-number">1.8.</span> <span class="toc-text">错误二</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%B8%89"><span class="toc-number">1.9.</span> <span class="toc-text">错误三</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%9B%9B"><span class="toc-number">1.10.</span> <span class="toc-text">错误四</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%99%E8%AE%AD"><span class="toc-number">1.11.</span> <span class="toc-text">教训</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%88%90%E5%8A%9F"><span class="toc-number">1.12.</span> <span class="toc-text">成功</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">1.13.</span> <span class="toc-text">最后</span></a></li></ol></li></ol>
       </div>
     
 

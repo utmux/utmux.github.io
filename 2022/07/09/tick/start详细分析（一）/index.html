@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="title: start详细分析(一)date: 2022-07-05 23:09:41tags:categories: tick  start.s详细分析解释名词 123PMSA：Protected Memory System Architecture VMSA：Virtual Memory System Architecture   寄存器 SCTLR: 12345678The System">
+    <meta name="description" content="start.s详细分析 解释名词 123PMSA：Protected Memory System Architecture VMSA：Virtual Memory System Architecture  寄存器 SCTLR: 12345678The System Control Register, SCTLR, provides the top level control of the">
 <meta property="og:type" content="article">
 <meta property="og:title" content="start详细分析（一）">
 <meta property="og:url" content="https://nampsec.github.io/2022/07/09/tick/start%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="title: start详细分析(一)date: 2022-07-05 23:09:41tags:categories: tick  start.s详细分析解释名词 123PMSA：Protected Memory System Architecture VMSA：Virtual Memory System Architecture   寄存器 SCTLR: 12345678The System">
+<meta property="og:description" content="start.s详细分析 解释名词 123PMSA：Protected Memory System Architecture VMSA：Virtual Memory System Architecture  寄存器 SCTLR: 12345678The System Control Register, SCTLR, provides the top level control of the">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2024/01/03/DPYrUH15MTFjWcC.png">
 <meta property="article:published_time" content="2022-07-09T09:40:00.000Z">
@@ -67,7 +67,119 @@
 		</script>
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
 	
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body class="max-width mx-auto px3 ltr">    
       <div id="header-post">
@@ -127,7 +239,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#start-s%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">start.s详细分析</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#start.s%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">start.s详细分析</span></a></li></ol>
       </div>
     
   </span>
@@ -172,66 +284,51 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <hr>
-<p>title: start详细分析(一)<br>date: 2022-07-05 23:09:41<br>tags:<br>categories: tick</p>
-<hr>
-<h4 id="start-s详细分析"><a href="#start-s详细分析" class="headerlink" title="start.s详细分析"></a>start.s详细分析</h4><p>解释名词</p>
+    <h4 id="start.s详细分析">start.s详细分析</h4>
+<p>解释名词</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PMSA：Protected Memory System Architecture </span><br><span class="line">VMSA：Virtual Memory System Architecture </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>寄存器</p>
 <p>SCTLR:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">The System Control Register, SCTLR, provides the top level control of the system, including its memory system.</span><br><span class="line">uboot中的清零V（第13位的作用）：</span><br><span class="line">V, bit [13]</span><br><span class="line">Vectors bit. This bit selects the base address of the exception vectors:</span><br><span class="line">0</span><br><span class="line">Normal exception vectors, base address 0x0000 0000.</span><br><span class="line">1</span><br><span class="line">High exception vectors (Hivecs), base address 0xFFFF 0000.</span><br></pre></td></tr></table></figure>
-
 <p>VBAR:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">When high exception vectors are not selected, the VBAR holds the exception base address for exceptions that are not taken to Monitor mode or to Hyp mode.</span><br><span class="line">也就是说，当V=0，且该地址设置时，向量表的地址会被“重定向”到该地址，而不是0x00。</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://s2.loli.net/2024/01/03/DPYrUH15MTFjWcC.png" alt="image-20220704155428716"></p>
+<figure>
+<img src="https://s2.loli.net/2024/01/03/DPYrUH15MTFjWcC.png" alt="image-20220704155428716">
+<figcaption aria-hidden="true">image-20220704155428716</figcaption>
+</figure>
 <p>整体流程：</p>
 <p>1.save_boot_params（待补充）</p>
 <p>2.check for Hypervisor support（待补充）</p>
 <p>3.disable interrupts (FIQ and IRQ)</p>
 <p>判断是否为HYP模式，如果不是HYP则调整模式为SVC，清楚FIQ和IRQ中断</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mrs	r0, cpsr</span><br><span class="line">and	r1, r0, #0x1f		@ mask mode bits</span><br><span class="line">teq	r1, #0x1a		@ test for HYP mode</span><br><span class="line">bicne	r0, r0, #0x1f		@ clear all mode bits</span><br><span class="line">orrne	r0, r0, #0x13		@ set SVC mode</span><br><span class="line">orr	r0, r0, #0xc0		@ disable FIQ and IRQ</span><br><span class="line">msr	cpsr,r0</span><br></pre></td></tr></table></figure>
-
 <p>4.Setup vector</p>
-<p>总体是首先设置SCTLR寄存器的V位为0，即设置中断向量表为0x00000000低地址模式，然后设置向量地址为0x4a00000000,为什么是这个地址，这个地址是TEXT_BASE,也就是代码段地址的开头，该地址在<strong>u-boot-orangepi\Kconfig</strong>中自动化配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">config SYS_TEXT_BASE</span><br><span class="line">	depends on HAVE_SYS_TEXT_BASE</span><br><span class="line">	default 0x80800000 if ARCH_OMAP2PLUS || ARCH_K3</span><br><span class="line">	default 0x4a000000 if ARCH_SUNXI &amp;&amp; !MACH_SUN9I &amp;&amp; !MACH_SUN8I_V3S</span><br><span class="line">	default 0x2a000000 if ARCH_SUNXI &amp;&amp; MACH_SUN9I</span><br><span class="line">	default 0x42e00000 if ARCH_SUNXI &amp;&amp; MACH_SUN8I_V3S</span><br><span class="line">	hex &quot;Text Base&quot;</span><br><span class="line">	help</span><br><span class="line">	  The address in memory that U-Boot will be running from, initially.</span><br></pre></td></tr></table></figure>
-
+<p>总体是首先设置SCTLR寄存器的V位为0，即设置中断向量表为0x00000000低地址模式，然后设置向量地址为0x4a00000000,为什么是这个地址，这个地址是TEXT_BASE,也就是代码段地址的开头，该地址在**u-boot-orangepi*中自动化配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">config SYS_TEXT_BASE</span><br><span class="line">	depends on HAVE_SYS_TEXT_BASE</span><br><span class="line">	default 0x80800000 if ARCH_OMAP2PLUS || ARCH_K3</span><br><span class="line">	default 0x4a000000 if ARCH_SUNXI &amp;&amp; !MACH_SUN9I &amp;&amp; !MACH_SUN8I_V3S</span><br><span class="line">	default 0x2a000000 if ARCH_SUNXI &amp;&amp; MACH_SUN9I</span><br><span class="line">	default 0x42e00000 if ARCH_SUNXI &amp;&amp; MACH_SUN8I_V3S</span><br><span class="line">	hex "Text Base"</span><br><span class="line">	help</span><br><span class="line">	  The address in memory that U-Boot will be running from, initially.</span><br></pre></td></tr></table></figure>
 <p>关于uboot的自动化脚本构建流程，详细见另一篇文章。</p>
 <p>5.cpu_init_cp15（参考csdn的这篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44837631/article/details/122341159">文章</a>）</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* Setup CP15 registers (cache, MMU, TLBs). The I-cache is turned on unless</span><br><span class="line">* CONFIG_SYS_ICACHE_OFF is defined.</span><br></pre></td></tr></table></figure>
-
-<p>Invalidate L1 I&#x2F;D （清除L1中的数据和缓存）</p>
+<p>Invalidate L1 I/D （清除L1中的数据和缓存）</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mov	r0, #0			@ set up for MCR</span><br><span class="line">mcr	p15, 0, r0, c8, c7, 0	@ invalidate TLBs </span><br><span class="line">mcr	p15, 0, r0, c7, c5, 0	@ invalidate icache</span><br><span class="line">mcr	p15, 0, r0, c7, c5, 6	@ invalidate BP array</span><br><span class="line">mcr     p15, 0, r0, c7, c10, 4	@ DSB</span><br><span class="line">mcr     p15, 0, r0, c7, c5, 4	@ ISB</span><br></pre></td></tr></table></figure>
-
 <p>名词解释</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TLB用于虚拟地址的快速寻址表，便于频繁访问的虚拟内存地址能直接对应物理地址，无需转换，类似于cache，[详细见](https://blog.csdn.net/hnwyllmm/article/details/77051135)。也就是说他的优先级很高，会在访问虚拟地址的时候首先看TLB。</span><br><span class="line">icache：指令缓存，缓存上次或频繁访问的指令。</span><br><span class="line">BP：分支预测功能，即Branch Predictor。</span><br><span class="line">DSB：数据同步隔离。在多核处理器中，多个核共享同一块内存，当一个核改变了内存中的数据后，别的CPU的cache中可能还缓存着内存改变之前的数据，所以需要做特别的指令处理。DSB清空了写缓冲，使得任何它后面的指令，不管要不要使用先前的存储器访问结果，通通等待访问完成。</span><br><span class="line">ISB：指令同步隔离。清空数据流水线缓存，让CPU重新从cache中或者内存中取指令。</span><br></pre></td></tr></table></figure>
-
 <p>disable MMU stuff and caches：关闭MMU和caches</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">    　　*1、为什么要关闭mmu？</span><br><span class="line">    　　*因为MMU是把虚拟地址转化为物理地址得作用</span><br><span class="line">    　　*而我们现在是要设置控制寄存器，而控制寄存器本来就是实地址（物理地址），</span><br><span class="line">    　　*再使能MMU，不就是多此一举了吗？</span><br><span class="line"> </span><br><span class="line">　　　　　*2、为什么要关闭cache？</span><br><span class="line">　　　　　*catch和MMU是通过CP15管理的，刚上电的时候，CPU还不能管理他们。</span><br><span class="line">*所以上电的时候MMU必须关闭，指令cache可关闭，可不关闭，但数据cache一定要关闭</span><br><span class="line">*否则可能导致刚开始的代码里面，去取数据的时候，从catch里面取，</span><br><span class="line">*而这时候RAM中数据还没有cache过来，导致数据预取异常</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">    mrc p15, 0, r0, c1, c0, 0</span><br><span class="line">    bic r0, r0, #0x00002000 @ clear bits 13 (--V-)　/*设置成正常异常模式，即异常向量表的基地址为0x00000000*/</span><br><span class="line">    bic r0, r0, #0x00000007 @ clear bits 2:0 (-CAM) /*关闭指令cache,关闭指令对齐检测，关闭mmu*/</span><br><span class="line">    orr r0, r0, #0x00000002 @ set bit 1 (--A-) Align /*使能对齐检测*/</span><br><span class="line">    orr r0, r0, #0x00000800 @ set bit 11 (Z---) BTB /*使能分支预测*/</span><br><span class="line">#ifdef CONFIG_SYS_ICACHE_OFF</span><br><span class="line">    bic r0, r0, #0x00001000 @ clear bit 12 (I) I-cache</span><br><span class="line">#else</span><br><span class="line">    orr r0, r0, #0x00001000 @ set bit 12 (I) I-cache　/*时能指令cache*/</span><br><span class="line">#endif</span><br><span class="line">    mcr p15, 0, r0, c1, c0, 0</span><br></pre></td></tr></table></figure>
-
 <p>后面是各种用于arm特定处理器的协处理器命令，还有段用于读取cpu的类型和版本号，存入r2，以便一些特写协处理器命令用到，然后返回。</p>
 <p>6.cpu_init_crit</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* Jump to board specific initialization...</span><br><span class="line">* The Mask ROM will have already initialized basic memory. Go here to bump up clock rate and handle wake up conditions.</span><br></pre></td></tr></table></figure>
-
 <p>直接跳转到lowlevel_init</p>
 <p>7.lowlevel_init</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#if defined(CONFIG_SPL_BUILD) &amp;&amp; defined(CONFIG_SPL_STACK)</span><br><span class="line">	ldr	sp, =CONFIG_SPL_STACK</span><br><span class="line">#else</span><br><span class="line">	ldr	sp, =CONFIG_SYS_INIT_SP_ADDR</span><br><span class="line">#endif</span><br><span class="line">	bic	sp, sp, #7 /* 8-byte alignment for ABI compliance */</span><br></pre></td></tr></table></figure>
-
-<p>这里我调试发现sp&#x3D;0x7F30，而CONFIG_SPL_STACK是写死在include&#x2F;configs&#x2F;sunxi-common.h中的，为0x8000，即32KB，那这里sp应该是CONFIG_SYS_INIT_SP_ADDR了，他来自</p>
+<p>这里我调试发现sp=0x7F30，而CONFIG_SPL_STACK是写死在include/configs/sunxi-common.h中的，为0x8000，即32KB，那这里sp应该是CONFIG_SYS_INIT_SP_ADDR了，他来自</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define CONFIG_SYS_INIT_SP_ADDR \</span><br><span class="line">	(CONFIG_SYS_INIT_RAM_ADDR + CONFIG_SYS_INIT_SP_OFFSET)</span><br><span class="line">	CONFIG_SYS_INIT_RAM_ADDR一般都是从零开始，可以看芯片手册，我这里是0</span><br></pre></td></tr></table></figure>
-
 <p>而CONFIG_SYS_INIT_SP_OFFSET来自</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define CONFIG_SYS_INIT_SP_OFFSET \</span><br><span class="line">	(CONFIG_SYS_INIT_RAM_SIZE - GENERATED_GBL_DATA_SIZE)</span><br><span class="line">	CONFIG_SYS_INIT_RAM_SIZE 0x8000</span><br></pre></td></tr></table></figure>
-
 <p>其中GENERATED_GBL_DATA_SIZE</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DEFINE(GENERATED_GBL_DATA_SIZE,</span><br><span class="line">	(sizeof(struct global_data) + 15) &amp; ~15);</span><br></pre></td></tr></table></figure>
-
 <p>global_data即GD是一个非常大的数据结构，将上面的信息合起来的话就是：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sp = 0 + 0x8000 - (sizeof(struct global_data) + 15) &amp; ~15)</span><br></pre></td></tr></table></figure>
-
 <p>这么说来这里的GD是0XD0个字节。</p>
 
   </div>
@@ -262,7 +359,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#start-s%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">start.s详细分析</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#start.s%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">start.s详细分析</span></a></li></ol>
       </div>
     
 
