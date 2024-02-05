@@ -296,9 +296,9 @@ mjx-container[display="true"] + br {
 ，看魔趣官网是有他的适配的，结果一看列表啥也没有，去archive查看历史网页发现最新的版本也就是20200327这个版本，在百度谷歌yandex找了一圈之后，功夫不负有心人，终于找到了一个疑似最新版的，体积却膨胀到914M了，这很不正常。按理说应该在500-700M之间，果然刷进去一看自带360全家桶和2345，priv-app目录下有各种乱七八糟的库(还有个吊毛DDT软件，进去一看甚么狗屁傲陈)，我就想自己编译，毕竟作者已经将所有源码开源，这里记录下步骤。</p>
 <h5 id="找源码树">找源码树</h5>
 <p>这里作者已经给出了，我们一般需要3个(应该是)，我这里为例子：</p>
-<p>NX589J：https://github.com/Cyborg2017/android_device_nubia_nx589j
-COMMON：https://github.com/Cyborg2017/android_device_nubia_msm8976-common
-KERNEL：https://github.com/nubia-development/android_kernel_nubia_msm8976</p>
+<p>NX589J：<a target="_blank" rel="noopener" href="https://github.com/Cyborg2017/android_device_nubia_nx589j" class="uri">https://github.com/Cyborg2017/android_device_nubia_nx589j</a><br>
+COMMON：<a target="_blank" rel="noopener" href="https://github.com/Cyborg2017/android_device_nubia_msm8976-common" class="uri">https://github.com/Cyborg2017/android_device_nubia_msm8976-common</a><br>
+KERNEL：<a target="_blank" rel="noopener" href="https://github.com/nubia-development/android_kernel_nubia_msm8976" class="uri">https://github.com/nubia-development/android_kernel_nubia_msm8976</a></p>
 <p>可以手动下载到对应目录下，其中下划线代表目录分隔符。我这里直接用作者的同步项目改一下，因为其已经将AOSP指向国内源了。</p>
 <h5 id="买服务器">买服务器</h5>
 <p>我在华为云上直接买了按量付费的服务器<img src="https://s2.loli.net/2024/01/03/vW4Ob89QlEghAHc.png" alt="image-20220510104404255"></p>
@@ -308,17 +308,11 @@ KERNEL：https://github.com/nubia-development/android_kernel_nubia_msm8976</p>
 <p>由于是国内的服务器，需要挂上梯子才能同步上一些源码，建议挂上梯子。具体方法不详细说。</p>
 <h5 id="同步源码树">同步源码树</h5>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">repo init -u https://github.com/NampSec/android-mokee.git -b mkp --depth=1</span><br><span class="line">repo sync -j4 </span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/03/dlDwJGvMOkuNFs6.png" alt="image-20220510110535363">
-<figcaption aria-hidden="true">image-20220510110535363</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2024/01/03/dlDwJGvMOkuNFs6.png" alt="image-20220510110535363"></p>
 <p>如果遇到repo的sys啥的错误，修改/usr/bin/repo中的第一行为的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/python 改为 /usr/bin/python3</span><br></pre></td></tr></table></figure>
 <p>详细请查看我之前关于repo处理的文章</p>
-<figure>
-<img src="https://s2.loli.net/2024/01/03/DHLE2sft96ga5nQ.png" alt="image-20220510122133881">
-<figcaption aria-hidden="true">image-20220510122133881</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2024/01/03/DHLE2sft96ga5nQ.png" alt="image-20220510122133881"></p>
 <p>同步成功后</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> USE_CCACHE=1</span><br><span class="line"><span class="built_in">export</span> CCACHE_EXEC=/usr/bin/ccache</span><br><span class="line">ccache -M 30G    <span class="comment">#我这里只设置了30个G，因为下面开启了compression</span></span><br><span class="line">ccache -o compression=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> build/envsetup.sh</span><br><span class="line">lunch mk_nx589j-userdebug &amp;&amp; mka bacon</span><br></pre></td></tr></table></figure>
@@ -337,22 +331,13 @@ KERNEL：https://github.com/nubia-development/android_kernel_nubia_msm8976</p>
 <p>注释掉后还是kernel报错</p>
 <p>最后检查一遍kernel源码，将kernel源码回退到上一个版本，作者verified的版本，一次编译就通过了</p>
 <p>编译过程中遇到了下面这样的提示，不知道是怎么回事。</p>
-<figure>
-<img src="https://s2.loli.net/2024/01/03/1kEYzpl5mqDTeu7.png" alt="image-20220510173419644">
-<figcaption aria-hidden="true">image-20220510173419644</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/03/6513ysKSl9OZex2.png" alt="image-20220510173439473">
-<figcaption aria-hidden="true">image-20220510173439473</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2024/01/03/1kEYzpl5mqDTeu7.png" alt="image-20220510173419644"></p>
+<p><img src="https://s2.loli.net/2024/01/03/6513ysKSl9OZex2.png" alt="image-20220510173439473"></p>
 <h5 id="教训">教训</h5>
 <p>编译到最后突然空间不足了，还好云服务器能够随时扩容，教训就是以后要用200G别用150G，数据不够用，切记切记。</p>
 <h5 id="成功">成功</h5>
 <p>成功截图如下</p>
-<figure>
-<img src="https://s2.loli.net/2024/01/03/ElQTH2gFrmGAhCi.png" alt="image-20220510183117035">
-<figcaption aria-hidden="true">image-20220510183117035</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2024/01/03/ElQTH2gFrmGAhCi.png" alt="image-20220510183117035"></p>
 <p>刷机，开机<img src="https://s2.loli.net/2024/01/03/2rZtPwcpDBHbUjl.png" alt="image-20220510193355760"></p>
 <p>经过测试，开启双击亮屏貌似有点问题，相机还是老样子，即使用4：3 320
 还是打不开，其他的都正常，对比之前移动叔叔下载的那个，提升巨大，那个玩意不知道甚么东西，哪怕把所有的流氓软件卸载了发热也很大，这个和安卓7差不多，冰凉冰凉。</p>

@@ -239,7 +239,7 @@ mjx-container[display="true"] + br {
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#start.s%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">start.s详细分析</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#starts%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">start.s详细分析</span></a></li></ol>
       </div>
     
   </span>
@@ -284,7 +284,7 @@ mjx-container[display="true"] + br {
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h4 id="start.s详细分析">start.s详细分析</h4>
+    <h4 id="starts详细分析">start.s详细分析</h4>
 <p>解释名词</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PMSA：Protected Memory System Architecture </span><br><span class="line">VMSA：Virtual Memory System Architecture </span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>寄存器</p>
@@ -292,10 +292,7 @@ mjx-container[display="true"] + br {
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">The System Control Register, SCTLR, provides the top level control of the system, including its memory system.</span><br><span class="line">uboot中的清零V（第13位的作用）：</span><br><span class="line">V, bit [13]</span><br><span class="line">Vectors bit. This bit selects the base address of the exception vectors:</span><br><span class="line">0</span><br><span class="line">Normal exception vectors, base address 0x0000 0000.</span><br><span class="line">1</span><br><span class="line">High exception vectors (Hivecs), base address 0xFFFF 0000.</span><br></pre></td></tr></table></figure>
 <p>VBAR:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">When high exception vectors are not selected, the VBAR holds the exception base address for exceptions that are not taken to Monitor mode or to Hyp mode.</span><br><span class="line">也就是说，当V=0，且该地址设置时，向量表的地址会被“重定向”到该地址，而不是0x00。</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/03/DPYrUH15MTFjWcC.png" alt="image-20220704155428716">
-<figcaption aria-hidden="true">image-20220704155428716</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2024/01/03/DPYrUH15MTFjWcC.png" alt="image-20220704155428716"></p>
 <p>整体流程：</p>
 <p>1.save_boot_params（待补充）</p>
 <p>2.check for Hypervisor support（待补充）</p>
@@ -359,7 +356,7 @@ mjx-container[display="true"] + br {
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#start.s%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">start.s详细分析</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#starts%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">start.s详细分析</span></a></li></ol>
       </div>
     
 

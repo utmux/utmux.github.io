@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="image-20220429101938794    image-20220429101952850    image-20220428135534909  一个是均值收敛于期望，第二个是频率收敛于概率   image-20220429101753429    image-20220429102037893    image-20220429102">
+    <meta name="description" content="一个是均值收敛于期望，第二个是频率收敛于概率               自己手动推出样本的方差的期望">
 <meta property="og:type" content="article">
 <meta property="og:title" content="概率论3">
 <meta property="og:url" content="https://nampsec.github.io/2022/04/29/exam/%E6%A6%82%E7%8E%87%E8%AE%BA3/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="image-20220429101938794    image-20220429101952850    image-20220428135534909  一个是均值收敛于期望，第二个是频率收敛于概率   image-20220429101753429    image-20220429102037893    image-20220429102">
+<meta property="og:description" content="一个是均值收敛于期望，第二个是频率收敛于概率               自己手动推出样本的方差的期望">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2024/01/04/32JeulN9jhFnGDq.png">
 <meta property="og:image" content="https://s2.loli.net/2024/01/04/DhpwOeQ7oBSUsfL.png">
@@ -297,80 +297,26 @@ mjx-container[display="true"] + br {
   
 
   <div class="content e-content" itemprop="articleBody">
-    <figure>
-<img src="https://s2.loli.net/2024/01/04/32JeulN9jhFnGDq.png" alt="image-20220429101938794">
-<figcaption aria-hidden="true">image-20220429101938794</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/DhpwOeQ7oBSUsfL.png" alt="image-20220429101952850">
-<figcaption aria-hidden="true">image-20220429101952850</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/hnlW8wrFXQA6JvY.png" alt="image-20220428135534909">
-<figcaption aria-hidden="true">image-20220428135534909</figcaption>
-</figure>
+    <p><img src="https://s2.loli.net/2024/01/04/32JeulN9jhFnGDq.png" alt="image-20220429101938794"></p>
+<p><img src="https://s2.loli.net/2024/01/04/DhpwOeQ7oBSUsfL.png" alt="image-20220429101952850"></p>
+<p><img src="https://s2.loli.net/2024/01/04/hnlW8wrFXQA6JvY.png" alt="image-20220428135534909"></p>
 <p>一个是均值收敛于期望，第二个是频率收敛于概率</p>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/SKuyXO1D2YEN5GM.png" alt="image-20220429101753429">
-<figcaption aria-hidden="true">image-20220429101753429</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/IOH6Wnhu8zkjmxc.png" alt="image-20220429102037893">
-<figcaption aria-hidden="true">image-20220429102037893</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/eqmkJZ7T4d2rIYz.png" alt="image-20220429102906705">
-<figcaption aria-hidden="true">image-20220429102906705</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/PyjtOhofQ5mKM6g.png" alt="image-20220429103238771">
-<figcaption aria-hidden="true">image-20220429103238771</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/BkKa63TxEt9nVhr.png" alt="image-20220429103646012">
-<figcaption aria-hidden="true">image-20220429103646012</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/05/LkcURji8SQfuldY.png" alt="image-20220429103703457">
-<figcaption aria-hidden="true">image-20220429103703457</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/05/4So5xXV3mTYEnjg.png" alt="image-20220429103823424">
-<figcaption aria-hidden="true">image-20220429103823424</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/05/FKDx6MYmleCTJOZ.png" alt="image-20220429104032624">
-<figcaption aria-hidden="true">image-20220429104032624</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/05/n8wv1O2yatgl6k9.png" alt="image-20220429104127597">
-<figcaption aria-hidden="true">image-20220429104127597</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/05/TdKsWJznG5FjVCA.png" alt="image-20220429104227415">
-<figcaption aria-hidden="true">image-20220429104227415</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/05/6EHXIPCfcoUlKe1.png" alt="image-20220429104426457">
-<figcaption aria-hidden="true">image-20220429104426457</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/05/PG7WngXazl1femH.png" alt="image-20220429104440977">
-<figcaption aria-hidden="true">image-20220429104440977</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/05/xKrqc59HWsVvjkg.png" alt="image-20220429104745524">
-<figcaption aria-hidden="true">image-20220429104745524</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/05/Be4MIucyrQ8EKaP.png" alt="image-20220429105633873">
-<figcaption aria-hidden="true">image-20220429105633873</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2024/01/04/SKuyXO1D2YEN5GM.png" alt="image-20220429101753429"></p>
+<p><img src="https://s2.loli.net/2024/01/04/IOH6Wnhu8zkjmxc.png" alt="image-20220429102037893"></p>
+<p><img src="https://s2.loli.net/2024/01/04/eqmkJZ7T4d2rIYz.png" alt="image-20220429102906705"></p>
+<p><img src="https://s2.loli.net/2024/01/04/PyjtOhofQ5mKM6g.png" alt="image-20220429103238771"></p>
+<p><img src="https://s2.loli.net/2024/01/04/BkKa63TxEt9nVhr.png" alt="image-20220429103646012"></p>
+<p><img src="https://s2.loli.net/2024/01/05/LkcURji8SQfuldY.png" alt="image-20220429103703457"></p>
+<p><img src="https://s2.loli.net/2024/01/05/4So5xXV3mTYEnjg.png" alt="image-20220429103823424"></p>
+<p><img src="https://s2.loli.net/2024/01/05/FKDx6MYmleCTJOZ.png" alt="image-20220429104032624"></p>
+<p><img src="https://s2.loli.net/2024/01/05/n8wv1O2yatgl6k9.png" alt="image-20220429104127597"></p>
+<p><img src="https://s2.loli.net/2024/01/05/TdKsWJznG5FjVCA.png" alt="image-20220429104227415"></p>
+<p><img src="https://s2.loli.net/2024/01/05/6EHXIPCfcoUlKe1.png" alt="image-20220429104426457"></p>
+<p><img src="https://s2.loli.net/2024/01/05/PG7WngXazl1femH.png" alt="image-20220429104440977"></p>
+<p><img src="https://s2.loli.net/2024/01/05/xKrqc59HWsVvjkg.png" alt="image-20220429104745524"></p>
+<p><img src="https://s2.loli.net/2024/01/05/Be4MIucyrQ8EKaP.png" alt="image-20220429105633873"></p>
 <p>自己手动推出样本的方差的期望</p>
-<figure>
-<img src="https://s2.loli.net/2024/01/05/AeZdi9zKBqX6VTf.png" alt="image-20220429105841078">
-<figcaption aria-hidden="true">image-20220429105841078</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2024/01/05/AeZdi9zKBqX6VTf.png" alt="image-20220429105841078"></p>
 
   </div>
 </article>

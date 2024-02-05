@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="全志H3裸机开发环境的搭建，以Nanopi_NEO为例 前提摘要： 我一直以来，想要在arm上进行裸机开发，前两天搞了很长时间都没有搞定。用sunxi-tool运行一直没有预期的反应。 机缘巧合之下，在GitHub上搜索项目发现了一个基于H3的裸机开发框架，今天晚上搞了一通，终于成功初始化了LED和串口，下面是演示图片： 效果图：   image-20220517220137932">
+    <meta name="description" content="全志H3裸机开发环境的搭建，以Nanopi_NEO为例 前提摘要： 我一直以来，想要在arm上进行裸机开发，前两天搞了很长时间都没有搞定。用sunxi-tool运行一直没有预期的反应。 机缘巧合之下，在GitHub上搜索项目发现了一个基于H3的裸机开发框架，今天晚上搞了一通，终于成功初始化了LED和串口，下面是演示图片： 效果图：   项目地址是：这里 使用方法： 12makem">
 <meta property="og:type" content="article">
 <meta property="og:title" content="全志H3裸机开发环境的搭建">
 <meta property="og:url" content="https://nampsec.github.io/2022/05/17/tick/%E5%85%A8%E5%BF%97H3%E8%A3%B8%E6%9C%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E6%90%AD%E5%BB%BA/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="全志H3裸机开发环境的搭建，以Nanopi_NEO为例 前提摘要： 我一直以来，想要在arm上进行裸机开发，前两天搞了很长时间都没有搞定。用sunxi-tool运行一直没有预期的反应。 机缘巧合之下，在GitHub上搜索项目发现了一个基于H3的裸机开发框架，今天晚上搞了一通，终于成功初始化了LED和串口，下面是演示图片： 效果图：   image-20220517220137932">
+<meta property="og:description" content="全志H3裸机开发环境的搭建，以Nanopi_NEO为例 前提摘要： 我一直以来，想要在arm上进行裸机开发，前两天搞了很长时间都没有搞定。用sunxi-tool运行一直没有预期的反应。 机缘巧合之下，在GitHub上搜索项目发现了一个基于H3的裸机开发框架，今天晚上搞了一通，终于成功初始化了LED和串口，下面是演示图片： 效果图：   项目地址是：这里 使用方法： 12makem">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2024/01/03/FBIiPy8fYrw4ox5.png">
 <meta property="og:image" content="https://s2.loli.net/2024/01/03/KMh2cUiB4m8kXds.png">
@@ -291,23 +291,14 @@ mjx-container[display="true"] + br {
 <p>我一直以来，想要在arm上进行裸机开发，前两天搞了很长时间都没有搞定。用sunxi-tool运行一直没有预期的反应。</p>
 <p>机缘巧合之下，在GitHub上搜索项目发现了一个基于H3的裸机开发框架，今天晚上搞了一通，终于成功初始化了LED和串口，下面是演示图片：</p>
 <h4 id="效果图">效果图：</h4>
-<figure>
-<img src="https://s2.loli.net/2024/01/03/FBIiPy8fYrw4ox5.png" alt="image-20220517220137932">
-<figcaption aria-hidden="true">image-20220517220137932</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/03/KMh2cUiB4m8kXds.png" alt="image-20220517220101205">
-<figcaption aria-hidden="true">image-20220517220101205</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2024/01/03/FBIiPy8fYrw4ox5.png" alt="image-20220517220137932"></p>
+<p><img src="https://s2.loli.net/2024/01/03/KMh2cUiB4m8kXds.png" alt="image-20220517220101205"></p>
 <p>项目地址是：<a target="_blank" rel="noopener" href="https://github.com/NampSec/h3-bare-metal">这里</a></p>
 <p>使用方法：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
 <p>spl初始化需要相关的uboot，可以去编译官方的主线uboot，也可以参考我的上一篇文章。</p>
 <h4 id="代码图">代码图：</h4>
-<figure>
-<img src="https://s2.loli.net/2024/01/03/l2RxKoWtB68asic.png" alt="image-20220517215920925">
-<figcaption aria-hidden="true">image-20220517215920925</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2024/01/03/l2RxKoWtB68asic.png" alt="image-20220517215920925"></p>
 
   </div>
 </article>

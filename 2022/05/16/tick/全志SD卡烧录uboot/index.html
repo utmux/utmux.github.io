@@ -289,10 +289,7 @@ mjx-container[display="true"] + br {
 <p>首先需要下载全志原先官方的项目，在该项目下烧写入官方的uboot（此时会把boot_sd的引导文件也给烧录进去）</p>
 <h3 id="烧录自己编译的新版uboot">烧录自己编译的新版uboot</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> u-boot</span><br><span class="line">$ <span class="built_in">dd</span> <span class="keyword">if</span>=u-boot-sunxi-with-spl.bin of=/dev/sdX bs=1024 seek=8</span><br><span class="line">$ <span class="built_in">sync</span> &amp;&amp; eject /dev/sdX</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/03/H8v95YORBGTD1fq.png" alt="image-20220516223123148">
-<figcaption aria-hidden="true">image-20220516223123148</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2024/01/03/H8v95YORBGTD1fq.png" alt="image-20220516223123148"></p>
 
   </div>
 </article>

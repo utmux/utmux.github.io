@@ -286,10 +286,7 @@ mjx-container[display="true"] + br {
 <p>这样的提示，这个很明显是repo用的python版本的问题，因此这里讨论下如何更改repo对应的python版本</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> repo	<span class="comment">#找到repo的安装路径,我的是/usr/bin/repo</span></span><br><span class="line">nano /usr/bin/repo</span><br></pre></td></tr></table></figure>
 <p>可以看到第一行的执行环境为python</p>
-<figure>
-<img src="https://s2.loli.net/2024/01/03/F1STgI59ODf4sdq.png" alt="image-20220509213739095">
-<figcaption aria-hidden="true">image-20220509213739095</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2024/01/03/F1STgI59ODf4sdq.png" alt="image-20220509213739095"></p>
 <p>更改为python3即可变为python3的环境了，当然可以改为对应的python版本</p>
 <p>除此之外，还可以将/usr/bin/python删除，将其余版本的python建立软连接也可以。</p>
 

@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="参数估计和置信区间的求解 根据样本推理出总体中的某些未知量   image-20220502212128997    image-20220502212308999  矩估计法---假设总体的矩和样本的矩相等，从而推出总体未知变量   image-20220502212431490  常用一阶和二阶原点矩进行估计，重要结论如下： 注意二阶矩并不是样本方差，注意区别这">
+    <meta name="description" content="参数估计和置信区间的求解 根据样本推理出总体中的某些未知量   矩估计法---假设总体的矩和样本的矩相等，从而推出总体未知变量  常用一阶和二阶原点矩进行估计，重要结论如下： 注意二阶矩并不是样本方差，注意区别这两个不同点。    再求未知参数时，需要根据题目条件舍去某些取值">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第七章参数估计">
 <meta property="og:url" content="https://nampsec.github.io/2022/05/04/exam/%E7%AC%AC%E4%B8%83%E7%AB%A0%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="参数估计和置信区间的求解 根据样本推理出总体中的某些未知量   image-20220502212128997    image-20220502212308999  矩估计法---假设总体的矩和样本的矩相等，从而推出总体未知变量   image-20220502212431490  常用一阶和二阶原点矩进行估计，重要结论如下： 注意二阶矩并不是样本方差，注意区别这">
+<meta property="og:description" content="参数估计和置信区间的求解 根据样本推理出总体中的某些未知量   矩估计法---假设总体的矩和样本的矩相等，从而推出总体未知变量  常用一阶和二阶原点矩进行估计，重要结论如下： 注意二阶矩并不是样本方差，注意区别这两个不同点。    再求未知参数时，需要根据题目条件舍去某些取值">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://nampsec.github.io/2022/05/04/exam/%E7%AC%AC%E4%B8%83%E7%AB%A0%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1/post_img/study/image-20220502212128997.png">
 <meta property="og:image" content="https://nampsec.github.io/2022/05/04/exam/%E7%AC%AC%E4%B8%83%E7%AB%A0%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1/post_img/study/image-20220502212308999.png">
@@ -303,82 +303,28 @@ mjx-container[display="true"] + br {
   <div class="content e-content" itemprop="articleBody">
     <h3 id="参数估计和置信区间的求解">参数估计和置信区间的求解</h3>
 <h4 id="根据样本推理出总体中的某些未知量">根据样本推理出总体中的某些未知量</h4>
-<figure>
-<img src="post_img/study/image-20220502212128997.png" alt="image-20220502212128997">
-<figcaption aria-hidden="true">image-20220502212128997</figcaption>
-</figure>
-<figure>
-<img src="post_img/study/image-20220502212308999.png" alt="image-20220502212308999">
-<figcaption aria-hidden="true">image-20220502212308999</figcaption>
-</figure>
+<p><img src="post_img/study/image-20220502212128997.png" alt="image-20220502212128997"></p>
+<p><img src="post_img/study/image-20220502212308999.png" alt="image-20220502212308999"></p>
 <h5 id="矩估计法---假设总体的矩和样本的矩相等从而推出总体未知变量">矩估计法---假设总体的矩和样本的矩相等，从而推出总体未知变量</h5>
-<figure>
-<img src="post_img/study/image-20220502212431490.png" alt="image-20220502212431490">
-<figcaption aria-hidden="true">image-20220502212431490</figcaption>
-</figure>
+<p><img src="post_img/study/image-20220502212431490.png" alt="image-20220502212431490"></p>
 <h5 id="常用一阶和二阶原点矩进行估计重要结论如下">常用一阶和二阶原点矩进行估计，重要结论如下：</h5>
 <p>注意二阶矩并不是样本方差，注意区别这两个不同点。</p>
-<figure>
-<img src="post_img/study/image-20220502212710974.png" alt="image-20220502212710974">
-<figcaption aria-hidden="true">image-20220502212710974</figcaption>
-</figure>
-<figure>
-<img src="post_img/study/image-20220502212828912.png" alt="image-20220502212828912">
-<figcaption aria-hidden="true">image-20220502212828912</figcaption>
-</figure>
-<figure>
-<img src="post_img/study/image-20220502213845839.png" alt="image-20220502213845839">
-<figcaption aria-hidden="true">image-20220502213845839</figcaption>
-</figure>
+<p><img src="post_img/study/image-20220502212710974.png" alt="image-20220502212710974"></p>
+<p><img src="post_img/study/image-20220502212828912.png" alt="image-20220502212828912"></p>
+<p><img src="post_img/study/image-20220502213845839.png" alt="image-20220502213845839"></p>
 <h5 id="再求未知参数时需要根据题目条件舍去某些取值">再求未知参数时，需要根据题目条件舍去某些取值</h5>
-<figure>
-<img src="post_img/study/image-20220504095726817.png" alt="image-20220504095726817">
-<figcaption aria-hidden="true">image-20220504095726817</figcaption>
-</figure>
-<figure>
-<img src="post_img/study/image-20220504095830053.png" alt="image-20220504095830053">
-<figcaption aria-hidden="true">image-20220504095830053</figcaption>
-</figure>
-<figure>
-<img src="post_img/study/image-20220504100238141.png" alt="image-20220504100238141">
-<figcaption aria-hidden="true">image-20220504100238141</figcaption>
-</figure>
-<figure>
-<img src="post_img/study/image-20220504100320168.png" alt="image-20220504100320168">
-<figcaption aria-hidden="true">image-20220504100320168</figcaption>
-</figure>
-<figure>
-<img src="post_img/study/image-20220504150110761.png" alt="image-20220504150110761">
-<figcaption aria-hidden="true">image-20220504150110761</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/kqeVAc4iQvJuYXb.png" alt="image-20220504150203216">
-<figcaption aria-hidden="true">image-20220504150203216</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/Q8hqRD3LBxNH9wK.png" alt="image-20220504150307602">
-<figcaption aria-hidden="true">image-20220504150307602</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/7JOPinxNaXdfIMR.png" alt="image-20220504150405374">
-<figcaption aria-hidden="true">image-20220504150405374</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/6yz8USCLfIPTkEY.png" alt="image-20220504150523155">
-<figcaption aria-hidden="true">image-20220504150523155</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/NGwFh5kez63Q8vJ.png" alt="image-20220504150655257">
-<figcaption aria-hidden="true">image-20220504150655257</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/EY3l21eC8WspKL9.png" alt="image-20220504150749347">
-<figcaption aria-hidden="true">image-20220504150749347</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2024/01/04/Bo59ilMRhjWHr6f.png" alt="image-20220504150801686">
-<figcaption aria-hidden="true">image-20220504150801686</figcaption>
-</figure>
+<p><img src="post_img/study/image-20220504095726817.png" alt="image-20220504095726817"></p>
+<p><img src="post_img/study/image-20220504095830053.png" alt="image-20220504095830053"></p>
+<p><img src="post_img/study/image-20220504100238141.png" alt="image-20220504100238141"></p>
+<p><img src="post_img/study/image-20220504100320168.png" alt="image-20220504100320168"></p>
+<p><img src="post_img/study/image-20220504150110761.png" alt="image-20220504150110761"></p>
+<p><img src="https://s2.loli.net/2024/01/04/kqeVAc4iQvJuYXb.png" alt="image-20220504150203216"></p>
+<p><img src="https://s2.loli.net/2024/01/04/Q8hqRD3LBxNH9wK.png" alt="image-20220504150307602"></p>
+<p><img src="https://s2.loli.net/2024/01/04/7JOPinxNaXdfIMR.png" alt="image-20220504150405374"></p>
+<p><img src="https://s2.loli.net/2024/01/04/6yz8USCLfIPTkEY.png" alt="image-20220504150523155"></p>
+<p><img src="https://s2.loli.net/2024/01/04/NGwFh5kez63Q8vJ.png" alt="image-20220504150655257"></p>
+<p><img src="https://s2.loli.net/2024/01/04/EY3l21eC8WspKL9.png" alt="image-20220504150749347"></p>
+<p><img src="https://s2.loli.net/2024/01/04/Bo59ilMRhjWHr6f.png" alt="image-20220504150801686"></p>
 
   </div>
 </article>
