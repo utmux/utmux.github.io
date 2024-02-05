@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="第六章 样本即样本函数的分布       这里将x拔看作一个常数,而不是一个式子     再概率统计中将1&#x2F;n看作一个常数   这个结论似乎只对正态分布有效                         开分布 t分布 F分布     定义 从同一个标准正态分布中抽取样本 X,Y独立，X为正态，Y为">
+    <meta name="description" content="第六章 样本即样本函数的分布        这里将x拔看作一个常数,而不是一个式子     再概率统计中将1&#x2F;n看作一个常数    这个结论似乎只对正态分布有效                   开分布 t分布 F分布     定义 从同一个标准正态分布中抽取样本 X,Y独立，X为正态，Y为开分布 X,Y独立，都为开分布   图像 不对称 关于y&#x3D;0对称 不对称,可由F_a(n1,n2) &#x3D;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第六章样本即样本函数的分布总结">
 <meta property="og:url" content="https://nampsec.github.io/2022/05/02/exam/%E7%AC%AC%E5%85%AD%E7%AB%A0%E6%A0%B7%E6%9C%AC%E5%8D%B3%E6%A0%B7%E6%9C%AC%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E5%B8%83%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="第六章 样本即样本函数的分布       这里将x拔看作一个常数,而不是一个式子     再概率统计中将1&#x2F;n看作一个常数   这个结论似乎只对正态分布有效                         开分布 t分布 F分布     定义 从同一个标准正态分布中抽取样本 X,Y独立，X为正态，Y为">
+<meta property="og:description" content="第六章 样本即样本函数的分布        这里将x拔看作一个常数,而不是一个式子     再概率统计中将1&#x2F;n看作一个常数    这个结论似乎只对正态分布有效                   开分布 t分布 F分布     定义 从同一个标准正态分布中抽取样本 X,Y独立，X为正态，Y为开分布 X,Y独立，都为开分布   图像 不对称 关于y&#x3D;0对称 不对称,可由F_a(n1,n2) &#x3D;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2024/01/04/Ihl6LDKFEYCXsB4.png">
 <meta property="og:image" content="https://s2.loli.net/2024/01/04/JXIDQlG9mi3f5Kt.png">
@@ -92,119 +92,11 @@
 		</script>
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
 	
-<style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style></head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body class="max-width mx-auto px3 ltr">    
       <div id="header-post">
@@ -264,7 +156,7 @@ mjx-container[display="true"] + br {
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%A0%B7%E6%9C%AC%E5%8D%B3%E6%A0%B7%E6%9C%AC%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E5%B8%83"><span class="toc-number">1.</span> <span class="toc-text">第六章 样本即样本函数的分布</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%BF%99%E9%87%8C%E5%B0%86x%E6%8B%94%E7%9C%8B%E4%BD%9C%E4%B8%80%E4%B8%AA%E5%B8%B8%E6%95%B0%E8%80%8C%E4%B8%8D%E6%98%AF%E4%B8%80%E4%B8%AA%E5%BC%8F%E5%AD%90"><span class="toc-number">1.0.1.</span> <span class="toc-text">这里将x拔看作一个常数,而不是一个式子</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E7%BB%93%E8%AE%BA%E4%BC%BC%E4%B9%8E%E5%8F%AA%E5%AF%B9%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%E6%9C%89%E6%95%88"><span class="toc-number">2.</span> <span class="toc-text">这个结论似乎只对正态分布有效</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%A0%B7%E6%9C%AC%E5%8D%B3%E6%A0%B7%E6%9C%AC%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E5%B8%83"><span class="toc-number">1.</span> <span class="toc-text"> 第六章 样本即样本函数的分布</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%BF%99%E9%87%8C%E5%B0%86x%E6%8B%94%E7%9C%8B%E4%BD%9C%E4%B8%80%E4%B8%AA%E5%B8%B8%E6%95%B0%E8%80%8C%E4%B8%8D%E6%98%AF%E4%B8%80%E4%B8%AA%E5%BC%8F%E5%AD%90"><span class="toc-number">1.0.1.</span> <span class="toc-text"> 这里将x拔看作一个常数,而不是一个式子</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E7%BB%93%E8%AE%BA%E4%BC%BC%E4%B9%8E%E5%8F%AA%E5%AF%B9%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%E6%9C%89%E6%95%88"><span class="toc-number">2.</span> <span class="toc-text"> 这个结论似乎只对正态分布有效</span></a></li></ol>
       </div>
     
   </span>
@@ -309,45 +201,39 @@ mjx-container[display="true"] + br {
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h4 id="第六章-样本即样本函数的分布">第六章 样本即样本函数的分布</h4>
-<p><img src="https://s2.loli.net/2024/01/04/Ihl6LDKFEYCXsB4.png" alt="image-20220501190846494"></p>
-<p><img src="https://s2.loli.net/2024/01/04/JXIDQlG9mi3f5Kt.png" alt="image-20220501191107354"></p>
-<p><img src="https://s2.loli.net/2024/01/04/SiV7CKPqvnf4MAp.png" alt="image-20220501191210036"></p>
-<p><img src="https://s2.loli.net/2024/01/04/sZqpWVJfal9Rkij.png" alt="image-20220501191522373"></p>
-<p><img src="https://s2.loli.net/2024/01/04/BkFp4hHuXG17svP.png" alt="image-20220501191936867"></p>
-<p><img src="https://s2.loli.net/2024/01/04/DLYXRz5hHxNdemf.png" alt="image-20220501200034717"></p>
-<h6 id="这里将x拔看作一个常数而不是一个式子"><strong>这里将x拔看作一个常数,而不是一个式子</strong></h6>
-<p><img src="https://s2.loli.net/2024/01/04/NztKMcukTXiCwmo.png" alt="image-20220501200158575"></p>
-<p><img src="https://s2.loli.net/2024/01/04/T6UijSnE7C3hApB.png" alt="image-20220501202043926"></p>
-<p><img src="https://s2.loli.net/2024/01/04/7gbd5OA6JvpZu4K.png" alt="image-20220501202058907"></p>
-<p><img src="https://s2.loli.net/2024/01/04/5SpQMOoTblkCKBW.png" alt="image-20220501202414121"></p>
+    <h4 id="第六章-样本即样本函数的分布"><a class="markdownIt-Anchor" href="#第六章-样本即样本函数的分布"></a> 第六章 样本即样本函数的分布</h4>
+<p><img src="https://s2.loli.net/2024/01/04/Ihl6LDKFEYCXsB4.png" alt="image-20220501190846494" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/JXIDQlG9mi3f5Kt.png" alt="image-20220501191107354" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/SiV7CKPqvnf4MAp.png" alt="image-20220501191210036" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/sZqpWVJfal9Rkij.png" alt="image-20220501191522373" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/BkFp4hHuXG17svP.png" alt="image-20220501191936867" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/DLYXRz5hHxNdemf.png" alt="image-20220501200034717" /></p>
+<h6 id="这里将x拔看作一个常数而不是一个式子"><a class="markdownIt-Anchor" href="#这里将x拔看作一个常数而不是一个式子"></a> <strong>这里将x拔看作一个常数,而不是一个式子</strong></h6>
+<p><img src="https://s2.loli.net/2024/01/04/NztKMcukTXiCwmo.png" alt="image-20220501200158575" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/T6UijSnE7C3hApB.png" alt="image-20220501202043926" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/7gbd5OA6JvpZu4K.png" alt="image-20220501202058907" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/5SpQMOoTblkCKBW.png" alt="image-20220501202414121" /></p>
 <p><strong>再概率统计中将1/n看作一个常数</strong></p>
-<p><img src="https://s2.loli.net/2024/01/04/ZuEn8sRPDJCct7x.png" alt="image-20220502200615477"></p>
-<p><img src="https://s2.loli.net/2024/01/04/5A2H7LcMQtyTCqz.png" alt="image-20220502201401689"></p>
-<h4 id="这个结论似乎只对正态分布有效">这个结论似乎只对正态分布有效</h4>
-<p><img src="https://s2.loli.net/2024/01/04/9QtIOK3eNvEwWku.png" alt="image-20220502201658798"></p>
-<p><img src="https://s2.loli.net/2024/01/04/XGPZYWpwV3SKMJC.png" alt="image-20220502201715705"></p>
-<p><img src="https://s2.loli.net/2024/01/04/dNAHuT8kczDeJFR.png" alt="image-20220502201755943"></p>
-<p><img src="https://s2.loli.net/2024/01/04/jUkbC4Nv8XZ9aIo.png" alt="image-20220502202254344"></p>
-<p><img src="https://s2.loli.net/2024/01/04/x54uiYQ19MVaceW.png" alt="image-20220502202144320"></p>
-<p><img src="https://s2.loli.net/2024/01/04/ReupNcPJHDMdLOI.png" alt="image-20220502202535669"></p>
-<p><img src="https://s2.loli.net/2024/01/04/C8ivY6o1IHjfEbM.png" alt="image-20220502202605350"></p>
-<p><img src="https://s2.loli.net/2024/01/04/BFldgJXT23KnYkm.png" alt="image-20220502202622293"></p>
-<p><img src="https://s2.loli.net/2024/01/04/BvkP9HRe8XGj62D.png" alt="image-20220502204056560"></p>
-<p><img src="https://s2.loli.net/2024/01/04/2dY9nLf8sHcvPSr.png" alt="image-20220502204318003"></p>
-<p><img src="https://s2.loli.net/2024/01/04/ro3vy9RCZHFjDeK.png" alt="image-20220502205602393"></p>
-<p><img src="https://s2.loli.net/2024/01/04/yjipvIPS9VHlXxm.png" alt="image-20220502210145883"></p>
-<p><img src="https://s2.loli.net/2024/01/04/lnxNuj8kHiJMrRV.png" alt="image-20220502205834345"></p>
-<p><img src="https://s2.loli.net/2024/01/04/WoXv6hdIz9NwjkO.png" alt="image-20220502210420180"></p>
+<p><img src="https://s2.loli.net/2024/01/04/ZuEn8sRPDJCct7x.png" alt="image-20220502200615477" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/5A2H7LcMQtyTCqz.png" alt="image-20220502201401689" /></p>
+<h4 id="这个结论似乎只对正态分布有效"><a class="markdownIt-Anchor" href="#这个结论似乎只对正态分布有效"></a> 这个结论似乎只对正态分布有效</h4>
+<p><img src="https://s2.loli.net/2024/01/04/9QtIOK3eNvEwWku.png" alt="image-20220502201658798" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/XGPZYWpwV3SKMJC.png" alt="image-20220502201715705" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/dNAHuT8kczDeJFR.png" alt="image-20220502201755943" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/jUkbC4Nv8XZ9aIo.png" alt="image-20220502202254344" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/x54uiYQ19MVaceW.png" alt="image-20220502202144320" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/ReupNcPJHDMdLOI.png" alt="image-20220502202535669" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/C8ivY6o1IHjfEbM.png" alt="image-20220502202605350" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/BFldgJXT23KnYkm.png" alt="image-20220502202622293" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/BvkP9HRe8XGj62D.png" alt="image-20220502204056560" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/2dY9nLf8sHcvPSr.png" alt="image-20220502204318003" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/ro3vy9RCZHFjDeK.png" alt="image-20220502205602393" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/yjipvIPS9VHlXxm.png" alt="image-20220502210145883" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/lnxNuj8kHiJMrRV.png" alt="image-20220502205834345" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/WoXv6hdIz9NwjkO.png" alt="image-20220502210420180" /></p>
 <table>
-<colgroup>
-<col style="width: 4%">
-<col style="width: 44%">
-<col style="width: 19%">
-<col style="width: 31%">
-</colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th></th>
 <th>开分布</th>
 <th>t分布</th>
@@ -355,25 +241,25 @@ mjx-container[display="true"] + br {
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>定义</td>
 <td>从同一个标准正态分布中抽取样本</td>
 <td>X,Y独立，X为正态，Y为开分布</td>
 <td>X,Y独立，都为开分布</td>
 </tr>
-<tr class="even">
+<tr>
 <td>图像</td>
 <td>不对称</td>
 <td>关于y=0对称</td>
 <td>不对称,可由F_a(n1,n2) = 1/F_1-a(n2,n1)推出</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>性质</td>
 <td>知道期望和方差。两个开分布相加仍为开分布（这应该是由两个独立抽样正态相加后的性质决定的）</td>
 <td>以开分布为基础</td>
 <td>F_a(n1,n2) = 1/F_1-a(n2,n1)，以开分布为基础</td>
 </tr>
-<tr class="even">
+<tr>
 <td>不同点</td>
 <td>略</td>
 <td>略</td>
@@ -410,7 +296,7 @@ mjx-container[display="true"] + br {
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%A0%B7%E6%9C%AC%E5%8D%B3%E6%A0%B7%E6%9C%AC%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E5%B8%83"><span class="toc-number">1.</span> <span class="toc-text">第六章 样本即样本函数的分布</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%BF%99%E9%87%8C%E5%B0%86x%E6%8B%94%E7%9C%8B%E4%BD%9C%E4%B8%80%E4%B8%AA%E5%B8%B8%E6%95%B0%E8%80%8C%E4%B8%8D%E6%98%AF%E4%B8%80%E4%B8%AA%E5%BC%8F%E5%AD%90"><span class="toc-number">1.0.1.</span> <span class="toc-text">这里将x拔看作一个常数,而不是一个式子</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E7%BB%93%E8%AE%BA%E4%BC%BC%E4%B9%8E%E5%8F%AA%E5%AF%B9%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%E6%9C%89%E6%95%88"><span class="toc-number">2.</span> <span class="toc-text">这个结论似乎只对正态分布有效</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%A0%B7%E6%9C%AC%E5%8D%B3%E6%A0%B7%E6%9C%AC%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E5%B8%83"><span class="toc-number">1.</span> <span class="toc-text"> 第六章 样本即样本函数的分布</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%BF%99%E9%87%8C%E5%B0%86x%E6%8B%94%E7%9C%8B%E4%BD%9C%E4%B8%80%E4%B8%AA%E5%B8%B8%E6%95%B0%E8%80%8C%E4%B8%8D%E6%98%AF%E4%B8%80%E4%B8%AA%E5%BC%8F%E5%AD%90"><span class="toc-number">1.0.1.</span> <span class="toc-text"> 这里将x拔看作一个常数,而不是一个式子</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E7%BB%93%E8%AE%BA%E4%BC%BC%E4%B9%8E%E5%8F%AA%E5%AF%B9%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%E6%9C%89%E6%95%88"><span class="toc-number">2.</span> <span class="toc-text"> 这个结论似乎只对正态分布有效</span></a></li></ol>
       </div>
     
 

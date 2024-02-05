@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="第五章节复习PPT 切比雪夫不等式 给出一个偏移均值时可能性大小的一个不等式    1解释下为什么D(2X) !&#x3D; D(X) + D(X),因为其省略了(2E(XY)-u_1u_2),即2D(X) 即求D(X)关键看相关不相关 典型例题  该定理的典型应用  只能求出一个概率的范围 所求概率其应该关于均值对称，且带绝对值  大数定律   即存在一个极限，当事件发">
+    <meta name="description" content="第五章节复习PPT  切比雪夫不等式  给出一个偏移均值时可能性大小的一个不等式    1解释下为什么D(2X) !&#x3D; D(X) + D(X),因为其省略了(2E(XY)-u_1u_2),即2D(X)  即求D(X)关键看相关不相关 典型例题   该定理的典型应用  只能求出一个概率的范围 所求概率其应该关于均值对称，且带绝对值   大数定律   即存在一个极限，当事件发生趋于无穷时，概率稳定为">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第五章节复习PPT总结">
 <meta property="og:url" content="https://nampsec.github.io/2022/05/01/exam/%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%8A%82%E5%A4%8D%E4%B9%A0PPT%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="第五章节复习PPT 切比雪夫不等式 给出一个偏移均值时可能性大小的一个不等式    1解释下为什么D(2X) !&#x3D; D(X) + D(X),因为其省略了(2E(XY)-u_1u_2),即2D(X) 即求D(X)关键看相关不相关 典型例题  该定理的典型应用  只能求出一个概率的范围 所求概率其应该关于均值对称，且带绝对值  大数定律   即存在一个极限，当事件发">
+<meta property="og:description" content="第五章节复习PPT  切比雪夫不等式  给出一个偏移均值时可能性大小的一个不等式    1解释下为什么D(2X) !&#x3D; D(X) + D(X),因为其省略了(2E(XY)-u_1u_2),即2D(X)  即求D(X)关键看相关不相关 典型例题   该定理的典型应用  只能求出一个概率的范围 所求概率其应该关于均值对称，且带绝对值   大数定律   即存在一个极限，当事件发生趋于无穷时，概率稳定为">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2024/01/04/fEMz7nQiksD25Wq.png">
 <meta property="og:image" content="https://s2.loli.net/2024/01/04/8JcQdt1IqXFiE2o.png">
@@ -86,119 +86,11 @@
 		</script>
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
 	
-<style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style></head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body class="max-width mx-auto px3 ltr">    
       <div id="header-post">
@@ -258,8 +150,7 @@ mjx-container[display="true"] + br {
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%8A%82%E5%A4%8D%E4%B9%A0ppt"><span class="toc-number">1.</span> <span class="toc-text">第五章节复习PPT</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E4%B8%8D%E7%AD%89%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">切比雪夫不等式</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%BB%99%E5%87%BA%E4%B8%80%E4%B8%AA%E5%81%8F%E7%A7%BB%E5%9D%87%E5%80%BC%E6%97%B6%E5%8F%AF%E8%83%BD%E6%80%A7%E5%A4%A7%E5%B0%8F%E7%9A%84%E4%B8%80%E4%B8%AA%E4%B8%8D%E7%AD%89%E5%BC%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text">给出一个偏移均值时可能性大小的一个不等式</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%B3%E6%B1%82dx%E5%85%B3%E9%94%AE%E7%9C%8B%E7%9B%B8%E5%85%B3%E4%B8%8D%E7%9B%B8%E5%85%B3"><span class="toc-number">1.2.</span> <span class="toc-text">即求D(X)关键看相关不相关</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%AF%A5%E5%AE%9A%E7%90%86%E7%9A%84%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">该定理的典型应用</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B"><span class="toc-number">1.3.</span> <span class="toc-text">大数定律</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%9B%B8%E4%BA%92%E7%8B%AC%E7%AB%8B%E6%B3%A8%E6%84%8F%E6%9D%A1%E4%BB%B6%E5%AD%98%E5%9C%A8%E6%96%B9%E5%B7%AE%E4%B8%80%E8%87%B4%E4%B8%94%E6%9C%89%E4%B8%8A%E7%95%8C"><span class="toc-number">1.3.1.</span> <span class="toc-text">相互独立，注意条件存在方差一致且有上界</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86%E6%8C%87%E4%BB%BB%E4%BD%95%E6%96%B9%E5%B7%AE%E5%A4%A7%E4%BA%8E%E9%9B%B6%E7%8B%AC%E7%AB%8B%E5%90%8C%E5%88%86%E5%B8%83%E5%8A%A0%E8%B5%B7%E6%9D%A5%E6%80%BB%E4%BD%93%E6%98%AF%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83"><span class="toc-number">1.4.</span> <span class="toc-text">中心极限定理（指任何(方差大于零)独立同分布加起来总体是正态分布）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%94%B1%E4%B8%8A%E4%B8%80%E8%8A%82%E7%9A%84%E6%8C%87%E6%95%B0%E5%88%86%E5%B8%83%E7%9A%84%E6%80%A7%E8%B4%A8minxy%E5%92%8Czxy-%E9%83%BD%E8%83%BD%E6%8E%A8%E5%87%BAp"><span class="toc-number">1.4.1.</span> <span class="toc-text">由上一节的指数分布的性质，min(X,Y)和Z&#x3D;X+Y
-都能推出P...</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%80%E5%AE%9A%E8%A6%81%E6%96%B9%E5%B7%AE%E5%A4%A7%E4%BA%8E%E9%9B%B6"><span class="toc-number">1.4.2.</span> <span class="toc-text">一定要方差大于零</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E9%A2%98%E7%9B%AE%E6%88%91%E6%B2%A1%E7%9C%8B%E6%87%82%E4%B8%BA%E5%95%A5%E8%83%BD%E8%BF%99%E4%B9%88%E5%81%9A%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%E7%9A%84%E5%9D%87%E5%80%BC%E4%BB%8D%E4%B8%BA%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%E5%90%97"><span class="toc-number">2.</span> <span class="toc-text">这个题目我没看懂，为啥能这么做，正态分布的均值仍为正态分布吗？</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%8A%82%E5%A4%8D%E4%B9%A0ppt"><span class="toc-number">1.</span> <span class="toc-text"> 第五章节复习PPT</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E4%B8%8D%E7%AD%89%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text"> 切比雪夫不等式</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%BB%99%E5%87%BA%E4%B8%80%E4%B8%AA%E5%81%8F%E7%A7%BB%E5%9D%87%E5%80%BC%E6%97%B6%E5%8F%AF%E8%83%BD%E6%80%A7%E5%A4%A7%E5%B0%8F%E7%9A%84%E4%B8%80%E4%B8%AA%E4%B8%8D%E7%AD%89%E5%BC%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 给出一个偏移均值时可能性大小的一个不等式</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%B3%E6%B1%82dx%E5%85%B3%E9%94%AE%E7%9C%8B%E7%9B%B8%E5%85%B3%E4%B8%8D%E7%9B%B8%E5%85%B3"><span class="toc-number">1.2.</span> <span class="toc-text"> 即求D(X)关键看相关不相关</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%AF%A5%E5%AE%9A%E7%90%86%E7%9A%84%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 该定理的典型应用</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B"><span class="toc-number">1.3.</span> <span class="toc-text"> 大数定律</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%9B%B8%E4%BA%92%E7%8B%AC%E7%AB%8B%E6%B3%A8%E6%84%8F%E6%9D%A1%E4%BB%B6%E5%AD%98%E5%9C%A8%E6%96%B9%E5%B7%AE%E4%B8%80%E8%87%B4%E4%B8%94%E6%9C%89%E4%B8%8A%E7%95%8C"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 相互独立，注意条件存在方差一致且有上界</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86%E6%8C%87%E4%BB%BB%E4%BD%95%E6%96%B9%E5%B7%AE%E5%A4%A7%E4%BA%8E%E9%9B%B6%E7%8B%AC%E7%AB%8B%E5%90%8C%E5%88%86%E5%B8%83%E5%8A%A0%E8%B5%B7%E6%9D%A5%E6%80%BB%E4%BD%93%E6%98%AF%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83"><span class="toc-number">1.4.</span> <span class="toc-text"> 中心极限定理（指任何(方差大于零)独立同分布加起来总体是正态分布）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%94%B1%E4%B8%8A%E4%B8%80%E8%8A%82%E7%9A%84%E6%8C%87%E6%95%B0%E5%88%86%E5%B8%83%E7%9A%84%E6%80%A7%E8%B4%A8minxy%E5%92%8Czxy-%E9%83%BD%E8%83%BD%E6%8E%A8%E5%87%BAp"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 由上一节的指数分布的性质，min(X,Y)和Z&#x3D;X+Y 都能推出P...</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%80%E5%AE%9A%E8%A6%81%E6%96%B9%E5%B7%AE%E5%A4%A7%E4%BA%8E%E9%9B%B6"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 一定要方差大于零</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E9%A2%98%E7%9B%AE%E6%88%91%E6%B2%A1%E7%9C%8B%E6%87%82%E4%B8%BA%E5%95%A5%E8%83%BD%E8%BF%99%E4%B9%88%E5%81%9A%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%E7%9A%84%E5%9D%87%E5%80%BC%E4%BB%8D%E4%B8%BA%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%E5%90%97"><span class="toc-number">2.</span> <span class="toc-text"> 这个题目我没看懂，为啥能这么做，正态分布的均值仍为正态分布吗？</span></a></li></ol>
       </div>
     
   </span>
@@ -304,47 +195,46 @@ mjx-container[display="true"] + br {
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h4 id="第五章节复习ppt">第五章节复习PPT</h4>
-<h5 id="切比雪夫不等式">切比雪夫不等式</h5>
-<h6 id="给出一个偏移均值时可能性大小的一个不等式">给出一个偏移均值时可能性大小的一个不等式</h6>
-<p><img src="https://s2.loli.net/2024/01/04/fEMz7nQiksD25Wq.png" alt="image-20220501174849595"></p>
-<p><img src="https://s2.loli.net/2024/01/04/8JcQdt1IqXFiE2o.png" alt="image-20220501180353230"></p>
-<p><img src="https://s2.loli.net/2024/01/04/Tr3YGcSw8jxJOmi.png" alt="image-20220501180411973"></p>
+    <h4 id="第五章节复习ppt"><a class="markdownIt-Anchor" href="#第五章节复习ppt"></a> 第五章节复习PPT</h4>
+<h5 id="切比雪夫不等式"><a class="markdownIt-Anchor" href="#切比雪夫不等式"></a> 切比雪夫不等式</h5>
+<h6 id="给出一个偏移均值时可能性大小的一个不等式"><a class="markdownIt-Anchor" href="#给出一个偏移均值时可能性大小的一个不等式"></a> 给出一个偏移均值时可能性大小的一个不等式</h6>
+<p><img src="https://s2.loli.net/2024/01/04/fEMz7nQiksD25Wq.png" alt="image-20220501174849595" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/8JcQdt1IqXFiE2o.png" alt="image-20220501180353230" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/Tr3YGcSw8jxJOmi.png" alt="image-20220501180411973" /></p>
 <figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">解释下为什么D(2X) != D(X) + D(X),因为其省略了(2E(XY)-u<span class="built_in">_</span>1u<span class="built_in">_</span>2),即2D(X)</span><br></pre></td></tr></table></figure>
-<h5 id="即求dx关键看相关不相关">即求D(X)关键看相关不相关</h5>
+<h5 id="即求dx关键看相关不相关"><a class="markdownIt-Anchor" href="#即求dx关键看相关不相关"></a> 即求D(X)关键看相关不相关</h5>
 <p><strong>典型例题</strong></p>
-<p><img src="https://s2.loli.net/2024/01/04/EYBChZcRkS79JUr.png" alt="image-20220501181407896"></p>
-<h6 id="该定理的典型应用">该定理的典型应用</h6>
+<p><img src="https://s2.loli.net/2024/01/04/EYBChZcRkS79JUr.png" alt="image-20220501181407896" /></p>
+<h6 id="该定理的典型应用"><a class="markdownIt-Anchor" href="#该定理的典型应用"></a> 该定理的典型应用</h6>
 <ul>
 <li><strong>只能求出一个概率的范围</strong></li>
 <li><strong>所求概率其应该关于均值对称，且带绝对值</strong></li>
 </ul>
-<h5 id="大数定律">大数定律</h5>
-<p><img src="https://s2.loli.net/2024/01/04/bKmdAHGwycazW1U.png" alt="image-20220501181738279"></p>
-<p><img src="https://s2.loli.net/2024/01/04/fvxoW9dgZ5BTHnD.png" alt="image-20220501181816539"></p>
+<h5 id="大数定律"><a class="markdownIt-Anchor" href="#大数定律"></a> 大数定律</h5>
+<p><img src="https://s2.loli.net/2024/01/04/bKmdAHGwycazW1U.png" alt="image-20220501181738279" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/fvxoW9dgZ5BTHnD.png" alt="image-20220501181816539" /></p>
 <p><strong>即存在一个极限，当事件发生趋于无穷时，概率稳定为一个常数</strong></p>
-<p><img src="https://s2.loli.net/2024/01/04/cFoKSWNQ9JrD8wd.png" alt="image-20220501182040678"></p>
-<h6 id="相互独立注意条件存在方差一致且有上界">相互独立，注意条件存在方差一致且有上界</h6>
-<p><img src="https://s2.loli.net/2024/01/04/jmBtIg3Jb1YoS8e.png" alt="image-20220501182150200"></p>
-<p><img src="https://s2.loli.net/2024/01/04/EAreclTWYwh2U63.png" alt="image-20220501182211154"></p>
-<p><img src="https://s2.loli.net/2024/01/04/vwQedAgGDWFCZrn.png" alt="image-20220501182245773"></p>
-<p><img src="https://s2.loli.net/2024/01/04/MLs4x9aibh6QvrF.png" alt="image-20220501182300499"></p>
+<p><img src="https://s2.loli.net/2024/01/04/cFoKSWNQ9JrD8wd.png" alt="image-20220501182040678" /></p>
+<h6 id="相互独立注意条件存在方差一致且有上界"><a class="markdownIt-Anchor" href="#相互独立注意条件存在方差一致且有上界"></a> 相互独立，注意条件存在方差一致且有上界</h6>
+<p><img src="https://s2.loli.net/2024/01/04/jmBtIg3Jb1YoS8e.png" alt="image-20220501182150200" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/EAreclTWYwh2U63.png" alt="image-20220501182211154" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/vwQedAgGDWFCZrn.png" alt="image-20220501182245773" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/MLs4x9aibh6QvrF.png" alt="image-20220501182300499" /></p>
 <p><strong>一个是均值收敛于期望，第二个是频率收敛于概率</strong></p>
-<h5 id="中心极限定理指任何方差大于零独立同分布加起来总体是正态分布">中心极限定理（指任何(方差大于零)独立同分布加起来总体是正态分布）</h5>
-<p><img src="https://s2.loli.net/2024/01/04/g8TvCbIFrcoVxy7.png" alt="image-20220501182844523"></p>
-<p><img src="https://s2.loli.net/2024/01/04/fA3L8SdwIHJm4bP.png" alt="image-20220501183111750"></p>
-<p><img src="https://s2.loli.net/2024/01/04/A9FmwchlkgpaesB.png" alt="image-20220501183314395"></p>
-<h6 id="由上一节的指数分布的性质minxy和zxy-都能推出p">由上一节的指数分布的性质，min(X,Y)和Z=X+Y
-都能推出P...</h6>
-<h6 id="一定要方差大于零"><strong>一定要方差大于零</strong></h6>
-<p><img src="https://s2.loli.net/2024/01/04/CGEyUl7VXgsO5e6.png" alt="image-20220501184539251"></p>
-<p><img src="https://s2.loli.net/2024/01/04/tqOjas4vBW5YE7U.png" alt="image-20220501184604232"></p>
-<p><img src="https://s2.loli.net/2024/01/04/fAsDity1nJ7hwSV.png" alt="image-20220501184749150"></p>
-<p><img src="https://s2.loli.net/2024/01/04/pLs9Tvkr1qx8jtN.png" alt="image-20220501185059623"></p>
+<h5 id="中心极限定理指任何方差大于零独立同分布加起来总体是正态分布"><a class="markdownIt-Anchor" href="#中心极限定理指任何方差大于零独立同分布加起来总体是正态分布"></a> 中心极限定理（指任何(方差大于零)独立同分布加起来总体是正态分布）</h5>
+<p><img src="https://s2.loli.net/2024/01/04/g8TvCbIFrcoVxy7.png" alt="image-20220501182844523" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/fA3L8SdwIHJm4bP.png" alt="image-20220501183111750" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/A9FmwchlkgpaesB.png" alt="image-20220501183314395" /></p>
+<h6 id="由上一节的指数分布的性质minxy和zxy-都能推出p"><a class="markdownIt-Anchor" href="#由上一节的指数分布的性质minxy和zxy-都能推出p"></a> 由上一节的指数分布的性质，min(X,Y)和Z=X+Y 都能推出P...</h6>
+<h6 id="一定要方差大于零"><a class="markdownIt-Anchor" href="#一定要方差大于零"></a> <strong>一定要方差大于零</strong></h6>
+<p><img src="https://s2.loli.net/2024/01/04/CGEyUl7VXgsO5e6.png" alt="image-20220501184539251" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/tqOjas4vBW5YE7U.png" alt="image-20220501184604232" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/fAsDity1nJ7hwSV.png" alt="image-20220501184749150" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/pLs9Tvkr1qx8jtN.png" alt="image-20220501185059623" /></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这种题型，要注意的是取值的范围，是否是取连续的左右端点</span><br></pre></td></tr></table></figure>
-<h4 id="这个题目我没看懂为啥能这么做正态分布的均值仍为正态分布吗">这个题目我没看懂，为啥能这么做，正态分布的均值仍为正态分布吗？</h4>
-<p><img src="https://s2.loli.net/2024/01/04/hOYvnzLNaA2lybQ.png" alt="image-20220501185609219"></p>
-<p><img src="https://s2.loli.net/2024/01/04/1X7geznC3YvVUrp.png" alt="image-20220501185621751"></p>
+<h4 id="这个题目我没看懂为啥能这么做正态分布的均值仍为正态分布吗"><a class="markdownIt-Anchor" href="#这个题目我没看懂为啥能这么做正态分布的均值仍为正态分布吗"></a> 这个题目我没看懂，为啥能这么做，正态分布的均值仍为正态分布吗？</h4>
+<p><img src="https://s2.loli.net/2024/01/04/hOYvnzLNaA2lybQ.png" alt="image-20220501185609219" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/1X7geznC3YvVUrp.png" alt="image-20220501185621751" /></p>
 
   </div>
 </article>
@@ -374,8 +264,7 @@ mjx-container[display="true"] + br {
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%8A%82%E5%A4%8D%E4%B9%A0ppt"><span class="toc-number">1.</span> <span class="toc-text">第五章节复习PPT</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E4%B8%8D%E7%AD%89%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">切比雪夫不等式</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%BB%99%E5%87%BA%E4%B8%80%E4%B8%AA%E5%81%8F%E7%A7%BB%E5%9D%87%E5%80%BC%E6%97%B6%E5%8F%AF%E8%83%BD%E6%80%A7%E5%A4%A7%E5%B0%8F%E7%9A%84%E4%B8%80%E4%B8%AA%E4%B8%8D%E7%AD%89%E5%BC%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text">给出一个偏移均值时可能性大小的一个不等式</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%B3%E6%B1%82dx%E5%85%B3%E9%94%AE%E7%9C%8B%E7%9B%B8%E5%85%B3%E4%B8%8D%E7%9B%B8%E5%85%B3"><span class="toc-number">1.2.</span> <span class="toc-text">即求D(X)关键看相关不相关</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%AF%A5%E5%AE%9A%E7%90%86%E7%9A%84%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">该定理的典型应用</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B"><span class="toc-number">1.3.</span> <span class="toc-text">大数定律</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%9B%B8%E4%BA%92%E7%8B%AC%E7%AB%8B%E6%B3%A8%E6%84%8F%E6%9D%A1%E4%BB%B6%E5%AD%98%E5%9C%A8%E6%96%B9%E5%B7%AE%E4%B8%80%E8%87%B4%E4%B8%94%E6%9C%89%E4%B8%8A%E7%95%8C"><span class="toc-number">1.3.1.</span> <span class="toc-text">相互独立，注意条件存在方差一致且有上界</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86%E6%8C%87%E4%BB%BB%E4%BD%95%E6%96%B9%E5%B7%AE%E5%A4%A7%E4%BA%8E%E9%9B%B6%E7%8B%AC%E7%AB%8B%E5%90%8C%E5%88%86%E5%B8%83%E5%8A%A0%E8%B5%B7%E6%9D%A5%E6%80%BB%E4%BD%93%E6%98%AF%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83"><span class="toc-number">1.4.</span> <span class="toc-text">中心极限定理（指任何(方差大于零)独立同分布加起来总体是正态分布）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%94%B1%E4%B8%8A%E4%B8%80%E8%8A%82%E7%9A%84%E6%8C%87%E6%95%B0%E5%88%86%E5%B8%83%E7%9A%84%E6%80%A7%E8%B4%A8minxy%E5%92%8Czxy-%E9%83%BD%E8%83%BD%E6%8E%A8%E5%87%BAp"><span class="toc-number">1.4.1.</span> <span class="toc-text">由上一节的指数分布的性质，min(X,Y)和Z&#x3D;X+Y
-都能推出P...</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%80%E5%AE%9A%E8%A6%81%E6%96%B9%E5%B7%AE%E5%A4%A7%E4%BA%8E%E9%9B%B6"><span class="toc-number">1.4.2.</span> <span class="toc-text">一定要方差大于零</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E9%A2%98%E7%9B%AE%E6%88%91%E6%B2%A1%E7%9C%8B%E6%87%82%E4%B8%BA%E5%95%A5%E8%83%BD%E8%BF%99%E4%B9%88%E5%81%9A%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%E7%9A%84%E5%9D%87%E5%80%BC%E4%BB%8D%E4%B8%BA%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%E5%90%97"><span class="toc-number">2.</span> <span class="toc-text">这个题目我没看懂，为啥能这么做，正态分布的均值仍为正态分布吗？</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%8A%82%E5%A4%8D%E4%B9%A0ppt"><span class="toc-number">1.</span> <span class="toc-text"> 第五章节复习PPT</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E4%B8%8D%E7%AD%89%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text"> 切比雪夫不等式</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%BB%99%E5%87%BA%E4%B8%80%E4%B8%AA%E5%81%8F%E7%A7%BB%E5%9D%87%E5%80%BC%E6%97%B6%E5%8F%AF%E8%83%BD%E6%80%A7%E5%A4%A7%E5%B0%8F%E7%9A%84%E4%B8%80%E4%B8%AA%E4%B8%8D%E7%AD%89%E5%BC%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 给出一个偏移均值时可能性大小的一个不等式</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%B3%E6%B1%82dx%E5%85%B3%E9%94%AE%E7%9C%8B%E7%9B%B8%E5%85%B3%E4%B8%8D%E7%9B%B8%E5%85%B3"><span class="toc-number">1.2.</span> <span class="toc-text"> 即求D(X)关键看相关不相关</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%AF%A5%E5%AE%9A%E7%90%86%E7%9A%84%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 该定理的典型应用</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B"><span class="toc-number">1.3.</span> <span class="toc-text"> 大数定律</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%9B%B8%E4%BA%92%E7%8B%AC%E7%AB%8B%E6%B3%A8%E6%84%8F%E6%9D%A1%E4%BB%B6%E5%AD%98%E5%9C%A8%E6%96%B9%E5%B7%AE%E4%B8%80%E8%87%B4%E4%B8%94%E6%9C%89%E4%B8%8A%E7%95%8C"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 相互独立，注意条件存在方差一致且有上界</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86%E6%8C%87%E4%BB%BB%E4%BD%95%E6%96%B9%E5%B7%AE%E5%A4%A7%E4%BA%8E%E9%9B%B6%E7%8B%AC%E7%AB%8B%E5%90%8C%E5%88%86%E5%B8%83%E5%8A%A0%E8%B5%B7%E6%9D%A5%E6%80%BB%E4%BD%93%E6%98%AF%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83"><span class="toc-number">1.4.</span> <span class="toc-text"> 中心极限定理（指任何(方差大于零)独立同分布加起来总体是正态分布）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%94%B1%E4%B8%8A%E4%B8%80%E8%8A%82%E7%9A%84%E6%8C%87%E6%95%B0%E5%88%86%E5%B8%83%E7%9A%84%E6%80%A7%E8%B4%A8minxy%E5%92%8Czxy-%E9%83%BD%E8%83%BD%E6%8E%A8%E5%87%BAp"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 由上一节的指数分布的性质，min(X,Y)和Z&#x3D;X+Y 都能推出P...</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%80%E5%AE%9A%E8%A6%81%E6%96%B9%E5%B7%AE%E5%A4%A7%E4%BA%8E%E9%9B%B6"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 一定要方差大于零</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E9%A2%98%E7%9B%AE%E6%88%91%E6%B2%A1%E7%9C%8B%E6%87%82%E4%B8%BA%E5%95%A5%E8%83%BD%E8%BF%99%E4%B9%88%E5%81%9A%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%E7%9A%84%E5%9D%87%E5%80%BC%E4%BB%8D%E4%B8%BA%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%E5%90%97"><span class="toc-number">2.</span> <span class="toc-text"> 这个题目我没看懂，为啥能这么做，正态分布的均值仍为正态分布吗？</span></a></li></ol>
       </div>
     
 

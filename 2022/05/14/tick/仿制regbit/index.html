@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="to do  top置顶功能 基本功能 运算功能 剪贴板功能 基址锁定功能 初版：   突然发现，其实我可以做一个C语言的后台，时刻监控输入框，然后通过劫持输入框来达到目的。 5.14更新">
+    <meta name="description" content="to do   [x] top置顶功能   [x] 基本功能   [x] 运算功能   [x] 剪贴板功能   [x] 基址锁定功能  初版：    突然发现，其实我可以做一个C语言的后台，时刻监控输入框，然后通过劫持输入框来达到目的。  5.14更新">
 <meta property="og:type" content="article">
 <meta property="og:title" content="仿制regbit">
 <meta property="og:url" content="https://nampsec.github.io/2022/05/14/tick/%E4%BB%BF%E5%88%B6regbit/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="to do  top置顶功能 基本功能 运算功能 剪贴板功能 基址锁定功能 初版：   突然发现，其实我可以做一个C语言的后台，时刻监控输入框，然后通过劫持输入框来达到目的。 5.14更新">
+<meta property="og:description" content="to do   [x] top置顶功能   [x] 基本功能   [x] 运算功能   [x] 剪贴板功能   [x] 基址锁定功能  初版：    突然发现，其实我可以做一个C语言的后台，时刻监控输入框，然后通过劫持输入框来达到目的。  5.14更新">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2024/01/03/HWZx6Ba5Q3PI9Rr.png">
 <meta property="og:image" content="https://s2.loli.net/2024/01/03/PvOIoNsJFMGk2QR.png">
@@ -68,119 +68,11 @@
 		</script>
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
 	
-<style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style></head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body class="max-width mx-auto px3 ltr">    
       <div id="header-post">
@@ -240,7 +132,7 @@ mjx-container[display="true"] + br {
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E7%89%88"><span class="toc-number">1.</span> <span class="toc-text">初版：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#514%E6%9B%B4%E6%96%B0"><span class="toc-number">2.</span> <span class="toc-text">5.14更新</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E7%89%88"><span class="toc-number">1.</span> <span class="toc-text"> 初版：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#514%E6%9B%B4%E6%96%B0"><span class="toc-number">2.</span> <span class="toc-text"> 5.14更新</span></a></li></ol>
       </div>
     
   </span>
@@ -286,18 +178,28 @@ mjx-container[display="true"] + br {
 
   <div class="content e-content" itemprop="articleBody">
     <p>to do</p>
-<ul class="task-list">
-<li><p><label><input type="checkbox" checked="">top置顶功能</label></p></li>
-<li><p><label><input type="checkbox" checked="">基本功能</label></p></li>
-<li><p><label><input type="checkbox" checked="">运算功能</label></p></li>
-<li><p><label><input type="checkbox" checked="">剪贴板功能</label></p></li>
-<li><p><label><input type="checkbox" checked="">基址锁定功能</label></p>
-<h4 id="初版">初版：</h4></li>
+<ul>
+<li>
+<p>[x] top置顶功能</p>
+</li>
+<li>
+<p>[x] 基本功能</p>
+</li>
+<li>
+<p>[x] 运算功能</p>
+</li>
+<li>
+<p>[x] 剪贴板功能</p>
+</li>
+<li>
+<p>[x] 基址锁定功能</p>
+<h4 id="初版"><a class="markdownIt-Anchor" href="#初版"></a> 初版：</h4>
+</li>
 </ul>
-<p><img src="https://s2.loli.net/2024/01/03/HWZx6Ba5Q3PI9Rr.png" alt="image-20220513221119229"></p>
+<p><img src="https://s2.loli.net/2024/01/03/HWZx6Ba5Q3PI9Rr.png" alt="image-20220513221119229" /></p>
 <p>突然发现，其实我可以做一个C语言的后台，时刻监控输入框，然后通过劫持输入框来达到目的。</p>
-<h4 id="514更新">5.14更新</h4>
-<p><img src="https://s2.loli.net/2024/01/03/PvOIoNsJFMGk2QR.png" alt="image-20220514212827374"></p>
+<h4 id="514更新"><a class="markdownIt-Anchor" href="#514更新"></a> 5.14更新</h4>
+<p><img src="https://s2.loli.net/2024/01/03/PvOIoNsJFMGk2QR.png" alt="image-20220514212827374" /></p>
 
   </div>
 </article>
@@ -327,7 +229,7 @@ mjx-container[display="true"] + br {
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E7%89%88"><span class="toc-number">1.</span> <span class="toc-text">初版：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#514%E6%9B%B4%E6%96%B0"><span class="toc-number">2.</span> <span class="toc-text">5.14更新</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E7%89%88"><span class="toc-number">1.</span> <span class="toc-text"> 初版：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#514%E6%9B%B4%E6%96%B0"><span class="toc-number">2.</span> <span class="toc-text"> 5.14更新</span></a></li></ol>
       </div>
     
 

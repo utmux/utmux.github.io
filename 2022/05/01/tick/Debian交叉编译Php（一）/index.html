@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Debian交叉编译Php（一） 1.下载解压对应php源码 12wget https:&#x2F;&#x2F;www.php.net&#x2F;distributions&#x2F;php-7.4.23.tar.gztar -xzvf php-7.4.23.tar.gz 2.建立一个安装目录 1cd php-7.4.23 &amp;&amp; mkdir arminstall 3.设置环境变量为交叉编译器 1CC&#x3D;aarc">
+    <meta name="description" content="Debian交叉编译Php（一）  1.下载解压对应php源码 12wget https:&#x2F;&#x2F;www.php.net&#x2F;distributions&#x2F;php-7.4.23.tar.gztar -xzvf php-7.4.23.tar.gz  2.建立一个安装目录 1cd php-7.4.23 &amp;&amp; mkdir arminstall  3.设置环境变量为交叉编译器 1CC&#x3D;aarch6">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Debian交叉编译Php（一）">
 <meta property="og:url" content="https://nampsec.github.io/2022/05/01/tick/Debian%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91Php%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="Debian交叉编译Php（一） 1.下载解压对应php源码 12wget https:&#x2F;&#x2F;www.php.net&#x2F;distributions&#x2F;php-7.4.23.tar.gztar -xzvf php-7.4.23.tar.gz 2.建立一个安装目录 1cd php-7.4.23 &amp;&amp; mkdir arminstall 3.设置环境变量为交叉编译器 1CC&#x3D;aarc">
+<meta property="og:description" content="Debian交叉编译Php（一）  1.下载解压对应php源码 12wget https:&#x2F;&#x2F;www.php.net&#x2F;distributions&#x2F;php-7.4.23.tar.gztar -xzvf php-7.4.23.tar.gz  2.建立一个安装目录 1cd php-7.4.23 &amp;&amp; mkdir arminstall  3.设置环境变量为交叉编译器 1CC&#x3D;aarch6">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2024/01/03/zJ9pnAvaPfZkEOC.png">
 <meta property="article:published_time" content="2022-05-01T08:14:47.000Z">
@@ -67,119 +67,11 @@
 		</script>
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
 	
-<style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style></head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body class="max-width mx-auto px3 ltr">    
       <div id="header-post">
@@ -239,9 +131,7 @@ mjx-container[display="true"] + br {
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#debian%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91php%E4%B8%80"><span class="toc-number">1.</span> <span class="toc-text">Debian交叉编译Php（一）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1%E4%B8%8B%E8%BD%BD%E8%A7%A3%E5%8E%8B%E5%AF%B9%E5%BA%94php%E6%BA%90%E7%A0%81"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.下载解压对应php源码</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2%E5%BB%BA%E7%AB%8B%E4%B8%80%E4%B8%AA%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95"><span class="toc-number">1.0.2.</span> <span class="toc-text">2.建立一个安装目录</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E4%B8%BA%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%99%A8"><span class="toc-number">1.0.3.</span> <span class="toc-text">3.设置环境变量为交叉编译器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4%E5%BC%80%E5%A7%8B%E7%BC%96%E8%AF%91%E6%B3%A8%E6%84%8F%E5%B0%86python%E5%BA%93%E7%BB%99%E5%8E%BB%E6%8E%89%E5%90%A6%E5%88%99%E9%9C%80%E8%A6%81%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%90%8E%E7%9A%84python%E6%AF%94%E8%BE%83%E9%BA%BB%E7%83%A6"><span class="toc-number">1.0.4.</span> <span class="toc-text">4.开始编译（注意将Python库给去掉，否则需要交叉编译后的Python比较麻烦）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5%E9%94%99%E8%AF%AFc-compiler-cannot-create-executables"><span class="toc-number">1.0.5.</span> <span class="toc-text">5.错误C compiler
-cannot create executables</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6%E9%94%99%E8%AF%AFpackage-requirements-libxml-20--276-were-not-met"><span class="toc-number">1.0.6.</span> <span class="toc-text">6.错误Package
-requirements (libxml-2.0 &gt;&#x3D; 2.7.6) were not met</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#debian%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91php%E4%B8%80"><span class="toc-number">1.</span> <span class="toc-text"> Debian交叉编译Php（一）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1%E4%B8%8B%E8%BD%BD%E8%A7%A3%E5%8E%8B%E5%AF%B9%E5%BA%94php%E6%BA%90%E7%A0%81"><span class="toc-number">1.0.1.</span> <span class="toc-text"> 1.下载解压对应php源码</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2%E5%BB%BA%E7%AB%8B%E4%B8%80%E4%B8%AA%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95"><span class="toc-number">1.0.2.</span> <span class="toc-text"> 2.建立一个安装目录</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E4%B8%BA%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%99%A8"><span class="toc-number">1.0.3.</span> <span class="toc-text"> 3.设置环境变量为交叉编译器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4%E5%BC%80%E5%A7%8B%E7%BC%96%E8%AF%91%E6%B3%A8%E6%84%8F%E5%B0%86python%E5%BA%93%E7%BB%99%E5%8E%BB%E6%8E%89%E5%90%A6%E5%88%99%E9%9C%80%E8%A6%81%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%90%8E%E7%9A%84python%E6%AF%94%E8%BE%83%E9%BA%BB%E7%83%A6"><span class="toc-number">1.0.4.</span> <span class="toc-text"> 4.开始编译（注意将Python库给去掉，否则需要交叉编译后的Python比较麻烦）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5%E9%94%99%E8%AF%AFc-compiler-cannot-create-executables"><span class="toc-number">1.0.5.</span> <span class="toc-text"> 5.错误C compiler cannot create executables</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6%E9%94%99%E8%AF%AFpackage-requirements-libxml-20-276-were-not-met"><span class="toc-number">1.0.6.</span> <span class="toc-text"> 6.错误Package requirements (libxml-2.0 &gt;&#x3D; 2.7.6) were not met</span></a></li></ol></li></ol></li></ol>
       </div>
     
   </span>
@@ -286,25 +176,23 @@ requirements (libxml-2.0 &gt;&#x3D; 2.7.6) were not met</span></a></li></ol></li
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h4 id="debian交叉编译php一">Debian交叉编译Php（一）</h4>
-<h6 id="1下载解压对应php源码">1.下载解压对应php源码</h6>
+    <h4 id="debian交叉编译php一"><a class="markdownIt-Anchor" href="#debian交叉编译php一"></a> Debian交叉编译Php（一）</h4>
+<h6 id="1下载解压对应php源码"><a class="markdownIt-Anchor" href="#1下载解压对应php源码"></a> 1.下载解压对应php源码</h6>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://www.php.net/distributions/php-7.4.23.tar.gz</span><br><span class="line">tar -xzvf php-7.4.23.tar.gz</span><br></pre></td></tr></table></figure>
-<h6 id="2建立一个安装目录">2.建立一个安装目录</h6>
+<h6 id="2建立一个安装目录"><a class="markdownIt-Anchor" href="#2建立一个安装目录"></a> 2.建立一个安装目录</h6>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd php-7.4.23 &amp;&amp; mkdir arminstall</span><br></pre></td></tr></table></figure>
-<h6 id="3设置环境变量为交叉编译器">3.设置环境变量为交叉编译器</h6>
+<h6 id="3设置环境变量为交叉编译器"><a class="markdownIt-Anchor" href="#3设置环境变量为交叉编译器"></a> 3.设置环境变量为交叉编译器</h6>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CC=aarch64-linux-gnu-gcc AR=aarch64-linux-gnu-ar LD=aarch64-linux-gnu-ld RANLIB=aarch64-linux-gnu-ranlib STRIP=aarch64-linux-gnu-strip </span><br></pre></td></tr></table></figure>
-<h6 id="4开始编译注意将python库给去掉否则需要交叉编译后的python比较麻烦">4.开始编译（注意将Python库给去掉，否则需要交叉编译后的Python比较麻烦）</h6>
+<h6 id="4开始编译注意将python库给去掉否则需要交叉编译后的python比较麻烦"><a class="markdownIt-Anchor" href="#4开始编译注意将python库给去掉否则需要交叉编译后的python比较麻烦"></a> 4.开始编译（注意将Python库给去掉，否则需要交叉编译后的Python比较麻烦）</h6>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --host=aarch64-linux-gnu --prefix=/root/armphp/php-7.4.23/arminstall/ --without-python</span><br></pre></td></tr></table></figure>
-<h6 id="5错误c-compiler-cannot-create-executables">5.错误C compiler
-cannot create executables</h6>
-<p>​ 查找log发现<img src="https://s2.loli.net/2024/01/03/zJ9pnAvaPfZkEOC.png" alt="image-20220501143224639"></p>
+<h6 id="5错误c-compiler-cannot-create-executables"><a class="markdownIt-Anchor" href="#5错误c-compiler-cannot-create-executables"></a> 5.错误C compiler cannot create executables</h6>
+<p>​	查找log发现<img src="https://s2.loli.net/2024/01/03/zJ9pnAvaPfZkEOC.png" alt="image-20220501143224639" /></p>
 <p>在谷歌的一些搜索结果中大概了解到是自己的交叉编译工具链不完整，缺少一些库文件。使用其他编译工具链。</p>
 <p><a target="_blank" rel="noopener" href="http://releases.linaro.org/components/toolchain/binaries/">linaro工具链</a></p>
 <p>下载，解压，设置好PATH变量</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/usr/local/sbin/gcc-linaro-aarch64/bin</span><br></pre></td></tr></table></figure>
 <p>再次尝试</p>
-<h6 id="6错误package-requirements-libxml-20--276-were-not-met">6.错误Package
-requirements (libxml-2.0 &gt;= 2.7.6) were not met</h6>
+<h6 id="6错误package-requirements-libxml-20-276-were-not-met"><a class="markdownIt-Anchor" href="#6错误package-requirements-libxml-20-276-were-not-met"></a> 6.错误Package requirements (libxml-2.0 &gt;= 2.7.6) were not met</h6>
 <p>这是个常见的错误，下载<a target="_blank" rel="noopener" href="http://xmlsoft.org/sources/">libxml</a>,解压到php源码文件夹中，配置编译安装，修改上面prefix指向该目录的子目录如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --host=aarch64-linux-gnu --prefix=/root/armphp/php-7.4.23/libxml2-2.9.12/armlibxml2/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>出现错误</p>
@@ -339,9 +227,7 @@ requirements (libxml-2.0 &gt;= 2.7.6) were not met</h6>
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#debian%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91php%E4%B8%80"><span class="toc-number">1.</span> <span class="toc-text">Debian交叉编译Php（一）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1%E4%B8%8B%E8%BD%BD%E8%A7%A3%E5%8E%8B%E5%AF%B9%E5%BA%94php%E6%BA%90%E7%A0%81"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.下载解压对应php源码</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2%E5%BB%BA%E7%AB%8B%E4%B8%80%E4%B8%AA%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95"><span class="toc-number">1.0.2.</span> <span class="toc-text">2.建立一个安装目录</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E4%B8%BA%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%99%A8"><span class="toc-number">1.0.3.</span> <span class="toc-text">3.设置环境变量为交叉编译器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4%E5%BC%80%E5%A7%8B%E7%BC%96%E8%AF%91%E6%B3%A8%E6%84%8F%E5%B0%86python%E5%BA%93%E7%BB%99%E5%8E%BB%E6%8E%89%E5%90%A6%E5%88%99%E9%9C%80%E8%A6%81%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%90%8E%E7%9A%84python%E6%AF%94%E8%BE%83%E9%BA%BB%E7%83%A6"><span class="toc-number">1.0.4.</span> <span class="toc-text">4.开始编译（注意将Python库给去掉，否则需要交叉编译后的Python比较麻烦）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5%E9%94%99%E8%AF%AFc-compiler-cannot-create-executables"><span class="toc-number">1.0.5.</span> <span class="toc-text">5.错误C compiler
-cannot create executables</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6%E9%94%99%E8%AF%AFpackage-requirements-libxml-20--276-were-not-met"><span class="toc-number">1.0.6.</span> <span class="toc-text">6.错误Package
-requirements (libxml-2.0 &gt;&#x3D; 2.7.6) were not met</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#debian%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91php%E4%B8%80"><span class="toc-number">1.</span> <span class="toc-text"> Debian交叉编译Php（一）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1%E4%B8%8B%E8%BD%BD%E8%A7%A3%E5%8E%8B%E5%AF%B9%E5%BA%94php%E6%BA%90%E7%A0%81"><span class="toc-number">1.0.1.</span> <span class="toc-text"> 1.下载解压对应php源码</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2%E5%BB%BA%E7%AB%8B%E4%B8%80%E4%B8%AA%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95"><span class="toc-number">1.0.2.</span> <span class="toc-text"> 2.建立一个安装目录</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E4%B8%BA%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%99%A8"><span class="toc-number">1.0.3.</span> <span class="toc-text"> 3.设置环境变量为交叉编译器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4%E5%BC%80%E5%A7%8B%E7%BC%96%E8%AF%91%E6%B3%A8%E6%84%8F%E5%B0%86python%E5%BA%93%E7%BB%99%E5%8E%BB%E6%8E%89%E5%90%A6%E5%88%99%E9%9C%80%E8%A6%81%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%90%8E%E7%9A%84python%E6%AF%94%E8%BE%83%E9%BA%BB%E7%83%A6"><span class="toc-number">1.0.4.</span> <span class="toc-text"> 4.开始编译（注意将Python库给去掉，否则需要交叉编译后的Python比较麻烦）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5%E9%94%99%E8%AF%AFc-compiler-cannot-create-executables"><span class="toc-number">1.0.5.</span> <span class="toc-text"> 5.错误C compiler cannot create executables</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6%E9%94%99%E8%AF%AFpackage-requirements-libxml-20-276-were-not-met"><span class="toc-number">1.0.6.</span> <span class="toc-text"> 6.错误Package requirements (libxml-2.0 &gt;&#x3D; 2.7.6) were not met</span></a></li></ol></li></ol></li></ol>
       </div>
     
 

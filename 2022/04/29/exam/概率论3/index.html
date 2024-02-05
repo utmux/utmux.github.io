@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="一个是均值收敛于期望，第二个是频率收敛于概率               自己手动推出样本的方差的期望">
+    <meta name="description" content="一个是均值收敛于期望，第二个是频率收敛于概率               自己手动推出样本的方差的期望">
 <meta property="og:type" content="article">
 <meta property="og:title" content="概率论3">
 <meta property="og:url" content="https://nampsec.github.io/2022/04/29/exam/%E6%A6%82%E7%8E%87%E8%AE%BA3/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="一个是均值收敛于期望，第二个是频率收敛于概率               自己手动推出样本的方差的期望">
+<meta property="og:description" content="一个是均值收敛于期望，第二个是频率收敛于概率               自己手动推出样本的方差的期望">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2024/01/04/32JeulN9jhFnGDq.png">
 <meta property="og:image" content="https://s2.loli.net/2024/01/04/DhpwOeQ7oBSUsfL.png">
@@ -84,119 +84,11 @@
 		</script>
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
 	
-<style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style></head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body class="max-width mx-auto px3 ltr">    
       <div id="header-post">
@@ -297,26 +189,26 @@ mjx-container[display="true"] + br {
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p><img src="https://s2.loli.net/2024/01/04/32JeulN9jhFnGDq.png" alt="image-20220429101938794"></p>
-<p><img src="https://s2.loli.net/2024/01/04/DhpwOeQ7oBSUsfL.png" alt="image-20220429101952850"></p>
-<p><img src="https://s2.loli.net/2024/01/04/hnlW8wrFXQA6JvY.png" alt="image-20220428135534909"></p>
+    <p><img src="https://s2.loli.net/2024/01/04/32JeulN9jhFnGDq.png" alt="image-20220429101938794" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/DhpwOeQ7oBSUsfL.png" alt="image-20220429101952850" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/hnlW8wrFXQA6JvY.png" alt="image-20220428135534909" /></p>
 <p>一个是均值收敛于期望，第二个是频率收敛于概率</p>
-<p><img src="https://s2.loli.net/2024/01/04/SKuyXO1D2YEN5GM.png" alt="image-20220429101753429"></p>
-<p><img src="https://s2.loli.net/2024/01/04/IOH6Wnhu8zkjmxc.png" alt="image-20220429102037893"></p>
-<p><img src="https://s2.loli.net/2024/01/04/eqmkJZ7T4d2rIYz.png" alt="image-20220429102906705"></p>
-<p><img src="https://s2.loli.net/2024/01/04/PyjtOhofQ5mKM6g.png" alt="image-20220429103238771"></p>
-<p><img src="https://s2.loli.net/2024/01/04/BkKa63TxEt9nVhr.png" alt="image-20220429103646012"></p>
-<p><img src="https://s2.loli.net/2024/01/05/LkcURji8SQfuldY.png" alt="image-20220429103703457"></p>
-<p><img src="https://s2.loli.net/2024/01/05/4So5xXV3mTYEnjg.png" alt="image-20220429103823424"></p>
-<p><img src="https://s2.loli.net/2024/01/05/FKDx6MYmleCTJOZ.png" alt="image-20220429104032624"></p>
-<p><img src="https://s2.loli.net/2024/01/05/n8wv1O2yatgl6k9.png" alt="image-20220429104127597"></p>
-<p><img src="https://s2.loli.net/2024/01/05/TdKsWJznG5FjVCA.png" alt="image-20220429104227415"></p>
-<p><img src="https://s2.loli.net/2024/01/05/6EHXIPCfcoUlKe1.png" alt="image-20220429104426457"></p>
-<p><img src="https://s2.loli.net/2024/01/05/PG7WngXazl1femH.png" alt="image-20220429104440977"></p>
-<p><img src="https://s2.loli.net/2024/01/05/xKrqc59HWsVvjkg.png" alt="image-20220429104745524"></p>
-<p><img src="https://s2.loli.net/2024/01/05/Be4MIucyrQ8EKaP.png" alt="image-20220429105633873"></p>
+<p><img src="https://s2.loli.net/2024/01/04/SKuyXO1D2YEN5GM.png" alt="image-20220429101753429" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/IOH6Wnhu8zkjmxc.png" alt="image-20220429102037893" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/eqmkJZ7T4d2rIYz.png" alt="image-20220429102906705" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/PyjtOhofQ5mKM6g.png" alt="image-20220429103238771" /></p>
+<p><img src="https://s2.loli.net/2024/01/04/BkKa63TxEt9nVhr.png" alt="image-20220429103646012" /></p>
+<p><img src="https://s2.loli.net/2024/01/05/LkcURji8SQfuldY.png" alt="image-20220429103703457" /></p>
+<p><img src="https://s2.loli.net/2024/01/05/4So5xXV3mTYEnjg.png" alt="image-20220429103823424" /></p>
+<p><img src="https://s2.loli.net/2024/01/05/FKDx6MYmleCTJOZ.png" alt="image-20220429104032624" /></p>
+<p><img src="https://s2.loli.net/2024/01/05/n8wv1O2yatgl6k9.png" alt="image-20220429104127597" /></p>
+<p><img src="https://s2.loli.net/2024/01/05/TdKsWJznG5FjVCA.png" alt="image-20220429104227415" /></p>
+<p><img src="https://s2.loli.net/2024/01/05/6EHXIPCfcoUlKe1.png" alt="image-20220429104426457" /></p>
+<p><img src="https://s2.loli.net/2024/01/05/PG7WngXazl1femH.png" alt="image-20220429104440977" /></p>
+<p><img src="https://s2.loli.net/2024/01/05/xKrqc59HWsVvjkg.png" alt="image-20220429104745524" /></p>
+<p><img src="https://s2.loli.net/2024/01/05/Be4MIucyrQ8EKaP.png" alt="image-20220429105633873" /></p>
 <p>自己手动推出样本的方差的期望</p>
-<p><img src="https://s2.loli.net/2024/01/05/AeZdi9zKBqX6VTf.png" alt="image-20220429105841078"></p>
+<p><img src="https://s2.loli.net/2024/01/05/AeZdi9zKBqX6VTf.png" alt="image-20220429105841078" /></p>
 
   </div>
 </article>
