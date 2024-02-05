@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="参考书籍&lt;&lt;雷达原理 第三版&gt;&gt; 主要知识点1.1 雷达的一些基本知识 常用的坐标系直角空间坐标系: $x,y,z$三个变量确定球坐标系: 斜距$R$，方位角$\alpha$（azimuth），仰角$\beta$（elevation）确定柱坐标系：水平距离$D$，方位角$\alpha$，高度$H$  1.2 雷达的基本组成（略） 分类：直接振荡式和功率放大式  组成：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="雷达基本原理">
+<meta property="og:url" content="https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="参考书籍&lt;&lt;雷达原理 第三版&gt;&gt; 主要知识点1.1 雷达的一些基本知识 常用的坐标系直角空间坐标系: $x,y,z$三个变量确定球坐标系: 斜距$R$，方位角$\alpha$（azimuth），仰角$\beta$（elevation）确定柱坐标系：水平距离$D$，方位角$\alpha$，高度$H$  1.2 雷达的基本组成（略） 分类：直接振荡式和功率放大式  组成：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/jUcrYk5eqGpT8bo.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/rINcW1fxhlgFRjp.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/HtarATvlukpc5gs.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/PC7s41bu5lVDMYS.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/nzJrvBOMpR13bAZ.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/VLOTjnKkAYCM7rc.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/g2s6PutSdmCpZ7G.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/KmzNP3VUAdbYSG7.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/sS3XYFcPf7hAEua.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/815ZkLCORVHu3Up.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/CcsrjIK9YB2iEgO.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/LO7ClauZ2hdFYBr.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/T96XoS1R4tbZPNj.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/NLu4ykqC5s1vcrw.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/T374YJn6FVP9pWS.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/akxA4FfejWMTglP.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/Ac1HpwbhyTqZi6J.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/G2sNj4bMoE3wz8P.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/UDT7ug1QYCNWPFq.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/H8OILgcsW9A6fzm.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/5YUTeMHfKsjGOJl.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/L8DHNCcdb3nwkGv.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/a9TqCHzuj4B1Ym5.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/wqXlprmYheu894C.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/zf3eaK9MVWQSJhX.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/Rxao1sm5PvYtZHd.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/CTga4rUdvGplLnZ.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/jAKtIYZsnX1prvx.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/IfRzYMiSDrW3h6n.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/2PEtmw3Q9yvH4pq.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/NISe3OBnxEp7vjL.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/7QF2j3MnPsVNkz8.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/tLwj38PveO2il1D.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/SYA7zUXqyFHDWPp.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/WvxkYHyuswm5ifI.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/boCqmSuDkI6EfB2.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/NiBq5a2OlSYM4dx.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/rvXTQSfGKBFbaIi.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/hNkGmv4qYUzPx5g.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/NofB2ITRXaH3YGP.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/YnI9qeW5PZyJ28t.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/mePIcrjVU2AQxyf.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/UJeXjfu4T7CcwqL.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/8U5dhMvr7VZRojp.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/tTu7fVwpDAHb2aQ.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/jRdxyKbUhJS3tfC.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/1xmUjr7TNvAP5sQ.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/GfmijEY8VLbaT37.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/jnQJ5EMKZdps8F6.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/2RlVpeQiYmBzNyL.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/JvXeFNhPTC9KZSm.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/JvYMB4KsA5C1lyQ.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/TC7DOU6n5jslcWF.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/6I9PEWBi7GtAdra.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/65c1oWhFMsjkSPy.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/pNTlGiXPh8BUKzL.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/v3iGVDExbw74MSI.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/KVmUfGxZiqEAnkP.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/OQTlkjxCzUbyhN8.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/Jgs1Z5OuGqLr9Xj.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/05/x15rqWFLNSKHuTz.png">
+<meta property="article:published_time" content="2024-02-01T01:48:33.000Z">
+<meta property="article:modified_time" content="2024-02-05T02:25:14.919Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/02/05/jUcrYk5eqGpT8bo.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>雷达基本原理</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/04/27/life/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8B%E5%8E%BB%E5%BB%B6%E5%90%89%E7%9A%84%E4%B8%80%E8%B6%9F%E6%97%85%E8%A1%8C/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&text=雷达基本原理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&title=雷达基本原理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&is_video=false&description=雷达基本原理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=雷达基本原理&body=Check out this article: https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&title=雷达基本原理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&title=雷达基本原理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&title=雷达基本原理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&title=雷达基本原理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&name=雷达基本原理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&t=雷达基本原理"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E4%B9%A6%E7%B1%8D"><span class="toc-number">1.</span> <span class="toc-text">参考书籍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">主要知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-1-%E9%9B%B7%E8%BE%BE%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"><span class="toc-number">2.0.1.</span> <span class="toc-text">1.1 雷达的一些基本知识</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#1-2-%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90%EF%BC%88%E7%95%A5%EF%BC%89"><span class="toc-number">2.0.2.</span> <span class="toc-text">1.2 雷达的基本组成（略）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#1-3-%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%B7%A5%E4%BD%9C%E9%A2%91%E7%8E%87"><span class="toc-number">2.0.3.</span> <span class="toc-text">1.3 雷达的工作频率</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#1-4-%E5%85%B6%E4%BB%96"><span class="toc-number">2.0.4.</span> <span class="toc-text">1.4 其他</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E9%9B%B7%E8%BE%BE%E5%8F%91%E5%B0%84%E6%9C%BA%EF%BC%88%E7%A8%8D%E5%BE%AE%E4%BA%86%E8%A7%A3%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">2.雷达发射机（稍微了解）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#2-1-%E5%8F%91%E5%B0%84%E6%9C%BA%E7%BB%93%E6%9E%84"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1 发射机结构</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8F%91%E5%B0%84%E6%9C%BA%E7%9A%84%E6%8C%87%E6%A0%87"><span class="toc-number">2.1.2.</span> <span class="toc-text">发射机的指标</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%84%89%E5%86%B2%E8%B0%83%E5%88%B6%E5%99%A8%EF%BC%88%E7%95%A5%EF%BC%89"><span class="toc-number">2.1.3.</span> <span class="toc-text">脉冲调制器（略）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%8E%A5%E6%94%B6%E6%9C%BA%EF%BC%88%E6%AF%94%E8%BE%83%E9%87%8D%E7%82%B9%E5%86%85%E5%AE%B9%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">3.接收机（比较重点内容）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#3-1-%E6%8E%A5%E6%94%B6%E6%9C%BA%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">3.0.1.</span> <span class="toc-text">3.1 接收机的结构</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-2-%E6%8E%A5%E6%94%B6%E6%9C%BA%E7%9A%84%E6%8C%87%E6%A0%87"><span class="toc-number">3.0.2.</span> <span class="toc-text">3.2 接收机的指标</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-3-%E5%99%AA%E5%A3%B0%E7%9B%B8%E5%85%B3%E7%9A%84%E7%9F%A5%E8%AF%86%EF%BC%88%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%EF%BC%89"><span class="toc-number">3.0.3.</span> <span class="toc-text">3.3 噪声相关的知识（比较重要）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-4-%E6%8E%A5%E6%94%B6%E6%9C%BA%E7%81%B5%E6%95%8F%E5%BA%A6%E6%88%96%E8%80%85%E6%9C%80%E5%B0%8F%E5%8F%AF%E6%A3%80%E6%B5%8B%E4%BF%A1%E5%8F%B7-S-mathrm-i-min"><span class="toc-number">3.0.4.</span> <span class="toc-text">3.4 接收机灵敏度或者最小可检测信号$S_\mathrm{i~min}$</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-5-%E9%9B%B7%E8%BE%BE%E6%8E%A5%E6%94%B6%E6%9C%BA%E7%9A%84%E9%AB%98%E9%A2%91%E9%83%A8%E5%88%86%E5%92%8C%E6%8C%AF%E8%8D%A1%E7%A8%B3%E5%AE%9A%E7%AD%89%EF%BC%88%E7%95%A5%EF%BC%89"><span class="toc-number">3.0.5.</span> <span class="toc-text">3.5 雷达接收机的高频部分和振荡稳定等（略）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-6-%E5%A2%9E%E7%9B%8A%E6%8E%A7%E5%88%B6"><span class="toc-number">3.0.6.</span> <span class="toc-text">3.6 增益控制</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-7-%E5%8C%B9%E9%85%8D%E6%BB%A4%E6%B3%A2%E5%92%8C%E5%87%86%E5%8C%B9%E9%85%8D%E6%BB%A4%E6%B3%A2"><span class="toc-number">3.0.7.</span> <span class="toc-text">3.7 匹配滤波和准匹配滤波</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-8-%E9%9B%B7%E8%BE%BE%E5%B8%A6%E5%AE%BD%E7%AD%89%EF%BC%88%E7%95%A5%EF%BC%89"><span class="toc-number">3.0.8.</span> <span class="toc-text">3.8 雷达带宽等（略）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E9%9B%B7%E8%BE%BE%E4%BD%9C%E7%94%A8%E8%B7%9D%E7%A6%BB-%E9%87%8D%E8%A6%81"><span class="toc-number">4.</span> <span class="toc-text">4. 雷达作用距离(重要)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#4-1-%E5%9F%BA%E6%9C%AC%E9%9B%B7%E8%BE%BE%E6%96%B9%E7%A8%8B"><span class="toc-number">4.0.1.</span> <span class="toc-text">4.1 基本雷达方程</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-2-%E7%9B%AE%E6%A0%87%E9%9B%B7%E8%BE%BE%E7%9A%84%E6%88%AA%E9%9D%A2%E7%A7%AF-RCS"><span class="toc-number">4.0.2.</span> <span class="toc-text">4.2 目标雷达的截面积(RCS)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-3-%E6%9C%80%E5%B0%8F%E5%8F%AF%E6%A3%80%E6%B5%8B%E4%BF%A1%E5%99%AA%E6%AF%94"><span class="toc-number">4.0.3.</span> <span class="toc-text">4.3 最小可检测信噪比</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-4-%E9%9B%B7%E8%BE%BE%E7%9A%84%E8%99%9A%E8%AD%A6%E6%A6%82%E7%8E%87%E5%92%8C%E5%8F%91%E7%8E%B0%E6%A6%82%E7%8E%87"><span class="toc-number">4.0.4.</span> <span class="toc-text">4.4 雷达的虚警概率和发现概率</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-5-%E8%84%89%E5%86%B2%E7%A7%AF%E7%B4%AF"><span class="toc-number">4.0.5.</span> <span class="toc-text">4.5 脉冲积累</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-6-%E6%9C%BA%E6%A2%B0%E6%89%AB%E6%8F%8F%E9%9B%B7%E8%BE%BE%E7%A7%AF%E7%B4%AF%E8%84%89%E5%86%B2%E4%B8%AA%E6%95%B0%E7%9A%84%E7%A1%AE%E5%AE%9A"><span class="toc-number">4.0.6.</span> <span class="toc-text">4.6 机械扫描雷达积累脉冲个数的确定</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-7-%E7%9B%AE%E6%A0%87%E6%88%AA%E9%9D%A2%E7%A7%AF%E4%B8%8E%E6%89%AB%E6%8F%8F%E6%B3%A2%E9%95%BF%E5%92%8C%E5%A4%A9%E7%BA%BF%E8%A7%92%E5%BA%A6%E6%9E%81%E5%8C%96%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">4.0.7.</span> <span class="toc-text">4.7 目标截面积与扫描波长和天线角度极化的关系</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-8-%E7%9B%AE%E6%A0%87%E7%89%B9%E6%80%A7%E4%B8%8E%E5%A4%A9%E7%BA%BF%E6%9E%81%E5%8C%96%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">4.0.8.</span> <span class="toc-text">4.8 目标特性与天线极化的关系</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-9-%E7%9B%AE%E6%A0%87%E8%B5%B7%E4%BC%8F%E6%A8%A1%E5%9E%8B%EF%BC%88%E9%87%8D%E8%A6%81%EF%BC%89"><span class="toc-number">4.0.9.</span> <span class="toc-text">4.9 目标起伏模型（重要）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-10-%E7%B3%BB%E7%BB%9F%E6%8D%9F%E8%80%97"><span class="toc-number">4.0.10.</span> <span class="toc-text">4.10 系统损耗</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-11-%E4%BC%A0%E6%92%AD%E8%BF%87%E7%A8%8B%E6%8D%9F%E8%80%97"><span class="toc-number">4.0.11.</span> <span class="toc-text">4.11 传播过程损耗</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-12-%E9%9B%B7%E8%BE%BE%E6%96%B9%E7%A8%8B%E7%9A%84%E5%85%B6%E4%BB%96%E5%87%A0%E7%A7%8D%E5%BD%A2%E5%BC%8F"><span class="toc-number">4.0.12.</span> <span class="toc-text">4.12 雷达方程的其他几种形式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E7%9B%AE%E6%A0%87%E8%B7%9D%E7%A6%BB%E7%9A%84%E6%B5%8B%E9%87%8F"><span class="toc-number">5.</span> <span class="toc-text">5 目标距离的测量</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#5-1-%E8%84%89%E5%86%B2%E6%B3%95%E6%B5%8B%E8%B7%9D"><span class="toc-number">5.0.1.</span> <span class="toc-text">5.1 脉冲法测距</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-2-%E8%B0%83%E9%A2%91%E6%B3%95%E6%B5%8B%E8%B7%9D%EF%BC%88%E5%8F%AF%E4%BB%A5%E5%8F%82%E7%9C%8BTI%E7%9A%84FMCW%E7%9A%84%E8%AF%BE%E7%A8%8B%EF%BC%89"><span class="toc-number">5.0.2.</span> <span class="toc-text">5.2 调频法测距（可以参看TI的FMCW的课程）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-3-%E8%B7%9D%E7%A6%BB%E8%B7%9F%E8%B8%AA%E5%8E%9F%E7%90%86"><span class="toc-number">5.0.3.</span> <span class="toc-text">5.3 距离跟踪原理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E8%A7%92%E5%BA%A6%E6%B5%8B%E9%87%8F"><span class="toc-number">6.</span> <span class="toc-text">6. 角度测量</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#6-1-%E9%9B%B7%E8%BE%BE%E6%B5%8B%E8%A7%92%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">6.0.1.</span> <span class="toc-text">6.1 雷达测角的方法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-2-%E9%9B%B7%E8%BE%BE%E5%A4%A9%E7%BA%BF%E6%96%B9%E5%90%91%E5%9B%BE%E5%87%BD%E6%95%B0"><span class="toc-number">6.0.2.</span> <span class="toc-text">6.2 雷达天线方向图函数</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-3-%E4%B8%A4%E5%A4%A9%E7%BA%BF%E7%9B%B8%E4%BD%8D%E6%B3%95%E6%B5%8B%E8%A7%92%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">6.0.3.</span> <span class="toc-text">6.3 两天线相位法测角的基本原理</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-4-%E7%9B%B8%E4%BD%8D%E6%AF%94%E8%BE%83%E5%99%A8"><span class="toc-number">6.0.4.</span> <span class="toc-text">6.4 相位比较器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-5-%E6%B5%8B%E9%87%8F%E7%B2%BE%E5%BA%A6%E5%92%8C%E7%9B%B8%E4%BD%8D%E5%A4%9A%E5%80%BC%E6%80%A7%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">6.0.5.</span> <span class="toc-text">6.5 测量精度和相位多值性的问题</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-6-%E6%8C%AF%E5%B9%85%E6%B3%95%E6%B5%8B%E8%A7%92"><span class="toc-number">6.0.6.</span> <span class="toc-text">6.6 振幅法测角</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-7-%E8%87%AA%E5%8A%A8%E6%B5%8B%E8%A7%92%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E6%96%B9%E6%B3%95"><span class="toc-number">6.0.7.</span> <span class="toc-text">6.7 自动测角的原理与方法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-8-%E6%B3%A2%E6%9D%9F%E5%BD%A2%E7%8A%B6%E5%92%8C%E6%89%AB%E6%8F%8F%E6%96%B9%E5%BC%8F"><span class="toc-number">6.0.8.</span> <span class="toc-text">6.8 波束形状和扫描方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E8%BF%90%E5%8A%A8%E7%9B%AE%E6%A0%87%E7%9A%84%E6%A3%80%E6%B5%8B%E5%8F%8A%E6%B5%8B%E9%80%9F"><span class="toc-number">7.</span> <span class="toc-text">7 运动目标的检测及测速</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#7-1-%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E4%BB%A5%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8"><span class="toc-number">7.0.1.</span> <span class="toc-text">7.1 多普勒效应以及其应用</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-2-%E5%8A%A8%E7%9B%AE%E6%A0%87%E6%98%BE%E7%A4%BA%E9%9B%B7%E8%BE%BE"><span class="toc-number">7.0.2.</span> <span class="toc-text">7.2 动目标显示雷达</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-3-%E7%9B%B2%E9%80%9F%EF%BC%8C%E7%9B%B2%E7%9B%B8%E4%B8%8E%E5%85%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">7.0.3.</span> <span class="toc-text">7.3 盲速，盲相与其解决方法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-4-%E5%8A%A8%E7%9B%AE%E6%A0%87%E6%98%BE%E7%A4%BA%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="toc-number">7.0.4.</span> <span class="toc-text">7.4 动目标显示滤波器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-5-%E5%8A%A8%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%88MTD%EF%BC%89"><span class="toc-number">7.0.5.</span> <span class="toc-text">7.5 动标检测（MTD）</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        雷达基本原理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-02-01T01:48:33.000Z" class="dt-published" itemprop="datePublished">2024-02-01</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">life</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h4 id="参考书籍"><a href="#参考书籍" class="headerlink" title="参考书籍"></a>参考书籍</h4><p>&lt;&lt;雷达原理 第三版&gt;&gt;</p>
+<h4 id="主要知识点"><a href="#主要知识点" class="headerlink" title="主要知识点"></a>主要知识点</h4><h6 id="1-1-雷达的一些基本知识"><a href="#1-1-雷达的一些基本知识" class="headerlink" title="1.1 雷达的一些基本知识"></a>1.1 雷达的一些基本知识</h6><ol>
+<li>常用的坐标系<br>直角空间坐标系: $x,y,z$三个变量确定<br>球坐标系: 斜距$R$，方位角$\alpha$（azimuth），仰角$\beta$（elevation）确定<br>柱坐标系：水平距离$D$，方位角$\alpha$，高度$H$</li>
+</ol>
+<h6 id="1-2-雷达的基本组成（略）"><a href="#1-2-雷达的基本组成（略）" class="headerlink" title="1.2 雷达的基本组成（略）"></a>1.2 雷达的基本组成（略）</h6><ol>
+<li><p>分类：直接振荡式和功率放大式</p>
+</li>
+<li><p>组成：<img src="https://s2.loli.net/2024/02/05/jUcrYk5eqGpT8bo.png" alt="radar_consist"></p>
+</li>
+</ol>
+<h6 id="1-3-雷达的工作频率"><a href="#1-3-雷达的工作频率" class="headerlink" title="1.3 雷达的工作频率"></a>1.3 雷达的工作频率</h6><p><img src="https://s2.loli.net/2024/02/05/rINcW1fxhlgFRjp.png" alt="radar_wave_freq"><br>这里知道，音频频率在20Hz-20Khz，视频在30kHz，雷达在3Mhz-300Ghz，毫米波在30Ghz-300Ghz<br><img src="https://s2.loli.net/2024/02/05/HtarATvlukpc5gs.png" alt="radar_wave_name"></p>
+<h6 id="1-4-其他"><a href="#1-4-其他" class="headerlink" title="1.4 其他"></a>1.4 其他</h6><p>雷达隐身<br>单基，多基，相控<br>雷达组网<br>超视距雷达</p>
+<h5 id="2-雷达发射机（稍微了解）"><a href="#2-雷达发射机（稍微了解）" class="headerlink" title="2.雷达发射机（稍微了解）"></a>2.雷达发射机（稍微了解）</h5><h6 id="2-1-发射机结构"><a href="#2-1-发射机结构" class="headerlink" title="2.1 发射机结构"></a>2.1 发射机结构</h6><p>单机振荡式雷达的发射机（只有测距功能）<br><img src="https://s2.loli.net/2024/02/05/PC7s41bu5lVDMYS.png" alt="radar_transmitter"></p>
+<p>多级功率放大<br><img src="https://s2.loli.net/2024/02/05/nzJrvBOMpR13bAZ.png" alt="radar_ap"><br>多级功率放大产生多种频率如下图所示：<br>触发脉冲用于相当于定时器用于开关发射信号<br>倍频器产生的MF当作载频，一路用于调制，一路用于解调<br>下面产生的NF为要加载的信号，一路用于调制，一类用于最佳匹配滤波解调<br><img src="https://s2.loli.net/2024/02/05/VLOTjnKkAYCM7rc.png" alt="multi_freq_radar"></p>
+<h6 id="发射机的指标"><a href="#发射机的指标" class="headerlink" title="发射机的指标"></a>发射机的指标</h6><ol>
+<li>工作频率和波段：决定设计时要采用的硬件方案等</li>
+<li>信号形式：简单脉冲，脉冲压缩，调频连续波<br> 下面a，b，c分别是简单脉冲，脉冲压缩和相位编码脉冲压缩<br> <img src="https://s2.loli.net/2024/02/05/g2s6PutSdmCpZ7G.png" alt="radar_signal"></li>
+<li>输出功率<br><em>雷达输出频率和雷达工作比D</em><br>$$P_{\operatorname{av}}&#x3D;P_{\operatorname{t}}\frac\tau{T_{\operatorname{r}}}&#x3D;P_{\operatorname{t}}D$$<br>信号纯度：<br>$$L(\int_{\mathfrak{m}})&#x3D;10\mathrm{<del>lg</del>}\frac{\Delta B\text{ 带宽内的单边带功率}}{\text{信号功率}} - 1 0 \mathrm{<del>lg</del>}\Delta B\mathrm{~dB&#x2F;Hz}$$</li>
+</ol>
+<h6 id="脉冲调制器（略）"><a href="#脉冲调制器（略）" class="headerlink" title="脉冲调制器（略）"></a>脉冲调制器（略）</h6><pre><code>硬性和软性脉冲调制器
+</code></pre>
+<h4 id="3-接收机（比较重点内容）"><a href="#3-接收机（比较重点内容）" class="headerlink" title="3.接收机（比较重点内容）"></a>3.接收机（比较重点内容）</h4><h6 id="3-1-接收机的结构"><a href="#3-1-接收机的结构" class="headerlink" title="3.1 接收机的结构"></a>3.1 接收机的结构</h6><p><img src="https://s2.loli.net/2024/02/05/KmzNP3VUAdbYSG7.png" alt="radar_reciever_const"><br><img src="https://s2.loli.net/2024/02/05/sS3XYFcPf7hAEua.png" alt="radar_recv"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">灵敏度时间增益控制(STC)使接收机的增益在发射机发射之后，按 R-规律随时间而增加，以避免近此离的强网波使接收机过载饱和。灵敏度时间控制义称为近程增益控制，可以加到高频放人器和前置巾频放人器巾。白动增益控制(AGC)是一种反馈技术，用来白动调整接收机的增益，以便在击达系统跟踪环路巾保持适当的增益范用。</span><br></pre></td></tr></table></figure>
+<h6 id="3-2-接收机的指标"><a href="#3-2-接收机的指标" class="headerlink" title="3.2 接收机的指标"></a>3.2 接收机的指标</h6><ol>
+<li>最小可检测信号$S_\mathrm{i~min}$</li>
+<li>工作频带范围：接受能够处理的频率范围</li>
+<li>动态范围：接受能够处理的信号功率范围</li>
+<li>中频频率和滤波方式：中频的选择要根据匹配滤波后的ADC采样能力等来选择。</li>
+</ol>
+<h6 id="3-3-噪声相关的知识（比较重要）"><a href="#3-3-噪声相关的知识（比较重要）" class="headerlink" title="3.3 噪声相关的知识（比较重要）"></a>3.3 噪声相关的知识（比较重要）</h6><ol>
+<li>噪声带宽<br> 即经过滤波器后等效均匀噪声的带宽<br> $$B_\mathrm{n}&#x3D;\frac{\int_0^\infty p_\mathrm{ne}(f)\mathrm{<del>d}f}{p_\mathrm{ne}(\int)}&#x3D;\frac{\int_0^\infty|H(f_0)|^2\mathrm{</del>d}f}{H^2(f_0)}$$</li>
+<li>电阻噪声<br> 电阻为R的噪声功率谱密度为：<br> $$p(f)&#x3D;4kTR$$<br> 其经过带宽为B的滤波器后为：<br> $$p(f)&#x3D;4kTRB_n$$</li>
+<li>额定功率<br> 将电阻噪声产生的功率看作一个内阻为R的电压源，其最大输出功率即额定噪声功率为：<br> $$N_{\mathfrak{o}}&#x3D;\frac{\overline{u}_{\mathfrak{n}}^2}{4R}&#x3D;kTB_n$$</li>
+<li>天线噪声<br> 比较复杂，一般简化为$$\overline{u}_{\mathrm{n}\Lambda}^2&#x3D;\text{4kТ }_\Lambda R_\Lambda B_n$$<br> 其中T和R分别为等效的温度和等效电阻，实际中其和仰角波瓣，地面温度都有关，有相应的曲线来描述该噪声。</li>
+<li>噪声系数<br> 即输入端口信噪比与输出端口信噪比的比值：<br> $F&#x3D;\frac{\mathrm{S_i&#x2F;N_i}}{\mathrm{S_o&#x2F;N_o}}$或者写为$F&#x3D;\frac{N_o}{N_\mathrm{i}G_a}$($G_a$为电路的放大倍数)，值得注意的是F应该只适用于线性或者准线性电路，否则F就不是一个定值，而是一个随温度变化的值，一般用分贝表示，以10为系数，由于是功率比。<br> 上面中进一步可以写为:<br> $$N_o&#x3D;N_iG_a+\Delta N&#x3D;kT_0B_nG_a+\Delta N$$<br> $$\begin{gathered}F&#x3D;1+\frac{\Delta N}{kT_0B_nG_a}\end{gathered}$$</li>
+<li>等效噪声温度<br> 能够更加直观，明显的反应微小的噪声系数差异之间有非常大的噪声性能差异：<br> 定义：$N_\Lambda&#x3D;k\text{Т }_\Lambda B_\mathrm{n}$</li>
+<li>多级串联的噪声系数F（重要）<br> n级电路级联时接收机总噪声系数为：<br> $$F_0&#x3D;F_1+\frac{F_2-1}{G_1}+\frac{F_3-1}{G_1G_2}+\cdots+\frac{F_\mathrm{n}-1}{G_1G_2\cdots G_\mathrm{n-l}}$$<br> <strong>上式给出了重要结论:为了使接收机的总噪声系数小，要求各级的噪声系数小、额定功率增益高。而各级内部噪声的影响并不相同，级数越靠前，对总噪声系数的影响越大。所以总噪声系数主要取决于最前面几级，这就是接收机要采用高增益低噪声高放的主要原因。</strong></li>
+</ol>
+<h6 id="3-4-接收机灵敏度或者最小可检测信号-S-mathrm-i-min"><a href="#3-4-接收机灵敏度或者最小可检测信号-S-mathrm-i-min" class="headerlink" title="3.4 接收机灵敏度或者最小可检测信号$S_\mathrm{i~min}$"></a>3.4 接收机灵敏度或者最小可检测信号$S_\mathrm{i~min}$</h6><p>在给定虚警概率和发现概率后：<br>$$\begin{aligned}<br>S_\mathrm{i}&amp;&#x3D;N_\mathrm{i}F_\mathrm{o}\frac{S_\mathrm{o}}{N_\mathrm{o}}\<br>S_{\mathrm{i<del>min}}&amp;&#x3D;kT_0B_\mathrm{n}F_0\left(\frac{S_\mathrm{o}}{N_\mathrm{o}}\right)<em>{\mathrm{min}}\end{aligned}$$<br>通常，我们把($S</em>{\mathrm{o}}&#x2F;N_{\mathrm{o}})<em>{\mathrm{min}}$称为“识别系数”,并用$M$表示，所以灵敏度义可以<br>$$<br>S</em>{\mathrm{i</del>tnin}}&#x3D;kT_0B_{\mathrm{n}}F_0M<br>$$<br>或者可以用dBmW来表示：<br>$$S_{\mathrm{i<del>min}}(\mathrm{dBmW})&#x3D;10\mathrm{lg}\frac{S_{\mathrm{i</del>min}}(\mathrm{W})}{10^{-3}}\mathrm{~(dBmW)}$$</p>
+<h6 id="3-5-雷达接收机的高频部分和振荡稳定等（略）"><a href="#3-5-雷达接收机的高频部分和振荡稳定等（略）" class="headerlink" title="3.5 雷达接收机的高频部分和振荡稳定等（略）"></a>3.5 雷达接收机的高频部分和振荡稳定等（略）</h6><ol>
+<li>动态范围（对于雷达一般由中频放大决定）<br> 当输入电压过大时，中频放大电路过饱和失真，过小时会发生截止失真。<br> $$D&#x3D;10\mathrm{<del>lg</del>}\frac{P_{\mathrm{i<del>max}}}{P_{\mathrm{i</del>min}}}\mathrm{<del>(dB)}&#x3D;20\mathrm{</del>lg}\frac{U_{i\mathrm{<del>max}}}{U_{i\mathrm{</del>min}}}\mathrm{~(dB)}$$</li>
+</ol>
+<h6 id="3-6-增益控制"><a href="#3-6-增益控制" class="headerlink" title="3.6 增益控制"></a>3.6 增益控制</h6><ol>
+<li>AGC自动增益控制：输入由输出负反馈控制</li>
+<li>IAGC瞬时自动增益控制：输入和干扰电压负反馈控制，防止杂波导致顺势功率增加烧毁电路。</li>
+<li>STC近程增益控制：去除近距离杂波的干扰<br> 根据试验，海浪杂泌干扰功率$P_\mathrm{im}$随此离 R 的变化规律为：<br> $$P_{\mathrm{im}}&#x3D;KR^{-\alpha}$$<br>  K为比例符数，它和雷达的发射功率等因索有关；$a$ 为山试验条作所确定的系数，它与天线波瓣形状等有关，一般$a&#x3D;2.7\sim4.7$。<br>  近程增益控制的基本原理是:当发射机每次发射信号之后，接收机产生一个和干扰功率随时间的变化规律相“匹配”的控制电压Uc来抵消杂波。</li>
+</ol>
+<h6 id="3-7-匹配滤波和准匹配滤波"><a href="#3-7-匹配滤波和准匹配滤波" class="headerlink" title="3.7 匹配滤波和准匹配滤波"></a>3.7 匹配滤波和准匹配滤波</h6><p>雷达中频放大器的级数较多，其合成频率特性有时可近似为矩形，此时采用矩形或者其他形状的匹配滤波器来进行滤波时滤波器的带宽等关系：<br><img src="https://s2.loli.net/2024/02/05/815ZkLCORVHu3Up.png" alt="likely_filter"></p>
+<h6 id="3-8-雷达带宽等（略）"><a href="#3-8-雷达带宽等（略）" class="headerlink" title="3.8 雷达带宽等（略）"></a>3.8 雷达带宽等（略）</h6><h4 id="4-雷达作用距离-重要"><a href="#4-雷达作用距离-重要" class="headerlink" title="4. 雷达作用距离(重要)"></a>4. 雷达作用距离(重要)</h4><h6 id="4-1-基本雷达方程"><a href="#4-1-基本雷达方程" class="headerlink" title="4.1 基本雷达方程"></a>4.1 基本雷达方程</h6><p>$$P_{\mathrm{r}}&#x3D;A_{\mathrm{r}}S_2&#x3D;\frac{P_{\mathrm{t}}G_{\mathrm{t}}\sigma A_{\mathrm{r}}}{(4\pi R^2)^2}$$<br>其中$A_r$为天线接收的有效面积，有效面积与天线增益之间的关系为：<br>$$G&#x3D;\frac{4\pi A}{\lambda^2}$$<br>将其带入：$$\begin{aligned}P_\mathrm{r}&amp;&#x3D;\frac{P_\mathrm{t}G_\mathrm{t}G_\mathrm{r}\lambda^2\sigma}{(4\pi)^3R^4}\P_\mathrm{r}&amp;&#x3D;\frac{P_\mathrm{t}A_\mathrm{t}A_\mathrm{r}\sigma}{4\pi\lambda^2R^4}\end{aligned}$$<br>对于共用发射和接受天线时，$G_t&#x3D;G_r,A_t&#x3D;A_r$<br>故可以得出最大检测距离$R_max$：<br>$$P_{\mathrm{r}}&#x3D;S_{\mathrm{i~min}}&#x3D;\frac{P_{\mathrm{t}}\sigma A_{\mathrm{r}}^2}{4\pi\lambda^2R_{\mathrm{max}}^4}&#x3D;\frac{P_{\mathrm{t}}G^2\lambda^2\sigma}{(4\pi)^3R_{\mathrm{max}}^4}$$<br>解得：<br>$$\begin{aligned}R_{\max}&amp;&#x3D;\left[\frac{P_{\tiny{t}}\sigma A_{\tiny{\mathrm{r}}}^2}{4\pi\lambda^2S_{\tiny{i}}\text{ min}} \right ] ^ { \frac 1 4 }\R_{\tiny{\max}}&amp;&#x3D;\left[\frac{P_{\tiny{t}}G^2\lambda^2\sigma}{(4\pi)^3S_{\tiny{i}\min}}\right]^{\frac14}\end{aligned}$$<br>从上面可以得出，在固定天线增益或者天线有效接受面积时会和波长成正比或者反比的关系。 ^520d38</p>
+<h6 id="4-2-目标雷达的截面积-RCS"><a href="#4-2-目标雷达的截面积-RCS" class="headerlink" title="4.2 目标雷达的截面积(RCS)"></a>4.2 目标雷达的截面积(RCS)</h6><p>$$\sigma&#x3D;\frac{4\pi P_2}{S_\mathrm{l}}$$<br>其中$S_1$为单位距离发射机发射的功率密度，$P_2$为单位距离单位角接受到的功率。对于简单形状目标可以有公式或者模型来近似，而对于复杂目标，一般是直接360°测量所有方位的RCS，导入软件进行计算。</p>
+<h6 id="4-3-最小可检测信噪比"><a href="#4-3-最小可检测信噪比" class="headerlink" title="4.3 最小可检测信噪比"></a>4.3 最小可检测信噪比</h6><p> 由$N_i&#x3D;kT_0B_n$，以及噪声系数的定义：</p>
+<p>$$<br>F_\mathrm{n}&#x3D;\frac{(S&#x2F;N)<em>\mathrm{i}}{(S&#x2F;N)<em>\mathrm{o}}&#x3D;\frac{\text{输入信噪比}}{\text{输出端信噪比}}<br>$$<br>变形即可得到：<br>$$S</em>{\mathrm{i~min}}&#x3D;kT</em>{(0}B_{\mathrm{n}}F_{\mathrm{n}}\left(\frac SN\right)<em>{\text{o min}}$$<br>故只要确定最小输出信噪比即可确定最小可检测信号的功率。<br>这里引入一个概念检测因子D，定义如下：<br>$$D_0&#x3D;\left(\frac{E</em>{\mathrm{r}}}{N_0}\right)<em>{\mathrm{o min}}&#x3D;\left(\frac SN\right)</em>{\text{о min}}$$<br>这里$E_r$代表的是一个矩形脉冲的能量信号，该推导如下所示：<br>对于长度为$\tau$矩形信号，其带宽为$\frac{1}{\tau}$经过带宽为$B_n$的接收机后：<br>$$\frac SN&#x3D;\frac S{N_0B_\mathrm{n}}&#x3D;\frac{S\tau}{N_\mathrm{o}}&#x3D;\frac{E_\mathrm{r}}{N_\mathrm{o}}$$<br>根据之前的雷达距离方程[[radar_toolbox&#x2F;雷达的基本原理#^520d38]]，将检测因子引入雷达距离方程有（重点）：<br>$$R_{\mathrm{max}}&#x3D;\left[\frac{E_{\mathrm{t}}G_{\mathrm{t}}A_{\mathrm{r}}\sigma}{(4\pi)^2kT_{<em>0}F</em>{<em>n}D_0C</em>{<em>B}L}\right]^{1&#x2F;4}&#x3D;\left[\frac{P</em>{t}{\tau}G_{<em>t}G</em>{<em>r}\sigma\lambda^{2}}{(4\pi)^3kT</em>{<em>0}F</em>{<em>n}D_0C</em>{_B}L}\right]^{1&#x2F;4}$$<br>这里对比发现引入了两个新的变量： ^7c4136</p>
+<ol>
+<li><p>带宽校正因子$C_{R}$&gt;1,它表示接收机带宽失配所带来的信噪比损失，匹配时$C_{R}&#x3D;1$。</p>
+</li>
+<li><p>$L$ 表示雷达各部分损耗引入的损失系数。<br>用检测因子$D_0$ 和能量$E_\mathrm{t}$表示的雷达方程在使用时有以下优点： (1)当雷达在检测目标之前有多个脉冲可以积累时，由于积累可改善信噪比，故此时</p>
+</li>
+<li><p>检波器输入端的$D_{_0}(n)$值将下降。因此可表明雷达作用此离和脉冲积累数 $n$ 之间的简明关系，可计算和绘制出标准曲线供查用。</p>
+</li>
+<li><p>用能量表示的雷达方程适用于当雷达使用各种复杂脉压信号的情况。只要知道脉冲功率及发射脉宽就可以用来估算作用距离而不必考虑具体的波形参数。</p>
+</li>
+</ol>
+<h6 id="4-4-雷达的虚警概率和发现概率"><a href="#4-4-雷达的虚警概率和发现概率" class="headerlink" title="4.4 雷达的虚警概率和发现概率"></a>4.4 雷达的虚警概率和发现概率</h6><table>
+<thead>
+<tr>
+<th>发现概率$P_d$</th>
+<th>漏报概率$P_{la}$</th>
+<th>正确不发现概率$P_{an}$</th>
+<th>虚警概率$P_{fa}$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>存目标时，判为有目标，这是一种正确判断</td>
+<td>存目标时，判为无目标，这是一种错误判断</td>
+<td>不存在目标时，判为无目标，这是一种正确判断</td>
+<td>不存在目标时，判为有目标，这是一种错误判断</td>
+</tr>
+</tbody></table>
+<ol>
+<li>虚警概率和门限电平<br> 如下图所示，判定门限电平决定了虚警概率，当然不同的解调方式有所不同，具体查看噪声分析相关的资料：<br> <img src="https://s2.loli.net/2024/02/05/CcsrjIK9YB2iEgO.png" alt="possi_fa"></li>
+<li>发现概率和门限电平<br> 包络检波输出的概率密度为：<br> $$p_d(r)&#x3D;\frac r{\sigma^2}\mathrm{exp}(-\frac{r^2+A^2}{2\sigma^2})I_0\left(\frac{rA}{\sigma^2}\right)$$<br> 其中$I_0(z)$为零阶修正贝塞尔函数<br> 发现概率$P_d$定义为：<br> $$P_{\mathrm{d}}&#x3D;\int_{\mathrm{U}<em>{\mathrm{T}}}^{\infty}p</em>{\mathrm{d}}(r)\mathrm{d}r&#x3D;\int_{\mathrm{U}_{\mathrm{T}}}^{\infty}\frac r{\sigma^2}\mathrm{exp}\left(-\frac{r^2+A^2}{2\sigma^2}\right)I_0\left(\frac{rA}{\sigma^2}\right)\mathrm{d}r$$<br> 检测概率和检测因子以及虚警概率的图为：<br> <img src="https://s2.loli.net/2024/02/05/LO7ClauZ2hdFYBr.png" alt="possi_dete"><br> <img src="https://s2.loli.net/2024/02/05/T96XoS1R4tbZPNj.png" alt="possi_all"></li>
+</ol>
+<h6 id="4-5-脉冲积累"><a href="#4-5-脉冲积累" class="headerlink" title="4.5 脉冲积累"></a>4.5 脉冲积累</h6><ol>
+<li>相参脉冲积累<br> 将 M个等幅相参中频脉冲信号进行参积累，可以使信噪比(S&#x2F;N)提高为原来的M倍。<br> 此时即检测因子的要求下降M倍：<br> $$D_0(M)&#x3D;\frac{D_0(1)}M$$</li>
+<li>非相参脉冲积累<br> M个等幅脉冲在包络检波后进行理想积累时，信噪比的改善达不到 M 倍。这是因为包络检波的非线性作用，信号加噪声通过检波器时，还将增加信号噪声的相工作用项而影响输出端的信号噪声比。特别当检波器输入端的信噪比较低时，在检波器输出端信噪比的损失更大。非参积累后信噪比(功率)的改善在 M和$\sqrt{M}$之间。<br> <img src="https://s2.loli.net/2024/02/05/NLu4ykqC5s1vcrw.png" alt="accumulate"></li>
+</ol>
+<h6 id="4-6-机械扫描雷达积累脉冲个数的确定"><a href="#4-6-机械扫描雷达积累脉冲个数的确定" class="headerlink" title="4.6 机械扫描雷达积累脉冲个数的确定"></a>4.6 机械扫描雷达积累脉冲个数的确定</h6><p>$$N&#x3D;\frac{\theta_{\alpha.0.5}f_{\mathrm{r}}}{\boldsymbol{\Omega}<em>\alpha\cos\theta_e}&#x3D;\frac{\theta</em>{\alpha.0.5}f_{\mathrm{r}}}{6\omega_m\cos\theta_{\mathrm{e}}}$$</p>
+<p>式中，$\theta_{\alpha.0.5}$为半功率天线方位波束宽度(°);$\Omega_{\alpha}$为天线方位扫描速度(°)&#x2F;s; $\omega_{m}$ 为天线方们扫描速度r&#x2F;min; $f_\mathrm{r}$ 雷达的脉冲重复频率Hz;$\theta_\mathrm{e}$ 目标仰角(°)。<br>该推导适用于</p>
+<ol>
+<li>有效方位波束$\theta_{\alpha.0,\bar{5}}&#x2F;\cos\theta_{e}$小于90°</li>
+<li>波束最大值方向的倾斜角大体上等于$\theta_e$</li>
+</ol>
+<h6 id="4-7-目标截面积与扫描波长和天线角度极化的关系"><a href="#4-7-目标截面积与扫描波长和天线角度极化的关系" class="headerlink" title="4.7 目标截面积与扫描波长和天线角度极化的关系"></a>4.7 目标截面积与扫描波长和天线角度极化的关系</h6><ol>
+<li>雷达三维分辨单元<br> 即在三维分辨内部无法分清两个相近物体的距离和角度，可以看作距离分辨率乘上角度分辨率，示意图如下所示：<br> <img src="https://s2.loli.net/2024/02/05/T374YJn6FVP9pWS.png" alt="diagram1"><br> $$V&#x3D;R\theta_{\alpha}R\theta_{\beta}\frac{c\tau}{2}&#x3D;\frac{\Omega{R}^2c\tau}2$$<br> 其中$\Omega$即为立体角，即两个维度角度的乘积，一般来说立体角越小，说明天线的方向性越小。</li>
+<li>点目标<br> 当目标的体积远小于上面所说的三维分辨单元的体积时，可以视为点目标。</li>
+<li>球形状点目标RCS与波长的关系<br> 分为三个阶段：瑞丽区，振荡区和光学区<br> <img src="https://s2.loli.net/2024/02/05/akxA4FfejWMTglP.png" alt="wave_different"><br> 一般来说我们都希望RCS不会随着波长变化而变化，而是一个固定的值。即要求$2\pi r\gt\gt \lambda$，即要求目标的尺寸远远大于照射其的电磁波波长时，此时才可以将其视为光学区，物体的RCS不会随着波长改变而改变。</li>
+<li>其他简单形状的RCS和波长的关系<br> 如下图所示：<img src="https://s2.loli.net/2024/02/05/Ac1HpwbhyTqZi6J.png" alt="shape_wave"><br> <img src="https://s2.loli.net/2024/02/05/G2sNj4bMoE3wz8P.png" alt="shape_rcs"><br> <img src="https://s2.loli.net/2024/02/05/UDT7ug1QYCNWPFq.png" alt="shape_rcs2"></li>
+<li>复杂目标的RCS<br> 可以通过查询数据集或者对其进行扫描来确定其雷达截面积。<br> 从上面的讨论中可看出，对于复杂目标的雷达截面积，只要稍微变动观察角或工作频率，就会引起截面积大的起伏。但有时为了估算作用此离，必须对各类复杂目标给出一个代表其截面积大小的数值$\sigma$。今尚无一个一致同意的标准来确定飞机等复杂目标截面积的单值表示值。可以采用其各方向截面积的平均值或中值作为截面积的单值表示值，有时也用“最小值”(即差不多95%以上时间的截面积都超过该值)来表示。也可能是根据实验测量的作用距离反过来确定其击达截面积。</li>
+</ol>
+<h6 id="4-8-目标特性与天线极化的关系"><a href="#4-8-目标特性与天线极化的关系" class="headerlink" title="4.8 目标特性与天线极化的关系"></a>4.8 目标特性与天线极化的关系</h6><ol>
+<li><p>极化的定义：<br> 天线发射时会有一定的极化，极化的概念如下：<br> 电磁波的传播本质上是电磁场的传播，而电场是有方向的。如果电场方向垂直于地面，我们称它为垂直极化波。同理，平行于地面，就是水平极化波。<br> 如果电场的方向和地面成45°夹角，我们就其称为±45°极化。<br> <img src="https://s2.loli.net/2024/02/05/H8OILgcsW9A6fzm.png" alt="polarized"><br> 如下图所示通过极化，可以避免极化电流导致信号能量衰减等等，也可以用于控制天线发射的方向等。<br> <img src="https://s2.loli.net/2024/02/05/5YUTeMHfKsjGOJl.png" alt="polorized2"></p>
+</li>
+<li><p>线极化：下面这个散射矩阵说明了天线在发射后经过散射，接受处得到的水平和垂直极化成分：<br> $$\begin{bmatrix}E_\mathrm{H}^\mathrm{r}\E_\mathrm{V}^\mathrm{r}\end{bmatrix}&#x3D;\begin{bmatrix}\alpha_\mathrm{HH}&amp;\alpha_\mathrm{VH}\\alpha_\mathrm{HV}&amp;\alpha_\mathrm{VV}\end{bmatrix}\begin{bmatrix}E_\mathrm{H}^\mathrm{T}\E_\mathrm{V}^\mathrm{T}\end{bmatrix}$$<br> 不同的目标会有不同的散射矩阵，对于天线来说，其交叉项元素是相等的<br> 天线的互易原理告诉我们，不论收发天线各采用什么样的极化，当收发天线互易时， 可以得到同样效果。特殊情况，比如发射天线是垂直极化，接收天线是水平极化，当发射天线作为接收而接收天线作为发射时，效果相同，可知$\alpha_\mathrm{HV}&#x3D;\alpha_\mathrm{VH}$,说明散射矩阵交叉项相同。<br> 物体的散射矩阵和物体的形状和材料等等都有关系，下面是几种特殊情况对应的散射矩阵：</p>
+<ol>
+<li>各向同性球体：<br>$$\begin{bmatrix}\alpha&amp;0\0&amp;\alpha\end{bmatrix}$$</li>
+<li>入射方向对称的物体<br>$$\left.\left[\begin{matrix}\alpha_{HH}&amp;0\0&amp;\alpha_{VV}\end{matrix}\right.\right]$$</li>
+</ol>
+</li>
+<li><p>圆极化或者椭圆极化：<br>对于圆极化或者椭圆极化可以仿照上面的线极化来用散射矩阵进行表示。<br>若$E_\mathrm{R}^\mathrm{T},E_\mathrm{L}^\mathrm{T}$分别表示发射场中的右旋和左旋圆极化成分，$E_\mathrm{R}^\mathrm{S}$、$E_\mathrm{L}^\mathrm{S}$分别表示散射场中右旋和左旋圆极化成分，则有：<br>$$\begin{bmatrix}E_\mathrm{R}^\mathrm{S}\E_\mathrm{L}^\mathrm{S}\end{bmatrix}&#x3D;\begin{bmatrix}\alpha_\mathrm{RR}&amp;\alpha_\mathrm{LR}\\\alpha_\mathrm{RL}&amp;\alpha_\mathrm{L,L}\end{bmatrix}\begin{bmatrix}E_\mathrm{R}^\mathrm{T}\\E_\mathrm{L}^\mathrm{T}\end{bmatrix}$$<br>这一性质是很重要的，如果我们采用相同极化的圆极化天线作为发射和接收天线，那么对于一个近似为球体的目标。接收功率很小或为零。我们知道，气象微粒如雨等就是球形或椭圆形，为了滤除雨回波的干扰，收发天线常采用同极化的圆极化天线。不管日目标是否对称，根据互易原理，都有 $\alpha_{LR}&#x3D;\alpha_{RL}$。</p>
+</li>
+</ol>
+<h6 id="4-9-目标起伏模型（重要）"><a href="#4-9-目标起伏模型（重要）" class="headerlink" title="4.9 目标起伏模型（重要）"></a>4.9 目标起伏模型（重要）</h6><ol>
+<li>由之前的最大作用距离公式[[radar_toolbox&#x2F;雷达的基本原理#^7c4136]]，当目标起伏时会导致雷达的最大作用距离减小。根据$\sigma$的概率分布函数和相关性将其分为以下几种起伏模型：</li>
+<li>Swering起伏模型1-5<br> 快起伏和慢起伏，指的时扫描的目标的起伏特性之间的变化速度，或者说相关性，慢起伏指的时每次扫描内M个脉冲积累之间其RCS具有相关性，而每两次扫描之间RCS不具有相关性。快起伏是指的是M个脉冲积累之间的RCS也不具有相关性。<br> <img src="https://s2.loli.net/2024/02/05/L8DHNCcdb3nwkGv.png" alt="wave_model"></li>
+<li>目标起伏对雷达最大作用距离的影响<br> 会导致检测因子$D_0$发生增加，如下所示：<br> $$\widetilde{\left(\frac{s}{N}\right)}<em>{1}&#x3D;\left(\frac{s}{N}\right)</em>{1}+\left(\Delta\frac{s}{N}\right)_{1}$$<br> 该增加可以由matlab函数或者查表来获得。</li>
+</ol>
+<h6 id="4-10-系统损耗"><a href="#4-10-系统损耗" class="headerlink" title="4.10 系统损耗"></a>4.10 系统损耗</h6><p>$$R_{\mathrm{max}}&#x3D;\left[\frac{P_{t}{\tau}G_{<em>t}G</em>{<em>r}\sigma\lambda^{2}}{(4\pi)^3kT</em>{<em>0}F</em>{<em>n}D_0C</em>{_B}L}\right]^{1&#x2F;4}$$<br>其中$L&#x3D;L_1L_2…$表示多个系统导致的损耗，其中$L_i$为大于1的正值，比如</p>
+<ol>
+<li>射频传输损耗</li>
+<li>天线波束损耗</li>
+<li>设备不完善损耗<br>$C_B$: 匹配滤波损耗</li>
+</ol>
+<h6 id="4-11-传播过程损耗"><a href="#4-11-传播过程损耗" class="headerlink" title="4.11 传播过程损耗"></a>4.11 传播过程损耗</h6><ol>
+<li>大气衰减<br>大气中的氧气和水蒸气是产生雷达电波衰减的主要原因。当雷达工作波长短于3GHz时，必须考虑大气衰减。下面是氧气和水蒸气的衰减图：<br><img src="https://s2.loli.net/2024/02/05/a9TqCHzuj4B1Ym5.png" alt="atom_fade"><br>除此之外还有：<br>雨雾天气的影响<br>电磁波仰角不同导致的衰减<br>发射高度导致的衰减</li>
+<li>大气折射和雷达直视距离<br> 由于地球并不是一个平面，而是一个不规则的椭圆，所以雷达在传输的过程中，需要考虑发射机的高度，目标的高度以及所在地方的球面曲率，根据这三者对雷达基本方程进行修正。<br> 大气折射对雷达的影响有两个方面，一个是改变雷达的测量距离，导致测量误差，另一方面会引起仰角误差。<br> 当电磁波在大气中传播时，其会向下折射而不是沿直线，这是因为大气中介质不均匀导致的，这个会增大雷达的可视距离。<br> 而地球的曲率会导致发射和接受必须有地一定的高度才能接受，这个会减小雷达的可视距离。</li>
+<li>地面和水面反射导致的衰减</li>
+</ol>
+<h6 id="4-12-雷达方程的其他几种形式"><a href="#4-12-雷达方程的其他几种形式" class="headerlink" title="4.12 雷达方程的其他几种形式"></a>4.12 雷达方程的其他几种形式</h6><ol>
+<li><p>二次雷达方程<br>即应答器在接受到电磁波后会对雷达发射一个信号。该过程有两个步骤：<br>雷达发射信号给应答器，其中$S_{\mathrm{i}\mathrm{min}}^{‘}$为应答器能够检测的最小信号：<br>$$R_{\mathrm{max}}&#x3D;\left[\frac{P_{\mathrm{t}}^{‘}G_{\mathrm{t}}G_{\mathrm{r}}^{‘}\lambda^{2}}{(4\pi)^2S_{\mathrm{i}\mathrm{min}}^{‘}}\right]^{1&#x2F;2}$$<br>应答器发射信号给雷达：<br>$$R_{\max}^{‘}&#x3D;\left[\frac{P_t^{‘}G_{\mathrm{t}}^{‘}G_{\mathrm{r}}\lambda^2}{(4\pi)^2S_{\mathrm{i}\min}}\right]^{1&#x2F;2}$$<br>两个距离中的较小值即为该系统的最大传输距离。</p>
+</li>
+<li><p>双基雷达方程（比较常用例如MIMO中）<br>   <img src="https://s2.loli.net/2024/02/05/wqXlprmYheu894C.png" alt="bi_radar"><br>  如图所示，其中值得注意的是此时的$\sigma$是指的$R_t$方向发射电磁波向$R_r$方向散射电磁波的雷达截面积。<br>  得到最大雷达作用距离如下，且满足三角形的方程：<br>   $$(R_tR_\mathrm{r})_\mathrm{max}&#x3D;\left[\frac{P_t \tau G_\mathrm{t}G_\mathrm{r}\sigma_\mathrm{b},\lambda^2F_\mathrm{t}^2F_\mathrm{r}^2}{(4\pi)^3kT_\mathrm{0}F_\mathrm{n}D_0C_\mathrm{B}L}\right]^{1\cdot2}$$<br>   上面的$F_t$和$F_r$为波束电压的归一化数字，即当天线不是正对着目标的时候，如下图所示：<br>   <img src="https://s2.loli.net/2024/02/05/zf3eaK9MVWQSJhX.png" alt="bi_radar2">	满足的三角形方程：<br>   $$\begin{aligned}&amp;\mid R_\mathfrak{i}-R_\mathfrak{r}\mid\leqslant R_b\&amp;R_\mathfrak{i}+R_\mathfrak{r}\geqslant R_b\end{aligned}$$</p>
+</li>
+<li><p>用信号能量表示的雷达方程<br>  和之前说过的一样<br>  $$R_{\mathrm{rax}}&#x3D;\left[\frac{E_\mathrm{t}G_\mathrm{t}A_\mathrm{r}\sigma}{(4\pi)^2kT_\mathrm{0}F_\mathrm{n}D_\mathrm{0}(M)C_\mathrm{B}}\right]^{1&#x2F;4}&#x3D;\left[\frac{ME_\mathrm{t}G_\mathrm{t}A_\mathrm{r}\sigma}{(4\pi)^2kT_\mathrm{0}F_\mathrm{n}D_\mathrm{0}(1)C_\mathrm{B}}\right]^{1&#x2F;4}$$</p>
+</li>
+<li><p>搜索雷达方程<br>搜索雷达即在某个空域内一直扫描来找到目标。<br>雷达搜索的过程中有一对矛盾，即天线波束增益角度$\beta$和积累脉冲数$M$的关系。具体推导可以查看雷达原理第三版5.3.7节，可以得到下面：<br>$$R_{\mathrm{max}}&#x3D;\left[\left(P_{\mathrm{av}}A\right)\frac{T_{f}}{\Omega}\frac\sigma{4\pi kT_{\mathrm{0}}f_{\mathrm{n}}D_{\mathrm{0}}(1)C_{\mathrm{B}}L}\right]^{1&#x2F;4}$$<br>可以看出雷达搜索能力和天线的平均功率于孔径乘积（天线有效面积）有关，以及和扫描整个空域的时间$T_f$与整个空域的立体角$\Omega$的比值有关。这也说的通，功率和天线接受能力越强，能找到的概率越高，每个地点扫描的时间越多找到的概率也越高。</p>
+</li>
+<li><p>跟踪雷达方程<br>跟踪雷达指的是在$t_0$时间内连续跟踪一个目标，对于单个跟踪目标雷达方程为：<br>$$R_{\max}&#x3D;\left[P_{\mathrm{av}}A_{\mathrm{r}}\frac{A_{\mathrm{i}}}{\lambda^2}\frac{t_{0}\sigma}{4\pi kT_{0}F_{\mathrm{n}}D_{0}(1)C_{\mathrm{B}}L}\right]^{1&#x2F;4}$$</p>
+</li>
+<li><p>干扰环境下的雷达方程<br>  有源干扰：此时看的是信干比<br><img src="https://s2.loli.net/2024/02/05/Rxao1sm5PvYtZHd.png" alt="radar_interv"><br>这里我们发现  <img src="https://s2.loli.net/2024/02/05/CTga4rUdvGplLnZ.png" alt="image-20240110120614693"><br>  $$<br>  R_{\max}&#x3D;\left[\frac{P_{t}G_{t}G_{r}\sigma R_{j}^{2}\Delta f_{j}}{4\pi P_{j}G_{j}G_{r}^{‘}\Delta f_{r}AL}\right]^{1&#x2F;4}<br>  $$</p>
+</li>
+<li><p>无源干扰</p>
+<p>可以得到接收到的信号与干扰信号分别为：<br>$$<br>\begin{aligned}Prs&#x3D;\frac{P_{t}G_{t}G_{r}\lambda^{2}\sigma}{(4\pi)^{3}R^{4}}\Prc&#x3D;\frac{P_{t}G_{t}G_{r}\lambda^{2}\sigma_{c}}{(4\pi)^{3}R^{4}}\end{aligned}<br>$$<br>故要求两者的比值$\frac{P_{rs}}{P_{rs}}&#x3D;\frac{\sigma}{\sigma_c}\geq\frac{S_{0}}{C_{0}}$<br>后面的具体看书上的推导，我就不写了，得到的公式如下：<br>$$<br>R&#x3D;\left[\frac{P_1G_1\lambda^2\bar{\sigma}\Big(\frac12c\tau\Big)}{(4\pi)^2LMN_i}\right]^{\frac12}<br>$$</p>
+</li>
+</ol>
+<h4 id="5-目标距离的测量"><a href="#5-目标距离的测量" class="headerlink" title="5 目标距离的测量"></a>5 目标距离的测量</h4><h6 id="5-1-脉冲法测距"><a href="#5-1-脉冲法测距" class="headerlink" title="5.1 脉冲法测距"></a>5.1 脉冲法测距</h6><ol>
+<li><p>基本原理：<br>通过估计脉冲的中心点来检测时间差，具体的检测流程如下所示：<br><img src="https://s2.loli.net/2024/02/05/jAKtIYZsnX1prvx.png" alt="image-20240110123736941"></p>
+</li>
+<li><p>影响测量精度的因素：<br>​	对测距公式进行微分：</p>
+</li>
+</ol>
+<p>$$<br>\mathrm{d}R&#x3D;\frac{\partial R}{\partial c}\mathrm{d}c+\frac{\partial R}{\partial t_\mathrm{R}}\mathrm{d}t_\mathrm{R}&#x3D;\frac Rc\mathrm{d}c+\frac c2\mathrm{d}t_\mathrm{R}<br>$$<br>   故我们可以看出来有下面以下几项误差：</p>
+<ol>
+<li><p>电磁波传播速度的变化导致的误差，由于空气介质不均匀。</p>
+</li>
+<li><p>实际传播路径变化的导致的误差，由于电磁波会在不均匀介质中折射。</p>
+</li>
+<li><p>实际读数导致的误差</p>
+</li>
+<li><p>距离分辨率：</p>
+</li>
+</ol>
+<p>$$<br>\Delta r_c&#x3D;\frac c2\left(\tau+\frac d{\upsilon_n}\right)<br>$$<br>   式子中后面的哪一项是指屏幕光点直径和屏幕刷新速度导致的影响。<br>   对于线性调频信号采用脉冲压缩后，其距离分辨率变为了其斜率$S$的倒数。<br>$$<br>\Delta r_c&#x3D;\frac {c}{2B}&#x3D;\frac {c\tau}{2S}<br>$$<br>4. 测距范围：<br>   最小测距范围：接受的脉冲至少要等当前脉冲发出去，</p>
+<p>$$<br>R_{min}&#x3D;\frac 12c(\tau+t_0)<br>$$<br>   此式子中$t_0$代表雷达收发开关切换所需要的时间。<br>   最大无模糊距离：<br>$$<br>R_{max}&#x3D;\frac 12cT_r<br>$$<br>该式子与积累脉冲数M冲突：$M&#x3D;\frac{\theta_{0.5}}{\omega}\frac{1}{T_{r}}$，一般优先满足积累脉冲，故实际测量中可能会变成不满足最大无模糊距离：<br>$$<br>R&#x3D;\frac c2(mT_{\mathrm{r}}+t_{\mathrm{r}})<br>$$<br>这个时候为了得到$t_r$，我们就要确定$T_r$。</p>
+<p>距离模糊的判定方法：<br>重频参差：发射两组发射频率不同的发射波长相同的电磁波。<br>其频率关系为： ^a84f9d<br>$$<br>\frac{fr_{1}}{fr_{2}}&#x3D;\frac{N+1}{N}~~~\frac{Tr_{2}}{Tr_{1}}&#x3D;\frac{N+1}{N}<br>$$<br>即此时可以得到接受到的回波重合时有：<br>$$<br>T &#x3D; m_1{T_\mathrm{r1}}+t_{\mathrm{r}}&#x3D;m_2{T_\mathrm{r2}}+t_{\mathrm{r}}<br>$$<br>此时有两种情况：$m_1&#x3D;m_2&#x3D;0$即在最大模糊距离内，或者$m_1&#x3D;m_2+1$，通过下面公式来求得，如果第一个公式为负值则说明时第二种情况：<br>$$<br>t_{\mathrm{R}}&#x3D;\frac{t_{1}\int_{\mathrm{rl}}-t_{2}\int_{\mathrm{r}2}}{\int_{\mathrm{rl}}-\int_{\mathrm{r}2}}\quad\text{或}\quad t_{\mathrm{R}}&#x3D;\frac{t_{1}\int_{\mathrm{rl}}-t_{2}\int_{\mathrm{r}2}+1}{\int_{\mathrm{rl}}-\int_{\mathrm{r}2}}<br>$$<br>此时两组重频参差的最大模糊距离变为：<br>$$<br>\frac{1}{2}c(T_{r1}与T_{r2}的最小公倍数)<br>$$<br>舍脉冲标记法：在发射的M个脉冲中舍去一个作为标记该脉冲。此时最大模糊距离扩大M倍。</p>
+<h6 id="5-2-调频法测距（可以参看TI的FMCW的课程）"><a href="#5-2-调频法测距（可以参看TI的FMCW的课程）" class="headerlink" title="5.2 调频法测距（可以参看TI的FMCW的课程）"></a>5.2 调频法测距（可以参看TI的FMCW的课程）</h6><p>通过调频连续波而不是脉冲波来测距，此时无法收发共用，该种雷达有两种天线，发射天线和接受天线。</p>
+<p>三角波调频连续波测距：<br>$$<br>f_r&#x3D;f_0+f_{\mathrm{d}}\pm\frac{4\Delta f}{T_{\mathrm{m}}}\Big(t-\frac{2R}c\Big)<br>$$<br>其中$f_d$为多普勒频移，具体为$\frac{2v}{\lambda}$，后面的$\frac{4\Delta f}{T_m}$为频率增减的斜率。</p>
+<h6 id="5-3-距离跟踪原理"><a href="#5-3-距离跟踪原理" class="headerlink" title="5.3 距离跟踪原理"></a>5.3 距离跟踪原理</h6><p>​	目标回波的波形有各种形状，如图所示：<br><img src="https://s2.loli.net/2024/02/05/IfRzYMiSDrW3h6n.png" alt="image-20240111113749033"></p>
+<ol>
+<li>锯齿电压波法：<br><img src="https://s2.loli.net/2024/02/05/2PEtmw3Q9yvH4pq.png" alt="image-20240111114239527"><br>如上图所示，调节$E_p$与回波峰值重合，即可通过读出$E_p$来得到回波的时间，峰值等等参数。</li>
+<li>相位调制法：<br><img src="https://s2.loli.net/2024/02/05/NISe3OBnxEp7vjL.png" alt="image-20240111114733020"><br>如图，通过调相电路使得相位调制后脉冲产生器的输出与目标回波脉冲重合，读出此时所调相位即可计算得出回波的时间等。</li>
+<li>自动距离捕捉<br>   （略，详细见课本和网课雷达原理 P65）<br>   <img src="https://s2.loli.net/2024/02/05/7QF2j3MnPsVNkz8.png" alt="image-20240111115613884"><br>   如上图所示，跟踪脉冲产生器模拟产生一个延时为$t^{‘}$的波形，在时间鉴别器中和接受脉冲进行对比，将差值通过控制器进行负反馈，直到$t&#x3D;t^{‘}$。</li>
+</ol>
+<h4 id="6-角度测量"><a href="#6-角度测量" class="headerlink" title="6. 角度测量"></a>6. 角度测量</h4><h6 id="6-1-雷达测角的方法"><a href="#6-1-雷达测角的方法" class="headerlink" title="6.1 雷达测角的方法"></a>6.1 雷达测角的方法</h6><p>振幅法测向和相位法测向。</p>
+<h6 id="6-2-雷达天线方向图函数"><a href="#6-2-雷达天线方向图函数" class="headerlink" title="6.2 雷达天线方向图函数"></a>6.2 雷达天线方向图函数</h6><p>$$<br>F\left(\theta\right)&#x3D;\left|F\left(\theta\right)\right|e^{j\varphi\left(\theta\right)}<br>$$</p>
+<p>即天线方向图函数有振幅和相位的函数，严格来说发射和接受要考虑振幅和相位的响应。但是一般来说只考虑振幅响应。<br>性质：</p>
+<ol>
+<li><p>极大值性质，主瓣存在最大值</p>
+</li>
+<li><p>对称性，关于主瓣对称</p>
+</li>
+<li><p>主瓣单调性，在一个主瓣内，离主瓣中心点越远幅值越小</p>
+</li>
+<li><p>对于幅值以电压为单位的天线幅值方向图函数有：<br>其$\theta_{0.5}$即为3dB点，表示为：<br>$$<br>F_{\text{电}}(\frac{\theta_{0.5}}{2})&#x2F;F(0)&#x3D;\frac{\sqrt{2}}{2}<br>$$</p>
+</li>
+</ol>
+<p>典型的雷达方向图函数：<br><img src="https://s2.loli.net/2024/02/05/tLwj38PveO2il1D.png" alt="image-20240111121910350"><br>其中单向和双向工作的意义：单向工作代表只接受或者只发射天线方向图的增益，双向代表发射后目标不动，此时接受后的天线方向图的增益。单向工作的幅值平方即为双向工作幅值。<br>对于天线方向图函数要首先判断是以电压还是以功率为单位的天线方向图函数，对于电压其3dB幅值为$\frac{\sqrt2}{2}$，对于功率为$0.5$。<br>对于雷达距离方程中，其中所带入的$F$应该是功率的天线幅值。而不是电压，其转换关系如下所示：<br>$$<br>F_{\text{功率}}\left(\theta\right)&#x3D;F_{\text{电压}}^2\left(\theta\right)<br>$$</p>
+<h6 id="6-3-两天线相位法测角的基本原理"><a href="#6-3-两天线相位法测角的基本原理" class="headerlink" title="6.3 两天线相位法测角的基本原理"></a>6.3 两天线相位法测角的基本原理</h6><p>对于信号：<br>$$<br>f(x)&#x3D;Ucos(2\pi ft)<br>$$<br>如图所示，当目标和接收机的距离$D$远远大于接收机之间的间隔$d$时，可以看作此时目标到两个接收机之间的距离近似是一样，且方向是平行的：<br><img src="https://s2.loli.net/2024/02/05/SYA7zUXqyFHDWPp.png" alt="image-20240112211133141"><br>此时带入上面的信号公式，可以推出相位差<br>$$<br>\Delta\varphi&#x3D;\frac{2\pi}\lambda\Delta R&#x3D;\frac{2\pi}\lambda d\sin\theta<br>$$<br>从上面可以得出目标角度$\theta$为：<br>$$<br>\theta &#x3D; arcsin(\frac{\Delta\varphi \lambda}{2\pi d})<br>$$<br>从上面的式子可以看出，角度的模糊和波长以及接收天线之间的距离有关，下面来讨论关于角度模糊的问题。<br>$$<br>\theta\in\left[-\theta_{\max},\theta_{\max}\right]<br>$$<br>其中$\theta_{max}&#x3D;arcsin(\frac{\lambda}{2d})$<br>值得注意的是，实际应用中一般是采用线性调频信号，其相位在发射时刻和接受时刻是一样的。</p>
+<h6 id="6-4-相位比较器"><a href="#6-4-相位比较器" class="headerlink" title="6.4 相位比较器"></a>6.4 相位比较器</h6><p>将相位差变成电压差，具体电路原理就不分析了。</p>
+<h6 id="6-5-测量精度和相位多值性的问题"><a href="#6-5-测量精度和相位多值性的问题" class="headerlink" title="6.5 测量精度和相位多值性的问题"></a>6.5 测量精度和相位多值性的问题</h6><p>对于测量精度，我们进行微分，可以看出<br>$$<br>\begin{gathered}<br>\mathrm{d}\varphi&#x3D;\frac{2\pi}\lambda d\cos\theta\mathrm{d}\theta  \<br>\mathrm{d}\theta&#x3D;\frac{\lambda}{2\pi d\cos\theta}\mathrm{d}\varphi<br>\end{gathered}<br>$$<br>相位测量的精度与$\frac{d}{\lambda}$的大小有关，其越大精度越越高，但会导致最大能够测量的相位减小。当$\theta&#x3D;0$时此时测角误差最小，但在$\theta&#x3D;+&#x2F;-90$此时误差最大。此时就会出现相位模糊问题，下面说一下相位模糊问题。<br>如下图的三天线测角，我们要测量$d_{13}$之间的相位差，$d_{12}$是可以调整的：<br><img src="https://s2.loli.net/2024/02/05/WvxkYHyuswm5ifI.png" alt="image-20240115144603034"><br>首先调整$d_{12}$的距离使得其满足：<br>$$<br>\varphi_{12}&#x3D;\frac{2\pi}\lambda d_{12}\sin\theta&lt;2\pi<br>$$<br>此时根据相位差与距离的比值关系，即可以得到：<br>$$<br>\begin{aligned}\frac{\varphi_{13}}{\varphi_{12}}&amp;&#x3D;\frac{d_{13}}{d_{12}}\\varphi_{13}&amp;&#x3D;\frac{d_{13}}{d_{12}}\varphi_{12}\end{aligned}<br>$$</p>
+<h6 id="6-6-振幅法测角"><a href="#6-6-振幅法测角" class="headerlink" title="6.6 振幅法测角"></a>6.6 振幅法测角</h6><ol>
+<li><p>最大信号法：<br><img src="https://s2.loli.net/2024/02/05/boCqmSuDkI6EfB2.png" alt="image-20240115151503489"><br>如图，天线按照一定速度扫描某个角度，通过找出某个时刻回波的最大值来找到目标的角度，具体可以看书。</p>
+</li>
+<li><p>等信号法<br>通过两个重叠且相同的天线来测量：<br><img src="https://s2.loli.net/2024/02/05/NiBq5a2OlSYM4dx.png" alt="image-20240115151923344"><br>但目标在两个天线中间时，此时接收到的回波中1和2天线的振幅时一样的。<br>$$<br>\begin{aligned}F_1(\theta)&amp;&#x3D;F(\theta_1)&#x3D;F(\theta+\theta_k-\theta_0)\F_2(\theta)&amp;&#x3D;F(\theta_2)&#x3D;F(\theta-\theta_0-\theta_k)\end{aligned}<br>$$<br>两个天线的交叠位置一般在3dB点位置，示意图如下：<br><img src="https://s2.loli.net/2024/02/05/rvXTQSfGKBFbaIi.png" alt="image-20240115152417255"><br>此时，通过比幅法或者和差法来获得1和2天线接受的比值或者差来进行查表得到目标距离两天线正中间的差值或者说角度差。<br>等信号法的实现方法：<br>顺序波瓣：将一个波束绕着一个轴做圆锥运动。<br>同时波瓣法：将两个波束同时来进行扫描。<br>等信号法的优缺点：优点：测角精度高（相比最大信号法来说)，可以做角度跟踪。缺点：因为是采用3dB点，此时最大作用距离没有最大信号法作用距离这么远。</p>
+</li>
+</ol>
+<h6 id="6-7-自动测角的原理与方法"><a href="#6-7-自动测角的原理与方法" class="headerlink" title="6.7 自动测角的原理与方法"></a>6.7 自动测角的原理与方法</h6><p>分类：圆锥扫描自动测角系统和单脉冲自动测角系统。<br>圆锥扫描法：<br><img src="https://s2.loli.net/2024/02/05/hNkGmv4qYUzPx5g.png" alt="image-20240115155123171"><br>如图所示，单个天线波束偏离信号一个夹角<br>可以推导出$\theta$此时的角度，并通过调整$cos(\theta)$和$sin(\theta)$来调整天线的角度，使得最终天线波束能够把等信号轴对准目标。具体推导如下：<br><img src="https://s2.loli.net/2024/02/05/NofB2ITRXaH3YGP.png" alt="image-20240115165256615"><br>通过回波$u$的电压，将其与$cos(\omega_st)$混频得到$\phi_0$从而得出需要修正的距离。<br>单脉冲自动测角系统：</p>
+<ol>
+<li><p>振幅和差式单脉冲<br>和差比较器：一个微波器件来输出比较结果<br><img src="https://s2.loli.net/2024/02/05/YnI9qeW5PZyJ28t.png" alt="image-20240115165717113"><br>如上图所示，1和2接入两个接收天线，剩下那个接入发射信号。<br>发射时，从发射机来的信号加到和差比较器的Σ端，故1、2 端输出等幅同相信号，两个馈源被同相激励，并辐射相同的功率，结果两波束在空间各点产生的场强同相相加，形成发射和波束$F_{\Sigma}(\theta)$,如下图 (b)所示。<br><img src="https://s2.loli.net/2024/02/05/mePIcrjVU2AQxyf.png" alt="image-20240115170212673"><br>接收时，同脉冲同时被两个脉束的馈源所接收。两波束接收到的信号振幅有差异<br>(视目标偏离天线轴线的程度),但相位相同(为了实现精密跟踪，波束通常做得很窄)。这两个相位相同的信号分别加到和差比较器的 1、2 端。<br>此时接受到的信号的振幅为：<br>$$<br>\begin{gathered}<br>E_{\Sigma} &#x3D; kF_{\Sigma}(\theta)[F(\delta-\theta)+F(\delta+\theta)] \<br>&#x3D;kF_{\Sigma}^2(\theta)<br>\end{gathered}<br>$$<br>此时为了求出目标和等幅偏离程度来对天线进行调整，我们要解析出回波信号的信息。<br>$$<br>\begin{aligned}<br>&amp;F_{\sum}\left(\theta\right)&#x3D;F\left(\theta-\delta\right)+F\left(\theta+\delta\right) \<br>&amp;F_{\Delta}\left(\theta\right)&#x3D;F\left(\theta-\delta\right)-F\left(\theta+\delta\right) \<br>&amp;\text{泰勒展开有}\<br>&amp;F\left(\theta\pm\delta\right)&#x3D;F\left(\delta\right)\pm F^{\prime}\left(\delta\right)\theta \<br>&amp;\sum &#x3D; 4kF^2(\theta) \<br>&amp;\Delta&#x3D;-4kF(\delta)F^{\prime}(\delta)\theta<br>\end{aligned}<br>$$<br>具体说明如下图所示，在P243页有说明。<br><img src="https://s2.loli.net/2024/02/05/UJeXjfu4T7CcwqL.png" alt="image-20240115172443891"><br>上面说的比较清楚，通过和差比较器输出的信号，再通过下面这个增益控制，即可输出偏离的角度的大小，再通过一个相位比较器来比较判定该偏离是正值还是负值，下面是实现偏离电压输出系统的组成：<br><img src="https://s2.loli.net/2024/02/05/8U5dhMvr7VZRojp.png" alt="image-20240115173750355"><br>此时整个自动追踪系统框图如下所示，指的注意的是这里是单平面系统，对于双平面系统，增加一个平面即可，具体见书上的讲解：<br><img src="https://s2.loli.net/2024/02/05/tTu7fVwpDAHb2aQ.png" alt="image-20240115173939011"></p>
+</li>
+<li><p>相位和差式单脉冲<br>（略）</p>
+</li>
+</ol>
+<h6 id="6-8-波束形状和扫描方式"><a href="#6-8-波束形状和扫描方式" class="headerlink" title="6.8 波束形状和扫描方式"></a>6.8 波束形状和扫描方式</h6><ol>
+<li><p>波束形状：<br>扇形波束和针状波束</p>
+</li>
+<li><p>扫描方式<br>锥形扫描方式，圆形或者锯齿形状的扫描方式</p>
+</li>
+<li><p>天线波束的扫描方法<br>从原理上可以分为两种：机械性扫描与电扫描</p>
+</li>
+<li><p>相位扫描法（属于电扫描）<br>使用移相器来进行电扫描，或者说改变天线振子的馈电长度，具体可以参考天线或者微波线方程。<br>基本原理：<br>如图N个阵元，第K个阵元有一个$k\phi$的移相器，$k\in[0,N-1]$，如下图所示：<br><img src="https://s2.loli.net/2024/02/05/jRdxyKbUhJS3tfC.png" alt="image-20240115183213106"><br>此时接受到的总信号为各个信号的矢量和为：<br>$$<br>\begin{aligned}<br>\mathbf{E}(\theta)&amp; &#x3D;E_0+E_1+\cdotp\cdotp\cdotp+E_i+\cdotp\cdotp\cdotp+E_{\mathbb{N}-1}  \<br>&amp;&#x3D;\sum_{k&#x3D;0}^{N-1}E_k<br>\end{aligned}<br>$$<br>即化简为：<br>$$<br>E{(\theta)}&#x3D;E\sum_{k&#x3D;0}^{N-1}e^{jk(\psi-\varphi)}&#x3D;&#x3D;E\frac{\sin\left[\frac N2(\psi-\varphi)\right]}{\sin\left[\frac12(\psi-\varphi)\right]}\mathrm{e}^{\mathrm{j}\left[\frac{N-1}2(\psi-\varphi)\right]}<br>$$<br>其最大值为$NE$，我们只关注其幅度响应，对其取模值并归一化为：<br>$$<br>\begin{gathered}<br>F(\theta) &#x3D;\frac{\mid E(\theta)\mid_{\mathrm{max}}}{\mid E(\theta)\mid_{\mathrm{max}}}&#x3D;\left.\left|\frac1N\right.\frac{\sin!\left[\frac N2(\psi-\varphi)\right]}{\sin!\left[\frac12(\psi-\varphi)\right]}\right| \<br>&#x3D;\left.\left|\frac1N\frac{\sin\left[\frac N2\left(\frac{2\pi}\lambda d\right.\sin\left.\theta-\varphi\right)\right]}{\sin\left[\frac12\left(\frac{2\pi}\lambda d\right.\sin\left.\theta-\varphi\right)\right]}\right|\right.<br>\end{gathered}<br>$$<br>从上面的式子中我们可以发现，当：<br>$$<br>\begin{aligned}<br>&amp;\varphi&#x3D;\frac{2\pi d\sin\theta}{\lambda},F\left(\theta\right)&#x3D;1 \<br>&amp;\theta_{0}&#x3D;\arcsin\left(\frac{\varphi\lambda}{2\pi d}\right)<br>\end{aligned}<br>$$<br>故从这里可以看出，通过改变移相器的$\varphi$，即可改变相控阵的扫描方向$\theta$。</p>
+<p>栅瓣问题：<br><img src="https://s2.loli.net/2024/02/05/1xmUjr7TNvAP5sQ.png" alt="image-20240115184525590"><br>解决方法：控制的移相器相位差和每个天线阵元之间的距离导致的相位差满足下面这个式子：<br>$$<br>\left|\frac{\pi d}\lambda(\sin\theta-\sin\theta_0)\right|&lt;\pi<br>$$<br>变形的：<br>$$<br>\frac d\lambda&lt;\frac1{|\sin\theta-\sin\theta_0|}<br>$$<br>根据不等式：<br>$$<br>|\sin\theta-\sin\theta_0|\leqslant1+|\sin\theta_0|<br>$$<br>原式即可写为：<br>$$<br>\frac d\lambda&lt;\frac1{1+|\sin\theta_0|}&lt;\frac1{|\sin\theta-\sin\theta_0|}<br>$$<br>此时当$\sin(\theta_0)&#x3D;1$，即最严格条件下，可得：<br>$$<br>\frac d\lambda &lt; \frac12<br>$$<br>这也是为什么天线阵列之间的距离取半波长的原因。为了避免栅瓣问题。<br>进一步讨论相位阵的半功率波瓣的问题：<br>我们将上面所说的$F(\theta)$近似为辛克(Sinc)函数,由此可求出波束半功率宽度为：<br>$$<br>\theta_{0.5}\approx\frac{0.886}{Nd\cos(\theta_0)}\lambda\mathrm{<del>(rad)}\approx\frac{50.8}{Nd\cos(\theta_0)}\lambda\mathrm{</del>(°)}<br>$$<br>从上面可以看出关于半功率宽度有下面这些性质：</p>
+<ol>
+<li>N越大，天线的半功率宽度越小</li>
+<li>半功率角度和$\theta_0$有关，在$\theta_0&#x3D;0$处最小，即当天线垂直时此时天线比较瘦。而当天线与地面平行时，此时天线波束图会非常胖，故一般设置天线的扫描角度为$\pm60°$左右</li>
+</ol>
+</li>
+</ol>
+<h4 id="7-运动目标的检测及测速"><a href="#7-运动目标的检测及测速" class="headerlink" title="7 运动目标的检测及测速"></a>7 运动目标的检测及测速</h4><h6 id="7-1-多普勒效应以及其应用"><a href="#7-1-多普勒效应以及其应用" class="headerlink" title="7.1 多普勒效应以及其应用"></a>7.1 多普勒效应以及其应用</h6><ol>
+<li><p>对于连续波雷达，其推导可以看TI的培训视频，接收到的脉冲的时延为：<br>$$<br>t_\mathrm{r}&#x3D;\frac{2R(t)}c&#x3D;\frac2c(R_0-v_\mathrm{r}t)<br>$$<br>故此时相位差可以得到为：<br>$$<br>\varphi&#x3D;-\omega_0t_\mathrm{r}&#x3D;-\omega_0\frac2c\left(R_0-\upsilon_\mathrm{r}t\right)&#x3D;-2\pi\frac2\lambda\left(R_0-\upsilon_\mathrm{r}t\right)<br>$$<br>此时，对相位差求导即为频率差，称为多普勒频率，其中的$v_r$是相对雷达的径向速度分量。</p>
+</li>
+<li><p>脉冲多普勒雷达<br>此时雷达发射信号为脉冲，而不是连续波，也可以看作连续波雷达和一个0-1信号相乘。其表示式子和连续波类似，只是相乘了一个开关函数。</p>
+</li>
+<li><p>多普勒频率的提取<br>连续波雷达提取系统如图所示：<br><img src="https://s2.loli.net/2024/02/05/GfmijEY8VLbaT37.png" alt="image-20240117143657307"><br>相当于把发射信号与接收信号混频通过低通滤波器再测频提取。<br>脉冲雷达提取：<br>将接受到的脉冲波信号与连续波发射信号进行混频。此时混频得到的信号为：<br>$$<br>u_{r}\sum rect(t-t_{r}-nT_{r},\tau)\cos(w_{d}t-\varphi_{0})<br>$$<br>此时，我们得到的是一个连续波的乘上多个矩形脉冲。<br>具体的波形如下所示：<br><img src="https://s2.loli.net/2024/02/05/jnQJ5EMKZdps8F6.png" alt="image-20240117144346785"><br>如图所示，对于不运动的物体，其混频得出的为一个矩形波。而对于运动物体，其混频得出一个断断续续的正弦信号函数，此时看作对一个连续信号的矩形脉冲采样，由于$\tau$即运动时间一般远远小于脉冲发射周期$T_r$故可以认为满足采样定理。然后对其进行傅里叶变化即可得出多普勒频率。</p>
+</li>
+<li><p>盲速与频闪<br>对于速度和上面的距离以及相位类似，其存在模糊速度（最大可测速度）和速度分辨率。<br>盲速：当多普勒频率和脉冲发射频率满足：<br>$$<br>f_{\mathrm{d}}T_{\mathrm{r}}&#x3D;n\quad\text{或}\quad f_{\mathrm{d}}&#x3D;nf_{\mathrm{r}}<br>$$<br>示意图如下所示：<br><img src="https://s2.loli.net/2024/02/05/2RlVpeQiYmBzNyL.png" alt="image-20240117145950691"><br>此时混频后得到的信号脉冲都是一样的（因为恰好周期重复了)，这个时候可能会判断其为矩形信号，即认为其是静止目标。<br>故第一盲速的值为：$v_r&#x3D;\frac{f_d \lambda}2$，通过增大第一盲速的值可以缓解盲速问题。<br>频闪：<br>如图所示此时拟合脉冲有多种情况：可以是图中的虚线又可以是图中的实线：<br><img src="https://s2.loli.net/2024/02/05/JvXeFNhPTC9KZSm.png" alt="image-20240117150051726"><br>此时实线和虚线之间的频率关系为：<br>$$<br>f_{d_{1}}&#x3D;nf_{r}\pm f_{d2}<br>$$<br>频闪产生的本质原因是采样频率不满足采样定理，要避免频闪即要满足采样频率大于多普勒频率即：<br>$$<br>|f_{d}|&lt;\frac{1}{2}f_{r}<br>$$ ^13c6bb ^1086d1 ^ae6ca7</p>
+</li>
+</ol>
+<h6 id="7-2-动目标显示雷达"><a href="#7-2-动目标显示雷达" class="headerlink" title="7.2 动目标显示雷达"></a>7.2 动目标显示雷达</h6><ol>
+<li><p>基本原理<br>经过相检后，去除目标回波</p>
+</li>
+<li><p>中频部分进行相检的原理<br>在实际的雷达系统中，由于发射和接受的射频信号频率过高，实际的混频流程如下：</p>
+<ol>
+<li>首先将发射与接受信号都与本振信号混频</li>
+<li>上面得到的两个频率混频后通过低通滤波器</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>发射信号</th>
+<th>接受信号</th>
+<th>本振信号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\omega_{0}t+\varphi$</td>
+<td>$\omega_{L}t+\omega_{d}t+\varphi-\varphi_{0}$</td>
+<td>$\omega_{L}t+\varphi_{L}$</td>
+</tr>
+</tbody></table>
+<p>最终得到的效果实际上是和发射与接受直接混频是一样的。<br>都为：$w_{d}t-\varphi_{0}$。</p>
+</li>
+<li><p>相消器<br>一阶相消器：<br>系统结构图如图所示：<br><img src="https://s2.loli.net/2024/02/05/JvYMB4KsA5C1lyQ.png" alt="image-20240117152118999"><br>对于盲速或者静止目标此时输出为0。<br>$$<br>\begin{aligned}\Delta u&amp;&#x3D;u^{‘}-u&#x3D;u_{r}\cos\left(\omega_{d}\left(t-T_{r}\right)-\varphi_{0}\right)-u_{r}\cos\left(w_{d}t-\varphi_{0}\right)<br>\&amp;&#x3D;2u_r\mathrm{<del>sin</del>}\left(\frac{\omega_\mathrm{d}T_\mathrm{r}}2\right)\mathrm{<del>sin</del>}\left(\omega_\mathrm{d}t-\frac{\omega_\mathrm{d}T_\mathrm{r}}2-\varphi_0\right)\end{aligned}<br>$$<br>其本质上是一个滤波器，我们可以看出其系统响应为：<br>$$<br>H\left(jw\right)&#x3D;e^{-jw\tau}-1<br>$$<br>其幅值为：<br><img src="https://s2.loli.net/2024/02/05/TC7DOU6n5jslcWF.png" alt="image-20240117153429732"><br>其本质是将频率为$Kf_r$处的频率给去除，理想的滤波器应该是仅在$Kf_r$为0，其余为1。由于理想滤波器无法达到，故实际中的脉冲多普勒雷达无法完全消除盲速的影响。</p>
+</li>
+</ol>
+<h6 id="7-3-盲速，盲相与其解决方法"><a href="#7-3-盲速，盲相与其解决方法" class="headerlink" title="7.3 盲速，盲相与其解决方法"></a>7.3 盲速，盲相与其解决方法</h6><ol>
+<li><p>盲速：<br>我们知道第一盲速为：$v_{r}&#x3D;\frac{\lambda f_{r}}{2}$<br>而对于$f_r$的选取，其又要受到最大无模糊距离[[#^a84f9d]]的限制，我们可以通过重频参差来改善。同样同频参差也可以改善盲速，改善之后的盲速为：<br>$$<br>f_d&#x3D;N(f_{r1}\text{与}f_{r2}\text{的最小公倍数})<br>$$</p>
+</li>
+<li><p>盲相：<br>我们用几何与矢量来尝试解释上面的多个目标叠加后的信号：<br>首先对于单个恒定速度的运动目标：<br>$$<br>\cos\left(\omega_{0}t+\varphi\right)<br>$$<br>我们可以将其看作在一个单位圆上旋转的矢量，这里由于是脉冲雷达时间不是连续的，而是多个脉冲时间片。可以看出，当矢量恰好垂直基准电压方向时，此时投影振幅为0，故称为点盲相。<br>对于静止目标：<br>$$<br>\cos\left(\varphi\right)<br>$$<br>可以看作一个不动的角度为$\varphi$的矢量<br>此时一个静止目标和一个运动目标叠加后为：<br><img src="https://s2.loli.net/2024/02/05/6I9PEWBi7GtAdra.png" alt="image-20240117164112390"><br>其叠加后的振幅即为两个矢量和在基准电压方向的投影。<br>此时如果静止目标的矢量模过大，会导致系统经过相消器后几乎没有输出，如下图所示：<br><img src="https://s2.loli.net/2024/02/05/65c1oWhFMsjkSPy.png" alt="image-20240117170240505"><br>上面的ab时雷达会对幅度过大合成后的回波振幅进行限幅。</p>
+</li>
+<li><p>解决方法<br>中频对消：<br>直接对中频接收到的信号进行对消<br>对于中频信号为：<br>$$<br>u&#x3D;u_{\mathrm{r}}\left.\cos[(\omega_{\mathrm{i}}+\omega_{\mathrm{d}})t+\varphi_{0}^{^{\prime}}]\right.<br>$$<br>经过一阶相消器后：<br>$$<br>u^{‘}&#x3D;u_{\mathrm{r}}\left.\cos[\left(\omega_{\mathrm{i}}+\omega_{\mathrm{d}}\right)(t-T_{\mathrm{r}}\right)+\varphi_{0}^{^{\prime}}]<br>$$<br>输出为：<br>$$<br>\Delta u&#x3D;u-u^{‘}&#x3D;-2u_{\mathrm{r}}\sin\left(\frac{\omega_{\mathrm{i}}T_{\mathrm{r}}}2+\frac{\omega_{\mathrm{d}}T_{\mathrm{r}}}2\right)\mathrm{sin}\biggl[(\omega_{\mathrm{i}}+\omega_{\mathrm{d}})t-\frac{\omega_{\mathrm{i}}T_{\mathrm{r}}}2-\frac{\omega_{\mathrm{d}}T_{\mathrm{r}}}2+\varphi_{\mathrm{0}}^{\prime}\biggr]<br>$$<br>此时在中频即可把固定目标和盲速给消去，此时要求中频的频率$f_i$（即式中的$\omega_i$）满足：<br>$$<br>f_i&#x3D;nf_r<br>$$<br>此时对于$\omega_d&#x3D;0$，即物体静止，其输出也为0。<br>零中频（I,Q双通道处理）<br>将上面的矢量分解成垂直和平行两部分（携带的信息量更加多），从而可以解决上面所说的问题。</p>
+</li>
+</ol>
+<h6 id="7-4-动目标显示滤波器"><a href="#7-4-动目标显示滤波器" class="headerlink" title="7.4 动目标显示滤波器"></a>7.4 动目标显示滤波器</h6><p>回波信号与杂波的频谱</p>
+<ol>
+<li><p>雷达的回波信号的频谱<br>$$<br>\begin{aligned}Sr\left(t\right)&#x3D;&amp;kS_{t}\left(t-t_r\right)\Sr\left(f\right)&#x3D;&amp;kS_{t}\left(f\right)e^{-jwt_r}\end{aligned}<br>$$<br>对于静止目标$t_r$此时为一个常数值，而对于运动目标此时即使$t_r$变化，由于其模为一个常数，故此时不变频谱的幅度特性。<br>对于脉冲雷达来说，由于<br>$$<br>S_t(t) &#x3D; u_{r}\sum rect(t-t_{r}-nT_{r},\tau)\cos(w_{d}t-\varphi_{0})<br>$$<br> 在矩形脉冲采样后，其傅里叶变换关系如下：</p>
+<p><img src="https://s2.loli.net/2024/02/05/pNTlGiXPh8BUKzL.png" alt="image-20240117184617914"><br>接受信号即为上面发射信号在频谱上频移多普勒频率$f_d$，实际中，由于雷达天线的方向性原因，其接受到的信号还要乘上一个由于天线方向性导致的幅值变化：<br><img src="https://s2.loli.net/2024/02/05/v3iGVDExbw74MSI.png" alt="image-20240117185117766"><br>上面中$M(f)$中的$\sigma$为：<br><img src="https://s2.loli.net/2024/02/05/KVmUfGxZiqEAnkP.png" alt="image-20240117185311561"><br>此时各个信号的频谱为：<br><img src="https://s2.loli.net/2024/02/05/OQTlkjxCzUbyhN8.png" alt="image-20240117185731002"></p>
+</li>
+<li><p>杂波信号的频谱<br>对于杂波，如果杂波的物体是静止的和上面的静止物体的回波类似，对于海杂波其可能有一定的运动速度。</p>
+</li>
+<li><p>动目标显示滤波器<br>一次相消器为：<br>$$<br>H(z)&#x3D;1-z^{-1}<br>$$<br>其幅值为：<br>$$<br>H(\mathrm{e}^{i\omega T})<del>&#x3D;</del>1-\mathrm{e}^{-j\omega T}<del>&#x3D;</del>2<del>\sin\frac{\omega T}2</del>\left(\sin\frac{\omega T}2+\mathrm{j}~\cos\frac{\omega T}2\right)<br>$$<br>幅值图为：<br><img src="https://s2.loli.net/2024/02/05/Jgs1Z5OuGqLr9Xj.png" alt="image-20240117190530549"><br>相当于滤除了$Kf_r$处的频率，当然也可以用多重滤波器取得更好的频率特性。</p>
+</li>
+</ol>
+<h6 id="7-5-动标检测（MTD）"><a href="#7-5-动标检测（MTD）" class="headerlink" title="7.5 动标检测（MTD）"></a>7.5 动标检测（MTD）</h6><ol>
+<li>动态目标检测的特点<br>动态范围更大<br>改善因子提高：$I&#x3D;\frac{S_o&#x2F;C_0}{S_i&#x2F;C_0}$，即输出信号与杂波比和输入信号与杂波比的比值。<br>增加滤波器组<br>抑制杂波<br>增加杂波图</li>
+<li>多普勒滤波器组<br>使用滤波器组实现了类似于FFT的结构，从而对其进行FFT变换后输出得出频率：<br><img src="https://s2.loli.net/2024/02/05/x15rqWFLNSKHuTz.png" alt="image-20240117191419628"></li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E4%B9%A6%E7%B1%8D"><span class="toc-number">1.</span> <span class="toc-text">参考书籍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">主要知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-1-%E9%9B%B7%E8%BE%BE%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"><span class="toc-number">2.0.1.</span> <span class="toc-text">1.1 雷达的一些基本知识</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#1-2-%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90%EF%BC%88%E7%95%A5%EF%BC%89"><span class="toc-number">2.0.2.</span> <span class="toc-text">1.2 雷达的基本组成（略）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#1-3-%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%B7%A5%E4%BD%9C%E9%A2%91%E7%8E%87"><span class="toc-number">2.0.3.</span> <span class="toc-text">1.3 雷达的工作频率</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#1-4-%E5%85%B6%E4%BB%96"><span class="toc-number">2.0.4.</span> <span class="toc-text">1.4 其他</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E9%9B%B7%E8%BE%BE%E5%8F%91%E5%B0%84%E6%9C%BA%EF%BC%88%E7%A8%8D%E5%BE%AE%E4%BA%86%E8%A7%A3%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">2.雷达发射机（稍微了解）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#2-1-%E5%8F%91%E5%B0%84%E6%9C%BA%E7%BB%93%E6%9E%84"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1 发射机结构</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8F%91%E5%B0%84%E6%9C%BA%E7%9A%84%E6%8C%87%E6%A0%87"><span class="toc-number">2.1.2.</span> <span class="toc-text">发射机的指标</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%84%89%E5%86%B2%E8%B0%83%E5%88%B6%E5%99%A8%EF%BC%88%E7%95%A5%EF%BC%89"><span class="toc-number">2.1.3.</span> <span class="toc-text">脉冲调制器（略）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%8E%A5%E6%94%B6%E6%9C%BA%EF%BC%88%E6%AF%94%E8%BE%83%E9%87%8D%E7%82%B9%E5%86%85%E5%AE%B9%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">3.接收机（比较重点内容）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#3-1-%E6%8E%A5%E6%94%B6%E6%9C%BA%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">3.0.1.</span> <span class="toc-text">3.1 接收机的结构</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-2-%E6%8E%A5%E6%94%B6%E6%9C%BA%E7%9A%84%E6%8C%87%E6%A0%87"><span class="toc-number">3.0.2.</span> <span class="toc-text">3.2 接收机的指标</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-3-%E5%99%AA%E5%A3%B0%E7%9B%B8%E5%85%B3%E7%9A%84%E7%9F%A5%E8%AF%86%EF%BC%88%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%EF%BC%89"><span class="toc-number">3.0.3.</span> <span class="toc-text">3.3 噪声相关的知识（比较重要）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-4-%E6%8E%A5%E6%94%B6%E6%9C%BA%E7%81%B5%E6%95%8F%E5%BA%A6%E6%88%96%E8%80%85%E6%9C%80%E5%B0%8F%E5%8F%AF%E6%A3%80%E6%B5%8B%E4%BF%A1%E5%8F%B7-S-mathrm-i-min"><span class="toc-number">3.0.4.</span> <span class="toc-text">3.4 接收机灵敏度或者最小可检测信号$S_\mathrm{i~min}$</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-5-%E9%9B%B7%E8%BE%BE%E6%8E%A5%E6%94%B6%E6%9C%BA%E7%9A%84%E9%AB%98%E9%A2%91%E9%83%A8%E5%88%86%E5%92%8C%E6%8C%AF%E8%8D%A1%E7%A8%B3%E5%AE%9A%E7%AD%89%EF%BC%88%E7%95%A5%EF%BC%89"><span class="toc-number">3.0.5.</span> <span class="toc-text">3.5 雷达接收机的高频部分和振荡稳定等（略）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-6-%E5%A2%9E%E7%9B%8A%E6%8E%A7%E5%88%B6"><span class="toc-number">3.0.6.</span> <span class="toc-text">3.6 增益控制</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-7-%E5%8C%B9%E9%85%8D%E6%BB%A4%E6%B3%A2%E5%92%8C%E5%87%86%E5%8C%B9%E9%85%8D%E6%BB%A4%E6%B3%A2"><span class="toc-number">3.0.7.</span> <span class="toc-text">3.7 匹配滤波和准匹配滤波</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-8-%E9%9B%B7%E8%BE%BE%E5%B8%A6%E5%AE%BD%E7%AD%89%EF%BC%88%E7%95%A5%EF%BC%89"><span class="toc-number">3.0.8.</span> <span class="toc-text">3.8 雷达带宽等（略）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E9%9B%B7%E8%BE%BE%E4%BD%9C%E7%94%A8%E8%B7%9D%E7%A6%BB-%E9%87%8D%E8%A6%81"><span class="toc-number">4.</span> <span class="toc-text">4. 雷达作用距离(重要)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#4-1-%E5%9F%BA%E6%9C%AC%E9%9B%B7%E8%BE%BE%E6%96%B9%E7%A8%8B"><span class="toc-number">4.0.1.</span> <span class="toc-text">4.1 基本雷达方程</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-2-%E7%9B%AE%E6%A0%87%E9%9B%B7%E8%BE%BE%E7%9A%84%E6%88%AA%E9%9D%A2%E7%A7%AF-RCS"><span class="toc-number">4.0.2.</span> <span class="toc-text">4.2 目标雷达的截面积(RCS)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-3-%E6%9C%80%E5%B0%8F%E5%8F%AF%E6%A3%80%E6%B5%8B%E4%BF%A1%E5%99%AA%E6%AF%94"><span class="toc-number">4.0.3.</span> <span class="toc-text">4.3 最小可检测信噪比</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-4-%E9%9B%B7%E8%BE%BE%E7%9A%84%E8%99%9A%E8%AD%A6%E6%A6%82%E7%8E%87%E5%92%8C%E5%8F%91%E7%8E%B0%E6%A6%82%E7%8E%87"><span class="toc-number">4.0.4.</span> <span class="toc-text">4.4 雷达的虚警概率和发现概率</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-5-%E8%84%89%E5%86%B2%E7%A7%AF%E7%B4%AF"><span class="toc-number">4.0.5.</span> <span class="toc-text">4.5 脉冲积累</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-6-%E6%9C%BA%E6%A2%B0%E6%89%AB%E6%8F%8F%E9%9B%B7%E8%BE%BE%E7%A7%AF%E7%B4%AF%E8%84%89%E5%86%B2%E4%B8%AA%E6%95%B0%E7%9A%84%E7%A1%AE%E5%AE%9A"><span class="toc-number">4.0.6.</span> <span class="toc-text">4.6 机械扫描雷达积累脉冲个数的确定</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-7-%E7%9B%AE%E6%A0%87%E6%88%AA%E9%9D%A2%E7%A7%AF%E4%B8%8E%E6%89%AB%E6%8F%8F%E6%B3%A2%E9%95%BF%E5%92%8C%E5%A4%A9%E7%BA%BF%E8%A7%92%E5%BA%A6%E6%9E%81%E5%8C%96%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">4.0.7.</span> <span class="toc-text">4.7 目标截面积与扫描波长和天线角度极化的关系</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-8-%E7%9B%AE%E6%A0%87%E7%89%B9%E6%80%A7%E4%B8%8E%E5%A4%A9%E7%BA%BF%E6%9E%81%E5%8C%96%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">4.0.8.</span> <span class="toc-text">4.8 目标特性与天线极化的关系</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-9-%E7%9B%AE%E6%A0%87%E8%B5%B7%E4%BC%8F%E6%A8%A1%E5%9E%8B%EF%BC%88%E9%87%8D%E8%A6%81%EF%BC%89"><span class="toc-number">4.0.9.</span> <span class="toc-text">4.9 目标起伏模型（重要）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-10-%E7%B3%BB%E7%BB%9F%E6%8D%9F%E8%80%97"><span class="toc-number">4.0.10.</span> <span class="toc-text">4.10 系统损耗</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-11-%E4%BC%A0%E6%92%AD%E8%BF%87%E7%A8%8B%E6%8D%9F%E8%80%97"><span class="toc-number">4.0.11.</span> <span class="toc-text">4.11 传播过程损耗</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-12-%E9%9B%B7%E8%BE%BE%E6%96%B9%E7%A8%8B%E7%9A%84%E5%85%B6%E4%BB%96%E5%87%A0%E7%A7%8D%E5%BD%A2%E5%BC%8F"><span class="toc-number">4.0.12.</span> <span class="toc-text">4.12 雷达方程的其他几种形式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E7%9B%AE%E6%A0%87%E8%B7%9D%E7%A6%BB%E7%9A%84%E6%B5%8B%E9%87%8F"><span class="toc-number">5.</span> <span class="toc-text">5 目标距离的测量</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#5-1-%E8%84%89%E5%86%B2%E6%B3%95%E6%B5%8B%E8%B7%9D"><span class="toc-number">5.0.1.</span> <span class="toc-text">5.1 脉冲法测距</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-2-%E8%B0%83%E9%A2%91%E6%B3%95%E6%B5%8B%E8%B7%9D%EF%BC%88%E5%8F%AF%E4%BB%A5%E5%8F%82%E7%9C%8BTI%E7%9A%84FMCW%E7%9A%84%E8%AF%BE%E7%A8%8B%EF%BC%89"><span class="toc-number">5.0.2.</span> <span class="toc-text">5.2 调频法测距（可以参看TI的FMCW的课程）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-3-%E8%B7%9D%E7%A6%BB%E8%B7%9F%E8%B8%AA%E5%8E%9F%E7%90%86"><span class="toc-number">5.0.3.</span> <span class="toc-text">5.3 距离跟踪原理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E8%A7%92%E5%BA%A6%E6%B5%8B%E9%87%8F"><span class="toc-number">6.</span> <span class="toc-text">6. 角度测量</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#6-1-%E9%9B%B7%E8%BE%BE%E6%B5%8B%E8%A7%92%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">6.0.1.</span> <span class="toc-text">6.1 雷达测角的方法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-2-%E9%9B%B7%E8%BE%BE%E5%A4%A9%E7%BA%BF%E6%96%B9%E5%90%91%E5%9B%BE%E5%87%BD%E6%95%B0"><span class="toc-number">6.0.2.</span> <span class="toc-text">6.2 雷达天线方向图函数</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-3-%E4%B8%A4%E5%A4%A9%E7%BA%BF%E7%9B%B8%E4%BD%8D%E6%B3%95%E6%B5%8B%E8%A7%92%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">6.0.3.</span> <span class="toc-text">6.3 两天线相位法测角的基本原理</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-4-%E7%9B%B8%E4%BD%8D%E6%AF%94%E8%BE%83%E5%99%A8"><span class="toc-number">6.0.4.</span> <span class="toc-text">6.4 相位比较器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-5-%E6%B5%8B%E9%87%8F%E7%B2%BE%E5%BA%A6%E5%92%8C%E7%9B%B8%E4%BD%8D%E5%A4%9A%E5%80%BC%E6%80%A7%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">6.0.5.</span> <span class="toc-text">6.5 测量精度和相位多值性的问题</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-6-%E6%8C%AF%E5%B9%85%E6%B3%95%E6%B5%8B%E8%A7%92"><span class="toc-number">6.0.6.</span> <span class="toc-text">6.6 振幅法测角</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-7-%E8%87%AA%E5%8A%A8%E6%B5%8B%E8%A7%92%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E6%96%B9%E6%B3%95"><span class="toc-number">6.0.7.</span> <span class="toc-text">6.7 自动测角的原理与方法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-8-%E6%B3%A2%E6%9D%9F%E5%BD%A2%E7%8A%B6%E5%92%8C%E6%89%AB%E6%8F%8F%E6%96%B9%E5%BC%8F"><span class="toc-number">6.0.8.</span> <span class="toc-text">6.8 波束形状和扫描方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E8%BF%90%E5%8A%A8%E7%9B%AE%E6%A0%87%E7%9A%84%E6%A3%80%E6%B5%8B%E5%8F%8A%E6%B5%8B%E9%80%9F"><span class="toc-number">7.</span> <span class="toc-text">7 运动目标的检测及测速</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#7-1-%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E4%BB%A5%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8"><span class="toc-number">7.0.1.</span> <span class="toc-text">7.1 多普勒效应以及其应用</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-2-%E5%8A%A8%E7%9B%AE%E6%A0%87%E6%98%BE%E7%A4%BA%E9%9B%B7%E8%BE%BE"><span class="toc-number">7.0.2.</span> <span class="toc-text">7.2 动目标显示雷达</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-3-%E7%9B%B2%E9%80%9F%EF%BC%8C%E7%9B%B2%E7%9B%B8%E4%B8%8E%E5%85%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">7.0.3.</span> <span class="toc-text">7.3 盲速，盲相与其解决方法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-4-%E5%8A%A8%E7%9B%AE%E6%A0%87%E6%98%BE%E7%A4%BA%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="toc-number">7.0.4.</span> <span class="toc-text">7.4 动目标显示滤波器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-5-%E5%8A%A8%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%88MTD%EF%BC%89"><span class="toc-number">7.0.5.</span> <span class="toc-text">7.5 动标检测（MTD）</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&text=雷达基本原理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&title=雷达基本原理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&is_video=false&description=雷达基本原理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=雷达基本原理&body=Check out this article: https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&title=雷达基本原理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&title=雷达基本原理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&title=雷达基本原理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&title=雷达基本原理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&name=雷达基本原理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/02/01/life/%E9%9B%B7%E8%BE%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/&t=雷达基本原理"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
