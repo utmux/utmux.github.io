@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：阴天	心情：还好  狗屎图论作业还没做，然后加上还有实验作业没做，今天一直看代码看到了下午和晚上。晚上至少有两个小时在刷手机。效率还是太低了一点，我通过小熊猫了解了下关于C的一些常用的库，比如图形和opencv这些库，不知道能做个什么东西，首先显示图形这些库能做一些小游戏练练手，然后opencv这些库就必须连接上硬件的摄像头了，这个部分应该有参考代码没准能够移植到手机上去。我计划一下后面的任">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Cpp-4">
+<meta property="og:url" content="https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：阴天	心情：还好  狗屎图论作业还没做，然后加上还有实验作业没做，今天一直看代码看到了下午和晚上。晚上至少有两个小时在刷手机。效率还是太低了一点，我通过小熊猫了解了下关于C的一些常用的库，比如图形和opencv这些库，不知道能做个什么东西，首先显示图形这些库能做一些小游戏练练手，然后opencv这些库就必须连接上硬件的摄像头了，这个部分应该有参考代码没准能够移植到手机上去。我计划一下后面的任">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-02T14:00:26.000Z">
+<meta property="article:modified_time" content="2024-03-02T13:57:59.520Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习Cpp-4</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/03/01/life/%E5%AD%A6%E4%B9%A0Cpp-3/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&text=学习Cpp-4"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&title=学习Cpp-4"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&is_video=false&description=学习Cpp-4"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-4&body=Check out this article: https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&title=学习Cpp-4"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&title=学习Cpp-4"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&title=学习Cpp-4"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&title=学习Cpp-4"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&name=学习Cpp-4&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&t=学习Cpp-4"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%AD%E7%9A%84%E5%88%97%E8%A1%A8%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text"> C++中的列表初始化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%AD%E7%9A%84%E8%87%AA%E5%8A%A8%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.</span> <span class="toc-text"> C++中的自动转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%AD%E7%9A%84%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">3.</span> <span class="toc-text"> C++中的强制类型转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c11-%E4%B8%AD%E7%9A%84-auto-%E5%A3%B0%E6%98%8E"><span class="toc-number">4.</span> <span class="toc-text"> C++11 中的 auto 声明</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c11%E4%B8%AD%E6%95%B0%E7%BB%84%E5%88%97%E8%A1%A8%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text"> C++11中数组列表初始化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">6.</span> <span class="toc-text"> C++中的字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%AD%E7%9A%84get%E5%92%8Cgetline"><span class="toc-number">7.</span> <span class="toc-text"> C++中的get和getline</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        学习Cpp-4
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-03-02T14:00:26.000Z" class="dt-published" itemprop="datePublished">2024-03-02</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">life</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：阴天	心情：还好</p>
+<hr />
+<p>狗屎图论作业还没做，然后加上还有实验作业没做，今天一直看代码看到了下午和晚上。晚上至少有两个小时在刷手机。效率还是太低了一点，我通过小熊猫了解了下关于C<ins>的一些常用的库，比如图形和opencv这些库，不知道能做个什么东西，首先显示图形这些库能做一些小游戏练练手，然后opencv这些库就必须连接上硬件的摄像头了，这个部分应该有参考代码没准能够移植到手机上去。我计划一下后面的任务吧。<br />
+明天：把实验代码给写完，然后把图论作业手写也给写完，那个示意图如何画先用铅笔画一下试试。然后尽量后天能够把C</ins>第四章节给弄完。可以尝试使用QT或者搭建QT环境。今天看到了大概90页左右。</p>
+<h5 id="c中的列表初始化"><a class="markdownIt-Anchor" href="#c中的列表初始化"></a> C++中的列表初始化</h5>
+<p>列表初始化不允许缩窄（narrowing），即变量的类型可能无法表示赋给它的值。例如，不允许将浮点型转换 为整型。在不同的整型之间转换或将整型转换为浮点型可能被允许，条件是编译器知道目标变量能够正确 地存储赋给它的值。例如，可将 long 变量初始化为 int 值，因为 long 总是至少与 int 一样长；相反方向的 转换也可能被允许，只要 int 变量能够存储赋给它的 long 常量。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> code = <span class="number">66</span>;</span><br><span class="line"><span class="type">int</span> x = <span class="number">66</span>;</span><br><span class="line"><span class="type">char</span> c1 &#123;<span class="number">31325</span>&#125;; <span class="comment">// 缩窄了,不允许</span></span><br><span class="line"><span class="type">char</span> c2 &#123;<span class="number">66</span>&#125;; <span class="comment">// 允许因为char能放下66</span></span><br><span class="line"><span class="type">char</span> c3 &#123;code&#125;; <span class="comment">// 允许,因为x是一个常量</span></span><br><span class="line"><span class="type">char</span> c4 = &#123;x&#125;; <span class="comment">// 不允许,x不是一个常量</span></span><br><span class="line">x = <span class="number">31325</span>;</span><br><span class="line"><span class="type">char</span> c5 = x; <span class="comment">// 这种初始化时允许的,而列表初始化是不允许的</span></span><br></pre></td></tr></table></figure>
+<p><strong>初始化 c4 时，您知道 x 的值为 66，但在编译器看来，x 是一个变量，其值可能很大。编译器不会跟踪下述阶段可能发生的情况：从 x 被初始化到它被用来初始化 c4。</strong></p>
+<h5 id="c中的自动转换"><a class="markdownIt-Anchor" href="#c中的自动转换"></a> C++中的自动转换</h5>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">short</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="type">short</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="type">short</span> c = a + b; <span class="comment">// a + b首先转换为int,再转化为short</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">（1）如果有一个操作数的类型是 long double，则将另一个操作数转换为 long double。</span><br><span class="line">（2）否则，如果有一个操作数的类型是 double，则将另一个操作数转换为 double。</span><br><span class="line">（3）否则，如果有一个操作数的类型是 float，则将另一个操作数转换为 float。</span><br><span class="line">（4）否则，说明操作数都是整型，因此执行整型提升。</span><br><span class="line">（5）在这种情况下，如果两个操作数都是有符号或无符号的，且其中一个操作数的级别比另一个低，则转换为级别高的类型高，则将有符号操作数转换为无符号操作数所属的类型。</span><br><span class="line">（7）否则，如果有符号类型可表示无符号类型的所有可能取值，则将无符号操作数转换为有符号操作数所属的类型。</span><br><span class="line">（8）否则，将两个操作数都转换为有符号类型的无符号版本。</span><br></pre></td></tr></table></figure>
+<p>简单地说，有符号整型按级别从高到低依次为 <code>long long</code>、<code>long</code>、<code>int</code>、<code>short</code> 和 <code>signed char</code>。无符号整型的排列顺序与有符号整型相同。类型 <code>char</code>、<code>signed char</code>和 <code>unsigned char</code> 的级别相同。类型 <code>bool</code> 的级别最低。<code>wchar_t</code>、<code>char16_t</code> 和 <code>char32_t</code> 的级别与其底层类型相同。</p>
+<h5 id="c中的强制类型转换"><a class="markdownIt-Anchor" href="#c中的强制类型转换"></a> C++中的强制类型转换</h5>
+<p>有两种写法，如下所示。第一种格式来自 C 语言，第二种格式是纯粹的 C++。新格式的想法是，要让强制类型转换就像是函数调用。这样对内置类型的强制类型转换就像是为用户定义的类设计的类型转换。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">typename</span>) <span class="function">value</span></span><br><span class="line"><span class="function"><span class="title">typename</span> <span class="params">(value)</span></span></span><br></pre></td></tr></table></figure>
+<p>为了改善C中强制转换的安全性，C++中引入了4个强制转换的符号，比传统的强制转换更加严格。例如<code>static_cast&lt;typeName&gt; (value)</code>。</p>
+<h5 id="c11-中的-auto-声明"><a class="markdownIt-Anchor" href="#c11-中的-auto-声明"></a> C++11 中的 auto 声明</h5>
+<p>不指定变量的类型，编译器将把变量的类型设置成与初始值相同。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> x = <span class="number">0.0</span>; <span class="comment">// x将会被设置为double类型</span></span><br><span class="line"><span class="keyword">auto</span> n = <span class="number">100</span>; <span class="comment">// n将会被设置为int类型</span></span><br></pre></td></tr></table></figure>
+<p>auto可能会出错，如果初始值写的并不明确的话，但有时很有用，例如对于复杂类型的代码，指向某个类的指针等，这样就能够自动推断，而不用写一大串的代码。</p>
+<h5 id="c11中数组列表初始化"><a class="markdownIt-Anchor" href="#c11中数组列表初始化"></a> C++11中数组列表初始化</h5>
+<p>再C中可以通过</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a[<span class="number">3</span>] = &#123;<span class="number">1</span>,&#125;</span><br><span class="line"><span class="type">char</span> str[] = <span class="string">&quot;hello,world&quot;</span></span><br></pre></td></tr></table></figure>
+<p>在C++11中新增了下面这几条规则：</p>
+<ol>
+<li>
+<p>不必使用等号，可以直接</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a[<span class="number">3</span>] &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>可以不在大括号类包括任何东西，表示初始化为0</p>
+</li>
+<li>
+<p>和前面的列表初始化一样，进制缩窄转换（narrow）</p>
+</li>
+</ol>
+<h5 id="c中的字符串"><a class="markdownIt-Anchor" href="#c中的字符串"></a> C++中的字符串</h5>
+<p>C<ins>提供了两种字符串存储，一个是C语言风格的以char数组为基础的字符串，以空字符<code>\0</code>为结尾。第二个是使用类string，例如string str = &quot;hello&quot;。<br />
+使用string类能够自动根据输入调整数组的大小，也就是说更加安全而不必考虑内存溢出等安全问题。<br />
+在C</ins>的编译器中任何由空白隔开的字符串都会自动拼接成一个字符串，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="string">&quot;hello&quot;</span> <span class="string">&quot;world&quot;</span> &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<p>C++中字符串的初始化同样可以通过大括号来初始化，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> a[] = &#123;<span class="string">&quot;hello&quot;</span>&#125;;</span><br><span class="line"><span class="type">char</span> b[] &#123;<span class="string">&quot;world&quot;</span>&#125;;</span><br><span class="line">string d = &#123;<span class="string">&quot;what&quot;</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>值得注意的是string类能够直接通过<code>+</code>和<code>+=</code>来对字符串进行拼接等，并能直接用等号等于另一个字符串。或者直接等于一个字符串数组。<br />
+对于字符串数组定义后默认会占用数组大小的空间，而对于string字符串，定义后未赋值，其占用是0。</p>
+<h5 id="c中的get和getline"><a class="markdownIt-Anchor" href="#c中的get和getline"></a> C++中的get和getline</h5>
+<p><code>getline</code>函数将最后的回车替换为<code>\0</code>，作为字符串结束标志。<code>getline</code>有两个参数，存储的数组，最大的读取字符数。<br />
+<code>get</code>函数和<code>getline</code>参数类似，第一个参数为存储数组，第二个为最大读取字符数。但是其不会读取回车，回车会留在输入缓冲区。也就是说其一碰到回车就认为读取完了，回车放在输入缓冲区不管他。从而，下面两个代码的实际效果是一样的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cin.<span class="built_in">get</span>(name, ArSize);</span><br><span class="line">cin.<span class="built_in">get</span>(); <span class="comment">// 排除掉上个输入缓存中的回车,对于get不加参数默认会认为是读取一个字符,而不是像上面读取字符串遇到回车跳过.</span></span><br><span class="line">cin.<span class="built_in">get</span>(name2, ArSize); </span><br><span class="line"><span class="comment">//或者该段代码可以写为</span></span><br><span class="line">cin.<span class="built_in">get</span>(name, ArSize).<span class="built_in">get</span>().<span class="built_in">get</span>(name2, ArSize);</span><br><span class="line"><span class="comment">// 用getline可以写为</span></span><br><span class="line">cin.<span class="built_in">getline</span>(name1, ArSize).<span class="built_in">getline</span>(name2, ArSize);</span><br></pre></td></tr></table></figure>
+<p>C++中的使用<code>cin &gt;&gt; xx</code>其类似于get这个函数的，不会丢弃缓冲区的回车键，也就是说如果采用<code>cin</code>和<code>getline</code>混合使用可能会导致问题。比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cin &gt;&gt; year;</span><br><span class="line">cin.<span class="built_in">getline</span>(address, <span class="number">80</span>);</span><br></pre></td></tr></table></figure>
+<p>此时<code>getline</code>会读取到回车，导致会认为输入为空，解决方法是加一个get如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(cin &gt;&gt; year).<span class="built_in">get</span>() <span class="comment">// or (cin &gt;&gt; year).get(ch);</span></span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%AD%E7%9A%84%E5%88%97%E8%A1%A8%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text"> C++中的列表初始化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%AD%E7%9A%84%E8%87%AA%E5%8A%A8%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.</span> <span class="toc-text"> C++中的自动转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%AD%E7%9A%84%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">3.</span> <span class="toc-text"> C++中的强制类型转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c11-%E4%B8%AD%E7%9A%84-auto-%E5%A3%B0%E6%98%8E"><span class="toc-number">4.</span> <span class="toc-text"> C++11 中的 auto 声明</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c11%E4%B8%AD%E6%95%B0%E7%BB%84%E5%88%97%E8%A1%A8%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text"> C++11中数组列表初始化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">6.</span> <span class="toc-text"> C++中的字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%AD%E7%9A%84get%E5%92%8Cgetline"><span class="toc-number">7.</span> <span class="toc-text"> C++中的get和getline</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&text=学习Cpp-4"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&title=学习Cpp-4"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&is_video=false&description=学习Cpp-4"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-4&body=Check out this article: https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&title=学习Cpp-4"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&title=学习Cpp-4"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&title=学习Cpp-4"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&title=学习Cpp-4"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&name=学习Cpp-4&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/03/02/life/%E5%AD%A6%E4%B9%A0Cpp-4/&t=学习Cpp-4"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
