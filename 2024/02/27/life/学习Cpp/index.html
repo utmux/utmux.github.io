@@ -71,8 +71,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
 <!-- hexo injector head_end end --></head>
 
-<body class="max-width mx-auto px3 ltr">
-    
+<body class="max-width mx-auto px3 ltr">    
       <div id="header-post">
   <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
@@ -175,7 +174,7 @@
 <hr />
 <p>根据学长的经验，目前正在学习C++的基础知识。</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">语言</span><br><span class="line">推荐学习1个月</span><br><span class="line">学习方针：视频为主，书籍为辅。</span><br><span class="line">配套视频：C语言，C++语言</span><br><span class="line">C++ Primer Plus</span><br><span class="line">集中学习该书的1~8章，涉及C语言基础语法及指针、结构体的使用。</span><br><span class="line">C和指针</span><br><span class="line">该书全面深入的剖析了指针的概念与使用，是C语言的进阶。</span><br><span class="line">C++ Primer</span><br><span class="line">作为C++查询的工具书，相当于新华词典，里面会涉及C++的很多技术细节，实际工程中用到的并不会太多。平时遇到问题可以查询该书，另外也可以作为面试的参考书。</span><br><span class="line">STL源码解析</span><br><span class="line">涉及C++标准模板库的源码实现，其中vector、map的实现需要重点关注，比如内存分配，底层数据结构等。</span><br></pre></td></tr></table></figure>
-<p>我向来是非常认同实践是理论的的目的这个哲学观点的。我正在想尽方法看能否用C<ins>做出一些有趣的东西，哪怕是最基础的C</ins>，使用其来构建某个有趣的东西或者做出某个toy project。C++的魅力根据书上所学在于其OOP这种对类和对象的抽象以及其泛函能力。本质上就是一种C语言的扩展。</p>
+<p>我向来是非常认同实践是理论的的目的这个哲学观点的。我正在想尽方法看能否用C++做出一些有趣的东西，哪怕是最基础的C++，使用其来构建某个有趣的东西或者做出某个toy project。C++的魅力根据书上所学在于其OOP这种对类和对象的抽象以及其泛函能力。本质上就是一种C语言的扩展。</p>
 <p>看了下学长的规划，一个月要把前八章和后面的STL源码解析给过一遍其实还是需要一定的执行力的。而且这几天还有各种论文需要看，以及各种作业，实在是没有权值，只能选一些事情比较多的老师了。</p>
 <p>最近这几天的狗屁选课也让我非常的烦躁。如何选出一门合理的课程，还有下个学期的联培，压力好大，实在是不知道该怎么办。读研实在是对人的一种巨大的折磨。</p>
 
@@ -315,5 +314,20 @@
 
 <!-- utterances Comments -->
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
