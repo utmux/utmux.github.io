@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：暴雨	心情：差  今天去剪了头发，花了12快剪，发现其实还不错，感觉以前剪头发花20甚至25真的是大冤种。 下午在看图论题目，简直是折磨，好几个题目都不会，只有晚上花了一个多小时看了下C++，终于把最折磨的章节看完了，到了我最感兴趣的章节了-第十章，特别是其中的this指针。  [x] 每日打卡之第二天 [x] 1点之前睡觉 [ ] 适当锻炼 [x] 多喝水 [x] 不要吃喝过量   再谈c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Cpp-14">
+<meta property="og:url" content="https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：暴雨	心情：差  今天去剪了头发，花了12快剪，发现其实还不错，感觉以前剪头发花20甚至25真的是大冤种。 下午在看图论题目，简直是折磨，好几个题目都不会，只有晚上花了一个多小时看了下C++，终于把最折磨的章节看完了，到了我最感兴趣的章节了-第十章，特别是其中的this指针。  [x] 每日打卡之第二天 [x] 1点之前睡觉 [ ] 适当锻炼 [x] 多喝水 [x] 不要吃喝过量   再谈c">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-24T14:25:26.000Z">
+<meta property="article:modified_time" content="2024-03-24T14:26:01.224Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习Cpp-14</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/03/23/life/%E7%A7%BB%E5%8A%A8%E4%BA%91%E7%94%B5%E8%84%91%E4%BD%BF%E7%94%A8Linux%E6%95%99%E7%A8%8B/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&text=学习Cpp-14"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&title=学习Cpp-14"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&is_video=false&description=学习Cpp-14"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-14&body=Check out this article: https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&title=学习Cpp-14"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&title=学习Cpp-14"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&title=学习Cpp-14"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&title=学习Cpp-14"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&name=学习Cpp-14&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&t=学习Cpp-14"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%8D%E8%B0%88const"><span class="toc-number">1.</span> <span class="toc-text"> 再谈const</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E9%93%BE%E6%8E%A5%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text"> 函数的链接性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%8Ec%E5%BA%93%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="toc-number">1.2.</span> <span class="toc-text"> C与C++库的不同</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E5%AD%98%E5%82%A8%E5%88%92%E5%88%86"><span class="toc-number">1.3.</span> <span class="toc-text"> C++编译器的存储划分</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#new%E8%BF%90%E7%AE%97%E7%AC%A6%E8%A7%A3%E6%9E%90"><span class="toc-number">1.4.</span> <span class="toc-text"> new运算符解析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4"><span class="toc-number">1.5.</span> <span class="toc-text"> 名称空间</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8E%9F%E5%88%99"><span class="toc-number">1.6.</span> <span class="toc-text"> 名称空间的使用原则：</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        学习Cpp-14
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-03-24T14:25:26.000Z" class="dt-published" itemprop="datePublished">2024-03-24</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">life</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：暴雨	心情：差</p>
+<hr />
+<p>今天去剪了头发，花了12快剪，发现其实还不错，感觉以前剪头发花20甚至25真的是大冤种。</p>
+<p>下午在看图论题目，简直是折磨，好几个题目都不会，只有晚上花了一个多小时看了下C++，终于把最折磨的章节看完了，到了我最感兴趣的章节了-第十章，特别是其中的this指针。</p>
+<ul>
+<li>[x] 每日打卡之第二天</li>
+<li>[x] 1点之前睡觉</li>
+<li>[ ] 适当锻炼</li>
+<li>[x] 多喝水</li>
+<li>[x] 不要吃喝过量</li>
+</ul>
+<h4 id="再谈const"><a class="markdownIt-Anchor" href="#再谈const"></a> 再谈const</h4>
+<p>正常情况下，定义在函数体之外的变量应该是全局变量，但是对于使用了const修饰的全局变量其类似于使用static修饰了一样，是内部性链接的。也就是说如果可以对多个文件使用同一个名称的变量放在函数体之外。我们也可以通过将const全局变量放入头文件中通过引用头文件的方法来使用。</p>
+<p>我们也可以修改const默认的内部链接性，例如在定义的时候使用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> state = <span class="number">50</span>; <span class="comment">// 注意赋值代表定义</span></span><br></pre></td></tr></table></figure>
+<p>在其他文件中引用的时候为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> state; <span class="comment">// 注意后面没有赋值符号</span></span><br></pre></td></tr></table></figure>
+<p>这和一般的全局变量不同，一般的全局变量定义的时候无需使用extern，只有引用的时候需要。</p>
+<h5 id="函数的链接性"><a class="markdownIt-Anchor" href="#函数的链接性"></a> 函数的链接性</h5>
+<p>对于使用static修饰的函数，如果本文件中有对该函数的调用，其优先权是要高于其他文件的同名函数的。对于内联函数则不同，内联函数的本质是各个调用的地方都复制一份，<strong>可以直接在头文件中定义</strong>。</p>
+<p>C++在根据函数名寻找函数时，如果用户定义了一个与库函数中同名的函数，C++将使用用户定义的函数，而不是库函数。这种情况叫做函数覆盖。</p>
+<h5 id="c与c库的不同"><a class="markdownIt-Anchor" href="#c与c库的不同"></a> C与C++库的不同</h5>
+<p>对于C语言，编译器在寻找库的时候由于C中没有重载机制，这保证了C中所有的函数名都是唯一的。因此C的库函数符号一般为<code>_function</code>，而对于C++由于有重载存在，故其库中的函数符号包括了参数例如对于函数spiff(int)和spiff(double, double)，其函数名分别为：<code>_spiff_i</code>和<code>_spiff_d_d</code>，故如果C++想要链接到C语言的库，必须这样写：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">void</span> <span class="title">spiff</span><span class="params">(<span class="type">int</span>)</span></span>; <span class="comment">//表示使用C语言编译的库</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="type">void</span> <span class="title">snoff</span><span class="params">(<span class="type">int</span>)</span></span>; <span class="comment">//默认是使用C++编译的库</span></span><br><span class="line"><span class="comment">//上面那句代码等同于 extern &quot;C++&quot; void spoff(int);</span></span><br></pre></td></tr></table></figure>
+<h5 id="c编译器的存储划分"><a class="markdownIt-Anchor" href="#c编译器的存储划分"></a> C++编译器的存储划分</h5>
+<p>C++中和常见的编译器一样，有三块内存。</p>
+<p>第一块为程序的各种段，包含在程序编译之后，例如<code>bss</code>段，用于存储<code>static</code>和全局变量等，或者<code>rodata</code>段用于存储<code>const</code>变量。<br />
+第二块内存为堆栈<code>stack</code>，采用先进后出，用来存储局部变量。第三块就是堆<code>heap</code>，这里没有存储顺序，而是根据使用<code>new</code>或者<code>delete</code>的次序来决定。</p>
+<p>对于一般的变量，其一般存储在栈中，如果我们想要存储到堆中，我们可以这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *pi = <span class="keyword">new</span> <span class="built_in">int</span> (<span class="number">6</span>); <span class="comment">// 等同于int pi = 6;</span></span><br><span class="line"><span class="comment">// 或者利用C++11中的列表初始化特性</span></span><br><span class="line"><span class="type">int</span> *pi = <span class="keyword">new</span> <span class="type">int</span> &#123;<span class="number">6</span>&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="new运算符解析"><a class="markdownIt-Anchor" href="#new运算符解析"></a> new运算符解析</h5>
+<p>C++中的new运算符和malloc类似，不过new运算符使用了运算符重载，其本质定义为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> * <span class="keyword">operator</span> <span class="title">new</span><span class="params">(std::<span class="type">size_t</span>)</span></span>;</span><br><span class="line"><span class="type">void</span> * <span class="keyword">operator</span> <span class="keyword">new</span>[](std::<span class="type">size_t</span>);</span><br><span class="line"><span class="comment">// 上面的std::size_t本质是sizeof,例如</span></span><br><span class="line"><span class="comment">// 对于int,其转化为sizeof(int)</span></span><br><span class="line"><span class="comment">// 对于int[40],其转化为40*sizeof(int)</span></span><br></pre></td></tr></table></figure>
+<p>new可以指定要分配内存的位置，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> buffer[BUFSIZE];</span><br><span class="line">p1 = <span class="keyword">new</span> <span class="type">int</span>[<span class="number">20</span>]; <span class="comment">//在默认堆中分配内存</span></span><br><span class="line">p2 = <span class="built_in">new</span> (buffer) <span class="type">int</span>[<span class="number">20</span>]; <span class="comment">//在buffer中分配内存</span></span><br></pre></td></tr></table></figure>
+<p>值得注意的是对于这种用法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> (addr) <span class="type">int</span>[<span class="number">20</span>];</span><br></pre></td></tr></table></figure>
+<p><strong>new不会检查是否被使用或者是否有足够的空间分配，其直接从该地址开始分配空间。</strong></p>
+<h5 id="名称空间"><a class="markdownIt-Anchor" href="#名称空间"></a> 名称空间</h5>
+<p>名称空间是全局的，可以位于另一个名称空间中，在默认情况下其引用时外部的，除非它 引用了常量。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> Jill</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> fetch;</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">bucket</span><span class="params">(<span class="type">double</span> n)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> n * fetch;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="comment">// namespace Jill</span></span><br><span class="line"><span class="keyword">namespace</span> Jill <span class="comment">// 名称空间可以通过再次调用来为原空间添加代码</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">fetch</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="comment">// 为Jill名称空间添加代码</span></span><br></pre></td></tr></table></figure>
+<p>使用using声明引用名称空间会覆盖当前同名的函数或者变量定义等。</p>
+<p>名称空间类似于函数原型一样，定义在main函数前面。不同的是名称空间优先级大于全局同名变量，小于局部同名变量，如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> Jill</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> fetch;</span><br><span class="line">&#125; <span class="comment">// namespace Jill</span></span><br><span class="line"><span class="type">char</span> fetch;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> Jill;</span><br><span class="line">    <span class="type">double</span> fetch; <span class="comment">// 将隐藏namespace Jill中的fetch</span></span><br><span class="line">    std::cin &gt;&gt; Jill::fetch; <span class="comment">// 使用namespace Jill中的fetch</span></span><br><span class="line">    std::cin &gt;&gt; ::fetch; <span class="comment">// 使用全局的fetch</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一般来说使用using指令导入必要的函数，且只在使用处才导入相对更加安全。</p>
+<p>名称空间的定义也支持嵌套，格式如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> elements</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">using</span> Jill::fetch; <span class="comment">// 导入另一个名称空间</span></span><br><span class="line">    <span class="keyword">namespace</span> fire</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> flame;</span><br><span class="line">    &#125; <span class="comment">// namespace fire</span></span><br><span class="line">    <span class="type">float</span> water;</span><br><span class="line">&#125; <span class="comment">// namespace elements</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> elements::fire;</span><br><span class="line">std::cin &gt;&gt; elements::water;</span><br></pre></td></tr></table></figure>
+<p>名称空间也可以匿名，此时代表只在本文件中使用该名称空间。类似于static 的全局变量或这全局函数。</p>
+<h5 id="名称空间的使用原则"><a class="markdownIt-Anchor" href="#名称空间的使用原则"></a> 名称空间的使用原则：</h5>
+<p>名称空间相当于把全局的变量和函数进行了分类，下面是一些指导</p>
+<ul>
+<li>使用在已命名的名称空间中声明的变量，而不是使用外部全局变量。（等于就是将全局变量放在名称空间中）</li>
+<li>使用在已命名的名称空间中声明的变量，而不是使用静态全局变量。（静态变量也是放在名称空间中）</li>
+<li>如果开发了一个函数库或类库，将其放在一个名称空间中。事实上，C++当前提倡将标准函数库 放在名称空间 std 中，这种做法扩展到了来自 C 语言中的函数。例如，头文件 math.h 是与 C 语言 兼容的，没有使用名称空间，但 C++头文件 cmath 应将各种数学库函数放在名称空间 std 中。实 际上，并非所有的编译器都完成了这种过渡。</li>
+<li>仅将编译指令 using 作为一种将旧代码转换为使用名称空间的权宜之计。</li>
+<li>不要在头文件中使用 using 编译指令。首先，这样做掩盖了要让哪些名称可用；另外，包含头文件的顺序可能影响程序的行为。如果非要使用编译指令 using，应将其放在所有预处理器编译指令 #include 之后。</li>
+<li>导入名称时，首选使用作用域解析运算符或 using 声明的方法。（即使用<code>::</code>或者using导入具体使用的包） 对于 using 声明，首选将其作用域设置为局部而不是全局。</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%8D%E8%B0%88const"><span class="toc-number">1.</span> <span class="toc-text"> 再谈const</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E9%93%BE%E6%8E%A5%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text"> 函数的链接性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%8Ec%E5%BA%93%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="toc-number">1.2.</span> <span class="toc-text"> C与C++库的不同</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E5%AD%98%E5%82%A8%E5%88%92%E5%88%86"><span class="toc-number">1.3.</span> <span class="toc-text"> C++编译器的存储划分</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#new%E8%BF%90%E7%AE%97%E7%AC%A6%E8%A7%A3%E6%9E%90"><span class="toc-number">1.4.</span> <span class="toc-text"> new运算符解析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4"><span class="toc-number">1.5.</span> <span class="toc-text"> 名称空间</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8E%9F%E5%88%99"><span class="toc-number">1.6.</span> <span class="toc-text"> 名称空间的使用原则：</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&text=学习Cpp-14"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&title=学习Cpp-14"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&is_video=false&description=学习Cpp-14"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-14&body=Check out this article: https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&title=学习Cpp-14"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&title=学习Cpp-14"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&title=学习Cpp-14"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&title=学习Cpp-14"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&name=学习Cpp-14&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/03/24/life/%E5%AD%A6%E4%B9%A0Cpp-14/&t=学习Cpp-14"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

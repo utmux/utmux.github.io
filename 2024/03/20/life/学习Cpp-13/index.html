@@ -14,7 +14,7 @@
 <meta property="og:description" content="天气：晴天	心情：还好  现在新增两项任务，一个是每天写200行代码，第二个是每天画半个小时看一下研究论文。 今天的论文任务：看3页论文 今天的代码任务：QWidget写一个雷达工具箱的界面 下午看到B站收藏夹的时候看到了我收藏的李慧芹老师的C高级编程课程。我看了下，突然想起了我在GitHub上提交的项目，我大概应该看到平衡树那里了。大概100集左右，应该看完了平衡树，我记得我当初看到了那个IPV">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-20T14:10:26.000Z">
-<meta property="article:modified_time" content="2024-03-21T14:12:38.747Z">
+<meta property="article:modified_time" content="2024-03-24T05:10:34.518Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -230,7 +230,7 @@
 <p>C中的auto时指定该变量为自动存储，而C++auto则为用于自动定义。在C中register用于要求变量存在寄存器中，而C++中的register和C中的auto类似。</p>
 <h5 id="c中的说明符和限定符"><a class="markdownIt-Anchor" href="#c中的说明符和限定符"></a> C++中的说明符和限定符</h5>
 <p>存储说明符</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto(和C功能不一样)，register（和C功能不一样），static，extern，thread<span class="emphasis">_local，mutable。</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto(和C功能不一样)，register（和C中auto功能一样），static，extern，thread<span class="emphasis">_local，mutable。</span></span><br></pre></td></tr></table></figure>
 <p>mutable：可以用它来指出，即使结构（或类）变量为 const，其某个成员也可以被修改。例如，请看下面的代码：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">data</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> name[<span class="number">40</span>];</span><br><span class="line">    <span class="keyword">mutable</span> <span class="type">int</span> access;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">const</span> data d = &#123;<span class="string">&quot;hello&quot;</span>, <span class="number">1</span>&#125;;</span><br><span class="line"><span class="comment">// 上面即使为const,其中的access也能修改</span></span><br></pre></td></tr></table></figure>
 
