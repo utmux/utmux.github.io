@@ -14,7 +14,7 @@
 <meta property="og:description" content="天气：晴天	心情：好  今天周二，晚上去跑了步，今天记录一下今天的任务：  [x] 每天一万步 [x] 晚上给眼睛热敷10分钟 [x] 第四天了，等到100天就打卡完成可以买一个平板了 [x] 跑步第二天  在C++中的类中，数据成员通常是private（故数据成员默认是private的），而一些需要提供接口的成员函数通常为public。例如： 12345678class World&#123;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-26T14:34:26.000Z">
-<meta property="article:modified_time" content="2024-03-26T14:34:46.681Z">
+<meta property="article:modified_time" content="2024-03-27T02:37:15.262Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -95,6 +95,8 @@
     <br/>
     <span id="actions">
       <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/03/27/life/%E5%AD%A6%E4%B9%A0Cpp-16/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" aria-label="下一篇" href="/2024/03/25/life/%E4%BB%8A%E5%A4%A9%E7%9A%84%E8%AE%B0%E5%BD%95/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -200,6 +202,8 @@
 <p>为了避免构造函数和类中的函数冲突，有两种方法，一种是类中的数据成员以<code>m_</code>开头，代表是成员变量。第二种是数据成员以<code>_</code>下划线结尾。</p>
 <p>类的初始化方法有两种如下所示：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Stock food = <span class="built_in">Stock</span>(<span class="string">&quot;World Cabbage&quot;</span>, <span class="number">250</span>, <span class="number">1.25</span>);</span><br><span class="line"><span class="function">Stock <span class="title">food</span><span class="params">(<span class="string">&quot;World Cabbage&quot;</span>, <span class="number">250</span>, <span class="number">1.25</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>对于类数组进行初始化如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> STKS = <span class="number">4</span>;</span><br><span class="line">Stock stocks[STKS] = &#123;</span><br><span class="line">    <span class="built_in">Stock</span>(<span class="string">&quot;NanoSmart&quot;</span>, <span class="number">12</span>, <span class="number">20.0</span>),</span><br><span class="line">    <span class="built_in">Stock</span>(<span class="string">&quot;Boffo Objects&quot;</span>, <span class="number">200</span>, <span class="number">2.0</span>),</span><br><span class="line">    <span class="built_in">Stock</span>(<span class="string">&quot;Monolithic Obelisks&quot;</span>, <span class="number">130</span>, <span class="number">3.25</span>),</span><br><span class="line">    <span class="built_in">Stock</span>(<span class="string">&quot;Fleep Enterprises&quot;</span>, <span class="number">60</span>, <span class="number">6.5</span>)</span><br><span class="line">&#125;; <span class="comment">// 如果赋值个数小于4,剩下的使用默认初始化函数,因此类数组需要定义默认默认初始化数组</span></span><br><span class="line"><span class="comment">// 可以利用默认初始化跳过某些初始化</span></span><br><span class="line">Stock stocks2[STKS] = &#123;</span><br><span class="line">    <span class="built_in">Stock</span>(<span class="string">&quot;NanoSmart&quot;</span>, <span class="number">12</span>, <span class="number">20.0</span>),</span><br><span class="line">    <span class="built_in">Stock</span>(),</span><br><span class="line">    <span class="built_in">Stock</span>(<span class="string">&quot;Monolithic Obelisks&quot;</span>, <span class="number">130</span>, <span class="number">3.25</span>),</span><br><span class="line">&#125;;  <span class="comment">// 第二个和第四个元素将采用默认初始化</span></span><br></pre></td></tr></table></figure>
 <p>使用new给类分配内存的时候也类似初始化：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stock *pstock = <span class="keyword">new</span> <span class="built_in">Stock</span>(<span class="string">&quot;World Cabbage&quot;</span>, <span class="number">250</span>, <span class="number">1.25</span>);</span><br></pre></td></tr></table></figure>
 <p>如果不想给类赋值，可以通过函数默认值或者函数重载的方法给类初始化值，例如：</p>
