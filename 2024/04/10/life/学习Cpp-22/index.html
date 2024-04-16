@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="使用new初始化对象 如下面的代码所示，在使用new时，可以初始化类的值： 1Class_name *pclass &#x3D; new Class_name(value); 因为上面的函数会自动调用： 123Class_name(Type_name);&#x2F;&#x2F; 或者下面这个兼容的参数Class_name(const Type_name &amp;); 而如果使用常规的new（也就是后面不加value），此时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="混吃等死">
+<meta property="og:url" content="https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="使用new初始化对象 如下面的代码所示，在使用new时，可以初始化类的值： 1Class_name *pclass &#x3D; new Class_name(value); 因为上面的函数会自动调用： 123Class_name(Type_name);&#x2F;&#x2F; 或者下面这个兼容的参数Class_name(const Type_name &amp;); 而如果使用常规的new（也就是后面不加value），此时">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-04-10T03:31:51.409Z">
+<meta property="article:modified_time" content="2024-04-10T03:39:51.975Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>混吃等死</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/04/12/life/%E5%AD%A6%E4%B9%A0Cpp-23/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/04/09/life/%E5%AD%A6%E4%B9%A0Cpp-21/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&text="><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&title="><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&is_video=false&description="><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&body=Check out this article: https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&title="><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&title="><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&title="><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&title="><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&name=&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&t="><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8new%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.</span> <span class="toc-text"> 使用new初始化对象</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#new%E5%92%8Cdelete%E5%9C%A8buffer%E4%B8%AD%E5%88%86%E9%85%8D%E5%AF%B9%E8%B1%A1%E6%97%B6%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text"> new和delete在buffer中分配对象时的问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E4%B8%AD%E7%9A%84%E7%BB%93%E6%9E%84%E4%BD%93%E5%92%8C%E6%9E%9A%E4%B8%BE%E5%A3%B0%E6%98%8E%E8%A7%A3%E9%87%8A"><span class="toc-number">3.</span> <span class="toc-text"> 类中的结构体和枚举声明解释</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-04-10T03:31:51.409Z" class="dt-published" itemprop="datePublished">2024-04-10</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h5 id="使用new初始化对象"><a class="markdownIt-Anchor" href="#使用new初始化对象"></a> 使用new初始化对象</h5>
+<p>如下面的代码所示，在使用new时，可以初始化类的值：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class_name *pclass = <span class="keyword">new</span> <span class="built_in">Class_name</span>(value);</span><br></pre></td></tr></table></figure>
+<p>因为上面的函数会自动调用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Class_name</span>(Type_name);</span><br><span class="line"><span class="comment">// 或者下面这个兼容的参数</span></span><br><span class="line"><span class="built_in">Class_name</span>(<span class="type">const</span> Type_name &amp;);</span><br></pre></td></tr></table></figure>
+<p>而如果使用常规的new（也就是后面不加value），此时会使用默认构造函数。如下面所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class_name *ptr = <span class="keyword">new</span> Class_name; <span class="comment">// 此时调用默认初始化</span></span><br></pre></td></tr></table></figure>
+<h5 id="new和delete在buffer中分配对象时的问题"><a class="markdownIt-Anchor" href="#new和delete在buffer中分配对象时的问题"></a> new和delete在buffer中分配对象时的问题</h5>
+<p>如下面的代码所示，在buffer中分配类的内存，而不是堆（heap）中：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> * buffer = <span class="keyword">new</span> <span class="type">char</span>[<span class="number">512</span>];</span><br><span class="line">JustTestClass *pc1, *pc2;</span><br><span class="line">pc1 = <span class="built_in">new</span> (buffer) JustTestClass;</span><br><span class="line">pc2 = <span class="keyword">new</span> JustTestClass;</span><br><span class="line"><span class="comment">// 此时如果使用delete</span></span><br><span class="line"><span class="keyword">delete</span> pc1; <span class="comment">// 此时不会调用析构函数</span></span><br><span class="line"><span class="comment">// 上面的语句相当于delete [] buffer;</span></span><br><span class="line"><span class="keyword">delete</span> pc2; <span class="comment">// 此时会调用析构函数</span></span><br></pre></td></tr></table></figure>
+<p>从上面可以看出，如果new中使用内存地址指定内存分配，此时如果尝试采用普通的delete，不会按照预期工作，下面是对于这种new时需要采用的delete。注意的时，要按照依赖顺序来delete内存：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pc1-&gt;~<span class="built_in">JustTestClass</span>(); <span class="comment">// 此时会调用析构函数</span></span><br><span class="line"><span class="keyword">delete</span> [] buffer; <span class="comment">// 再删除buffer</span></span><br></pre></td></tr></table></figure>
+<h5 id="类中的结构体和枚举声明解释"><a class="markdownIt-Anchor" href="#类中的结构体和枚举声明解释"></a> 类中的结构体和枚举声明解释</h5>
+<p>在类声明中声明的结构、类或枚举被称为是被嵌套在类中，其作用域为整个类。这种声明不会创建数 据对象，而只是指定了可以在类中使用的类型。如果声明是在类的私有部分进行的，则只能在这个类使用 被声明的类型；如果声明是在公有部分进行的，则可以从类的外部通过作用域解析运算符使用被声明的类 型。如下代码所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Test</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">Node</span> &#123;xx&#125;; <span class="comment">// 此时全局类可见</span></span><br><span class="line">	<span class="keyword">private</span>: Struct Node &#123;xx&#125;; <span class="comment">// 此时只有该类可以使用</span></span><br><span class="line">	<span class="keyword">public</span>: Struct Node &#123;xx&#125;; <span class="comment">// 此时可以通过::外部使用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8new%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.</span> <span class="toc-text"> 使用new初始化对象</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#new%E5%92%8Cdelete%E5%9C%A8buffer%E4%B8%AD%E5%88%86%E9%85%8D%E5%AF%B9%E8%B1%A1%E6%97%B6%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text"> new和delete在buffer中分配对象时的问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E4%B8%AD%E7%9A%84%E7%BB%93%E6%9E%84%E4%BD%93%E5%92%8C%E6%9E%9A%E4%B8%BE%E5%A3%B0%E6%98%8E%E8%A7%A3%E9%87%8A"><span class="toc-number">3.</span> <span class="toc-text"> 类中的结构体和枚举声明解释</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&text="><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&title="><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&is_video=false&description="><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&body=Check out this article: https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&title="><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&title="><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&title="><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&title="><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&name=&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/04/10/life/%E5%AD%A6%E4%B9%A0Cpp-22/&t="><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
