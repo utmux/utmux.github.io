@@ -14,7 +14,7 @@
 <meta property="og:description" content="天气：下雨	心情：还好  突然发现昨天是闰年，看朋友圈发现禾赛雷达和荷兰的自主加油站因为没有考虑闰年导致软件出bug无法处理了。离谱。 今天的C++进度如下所示，下午在寝室躺了一下午，中午的时候和学长成功退补选了课，还要请他吃一顿饭。晚上学习了C++，现在到65页了，感觉进度还是不够快啊。  C++整数常量表示 C++中和C类似，其字面值整数可以分别用8进制（以0开头，后面的值小于8），10进制和">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-01T14:00:26.000Z">
-<meta property="article:modified_time" content="2024-03-01T14:01:35.038Z">
+<meta property="article:modified_time" content="2024-04-28T09:10:30.319Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -188,6 +188,7 @@
 <h5 id="c中的其他字符类型"><a class="markdownIt-Anchor" href="#c中的其他字符类型"></a> C++中的其他字符类型</h5>
 <p>为了兼容Unicode这些国际标准在C++中有宽字符类型<code>wchar_t</code>和<code>wcin</code>，<code>wcout</code>来处理该类型<code>wchar_t</code>（宽字符类型）可以表示扩展字符集。<code>wchar_t</code> 类型是一种 整数类型，它有足够的空间，可以表示系统使用的最大扩展字符集。<br />
 除此之外，在C++11中增加了<code>char16_t</code>和<code>char32_t</code>，为了不仅仅满足普通的Unicode字符，实现更加长的字符，采取了这两种类型，该两种类型都是无符号类型，分别用大写和小写的u来表示。C++11 使用前缀 u 表示 char16_t 字符常量和字符串常量，如 u‘C’和 u“be good”；并使用前缀 U 表示 char32_t 常量，如 U‘R’和 U“dirty  rat”。类型 char16_t 与/u00F6 形式的通用字符名匹配，而类型 char32_t 与/U0000222B 形式的通用字符名匹 配。</p>
+<p>批注：wchar_t会根据编译的系统平台不同而不同，在Windows上是两个字节，也就是int的一半，一般是可以容下<code>utf-8</code>中的一字节和二字节字符（一些希腊符号），但是中文主要在三字节字符中，少部分在四字节字符中。也就是<strong>如果要完整支持中文，需要使用四字节</strong>，也就是char32_t的。在python中，就是使用char32_t，但是为了效率，做了一点trick。上面三者对应的字符串为<code>std::wstring</code>,<code>std::u16string</code>,<code>std::u32string</code></p>
 <h5 id="c中增加了bool类型"><a class="markdownIt-Anchor" href="#c中增加了bool类型"></a> C++中增加了bool类型</h5>
 <p>在C++中非零为true，0为false。相比C增加了该类型。</p>
 <h5 id="c中的const"><a class="markdownIt-Anchor" href="#c中的const"></a> C++中的const</h5>
@@ -198,6 +199,7 @@
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">float 至少 32 位，double 至少 48 位，且不少于 float，long double</span><br><span class="line">至少和 double 一样多。这三种类型的有效位数可以一样多。另外，这 3 种类型的指数范围至少是−37 到 37。可以从头文件 cfloat 或 float.h</span><br><span class="line">中找到系统的限制。(float保证小数点后6位精确,double保证13位精确)</span><br></pre></td></tr></table></figure>
 <h5 id="c中的浮点常量表示"><a class="markdownIt-Anchor" href="#c中的浮点常量表示"></a> C++中的浮点常量表示</h5>
 <p>在C++中，浮点数默认表示为double来表示，如果希望是float或者long double类型在常数后面使用<code>f</code>和<code>l</code>/<code>L</code>来表示。</p>
+<p>批注：在C语言中也是默认double类型，但在matlab中默认是float，我之前搞错了。</p>
 <h5 id="c中的类型转换"><a class="markdownIt-Anchor" href="#c中的类型转换"></a> C++中的类型转换</h5>
 <p>发现了下面这种也可以类型转换。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">guess</span><span class="params">(<span class="number">3.9832</span>)</span></span>;</span><br></pre></td></tr></table></figure>

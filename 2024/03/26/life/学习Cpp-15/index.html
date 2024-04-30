@@ -14,7 +14,7 @@
 <meta property="og:description" content="天气：晴天	心情：好  今天周二，晚上去跑了步，今天记录一下今天的任务：  [x] 每天一万步 [x] 晚上给眼睛热敷10分钟 [x] 第四天了，等到100天就打卡完成可以买一个平板了 [x] 跑步第二天  在C++中的类中，数据成员通常是private（故数据成员默认是private的），而一些需要提供接口的成员函数通常为public。例如： 12345678class World&#123;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-26T14:34:26.000Z">
-<meta property="article:modified_time" content="2024-03-27T02:37:15.262Z">
+<meta property="article:modified_time" content="2024-04-29T03:29:04.773Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -194,6 +194,7 @@
 <p>故类函数无需传递或者定义即可访问类中的数据成员和函数成员。类函数和普通函数一样可以使用内联inline，代表在每一个类中都复制一份代码，而不是调用该代码，例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">Stock::show</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>根据C++中的规则，inline更像一种高级的复制，类似于define一样，不过更加智能。</p>
+<p>批注：直接在类定义完整函数的类成员函数都是默认作为inline的。</p>
 <p>为了节省空间，同一个类定义的不同变量，其数据成员的空间是分开的，而方法是共用同一个空间的，也就是调用同一个函数。</p>
 <h5 id="类的初始化函数类似于python的__init__"><a class="markdownIt-Anchor" href="#类的初始化函数类似于python的__init__"></a> 类的初始化函数（类似于python的<code>__init__</code>）</h5>
 <p>对于类其可以通过类似于结构体初始化一样使用等于号初始化（也可以通过列表初始化），但必须存在构造函数</p>
