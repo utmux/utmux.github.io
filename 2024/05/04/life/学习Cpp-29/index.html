@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天	心情：差  突然发现第十四章后面的练习题还没做，但是马上就要考试了，下午就不带电脑过来了，下午就带个平板和手机，然后还有图论习题。需要复习了。 编程最重要的就是联系，奶奶滴我还没有好好练习。这就是速成的坏处吗。  模板类（续） 对于模板类，将会采用具体程度最高的模板，比如： 123456789template &lt;typename T1 *, typename T2*&gt; cl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Cpp-29">
+<meta property="og:url" content="https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天	心情：差  突然发现第十四章后面的练习题还没做，但是马上就要考试了，下午就不带电脑过来了，下午就带个平板和手机，然后还有图论习题。需要复习了。 编程最重要的就是联系，奶奶滴我还没有好好练习。这就是速成的坏处吗。  模板类（续） 对于模板类，将会采用具体程度最高的模板，比如： 123456789template &lt;typename T1 *, typename T2*&gt; cl">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-05-04T12:40:26.000Z">
+<meta property="article:modified_time" content="2024-05-05T04:32:23.504Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习Cpp-29</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/05/03/life/%E5%AD%A6%E4%B9%A0Cpp-28/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&text=学习Cpp-29"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&title=学习Cpp-29"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&is_video=false&description=学习Cpp-29"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-29&body=Check out this article: https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&title=学习Cpp-29"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&title=学习Cpp-29"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&title=学习Cpp-29"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&title=学习Cpp-29"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&name=学习Cpp-29&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&t=学习Cpp-29"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB%E7%BB%AD"><span class="toc-number">1.</span> <span class="toc-text"> 模板类（续）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%88%90%E5%91%98%E6%A8%A1%E6%9D%BF"><span class="toc-number">2.</span> <span class="toc-text"> 成员模板</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%86%E6%A8%A1%E6%9D%BF%E7%94%A8%E4%BD%9C%E5%8F%82%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text"> 将模板用作参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB%E4%B8%8E%E5%8F%8B%E5%85%83"><span class="toc-number">4.</span> <span class="toc-text"> 模板类与友元</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips-%E5%85%B3%E4%BA%8E%E5%8F%8B%E5%85%83"><span class="toc-number">5.</span> <span class="toc-text"> tips: 关于友元</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips%E5%85%B3%E4%BA%8E%E7%B1%BB%E4%B8%AD%E7%9A%84static%E5%8F%98%E9%87%8F"><span class="toc-number">6.</span> <span class="toc-text"> tips：关于类中的static变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%AD%E6%A8%A1%E6%9D%BF%E7%B1%BB%E5%88%AB%E5%90%8D%E4%B8%8E%E5%8F%AF%E5%8F%98%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0"><span class="toc-number">7.</span> <span class="toc-text"> C++中模板类别名与可变模板参数</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        学习Cpp-29
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-05-04T12:40:26.000Z" class="dt-published" itemprop="datePublished">2024-05-04</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">life</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天	心情：差</p>
+<hr />
+<p>突然发现第十四章后面的练习题还没做，但是马上就要考试了，下午就不带电脑过来了，下午就带个平板和手机，然后还有图论习题。需要复习了。</p>
+<p>编程最重要的就是联系，奶奶滴我还没有好好练习。这就是速成的坏处吗。</p>
+<h5 id="模板类续"><a class="markdownIt-Anchor" href="#模板类续"></a> 模板类（续）</h5>
+<p>对于模板类，将会采用具体程度最高的模板，比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T1 *, <span class="keyword">typename</span> T2*&gt; <span class="keyword">class</span> <span class="title class_">Pair</span>&#123;...&#125;;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T1, <span class="keyword">typename</span> T2&gt; <span class="keyword">class</span> <span class="title class_">Pair</span>&#123;...&#125;;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T1, <span class="type">int</span>&gt; <span class="keyword">class</span> <span class="title class_">Pair</span>&#123;...&#125;;<span class="comment">//部分具体化</span></span><br><span class="line"><span class="keyword">template</span> &lt;&gt; <span class="keyword">class</span> <span class="title class_">Pair</span>&lt;<span class="type">int</span>, <span class="type">int</span>&gt; &#123;...&#125;;<span class="comment">//具体化</span></span><br><span class="line"><span class="comment">// 如上面四个模板类</span></span><br><span class="line">Pair&lt;<span class="type">double</span>, <span class="type">double</span>&gt;p1; <span class="comment">// 使用第二个通用</span></span><br><span class="line">Pair&lt;<span class="type">int</span> *, <span class="type">int</span>&gt;p2; <span class="comment">// 将使用部分具体化</span></span><br><span class="line">Pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; p3; <span class="comment">// 将使用具体化</span></span><br><span class="line">Pair&lt;<span class="type">int</span> *, <span class="type">int</span> *&gt;p4; <span class="comment">// 将使用第一个</span></span><br></pre></td></tr></table></figure>
+<p>除此之外部分具体化还可以这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T1, <span class="keyword">typename</span> T2&gt; <span class="keyword">class</span> <span class="title class_">Trio</span>&lt;T1, T2, T2&gt;&#123;...&#125;; <span class="comment">// 这个也算部分具体化</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T1&gt; <span class="keyword">class</span> <span class="title class_">Trio</span>&lt;T1, T1*, T1*&gt;&#123;...&#125;;</span><br><span class="line"><span class="comment">// 这个也算作部分具体化</span></span><br></pre></td></tr></table></figure>
+<h5 id="成员模板"><a class="markdownIt-Anchor" href="#成员模板"></a> 成员模板</h5>
+<p>类模板还能使用另一个模板类和模板函数作为其成员。如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">beta</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> V&gt;</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">hold</span></span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        V val;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">hold</span>(V v) : <span class="built_in">val</span>(v) &#123; &#125;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span> <span class="type">const</span> </span>&#123; cout &lt;&lt; val &lt;&lt; endl; &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    hold&lt;T&gt; q; <span class="comment">// hold object</span></span><br><span class="line">    hold&lt;<span class="type">int</span>&gt; n; <span class="comment">// hold object</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">beta</span>(T t, <span class="type">int</span> i) : <span class="built_in">q</span>(t), <span class="built_in">n</span>(i) &#123;&#125;</span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt;</span><br><span class="line">    <span class="function">U <span class="title">blab</span><span class="params">(U u, T t)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> u * t;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span> <span class="type">const</span> </span>&#123; q.<span class="built_in">show</span>(); n.<span class="built_in">show</span>(); &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们可以将模板成员放在类定义外定义：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">beta</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> V&gt;</span><br><span class="line">	<span class="keyword">class</span> <span class="title class_">hold</span>; <span class="comment">// 嵌套的模板1</span></span><br><span class="line">    hold&lt;T&gt; q;</span><br><span class="line">    hold&lt;<span class="type">int</span>&gt; n;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">beta</span>(T t, <span class="type">int</span> i) : <span class="built_in">q</span>(t), <span class="built_in">n</span>(i) &#123;&#125;</span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt;</span><br><span class="line">    <span class="function">U <span class="title">blab</span><span class="params">(U u, T t)</span>； <span class="comment">// 嵌套的模板2</span></span></span><br><span class="line"><span class="function">    <span class="type">void</span> <span class="title">show</span><span class="params">()</span> <span class="type">const</span> </span>&#123; q.<span class="built_in">show</span>(); n.<span class="built_in">show</span>(); &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 上面嵌套的模板1具体定义在这</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="comment">// 这里说明V是在T的下面</span></span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="keyword">typename</span> V&gt; 	<span class="comment">// 注意语法,类似于类方法的定义</span></span><br><span class="line">	clss beta&lt;T&gt;::hold	<span class="comment">//定义hold的方法</span></span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">        V val;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">hold</span>(V v) : <span class="built_in">val</span>(v) &#123; &#125;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span> <span class="type">const</span> </span>&#123; cout &lt;&lt; val &lt;&lt; endl; &#125;</span><br><span class="line">	&#125;;</span><br><span class="line"><span class="comment">// 上面嵌套的模板2具体定义在这</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt;</span><br><span class="line">    U beta&lt;T&gt;::<span class="built_in">blab</span>(U u, T t) <span class="comment">// 定义模板函数</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> u * t;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="将模板用作参数"><a class="markdownIt-Anchor" href="#将模板用作参数"></a> 将模板用作参数</h5>
+<p>模板类可以传入类型参数（typename T）和非类型参数，如int n。这两个可以分开接受，也可以结合，如下代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="type">int</span> n&gt; <span class="comment">// 分开使用类型和非类型参数</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class</span> <span class="title class_">Thing</span>&gt; <span class="keyword">class</span> <span class="title class_">Crab</span>&#123;...&#125;;</span><br><span class="line"><span class="comment">// 嵌套使用</span></span><br><span class="line"><span class="comment">// 并结合非类型参数</span></span><br></pre></td></tr></table></figure>
+<p>我们来看看嵌套使用的第二个模板类，首先我们回忆下我们之前关于模板嵌套：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ArrayTP&lt; ArrayTP&lt;<span class="type">int</span>, <span class="number">5</span>&gt;, <span class="number">10</span>&gt; twodee;</span><br><span class="line"><span class="comment">// 上面这个模板嵌套是从括号内部开始的</span></span><br><span class="line"><span class="comment">// 然后我们来看一下这个template &lt;template &lt;typename T&gt; class Thing&gt; class Crab&#123;...&#125;</span></span><br><span class="line"><span class="comment">// 首先括号内部是一个模板类Thing，括号外部的模板类Crab将使用Thing作为typename对Crab类进行替换（即此时模板类是类型参数）。</span></span><br><span class="line"><span class="comment">// 使用： Crab&lt;King&gt; legs;</span></span><br><span class="line"><span class="comment">// 要求King必须是一个模板类</span></span><br></pre></td></tr></table></figure>
+<p>上面是将类模板作为一个类型参数，除此之外，其还能和其他类型与非类型参数搭配：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class</span> <span class="title class_">Thing</span>, <span class="keyword">typename</span> U, <span class="type">int</span> n&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Crab</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Thing&lt;U&gt; s1;</span><br><span class="line">	<span class="type">char</span> str[n];</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="模板类与友元"><a class="markdownIt-Anchor" href="#模板类与友元"></a> 模板类与友元</h5>
+<p>模板类声明中也可以加入友元，模板的友元可以分为3类：</p>
+<ol>
+<li>
+<p>非模板友元函数，即将一个常规函数声明为友元：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">friend</span> <span class="type">void</span> <span class="title">counts</span><span class="params">()</span></span>; <span class="comment">// 常规函数作为该模板类的友元</span></span><br><span class="line">    <span class="comment">// 上面的参数没有A,此时可以通过指针，或者内部创建，或者访问模板类中的静态成员变量</span></span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>如上面所示，<strong>模板类的友元函数有点不同，其参数中是不能包括模板类作为参数的。但是可以在指定具体化后包括参数</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HasFriend</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="function"><span class="keyword">friend</span> <span class="type">void</span> <span class="title">report</span><span class="params">(HasFriend&lt;T&gt; &amp;)</span></span>;</span><br><span class="line">    <span class="comment">// 而friend void report(HasFriend &amp;);是不行的</span></span><br><span class="line">&#125;；</span><br><span class="line"><span class="comment">// 这是因为当生成具体实例时，此时T会被替换成具体的类型，此时此时编译器才能才能找到唯一的类。否则，当该模板生成了两个类型的实例的时候，就会导致类的多态（多个同名类），此时编译器就会二义性报错</span></span><br></pre></td></tr></table></figure>
+<p>我们这里说一下模板类，模板类的实例并不是根据代码顺序来生成的，我猜测编译器会首先找出所有调用模板类的实例，再生成所有的类。</p>
+</li>
+<li>
+<p>模板类的约束模板友元函数<br />
+所谓约束化友元函数，即该函数只和某些具体类型的生成类为友元函数，而不是和所有该模板类生成的类为友元。我们可以将友元函数也声明为模板，即模板函数，代码示例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="type">void</span> <span class="title">counts</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="type">void</span> <span class="title">report</span><span class="params">(T &amp;)</span></span>;<span class="comment">//1.类之前声明模板函数</span></span><br><span class="line">tempalte &lt;<span class="keyword">typename</span> TT&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HasFriendT</span></span><br><span class="line">&#123;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">friend</span> <span class="type">void</span> <span class="built_in">counts</span>&lt;TT&gt;(); <span class="comment">//2.将该模板函数具体化，并声明友元，注意这个counts此时和所有的HasFriendT都为友元。</span></span><br><span class="line"><span class="keyword">friend</span> <span class="type">void</span> report&lt;HasFriendT&lt;TT&gt;&gt;(HasFriendT&lt;TT&gt; &amp;); <span class="comment">// 3.对于有参数的要具体化函数和具体化参数的类模板，注意此时report仅和该TT实例化的HasFriendT为友元</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 4. 必须定义模板函数</span></span><br></pre></td></tr></table></figure>
+<p><strong>如上面所示，当没有参数时，友元函数会和所有类型的该类为友元。而当友元函数有参数时，友元函数仅和该类实例化的友元函数为友元。</strong></p>
+</li>
+<li>
+<p>模板类的非约束模板友元函数<br />
+上面的约束化友元函数中counts可以看作一个非约束友元函数，但是他的前提时没有参数，如果想让有参数的友元函数作为非约束友元函数，其定义如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ManyFriend</span></span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> C, <span class="keyword">typename</span> D&gt;<span class="function"><span class="keyword">friend</span> <span class="type">void</span> <span class="title">show2</span><span class="params">(C &amp;, D &amp;)</span></span>;</span><br><span class="line">    <span class="comment">//与上面不同，此时模板函数声明在模板类的内部</span></span><br><span class="line">    <span class="comment">// 此时该函数是所有ManyFriend生成类的友元函数</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 然后定义上面友元函数的模板</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> C, <span class="keyword">typename</span> D&gt; <span class="function"><span class="type">void</span> <span class="title">show2</span><span class="params">(C&amp; c, D &amp;d)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; c.item &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; d.item &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="tips-关于友元"><a class="markdownIt-Anchor" href="#tips-关于友元"></a> tips: 关于友元</h5>
+<p>友元有两种，友元函数和友元类，这里补充一下。首先友元的声明必须在类之中（友元具有单向性，就代表该函数/类能够访问该类了），但是不代表他是类成员。其次友元的具体定义可以在对应的cpp文件中或者直接写在声明那。最后就是友元关系不可传递 （比如继承，友元的友元），友元关系是单向的。<br />
+<strong>友元的声明中，参数可以有该类（比较方便访问），也可以没有（此时可以通过全局指针，或者在友元函数内部创建该类，或者访问类中的私有静态成员变量）。</strong></p>
+<h5 id="tips关于类中的static变量"><a class="markdownIt-Anchor" href="#tips关于类中的static变量"></a> tips：关于类中的static变量</h5>
+<p>类中的static变量和其他函数中的static变量一样，在编译的时候就会分配空间给他，所以即使你不定义该类的示例，或者说不使用该包含static变量的函数，该static变量仍然在那。</p>
+<h5 id="c中模板类别名与可变模板参数"><a class="markdownIt-Anchor" href="#c中模板类别名与可变模板参数"></a> C++中模板类别名与可变模板参数</h5>
+<p>我们可以通过typedef给一些类型定义别名，如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> std::array&lt;<span class="type">double</span>, 12&gt; arrd;</span><br><span class="line">arrd gallons;</span><br></pre></td></tr></table></figure>
+<p>对于模板类，我们也可以定义别名，从而可读性更加强（应该这才是正确用法）,使用方法为<code>using  a= b</code>，该语法在非模板类和typedef等价，具体代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> pc = <span class="type">const</span> <span class="type">char</span> *;</span><br><span class="line"><span class="comment">// 和typedef const char * pc 一样</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">using</span> arrtype  = std::array&lt;T, <span class="number">12</span>&gt; <span class="comment">// 这里可以给该类创建多个名字</span></span><br><span class="line"><span class="comment">// 类似于typedef 可以给同一个类型命名多个名称狗一样</span></span><br><span class="line">arrtype &lt;<span class="type">int</span>&gt; days; <span class="comment">// 相当于std::array&lt;int, 12&gt;</span></span><br></pre></td></tr></table></figure>
+<p>除了上面的别名，模板还可以加入可变参数，类似于<code>printf</code>中的可变参数，毕竟可能有些类不要这么多属性，类似于Linux内核中根据Define来决定结构体的各个属性一样。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB%E7%BB%AD"><span class="toc-number">1.</span> <span class="toc-text"> 模板类（续）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%88%90%E5%91%98%E6%A8%A1%E6%9D%BF"><span class="toc-number">2.</span> <span class="toc-text"> 成员模板</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%86%E6%A8%A1%E6%9D%BF%E7%94%A8%E4%BD%9C%E5%8F%82%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text"> 将模板用作参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB%E4%B8%8E%E5%8F%8B%E5%85%83"><span class="toc-number">4.</span> <span class="toc-text"> 模板类与友元</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips-%E5%85%B3%E4%BA%8E%E5%8F%8B%E5%85%83"><span class="toc-number">5.</span> <span class="toc-text"> tips: 关于友元</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips%E5%85%B3%E4%BA%8E%E7%B1%BB%E4%B8%AD%E7%9A%84static%E5%8F%98%E9%87%8F"><span class="toc-number">6.</span> <span class="toc-text"> tips：关于类中的static变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E4%B8%AD%E6%A8%A1%E6%9D%BF%E7%B1%BB%E5%88%AB%E5%90%8D%E4%B8%8E%E5%8F%AF%E5%8F%98%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0"><span class="toc-number">7.</span> <span class="toc-text"> C++中模板类别名与可变模板参数</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&text=学习Cpp-29"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&title=学习Cpp-29"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&is_video=false&description=学习Cpp-29"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-29&body=Check out this article: https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&title=学习Cpp-29"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&title=学习Cpp-29"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&title=学习Cpp-29"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&title=学习Cpp-29"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&name=学习Cpp-29&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/05/04/life/%E5%AD%A6%E4%B9%A0Cpp-29/&t=学习Cpp-29"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
