@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：下雨	心情：还好  家人们kindle到货了，我晚上去菜鸟拿一下kindle。  String类 C++在C语言的头文件string.h（也就是C++中的cstring）中添加了大量的方法，我们这里来介绍一下这些方法。  16.1.1 字符串构造方法 我们首先来看一下字符串类的构造函数，string类有7个构造函数（string是basic_string&lt;char&gt;的一个具体化模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Cpp-35">
+<meta property="og:url" content="https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：下雨	心情：还好  家人们kindle到货了，我晚上去菜鸟拿一下kindle。  String类 C++在C语言的头文件string.h（也就是C++中的cstring）中添加了大量的方法，我们这里来介绍一下这些方法。  16.1.1 字符串构造方法 我们首先来看一下字符串类的构造函数，string类有7个构造函数（string是basic_string&lt;char&gt;的一个具体化模">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-03T14:10:26.000Z">
+<meta property="article:modified_time" content="2024-06-03T14:07:09.460Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习Cpp-35</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/02/life/%E5%AD%A6%E4%B9%A0Cpp-34/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&text=学习Cpp-35"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&title=学习Cpp-35"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&is_video=false&description=学习Cpp-35"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-35&body=Check out this article: https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&title=学习Cpp-35"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&title=学习Cpp-35"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&title=学习Cpp-35"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&title=学习Cpp-35"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&name=学习Cpp-35&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&t=学习Cpp-35"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#string%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text"> String类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1611-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text"> 16.1.1 字符串构造方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1612-string%E7%B1%BB%E7%9A%84%E8%BE%93%E5%85%A5"><span class="toc-number">3.</span> <span class="toc-text"> 16.1.2 String类的输入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1613-%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">4.</span> <span class="toc-text"> 16.1.3 使用字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1614-string%E7%9A%84%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD"><span class="toc-number">5.</span> <span class="toc-text"> 16.1.4 string的其他功能</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1615-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="toc-number">6.</span> <span class="toc-text"> 16.1.5 字符串的种类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#162-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E6%A8%A1%E6%9D%BF%E7%B1%BB"><span class="toc-number">7.</span> <span class="toc-text"> 16.2 智能指针模板类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1622-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">8.</span> <span class="toc-text"> 16.2.2 智能指针的注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#unique_ptr%E5%92%8Cauto_ptr%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">8.1.</span> <span class="toc-text"> unique_ptr和auto_ptr的区别</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        学习Cpp-35
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-03T14:10:26.000Z" class="dt-published" itemprop="datePublished">2024-06-03</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">life</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：下雨	心情：还好</p>
+<hr />
+<p>家人们kindle到货了，我晚上去菜鸟拿一下kindle。</p>
+<h5 id="string类"><a class="markdownIt-Anchor" href="#string类"></a> String类</h5>
+<p>C++在C语言的头文件string.h（也就是C++中的cstring）中添加了大量的方法，我们这里来介绍一下这些方法。</p>
+<h5 id="1611-字符串构造方法"><a class="markdownIt-Anchor" href="#1611-字符串构造方法"></a> 16.1.1 字符串构造方法</h5>
+<p>我们首先来看一下字符串类的构造函数，string类有7个构造函数（<code>string是basic_string&lt;char&gt;的一个具体化模板</code>），string类分别重载了<code>[]</code>和<code>=</code>，<code>+=</code>以及<code>==</code>运算符，分别如下：</p>
+<ol>
+<li>
+<p>string(const char *s)：根据s指向的字符串（以\0结尾）创建string类</p>
+</li>
+<li>
+<p>string(size_type n, char c)：创建一个包含n个元素的字符串，每个字符都为c</p>
+</li>
+<li>
+<p>string(const string&amp;str)：复制构造函数</p>
+</li>
+<li>
+<p>string()：默认构造函数，创建一个空字符串，长度为0</p>
+</li>
+<li>
+<p>string(const char *s, size_type n)：初始化一个string，字符串为s的前n个元素（如果n超过了\0仍然会继续读取）</p>
+</li>
+<li>
+<pre class="highlight"><code class="c++"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> Iter&gt;
+<span class="title">string</span><span class="params">(Iter begin, Iter end)</span>
+<span class="comment">// 将 string 对象初始化为区间[begin, end)内的字符，注意区间是包括begin不包括end</span>
+<span class="comment">// 例如 string test(str + 1, str +5);</span>
+<span class="comment">// 或者string test(&amp;str[1], &amp;str[5]);</span>
+<span class="comment">// 我们来看一下实际过程，首先根据模板，这个Iter为char *,相当于string&lt;char *&gt;(str + 1, str + 5);的实体化</span>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">7. string(const string &amp;str, string size_type pos = 0, size_type_n = npos)：将一个 string 对象初始化为对象 str 中从位置 pos 开始到结尾的字符，或从位置 pos 开始的 n 个字符</span><br><span class="line"></span><br><span class="line">8. string(string &amp;&amp; str) noexcept ：C++11新增的，这种构造函数被称为**移动构造函数**，将一个string对象初始化str，区别之前那个string就是使用右值初始化，它不保证将 str 视为 const，且确保不会抛出异常，主要应用场景是创建一个临时的string变量，并能够利用noexcept提高效率。</span><br><span class="line"></span><br><span class="line">9. ```c++</span><br><span class="line">   string(initializer_list&lt;char&gt; il);</span><br><span class="line">   // 将一个string对象初始化列表il中的字符，此时我们可以通过列表初始化string，比如</span><br><span class="line">   // string piano_man = &#123;&#x27;L&#x27;, &#x27;i&#x27;, &#x27;s&#x27;, &#x27;z&#x27;, &#x27;t&#x27;&#125;;</span><br></pre></td></tr></table></figure>
+
+</span></code></pre>
+</li>
+</ol>
+<h5 id="1612-string类的输入"><a class="markdownIt-Anchor" href="#1612-string类的输入"></a> 16.1.2 String类的输入</h5>
+<p>对于字符串数组，又下面三种输入方式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> info[<span class="number">100</span>];</span><br><span class="line">cin &gt;&gt; info; <span class="comment">// read a word即跳过空白</span></span><br><span class="line">cin.<span class="built_in">getline</span>(info, <span class="number">100</span>); <span class="comment">// read a line, discard \n</span></span><br><span class="line">cin.<span class="built_in">get</span>(info, <span class="number">100</span>); <span class="comment">// read a line, leave \n in queue</span></span><br></pre></td></tr></table></figure>
+<p>对于string对象，有两种输入方式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">string stuff;</span><br><span class="line">cin &gt;&gt; stuff; <span class="comment">// read a word，即遇到空格会断开</span></span><br><span class="line"><span class="built_in">getline</span>(stuff, <span class="string">&#x27;:&#x27;</span>); <span class="comment">// 后一个可以省略，默认为&#x27;\n&#x27;，即遇到该字符就停止读取，并抛弃这个字符串(即抛弃\n或&#x27;:&#x27;)</span></span><br><span class="line"><span class="comment">// 使用cin &gt;&gt; 输入到数组，此时如果输入太长超出数组限制，会导致溢出</span></span><br><span class="line"><span class="comment">// 而如果使用getline(cin, fname)不会被空白字符打断，但是仍然可能会溢出</span></span><br></pre></td></tr></table></figure>
+<p>上面中有两个getline，一个是<code>cin.getline</code>针对字符串数组，此时需要指定最大读取字符数，而getline会默认根据读取到'\n'（或者指定的字符），自动分配内存，调整string的大小。<br />
+值得注意的是string对象的最大长度，其由<code>string::nops</code>指定，通常是最大的unsigned int值。string版本的getline会从输入中读取字符，并存储到目标string中，知道下面三种情况：</p>
+<ol>
+<li>到达文件为即EOF，此时istream的eofbit将会被设置，此时fail()和eof()方法都会返回true</li>
+<li>遇到分解字符（默认为\n），此时会删除\n，且会从输入缓冲区丢弃该字符</li>
+<li>读取的字符字数达到<code>string::nops</code>定义的最大允许值，此时会设置istream的failbit，fail()返回将会返回true</li>
+</ol>
+<p>istream类中有用于标记符来标记读取中遇到的情况，如果读取到文件末尾将设置eofbit，如果检测到输入错误，将设置failbit（比如输入的类型不匹配），如果出现无法识别的错误（比如硬盘故障），此时会设置badbit，一切顺利才会设置goodbit。</p>
+<p>string版本的<code>operator&gt;&gt;()</code>和字符数组版本的类似，不断读取，遇到空白字符就停止读取，并将空白字符留在缓冲区中。</p>
+<h5 id="1613-使用字符串"><a class="markdownIt-Anchor" href="#1613-使用字符串"></a> 16.1.3 使用字符串</h5>
+<p>string对象不但重载了上面说到的一些运算符，还重载了比较运算符，比如：<code>&lt;</code>,<code>&gt;</code>等等。string类中确定长度可以使用方法length()或者size()。string中查找内容，可以使用find()方法，其中find方法有多个重载的版本，如下所示：</p>
+<ol>
+<li>size_type find(const string &amp;str, size_type_pos = 0) const：从pos的位置开始查找字符串str，如果找到返回首字母的索引，否则返回<code>string::nops</code></li>
+<li>size_type find(const char *s,  size_type pos = 0)：类似上面</li>
+<li>size_type find(const char *s, size_type pos = 0, size_type n)：从pos开始，只查找str的前n个字符，返回和上面一样</li>
+<li>size_type find(char ch, size_type pos = 0) const：查找字符ch，如果找到返回索引，否则返回<code>string::nops</code></li>
+</ol>
+<p>除了find方法，还提供了<code>rfind()</code>，<code>find_first_of()</code>，<code>find_last_of()</code>，<code>find_first_not_of()</code>和<code>find_last_not_of()</code>方法，<code>rfind()</code>类似于find不过是查找字符串最后一次出现的位置，<code>find_first_of()</code>方法是查找参数中任何一个字符首次出现的位置，比如find_first_of(&quot;01234567890&quot;)代表查找其中是否有数字。find_last_of()与之相反。find_first_not_of()返回第一个不在参数中的字符。</p>
+<h5 id="1614-string的其他功能"><a class="markdownIt-Anchor" href="#1614-string的其他功能"></a> 16.1.4 string的其他功能</h5>
+<p>除了上面这些功能，string有下面这些功能（常用的文本增删查改都有）：</p>
+<ul>
+<li>删除字符串的部分或者全部内容</li>
+<li>用一 个字符串的部分或全部内容替换另一个字符串的部分或全部内容</li>
+<li>将数据插入到字符串中或删除字符串中的数据</li>
+<li>将一个字符串的部分或全部内容与另一个字符串的部分或全部内容进行比较</li>
+<li>从字符串中提取子字符串</li>
+<li>将一个字符串中的内容复制到另一个字符串中</li>
+<li>交换两个字符串的内容</li>
+</ul>
+<p>当字符串增加内容时，会遇上类似于realloc的问题，如果邻近的内存不够，该此时就需要重新分配内存，为了防止执行大量的操作，效率将会大大降低，因此实际运行中C++给string分配的是一个比string中字符串大的内存块。然而如果字符串不断增大，超出这个内存块，此时程序将会分配一个新的大小为原来<code>两倍</code>的内存块。string中含有两个方法：capacity()返回当前分配给字符串内存块的大小。reserve()方法用来保证请求的内存块的大小必须大于等于该长度，比如reserve(50)执行后，该string变量的在我电脑上的占用就是50。</p>
+<p>string类还有一个非常重要的方法，**c_str()**方法，返回一个指向该string字符串的C风格字符串指针。这个方法经常被使用，比如将string转化为C类型的字符串。</p>
+<h5 id="1615-字符串的种类"><a class="markdownIt-Anchor" href="#1615-字符串的种类"></a> 16.1.5 字符串的种类</h5>
+<p>前面提到，string是base_string的char的实例。除了char，还有wchar_t，char16_t，和char32_t。关于这三个类型，可以查看我之前提到的Unicode编码和中文占用字节以及wchar的应用场景。</p>
+<h5 id="162-智能指针模板类"><a class="markdownIt-Anchor" href="#162-智能指针模板类"></a> 16.2 智能指针模板类</h5>
+<p>智能指针类似于指针的类对象，这中对象能够帮助管理动态内存，下面介绍三个帮助干你动态内存的智能指针模板。该中类类似于指针，不过该指针会在该变量销毁时调用析构函数，该析构函数会释放该指针指向的内存。这三种指针分别为:auto_ptr(已抛弃，不会细讲)，unique_ptr，shared_ptr。</p>
+<p>首先是创建智能指针，智能指针在memory头文件中定义，使用模板化的语法来使用（这些智能指针本质就是类模板）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">auto_ptr&lt;<span class="type">double</span>&gt; <span class="title">pd</span><span class="params">(<span class="keyword">new</span> <span class="type">double</span>)</span></span>; <span class="comment">// 指向double类型的智能指针，该指针指向new double返回的地址</span></span><br><span class="line"><span class="function">auto_ptr&lt;string&gt; <span class="title">ps</span><span class="params">(<span class="keyword">new</span> string)</span></span>; <span class="comment">// 指向string的指针，指向new string返回的地址</span></span><br></pre></td></tr></table></figure>
+<p>由于智能指针的构造函数（默认构造函数参数为普通指针）都是被声明为explicit，所以如果想要将普通指针转化为智能指针，必须调用类的方法，如下调用对应模板实例化的方法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">share_ptr&lt;<span class="type">double</span>&gt; pd;</span><br><span class="line"><span class="type">double</span> *p_reg = <span class="keyword">new</span> <span class="type">double</span>;</span><br><span class="line">pd = p_reg; <span class="comment">// 由于explicit，不允许</span></span><br><span class="line">pd = <span class="built_in">shared_ptr</span>&lt;<span class="type">double</span>&gt;(p_reg)； <span class="comment">// 调用explicit方法转换</span></span><br><span class="line">shared_ptr&lt;<span class="type">double</span>&gt; <span class="built_in">pshared</span>(p_reg); <span class="comment">// 或者这样定义一个新的指针，初始化为p_reg</span></span><br></pre></td></tr></table></figure>
+<p>智能指针应该避免的一点就是避免其去释放已经释放的内存地址，比如下面：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">string <span class="title">vacation</span><span class="params">(<span class="string">&quot;I wandered lonely as a cloud.&quot;</span>)</span></span>;</span><br><span class="line"><span class="function">shared_ptr&lt;string&gt; <span class="title">pvac</span><span class="params">(&amp;vacation)</span></span>;</span><br><span class="line"><span class="comment">// 这种做法是错误的，当vacation变量超出作用域并被销毁时，shared_ptr仍然会尝试访问已经释放的内存，这会导致未定义行为，可能触发运行时错误。所以智能指针只能指向new分配的动态内存</span></span><br></pre></td></tr></table></figure>
+<h5 id="1622-智能指针的注意事项"><a class="markdownIt-Anchor" href="#1622-智能指针的注意事项"></a> 16.2.2 智能指针的注意事项</h5>
+<p>为什么有这么多种智能指针呢？（实际上有四种，除了上面提到的三种，还有一种是：weak_ptr），以及为什么auto_ptr会被抛弃呢，答案就是如果有两个智能指针指向同一个地址此时会尝试去释放两次内存：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">auto_ptr&lt;string&gt; <span class="title">ps</span> <span class="params">(<span class="keyword">new</span> string(<span class="string">&quot;I reigned lonely as a clound.&quot;</span>))</span></span>;</span><br><span class="line">auto_ptr&lt;string&gt; vocation;</span><br><span class="line">vocation = ps; <span class="comment">// 两个智能指针指向同一个地址，会导致释放两次</span></span><br></pre></td></tr></table></figure>
+<p>此时我们几种方法来解决这个问题（这就是为什么有这么多类型的智能指针）：</p>
+<ol>
+<li>重载赋值运算符，使之进行深复制，这样两个智能指针各自指向不同的对象，释放的时候就不会释放同一个地址呢。</li>
+<li>建立所有权(ownership)的概念，对于一个对象，只能有一个智能指针可以拥有它。赋值操作会转让所有权，只有拥有所有权的智能指针能够<strong>访问和释放</strong>该对象。这就是用于<code>auto_ptr</code>和<code>unique_ptr</code>的策略。</li>
+<li>创建智能更高的指针，跟踪应用该对象的智能指针数。这称为引用计数（reference counting），仅再引用技术为1时才会调用delete去释放内存。这就是<code>shared_ptr</code>采用的策略。</li>
+</ol>
+<p>当然复制构造函数采取的策略和上面的赋值运算符是一样的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 比如下面这个数组例子</span></span><br><span class="line">auto_ptr&lt;string&gt; films[<span class="number">5</span>] = </span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">auto_ptr</span>&lt;string&gt;(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">&quot;Fowl Balls&quot;</span>)),</span><br><span class="line">    <span class="built_in">auto_ptr</span>&lt;string&gt;(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">&quot;Duck Walks&quot;</span>)),</span><br><span class="line">    <span class="built_in">auto_ptr</span>&lt;string&gt;(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">&quot;Chicken Runs&quot;</span>)),</span><br><span class="line">    <span class="built_in">auto_ptr</span>&lt;string&gt;(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">&quot;Turkey Errors&quot;</span>)),</span><br><span class="line">    <span class="built_in">auto_ptr</span>&lt;string&gt;(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">&quot;Goose Eggs&quot;</span>))</span><br><span class="line">&#125;;</span><br><span class="line">pwin = films[<span class="number">2</span>]; <span class="comment">// 此时films[2]就失去呢ownership所有权，即此时无法通过films[2]来访问和删除这个对象</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)</span><br><span class="line">    cout &lt;&lt; *films[i] &lt;&lt; endl; <span class="comment">// 这个时候就会报错，因为films[2]没有所有权来访问这个对象</span></span><br></pre></td></tr></table></figure>
+<h6 id="unique_ptr和auto_ptr的区别"><a class="markdownIt-Anchor" href="#unique_ptr和auto_ptr的区别"></a> unique_ptr和auto_ptr的区别</h6>
+<p>上面提到unique_ptr和auto_ptr都是采用所有权的策略，但是有所不同，对于auto_ptr没有所有权的指针尝试访问数据会在运行时报错退出。而对于unique_ptr其则会在编译阶段就报错。因而C++98抛弃了auto_ptr而是采用了unique_ptr，更具体是下面的场景来说明为何unique_ptr更加好：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对于auto_ptr</span></span><br><span class="line"><span class="function">auto_ptr&lt;string&gt; <span class="title">p1</span><span class="params">(<span class="keyword">new</span> string(<span class="string">&quot;auto&quot;</span>))</span></span>;</span><br><span class="line">auto_ptr&lt;string&gt; p2;</span><br><span class="line">p2 = p1; <span class="comment">// 编译器不会报错</span></span><br><span class="line"><span class="comment">// 对于unique_ptr</span></span><br><span class="line"><span class="function">unique_ptr&lt;string&gt; <span class="title">p3</span><span class="params">(<span class="keyword">new</span> string(<span class="string">&quot;auto&quot;</span>))</span></span>;</span><br><span class="line">unique_ptr&lt;string&gt; p4;</span><br><span class="line">p4 = p3; <span class="comment">// 编译器会对这条语句报错</span></span><br></pre></td></tr></table></figure>
+<p>除此之外，</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#string%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text"> String类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1611-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text"> 16.1.1 字符串构造方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1612-string%E7%B1%BB%E7%9A%84%E8%BE%93%E5%85%A5"><span class="toc-number">3.</span> <span class="toc-text"> 16.1.2 String类的输入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1613-%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">4.</span> <span class="toc-text"> 16.1.3 使用字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1614-string%E7%9A%84%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD"><span class="toc-number">5.</span> <span class="toc-text"> 16.1.4 string的其他功能</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1615-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="toc-number">6.</span> <span class="toc-text"> 16.1.5 字符串的种类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#162-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E6%A8%A1%E6%9D%BF%E7%B1%BB"><span class="toc-number">7.</span> <span class="toc-text"> 16.2 智能指针模板类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1622-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">8.</span> <span class="toc-text"> 16.2.2 智能指针的注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#unique_ptr%E5%92%8Cauto_ptr%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">8.1.</span> <span class="toc-text"> unique_ptr和auto_ptr的区别</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&text=学习Cpp-35"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&title=学习Cpp-35"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&is_video=false&description=学习Cpp-35"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-35&body=Check out this article: https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&title=学习Cpp-35"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&title=学习Cpp-35"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&title=学习Cpp-35"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&title=学习Cpp-35"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&name=学习Cpp-35&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/&t=学习Cpp-35"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

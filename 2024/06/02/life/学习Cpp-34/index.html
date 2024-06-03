@@ -14,7 +14,7 @@
 <meta property="og:description" content="天气：天晴	心情：还好  今天上午去剪了头，然后洗了澡，中午来到图书馆白白废了一下午和一晚上，下午就单纯看了下一点点的C++，晚上就开始查关于远程控制的资料了，我是真的傻逼，不过倒是找到了一个好玩的项目。如果成了的话，感觉我的kindle就有救了，还是要等明天kindle到了再说，如果本来墨水屏就显示图片不清晰，那不就寄了。  RTTI（Runtime Type Identification）">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-06-02T12:30:26.000Z">
-<meta property="article:modified_time" content="2024-06-02T12:45:59.026Z">
+<meta property="article:modified_time" content="2024-06-03T03:12:50.538Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -95,6 +95,8 @@
     <br/>
     <span id="actions">
       <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/03/life/%E5%AD%A6%E4%B9%A0Cpp-35/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" aria-label="下一篇" href="/2024/06/01/life/%E5%AD%A6%E4%B9%A0Cpp-33/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -195,6 +197,19 @@
 </ul>
 <p>下面来说一下上面四种转换运算符，首先是dynamic_cast这个的主要应用场景在之前就说过了。然后是const_cast运算符，该运算符仅有一种用途，改变值为<strong>const</strong>或者<strong>volatile</strong>（相当于一个锁，当你想修改某个const时，转化一下，修改完再转换回去），语法和dynamic_cast语法一样，例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">High bar;</span><br><span class="line"><span class="type">const</span> High *pbar = &amp;bar;</span><br><span class="line">...</span><br><span class="line">High * pb = <span class="built_in">const_cast</span>&lt;<span class="type">const</span> Hign *&gt; (pbar); <span class="comment">// 正确使用</span></span><br><span class="line"><span class="type">const</span> Low *pl = <span class="built_in">const_cast</span>&lt;<span class="type">const</span> Low *&gt; (pbar); <span class="comment">// 错误</span></span><br></pre></td></tr></table></figure>
+<p>我们来说一下const_cast的使用方法一般如下，其只能去掉const，比如下面：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">change</span><span class="params">(<span class="type">const</span> <span class="type">int</span> *pt, <span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> *pc;</span><br><span class="line">    pc = <span class="built_in">const_cast</span>&lt;<span class="type">int</span> *&gt;(pt);</span><br><span class="line">    *pc += n;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 该函数能够去掉pt指针的const限制，从而可以使用*pt修改数据</span></span><br><span class="line"><span class="comment">// 然而如果pt指向的数据本身就是const，此时就无法修改，比如</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> test1;</span><br><span class="line"><span class="type">int</span> test2;</span><br><span class="line"><span class="built_in">change</span>(test1); <span class="comment">// 无法修改，去除const后相当于一个int *指针指向一个const值</span></span><br><span class="line"><span class="built_in">change</span>(test2); <span class="comment">// 此时能够修改，去除const就变成一个int *指针</span></span><br></pre></td></tr></table></figure>
+<p>static_cast运算符和上面两个的语法一样，能够进行一些强制类型转换，其强制类型转换的<strong>前提是一方能够隐式转换到另一方</strong>（弱连通？），比如int能转化为double，派生类能够转化到基类，枚举能够转换到int。此时static_cast就能强制，将本来不可逆的转化强制转换回去。</p>
+<p>reinterpret_cast适用于天生危险的转化，该转换运算符不允许删除const。例如访问某个地址的寄存器，其适合将long值转为为某种数据结构的指针。也可以将指针转化为某个整数，但是其有限制：</p>
+<ol>
+<li>
+<p>指针转化为整形或者浮点，该整形或者浮点必须能够容纳下该值，比如32位的指针，就必须使用32位以上的整形数据表示。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> ch = <span class="built_in">char</span> (&amp;d); <span class="comment">// 将指针转化为char就是错误的</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>不能将函数指针转化为数据指针或者将数据指针转化位航速指针</p>
+</li>
+</ol>
 
   </div>
 </article>
