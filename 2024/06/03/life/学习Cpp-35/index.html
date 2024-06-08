@@ -14,7 +14,7 @@
 <meta property="og:description" content="天气：下雨	心情：还好  家人们kindle到货了，我晚上去菜鸟拿一下kindle。  String类 C++在C语言的头文件string.h（也就是C++中的cstring）中添加了大量的方法，我们这里来介绍一下这些方法。  16.1.1 字符串构造方法 我们首先来看一下字符串类的构造函数，string类有7个构造函数（string是basic_string&lt;char&gt;的一个具体化模">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-06-03T14:10:26.000Z">
-<meta property="article:modified_time" content="2024-06-03T14:07:09.460Z">
+<meta property="article:modified_time" content="2024-06-08T02:24:04.067Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -198,15 +198,18 @@
 <p>string(const char *s, size_type n)：初始化一个string，字符串为s的前n个元素（如果n超过了\0仍然会继续读取）</p>
 </li>
 <li>
-<pre class="highlight"><code class="c++"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> Iter&gt;
-<span class="title">string</span><span class="params">(Iter begin, Iter end)</span>
-<span class="comment">// 将 string 对象初始化为区间[begin, end)内的字符，注意区间是包括begin不包括end</span>
-<span class="comment">// 例如 string test(str + 1, str +5);</span>
-<span class="comment">// 或者string test(&amp;str[1], &amp;str[5]);</span>
-<span class="comment">// 我们来看一下实际过程，首先根据模板，这个Iter为char *,相当于string&lt;char *&gt;(str + 1, str + 5);的实体化</span>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">7. string(const string &amp;str, string size_type pos = 0, size_type_n = npos)：将一个 string 对象初始化为对象 str 中从位置 pos 开始到结尾的字符，或从位置 pos 开始的 n 个字符</span><br><span class="line"></span><br><span class="line">8. string(string &amp;&amp; str) noexcept ：C++11新增的，这种构造函数被称为**移动构造函数**，将一个string对象初始化str，区别之前那个string就是使用右值初始化，它不保证将 str 视为 const，且确保不会抛出异常，主要应用场景是创建一个临时的string变量，并能够利用noexcept提高效率。</span><br><span class="line"></span><br><span class="line">9. ```c++</span><br><span class="line">   string(initializer_list&lt;char&gt; il);</span><br><span class="line">   // 将一个string对象初始化列表il中的字符，此时我们可以通过列表初始化string，比如</span><br><span class="line">   // string piano_man = &#123;&#x27;L&#x27;, &#x27;i&#x27;, &#x27;s&#x27;, &#x27;z&#x27;, &#x27;t&#x27;&#125;;</span><br></pre></td></tr></table></figure>
-
-</span></code></pre>
+<p>使用迭代器初始化</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> Iter&gt;</span></span><br><span class="line"><span class="function"><span class="title">string</span><span class="params">(Iter begin, Iter end)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 将 string 对象初始化为区间[begin, end)内的字符，注意区间是包括begin不包括end</span></span></span><br><span class="line"><span class="function"><span class="comment">// 例如 string test(str + 1, str +5);</span></span></span><br><span class="line"><span class="function"><span class="comment">// 或者string test(&amp;str[1], &amp;str[5]);</span></span></span><br><span class="line"><span class="function"><span class="comment">// 我们来看一下实际过程，首先根据模板，这个Iter为char *,相当于string&lt;char *&gt;(str + 1, str + 5);的实体化</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>string(const string &amp;str, string size_type pos = 0, size_type_n = npos)：将一个 string 对象初始化为对象 str 中从位置 pos 开始到结尾的字符，或从位置 pos 开始的 n 个字符</p>
+</li>
+<li>
+<p>string(string &amp;&amp; str) noexcept ：C++11新增的，这种构造函数被称为<strong>移动构造函数</strong>，将一个string对象初始化str，区别之前那个string就是使用右值初始化，它不保证将 str 视为 const，且确保不会抛出异常，主要应用场景是创建一个临时的string变量，并能够利用noexcept提高效率。</p>
+</li>
+<li>
+<p>列表初始化</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span>(initializer_list&lt;<span class="type">char</span>&gt; il);</span><br><span class="line"><span class="comment">// 将一个string对象初始化列表il中的字符，此时我们可以通过列表初始化string，比如</span></span><br><span class="line"><span class="comment">// string piano_man = &#123;&#x27;L&#x27;, &#x27;i&#x27;, &#x27;s&#x27;, &#x27;z&#x27;, &#x27;t&#x27;&#125;;</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h5 id="1612-string类的输入"><a class="markdownIt-Anchor" href="#1612-string类的输入"></a> 16.1.2 String类的输入</h5>
