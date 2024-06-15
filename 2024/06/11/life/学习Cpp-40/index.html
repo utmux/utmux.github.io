@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天	心情：差  我太狂妄自大了，看了别人的GitHub主页之后才知道别人有多牛，我就是一个小丑，之前看不太其movic认为他太不可一世了，现在看来我才是傻逼啊。 感觉自己啥成就都没有，学习C++只不过是为了逃避看论文罢了，看论文我自己没看出个啥玩意，驾照驾照没考到，下半年又要去衢州那边做项目，好烦啊，我是个傻逼。感觉自己好像还没长大，旁边的新一代10后就要取代我们了。可是我还没找到工作啊。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Cpp-40">
+<meta property="og:url" content="https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天	心情：差  我太狂妄自大了，看了别人的GitHub主页之后才知道别人有多牛，我就是一个小丑，之前看不太其movic认为他太不可一世了，现在看来我才是傻逼啊。 感觉自己啥成就都没有，学习C++只不过是为了逃避看论文罢了，看论文我自己没看出个啥玩意，驾照驾照没考到，下半年又要去衢州那边做项目，好烦啊，我是个傻逼。感觉自己好像还没长大，旁边的新一代10后就要取代我们了。可是我还没找到工作啊。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/06/15/FWsijSG5YI2pwtV.png">
+<meta property="article:published_time" content="2024-06-11T12:07:26.000Z">
+<meta property="article:modified_time" content="2024-06-15T14:18:16.760Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/06/15/FWsijSG5YI2pwtV.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习Cpp-40</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/15/life/%E5%AD%A6%E4%B9%A0Cpp-41/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/10/life/%E5%AD%A6%E4%B9%A0Cpp-38/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&text=学习Cpp-40"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&title=学习Cpp-40"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&is_video=false&description=学习Cpp-40"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-40&body=Check out this article: https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&title=学习Cpp-40"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&title=学习Cpp-40"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&title=学习Cpp-40"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&title=学习Cpp-40"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&name=学习Cpp-40&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&t=学习Cpp-40"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text"> 其他迭代器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%97%A0%E5%BA%8F%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text"> 无序关联容器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1"><span class="toc-number">3.</span> <span class="toc-text"> 函数对象</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%AC%A6%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">3.1.</span> <span class="toc-text"> 函数符的概念</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%A2%84%E5%AE%9A%E4%B9%89%E7%9A%84%E5%87%BD%E6%95%B0%E7%AC%A6"><span class="toc-number">4.</span> <span class="toc-text"> 一些预定义的函数符</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E5%85%B3%E4%BA%8Eplus%E8%BF%99%E4%BA%9B%E8%BF%90%E7%AE%97%E7%AC%A6%E7%B1%BB"><span class="toc-number">4.1.</span> <span class="toc-text"> Tips:关于plus&lt;&gt;这些运算符类</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%87%AA%E9%80%82%E5%BA%94%E5%87%BD%E6%95%B0%E7%AC%A6%E5%92%8C%E5%87%BD%E6%95%B0%E9%80%82%E9%85%8D%E5%99%A8"><span class="toc-number">4.2.</span> <span class="toc-text"> 自适应函数符和函数适配器</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#166-%E7%AE%97%E6%B3%95"><span class="toc-number">5.</span> <span class="toc-text"> 16.6 算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#stl%E5%92%8Cstring"><span class="toc-number">6.</span> <span class="toc-text"> STL和string</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E5%AE%B9%E5%99%A8%E6%96%B9%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text"> 函数和容器方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8stl"><span class="toc-number">8.</span> <span class="toc-text"> 使用STL</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%BA%93"><span class="toc-number">9.</span> <span class="toc-text"> 其他库</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#initializer_list"><span class="toc-number">9.1.</span> <span class="toc-text"> initializer_list</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        学习Cpp-40
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-11T12:07:26.000Z" class="dt-published" itemprop="datePublished">2024-06-11</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">life</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天	心情：差</p>
+<hr />
+<p>我太狂妄自大了，看了别人的GitHub主页之后才知道别人有多牛，我就是一个小丑，之前看不太其movic认为他太不可一世了，现在看来我才是傻逼啊。</p>
+<p>感觉自己啥成就都没有，学习<code>C++</code>只不过是为了逃避看论文罢了，看论文我自己没看出个啥玩意，驾照驾照没考到，下半年又要去衢州那边做项目，好烦啊，我是个傻逼。感觉自己好像还没长大，旁边的新一代10后就要取代我们了。可是我还没找到工作啊。</p>
+<h5 id="其他迭代器"><a class="markdownIt-Anchor" href="#其他迭代器"></a> 其他迭代器</h5>
+<p>multimap：<br />
+与set类似，multimap也是可反转的，经过排序的关联容器，但是键和值的类型不同，且同一个键可以和多个值关联。下面是一个示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">multimap&lt;<span class="type">int</span>, string&gt; codes; <span class="comment">// 声明一个multimap，键是int，值位string</span></span><br></pre></td></tr></table></figure>
+<p>和其他默认排序的容器（set）一样，其存在一个可选参数来指定对键进行排序的比较参数或者对象。在默认情况下，将会使用<code>less&lt;&gt;</code>模板。在实际应用中，为了将键和值结合到一起，STL使用模板类<code>pair&lt;class T, class U&gt;</code>将两种类型存储到一个对象中。如果<code>keytype</code>为键类型，<code>datatype</code>是存储的值的类型，则值类型为<code>pair&lt;const keytype, datatype&gt;</code>，例如下面使用区号作为键，城市名为值，则有：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">pair&lt;<span class="type">const</span> <span class="type">int</span>, string&gt; <span class="title">item</span><span class="params">(<span class="number">213</span>, <span class="string">&quot;Los Angleles&quot;</span>)</span></span>;</span><br><span class="line">codes.<span class="built_in">insert</span>(item); <span class="comment">// codes是multimap类型</span></span><br></pre></td></tr></table></figure>
+<p>对于pair我们可以通过first和second成员来访问键和值。如何获得有关于multimap对象的信息呢，成员函数count()接受键作为参数，返回拥有该键的元素数目。成员函数lower_bound()和upper_bound()将键作为参数，工作原理和set一致。成员函数equal_range()将键作为参数，返回两个迭代器，他们表示的区间与该键匹配，这两个迭代器被放入到一个pair中，如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pair&lt;multimap&lt;KeyType, string&gt;::iterator, multimap&lt;KeyType, string&gt;::iterator&gt; range = codes.<span class="built_in">equal_range</span>(<span class="number">718</span>); <span class="comment">// 返回值为一个pair，该pair为两个迭代器</span></span><br><span class="line"><span class="comment">// range中区间与718匹配的两个迭代器。</span></span><br></pre></td></tr></table></figure>
+<h5 id="无序关联容器"><a class="markdownIt-Anchor" href="#无序关联容器"></a> 无序关联容器</h5>
+<p>无需关联容器是对容器概念的另一种改进，和关联容器一样，也是将值和键关联起来，并使用键来查找值，但是底层存在差别，关联容器是基于树结构，而无序关联容器是基于<strong>哈希表结构</strong>，<strong>这能够提高添加和删除元素的速度以及查找算法的效率</strong>。有四种无序关联容器：unordered_set，unordered_multiset，unordered_map和unordered_multimap。</p>
+<h5 id="函数对象"><a class="markdownIt-Anchor" href="#函数对象"></a> 函数对象</h5>
+<p>很多STL算法都使用函数对象，也叫做函数符（functor）。可以看作一个通用的函数指针，适用于任何类型的函数。函数符可以是函数名，指向函数的指针或者重载了<code>operator()</code>运算符的类。如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Linear</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">double</span> slope;</span><br><span class="line">	<span class="type">double</span> y0;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Linear</span>(<span class="type">double</span> s1_ = <span class="number">1</span>, <span class="type">double</span> y_ = <span class="number">0</span>):<span class="built_in">slope</span>(s1_), <span class="built_in">y0</span>(y_) &#123;&#125;</span><br><span class="line">    <span class="comment">//  重载了operator()</span></span><br><span class="line">	<span class="function"><span class="type">double</span> <span class="title">operator</span><span class="params">(<span class="type">double</span> x)</span> </span>&#123;<span class="keyword">return</span> y0 + slope*x;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 此时我们可以像调用函数一样使用类的方法</span></span><br><span class="line">Linear f1;</span><br><span class="line"><span class="function">Linear <span class="title">f2</span><span class="params">(<span class="number">2.5</span>, <span class="number">10.0</span>)</span></span>;</span><br><span class="line"><span class="type">double</span> y1 = <span class="built_in">f1</span>(<span class="number">12.5</span>); <span class="comment">// 像调用函数一样使用类</span></span><br><span class="line"><span class="type">double</span> y2 = <span class="built_in">f2</span>(<span class="number">0.3</span>); <span class="comment">// 类似于调用函数一样</span></span><br></pre></td></tr></table></figure>
+<p>如上所示，函数和重载运算符的类是函数符，也是一种类，因此模板就也支持这种函数符类型，STL中的foreach的最后一个参数就是通过模板来获得对函数符的支持：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> Input, <span class="keyword">class</span> Function&gt;</span></span><br><span class="line"><span class="function">Function <span class="title">foreach</span><span class="params">(InputIterator first, InputIterator last, Function f)</span></span>; <span class="comment">// 该模板中注意返回值即为传入的函数类。</span></span><br><span class="line"><span class="comment">// 上面这个模板比如我们传入原型为</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ShowReview</span><span class="params">(<span class="type">const</span> Review &amp;)</span></span>;</span><br><span class="line"><span class="comment">// 此时模板中的Function就是void(*)(const Review &amp;)类型的指针。</span></span><br></pre></td></tr></table></figure>
+<h6 id="函数符的概念"><a class="markdownIt-Anchor" href="#函数符的概念"></a> 函数符的概念</h6>
+<ul>
+<li>生成器（generator）是不用参数就可以调用的函数符</li>
+<li>一元函数（unary function）是用一个参数可以调用的函数符</li>
+<li>二元函数（binary function）是用两个参数可以调用的函数符。</li>
+<li>返回 bool 值的一元函数是谓词（predicate）；</li>
+<li>返回 bool 值的二元函数是二元谓词（binary predicate）。</li>
+</ul>
+<p>前面我们就提到过使用二元谓词函数可以替代默认函数（比如sort排序）的比较函数。除此外使用谓词可以作为参数的<code>remove_if()</code>成员，在操作前判断该数据是否应该执行操作，比如merge等（可以查看上一节）。比如下面这个例子，使用类模板作为谓词：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TooBig</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        T cutoff;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">TooBig</span>(<span class="type">const</span> T &amp; t) : <span class="built_in">cutoff</span>(t) &#123; &#125;</span><br><span class="line">        <span class="function"><span class="type">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">const</span> T &amp; v)</span> </span>&#123; <span class="keyword">return</span> v &gt; cutoff; &#125;</span><br><span class="line">&#125;;</span><br><span class="line">....</span><br><span class="line"><span class="comment">// 然后对某一个list删除大于200的值如下</span></span><br><span class="line">test.<span class="built_in">remove_if</span>(<span class="built_in">TooBig</span>&lt;<span class="type">int</span>&gt;(<span class="number">200</span>));</span><br></pre></td></tr></table></figure>
+<p>我们可以将上面这个常见的一元谓词函数（大于某个值返回真）和一个常见的二元谓词函数（比较两个值的大小）结合起来，比如下面这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设已经有个一个二元谓词类Bigger用来作为比较函数</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TooBig2</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	T cutoff;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">TooBig2</span>(<span class="type">const</span> T &amp; t): <span class="built_in">cutoff</span>(t) &#123;&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">operator</span><span class="params">(<span class="type">const</span> T &amp;v)</span> </span>&#123;<span class="keyword">return</span> <span class="built_in">Bigger</span>&lt;T&gt;(v, cutoff);&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="一些预定义的函数符"><a class="markdownIt-Anchor" href="#一些预定义的函数符"></a> 一些预定义的函数符</h5>
+<p>STL定义了多个基本函数符，一般来说，一个函数应该支持一元谓词和二元谓词函数，所以有两个版本，下面是STL中的transform函数，分别是一元谓词函数和二元谓词函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vecotr&lt;<span class="type">double</span>&gt; gr8 = &#123;<span class="number">36</span>, <span class="number">39</span>, <span class="number">42</span>, <span class="number">45</span>, <span class="number">48</span>&#125;;</span><br><span class="line"><span class="function">ostream_iterator&lt;<span class="type">double</span>, <span class="type">char</span>&gt; <span class="title">out</span><span class="params">(cout, <span class="string">&quot; &quot;</span>)</span></span>;</span><br><span class="line"><span class="comment">// 一元谓词函数，sqrt(double)是一元谓词</span></span><br><span class="line"><span class="built_in">transform</span>(gr8.<span class="built_in">begin</span>(), gr8.<span class="built_in">end</span>(), out, sqrt);</span><br><span class="line"><span class="comment">// 二元谓词函数，mean(double, double)</span></span><br><span class="line"><span class="built_in">tranform</span>(gr8.<span class="built_in">begin</span>(), gr8.<span class="built_in">end</span>(), m8.<span class="built_in">begin</span>(), out, mean);</span><br></pre></td></tr></table></figure>
+<h6 id="tips关于plus这些运算符类"><a class="markdownIt-Anchor" href="#tips关于plus这些运算符类"></a> Tips:关于plus&lt;&gt;这些运算符类</h6>
+<p>貌似C++中一切都是类，对于默认的<code>+</code>，其并不是函数符，如果我们想要将其作为函数符，我们可以利用<code>plus&lt;&gt;</code>类，如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span> <span class="comment">// plus&lt;&gt;的头文件</span></span></span><br><span class="line">plus&lt;<span class="type">double</span>&gt; add; <span class="comment">// 创建一个plus&lt;double&gt;的object</span></span><br><span class="line"><span class="type">double</span> y = <span class="built_in">add</span>(<span class="number">2.2</span>, <span class="number">3.4</span>); <span class="comment">// 相当于y = 2.2 + 3.4,此时add是一个函数符也是一个类</span></span><br></pre></td></tr></table></figure>
+<p>除了<code>plus&lt;&gt;</code>，下面是其他的一些函数符的名称（比如<code>-</code>对应<code>minus</code>，<code>*</code>对应<code>multiplies</code>，<code>!=</code>对应<code>not_equal_to</code>）：<br />
+<img src="https://s2.loli.net/2024/06/15/FWsijSG5YI2pwtV.png" alt="image-20240611173108038" /></p>
+<h6 id="自适应函数符和函数适配器"><a class="markdownIt-Anchor" href="#自适应函数符和函数适配器"></a> 自适应函数符和函数适配器</h6>
+<p>上个表中列出的预定义函数符都是自定义的。实际上 STL 有 5 个相关的概念：自适应生成器（adaptable  generator）、自适应一元函数（adaptable unary function）、自适应二元函数（adaptable binary function）、自适 应谓词（adaptable predicate）和自适应二元谓词（adaptable binary predicate）。所谓函数适配器是将某个函数转化为零一类能够使用的函数。对于适配器，其会携带表示参数类型的typedef成员，分别为：<code>result_type</code>，<code>first_argument_type</code>，<code>second_argument_type</code>。他们是传入参数类型的typedef，比如<code>plus&lt;int&gt;</code>，该类的传入，返回都是int，所以<code>plus&lt;int&gt;:result_type</code>，<code>plus&lt;int&gt;:first_argument_type</code>，<code>plus&lt;int&gt;:second_type</code>都是int类型的typedef。</p>
+<p>比如某个二元函数，本来需要传入两个参数，转化为只需传入一个参数的一元函数，另一个函数为固定参数。我们前面通过在模板类定义一元函数，在模板类中使用该二元函数来做到。比如下面：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// mulitiplies(double, double)</span></span><br><span class="line"><span class="built_in">binder1st</span>(multiplies, <span class="number">2.5</span>) f1; <span class="comment">// 此时f1即mulitiplies(2.5, double)</span></span><br></pre></td></tr></table></figure>
+<p>除了上面的binder1st绑定第一个参数，还有binder2nd绑定第二个参数以及一个bind2nd的辅助函数。C++11提供了函数指针和函数符的替代品：lambda表达式。</p>
+<h5 id="166-算法"><a class="markdownIt-Anchor" href="#166-算法"></a> 16.6 算法</h5>
+<p>STL存在一些非成员函数的一些算法，比如sort,copy,find,random_shuffle,set_intersection,set_union,set_difference和transform。STL中提供的算法函数是通用的，体现在两个部分，都通过模板提供泛型，其次都是通过迭代器来处理数据。</p>
+<p>STL将算法分成四组：</p>
+<ul>
+<li>非修改式序列操作<br />
+操作元素，不修改容器内容。<br />
+示例：find(), for_each()。</li>
+<li>修改式序列操作<br />
+操作元素，可修改容器内容。<br />
+可修改值或排列顺序。<br />
+示例：transform(), random_shuffle(), copy()。</li>
+<li>排序和相关操作<br />
+包含多个排序函数（如 sort()）。<br />
+其他函数：集合操作。</li>
+<li>通用数字运算<br />
+累积区间内容。<br />
+计算容器间内部乘积。计算小计。计算相邻对象差。<br />
+主要用于数组操作。vector容器最常用。</li>
+</ul>
+<p>其中前三组都在头文件algorithm中，后一组在numeric这个库中。我们来了解一下算法的底层声明和约定，我们以copy()算法为例，copy()函数的原型如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _II, <span class="keyword">typename</span> _OI&gt;</span></span><br><span class="line"><span class="function"><span class="title">copy</span><span class="params">(_II __first, _II __last, _OI __result)</span></span></span><br><span class="line"><span class="function"><span class="comment">// _II和_IO分别代表inputIterator和OutputIterator，即至少满足这两种迭代器的要求</span></span></span><br></pre></td></tr></table></figure>
+<p>在STL的算法中大致分为两类，一个是<code>in-place algorithm</code>，另一个是<code>copying algorithm</code>。两者不同的是，一个不创建拷贝，一个创建。比如sort算法属于in-place algorithm，而copy算法就属于copying algorithm。有些函数有两个版本，即in-place和copying版本，比如transform，在STL的约定中，如果一个算法有两个版本，则copy版本的需要以<code>_copy</code>结尾。比如下面的replace算法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// in-place 版本</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> ForwardIterator, <span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">replace</span><span class="params">(ForwardIterator first, ForwardIterator last, <span class="type">const</span> T&amp; old, <span class="type">const</span> T&amp; new_value)</span></span>;</span><br><span class="line"><span class="comment">// copying 版本，以_copy结尾，对迭代器的要求变高，返回OutputIterator</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> InputIterator, <span class="keyword">typename</span> OutputIterator, <span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">OutputIterator <span class="title">replace_copy</span><span class="params">(InputIterator first, InputIterator last, <span class="type">const</span> T&amp; old, <span class="type">const</span> T&amp; new_value)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>对STL算法的零一常见的约定是有些函数会以<code>_if</code>结尾，来表示通过谓词来判断是否对该数据进行操作，比如<code>replace_if</code>函数。</p>
+<h5 id="stl和string"><a class="markdownIt-Anchor" href="#stl和string"></a> STL和string</h5>
+<p>string类虽然不是STL的组成部分，但是设计的时候考虑到了STL，因此包含了STL的一些成员，比如begin(),end(),rbegin(),rend()。可以使用STL接口。比如next_permutation输出唯一的排列组合：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">next_permutation</span>(letters.<span class="built_in">begin</span>(), letters.<span class="built_in">end</span>());</span><br><span class="line"><span class="comment">// 如果letters为aw，则执行函数后letters中会变为aw和wa</span></span><br></pre></td></tr></table></figure>
+<h5 id="函数和容器方法"><a class="markdownIt-Anchor" href="#函数和容器方法"></a> 函数和容器方法</h5>
+<p>有时候可以选择使用STL方法或者STL函数。通常特定容器自己的method是一个更好的选择，比如list容器中有remove方法，STL也有一个通用的remove方法，下面是两个的对比：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 首先是使用list容器中的remove方法删除元素为4的node</span></span><br><span class="line">la.<span class="built_in">remove</span>(<span class="number">4</span>); <span class="comment">// 直接完成</span></span><br><span class="line"><span class="comment">// 如果使用STL的通用remove方法,由于传入的为InputIterator没有写的权限，只有修改顺序的权限（可以看前面），此时会排序，将不需要删除的拍到前面，需要删除的拍到后面，并将需要删除的开始位置，因此此时我们通过erase()函数传入要删除的区间即可。</span></span><br><span class="line">list&lt;<span class="type">int</span>&gt;::iterator last = <span class="built_in">remove</span>(la.<span class="built_in">begin</span>(),la.<span class="built_in">end</span>(), <span class="number">4</span>);</span><br><span class="line"><span class="built_in">earase</span>(last, la.<span class="built_in">end</span>());</span><br></pre></td></tr></table></figure>
+<p>虽然对于特定类型，非STL方法可能更加好用，但是STL方法却更加通用，只要结构适配了迭代器和STL的一些基本要求，便可以使用STL的方法。</p>
+<h5 id="使用stl"><a class="markdownIt-Anchor" href="#使用stl"></a> 使用STL</h5>
+<p>STL是一个库，其组成部分被设计成协同工作，STL组件是工具，也是创建其他工具的基本部件。下面我们来说明一下使用STL的指南，通过使用STL的函数能够大大简化程序编写的难度，免于自己编写一些函数。</p>
+<p>使用STL应该尽可能减少要编写的代码，STL通用的设计将节省大量的工作时间。STL算法是经过仔细选择并且是内联的。</p>
+<p><strong>Tips：map支持数组表示法，类似于python，比如<code>a[&quot;key&quot;]</code>来访问值</strong></p>
+<h5 id="其他库"><a class="markdownIt-Anchor" href="#其他库"></a> 其他库</h5>
+<p>C++还提供了一些其他库，比如complex为复数提供了类模板complex，random提供了更多随机数功能，我们来介绍一下C++的其他库</p>
+<ol>
+<li>
+<p>vector，valarray和array<br />
+C++提供了三个数组模板：vector，valarray和array。这些类用于不同的目的。<br />
+vector模板类适用于STL容器和算法。valarray类模板是面向数值计算，不是STL的一部分，但是为很多数学计算提供了一个简单直观的接口。array是为替代内置数组而设计的，array表示固定长度的数组，所有没有push_back和insert方法，但是满足STL的接口要求，提供了STL方法，包括begin，end，rbegin，rend。使得STL方法能够用到Array上。</p>
+</li>
+<li>
+<p>如上所提到的，由于上面三个数组模板对STL的适配程度，如果我们有下面的定义：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">double</span>&gt; <span class="title">ved1</span><span class="params">(<span class="number">10</span>)</span>, <span class="title">ved2</span><span class="params">(<span class="number">10</span>)</span>, <span class="title">ved3</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">array&lt;<span class="type">double</span>, 10&gt; vod1, vod2, vod3;</span><br><span class="line"><span class="function">valarray&lt;<span class="type">double</span>&gt; <span class="title">vad1</span><span class="params">(<span class="number">10</span>)</span>, <span class="title">vad2</span><span class="params">(<span class="number">10</span>)</span>, <span class="title">vad3</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line"><span class="comment">// array和vector适配STL接口，可以如下，对于vector也使用</span></span><br><span class="line"><span class="built_in">transform</span>(vod1.<span class="built_in">begin</span>(), vod1.<span class="built_in">end</span>(), vod2.<span class="built_in">begin</span>(), vod3.<span class="built_in">begin</span>(), <span class="built_in">plus</span>&lt;<span class="type">double</span>&gt;());</span><br><span class="line"><span class="comment">//valarray重载了+和*这些算数运算符，便于数学运算，所以可以这样</span></span><br><span class="line">vad3 = vad1 + vad2; <span class="comment">// 不用对容器中每个元素进行transform</span></span><br><span class="line"><span class="comment">// 同样对数学函数，valarray也重载了</span></span><br><span class="line">vad3 = <span class="built_in">log</span>(vad1); <span class="comment">// valarray方便数学运算</span></span><br><span class="line"><span class="comment">// 除了上面外，valarray还提供了sum，size，max和min这些方便数学运算的函数。</span></span><br></pre></td></tr></table></figure>
+<p>如上面的代码所示，vector和array都适配了STL接口，而valarray对运算符和函数进行了重载，并提供了sum，size，max和min这些方便数学运算的函数，valarray还重载了比较运算符，比如numbers为<code>valarray&lt;double&gt;</code>，语句<code>number &gt; 9</code>此时会返回一个<code>valarray&lt;bool&gt;</code>的数组。除此之外，valarray还有一个resize的方法，但是不能像vector的push_back那样自动调整大小。</p>
+</li>
+<li>
+<p>valarray的接口更加简单和直观，然而并不意味着性能更加高，因为valarray底层使用循环来实现上面所说的特性。如果我们想要将valarray适配STL接口，C++11为valarray提供了特殊的begin和end函数，我们要如下使用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sort</span>(<span class="built_in">begin</span>(vad), <span class="built_in">end</span>(vad)); <span class="comment">// 不是vad.begin()</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>slice<br />
+上面的数组都支持数组表示法访问，valarray支持slice下标扩展函数，slice函数返回下表，分别其返回一个等差数组，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">slice</span>(<span class="number">1</span>, <span class="number">4</span>, <span class="number">3</span>); <span class="comment">// 返回1, 4, 7, 10</span></span><br><span class="line"><span class="comment">// 第一个参数为起始点，第二个参数会返回的个数，第三个为间隔</span></span><br><span class="line"><span class="comment">// 此时我们可以这样</span></span><br><span class="line">varint[<span class="built_in">slice</span>(<span class="number">1</span>,<span class="number">4</span>,<span class="number">3</span>)] = <span class="number">10</span>; <span class="comment">// 表示选择了四个元素</span></span><br><span class="line"><span class="comment">// 利用slice函数我们可以快速选择某一行某一列，或者某个二维数组中具有等差关系的元素</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h6 id="initializer_list"><a class="markdownIt-Anchor" href="#initializer_list"></a> initializer_list</h6>
+<p><code>C++11</code>中新增了初始化STL容器的<code>initializer_list</code>，使用其可以使用初始化列表语法将STL容器初始化为一系列值。如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::vector&lt;<span class="type">double</span>&gt; <span class="title">payments</span> <span class="params">(&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>,<span class="number">4</span>&#125;)</span></span>;</span><br><span class="line"><span class="comment">// 上面就使用了initializer_list特性，初始化</span></span><br><span class="line"><span class="comment">// &#123;1, 2, 3,4&#125; 就是一个initializer_list类</span></span><br><span class="line"><span class="comment">// 由于C++11新增的语法我们可以这样初始化与上面等效</span></span><br><span class="line">std::vector&lt;<span class="type">double</span>&gt; payments &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>,<span class="number">4</span>&#125;;</span><br><span class="line"><span class="comment">// 如果类中定义了使用Initializer_list作为参数的构造函数，可以如下</span></span><br><span class="line">std::vector&lt;<span class="type">double</span>&gt; payments = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>,<span class="number">4</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们来对比一下有无括号的两种初始化，第一个种可行是因为：容器类现在包含将 <code>initializer_list&lt;T&gt;</code> 作为参数的构造函数。第二种无需括号可行是因为<code>C++11</code>的语法让这种默认是和上面等价的。(<strong>如果类有接受 initializer_list 作为参数的构造函数，则使用语法{}将调用该构造函数</strong>)</p>
+<p>我们可以将某些类定义为只允许传入initializer_list参数来统一是定义一个变量，还是定义一个数组，比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shared_ptr&lt;<span class="type">double</span>&gt; pd &#123;<span class="keyword">new</span> <span class="type">double</span>&#125;; <span class="comment">// 使用&#123;&#125;而不是()来初始化,()也可以，因为如果不接受类使用initializer_list初始化,默认替换为()</span></span><br></pre></td></tr></table></figure>
+<p>总结：</p>
+<ol>
+<li>除非类要用于处理长度不同的列表，否则让它提供接受 initializer_list 作为参数的构造函数没有意义。</li>
+<li>如果类的构造函数有定义initializer_list作为参数的构造函数，则使用{}会调用该构造函数</li>
+<li>否则会替换为()调用该初始化函数</li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text"> 其他迭代器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%97%A0%E5%BA%8F%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text"> 无序关联容器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1"><span class="toc-number">3.</span> <span class="toc-text"> 函数对象</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%AC%A6%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">3.1.</span> <span class="toc-text"> 函数符的概念</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%A2%84%E5%AE%9A%E4%B9%89%E7%9A%84%E5%87%BD%E6%95%B0%E7%AC%A6"><span class="toc-number">4.</span> <span class="toc-text"> 一些预定义的函数符</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E5%85%B3%E4%BA%8Eplus%E8%BF%99%E4%BA%9B%E8%BF%90%E7%AE%97%E7%AC%A6%E7%B1%BB"><span class="toc-number">4.1.</span> <span class="toc-text"> Tips:关于plus&lt;&gt;这些运算符类</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%87%AA%E9%80%82%E5%BA%94%E5%87%BD%E6%95%B0%E7%AC%A6%E5%92%8C%E5%87%BD%E6%95%B0%E9%80%82%E9%85%8D%E5%99%A8"><span class="toc-number">4.2.</span> <span class="toc-text"> 自适应函数符和函数适配器</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#166-%E7%AE%97%E6%B3%95"><span class="toc-number">5.</span> <span class="toc-text"> 16.6 算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#stl%E5%92%8Cstring"><span class="toc-number">6.</span> <span class="toc-text"> STL和string</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E5%AE%B9%E5%99%A8%E6%96%B9%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text"> 函数和容器方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8stl"><span class="toc-number">8.</span> <span class="toc-text"> 使用STL</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%BA%93"><span class="toc-number">9.</span> <span class="toc-text"> 其他库</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#initializer_list"><span class="toc-number">9.1.</span> <span class="toc-text"> initializer_list</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&text=学习Cpp-40"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&title=学习Cpp-40"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&is_video=false&description=学习Cpp-40"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-40&body=Check out this article: https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&title=学习Cpp-40"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&title=学习Cpp-40"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&title=学习Cpp-40"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&title=学习Cpp-40"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&name=学习Cpp-40&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/06/11/life/%E5%AD%A6%E4%B9%A0Cpp-40/&t=学习Cpp-40"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
