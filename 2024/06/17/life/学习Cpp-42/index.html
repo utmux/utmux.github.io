@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天	心情：差   cin的各种标志位    成员 流状态     eofbit 如果到达文件尾，则设置为 1   badbit 如果流被破坏，则设置为 1；例如，文件读取错误   failbit 如果输入操作未能读取预期的字符或输出操作没有写入预期的字符，则设置为 1   goodbit 另一种表示 0 的方法   good() 如果流可以使用（所有的位都被清除），则返回 true   e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Cpp-42">
+<meta property="og:url" content="https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天	心情：差   cin的各种标志位    成员 流状态     eofbit 如果到达文件尾，则设置为 1   badbit 如果流被破坏，则设置为 1；例如，文件读取错误   failbit 如果输入操作未能读取预期的字符或输出操作没有写入预期的字符，则设置为 1   goodbit 另一种表示 0 的方法   good() 如果流可以使用（所有的位都被清除），则返回 true   e">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-17T14:07:26.000Z">
+<meta property="article:modified_time" content="2024-06-18T13:12:04.891Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习Cpp-42</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/18/life/%E5%AD%A6%E4%B9%A0Cpp-43/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/15/life/%E5%AD%A6%E4%B9%A0Cpp-41/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&text=学习Cpp-42"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&title=学习Cpp-42"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&is_video=false&description=学习Cpp-42"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-42&body=Check out this article: https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&title=学习Cpp-42"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&title=学习Cpp-42"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&title=学习Cpp-42"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&title=学习Cpp-42"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&name=学习Cpp-42&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&t=学习Cpp-42"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#cin%E7%9A%84%E5%90%84%E7%A7%8D%E6%A0%87%E5%BF%97%E4%BD%8D"><span class="toc-number">1.</span> <span class="toc-text"> cin的各种标志位</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96istream%E8%BE%93%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text"> 其他istream输入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%84%8F%E5%A4%96%E8%BE%93%E5%85%A5"><span class="toc-number">3.</span> <span class="toc-text"> 意外输入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96istream%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text"> 其他istream方法：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA"><span class="toc-number">5.</span> <span class="toc-text"> 文件的输入与输出</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E4%BB%A5%E9%BB%98%E8%AE%A4%E6%A8%A1%E5%BC%8F%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%87%BA%E5%B0%86%E8%87%AA%E5%8A%A8%E6%8A%8A%E6%96%87%E4%BB%B6%E7%9A%84%E9%95%BF%E5%BA%A6%E6%88%AA%E7%9F%AD%E4%B8%BA%E9%9B%B6%E8%BF%99%E7%9B%B8%E5%BD%93%E4%BA%8E%E5%88%A0%E9%99%A4%E5%B7%B2%E6%9C%89%E7%9A%84%E5%86%85%E5%AE%B9-%E7%9B%B8%E5%BD%93%E4%BA%8Ew%E6%A8%A1%E5%BC%8F%E7%9B%B4%E6%8E%A5%E5%88%9B%E5%BB%BA"><span class="toc-number">5.1.</span> <span class="toc-text"> Tips:以默认模式打开文件进行输出将自动把文件的长度截短为零，这相当于删除已有的内容。(相当于w模式，直接创建)</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%B5%81%E7%8A%B6%E6%80%81"><span class="toc-number">6.</span> <span class="toc-text"> 文件流状态</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%A8%A1%E5%BC%8F"><span class="toc-number">7.</span> <span class="toc-text"> 文件模式</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%E4%B8%8D%E5%90%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%BC%9A%E6%8D%A2%E8%A1%8C%E5%92%8C%E5%9B%9E%E8%BD%A6%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-number">7.1.</span> <span class="toc-text"> Tips：文本文件不同操作系统会换行和回车的处理</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        学习Cpp-42
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-17T14:07:26.000Z" class="dt-published" itemprop="datePublished">2024-06-17</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">life</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天	心情：差</p>
+<hr />
+<h5 id="cin的各种标志位"><a class="markdownIt-Anchor" href="#cin的各种标志位"></a> cin的各种标志位</h5>
+<table>
+<thead>
+<tr>
+<th>成员</th>
+<th>流状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>eofbit</td>
+<td>如果到达文件尾，则设置为 1</td>
+</tr>
+<tr>
+<td>badbit</td>
+<td>如果流被破坏，则设置为 1；例如，文件读取错误</td>
+</tr>
+<tr>
+<td>failbit</td>
+<td>如果输入操作未能读取预期的字符或输出操作没有写入预期的字符，则设置为 1</td>
+</tr>
+<tr>
+<td>goodbit</td>
+<td>另一种表示 0 的方法</td>
+</tr>
+<tr>
+<td>good()</td>
+<td>如果流可以使用（所有的位都被清除），则返回 true</td>
+</tr>
+<tr>
+<td>eof()</td>
+<td>如果 eofbit 被设置，则返回 true</td>
+</tr>
+<tr>
+<td>bad()</td>
+<td>如果 badbit 被设置，则返回 true</td>
+</tr>
+<tr>
+<td>fail()</td>
+<td>如果 badbit 或 failbit 被设置，则返回 true</td>
+</tr>
+<tr>
+<td>rdstate()</td>
+<td>返回流状态</td>
+</tr>
+<tr>
+<td>exceptions()</td>
+<td>返回一个位掩码，指出哪些标记导致异常被引发</td>
+</tr>
+<tr>
+<td>exceptions(iostate ex)</td>
+<td>设置哪些状态将导致 clear() 引发异常；例如，如果 ex 是 eofbit，则如果 eofbit 被设置，clear() 将引发异常</td>
+</tr>
+<tr>
+<td>clear(iostate s)</td>
+<td>将流状态设置为 s；s 的默认值为 0（goodbit）；如果(reststate() &amp; exceptions()) != 0，则引发异常</td>
+</tr>
+<tr>
+<td>setstate(iostate s)</td>
+<td>调用 clear(rdstate()s)。这将设置与 s 中设置的位对应的流状态位，其他流状态位保持不变</td>
+</tr>
+</tbody>
+</table>
+<p>clear( )方 法将状态设置为它的参数。因此，下面的调用将使用默认参数 0，这将清除全部 3 个状态位（eofbit、badbit 和 failbit）。而 setstate( )方法只影响其参数中已设置的位。</p>
+<p>cin设置异常：exceptions( )方法返回一个位字段，它包含 3 位，分别对应于 eofbit、failbit 和 badbit（即哪个位会导致异常被触发）。此时会触发<code>ios_base::failure</code> ，该异常类是从 std::exception 类派生而来的，因此包含一个 what( ) 方法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cin.<span class="built_in">exceptions</span>(ios_base::failbit|ios_base::badbit);</span><br><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">	cin &gt;&gt; input</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">catch</span>(ios_base::failure &amp;bf)</span><br><span class="line">&#123;</span><br><span class="line">	cout &lt;&lt; bf.<span class="built_in">what</span>() &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只有在流状态良好（所有的位都被清除）的情况下，下面的测试才返回 true</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(cin &gt;&gt; input)</span><br><span class="line"><span class="keyword">while</span>(cin &gt;&gt; input)</span><br></pre></td></tr></table></figure>
+<p>遇到异常后使用clear清除状态，但是输入循环终止的不匹配输入仍留在输入队列中，程序必须跳 过它。一种方法是一直读取字符，直到到达空白为止。isspace( )函数（参见第 6 章）是一个 cctype 函数， 它在参数是空白字符时返回 true。另一种方法是，丢弃行中的剩余部分，而不仅仅是下一个单词。如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法一</span></span><br><span class="line"><span class="keyword">while</span>( cin &gt;&gt; input)</span><br><span class="line">&#123;</span><br><span class="line">	sum += input;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (cin.<span class="built_in">fail</span>() &amp;&amp; !cin.<span class="built_in">eof</span>()) <span class="comment">// 输入不匹配</span></span><br><span class="line">&#123;</span><br><span class="line">	cin.<span class="built_in">clear</span>();</span><br><span class="line">	<span class="keyword">while</span>(!<span class="built_in">isspace</span>(cin.<span class="built_in">get</span>()))</span><br><span class="line">		<span class="keyword">continue</span>; <span class="comment">// 去除输入不匹配的输入，直到遇到空格</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">1</span>); <span class="comment">// badbit即此时由于硬件原因导致的</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 方法二</span></span><br><span class="line"><span class="keyword">while</span>(cin.<span class="built_in">get</span>() != <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">    	<span class="keyword">continue</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="其他istream输入"><a class="markdownIt-Anchor" href="#其他istream输入"></a> 其他istream输入</h5>
+<p><code>cin.get(char &amp;)</code>:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> ch;</span><br><span class="line">cin.<span class="built_in">get</span>(ch); <span class="comment">// 返回的是cin本身，所以可以如下</span></span><br><span class="line">cin.<span class="built_in">get</span>(ch).<span class="built_in">get</span>() <span class="comment">// 忽略空格</span></span><br></pre></td></tr></table></figure>
+<p>与<code>cin&gt;&gt;</code>的区别：其会跳过空白字符，所以如下，ch不会捕获到<code>'\n'</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> ch;</span><br><span class="line">cin &gt;&gt; ch;</span><br><span class="line"><span class="keyword">while</span>(ch != <span class="string">&#x27;\n&#x27;</span>) <span class="comment">// 不会捕获到空白字符</span></span><br></pre></td></tr></table></figure>
+<p>如果 cin.get(char &amp;)到达文件尾EOF，此时会调用setstate设置bit，使用while判断即可跳出。</p>
+<p><code>cin.get(void)</code>:<br />
+也读取空白，但使用返回值来将输入传递给程序。返回类型为 intt（或某种更大的整型，这取决于字符集和区域）。此时就不能像上面那样连环使用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cin.<span class="built_in">get</span>().<span class="built_in">get</span>(); <span class="comment">// 返回的是int</span></span><br></pre></td></tr></table></figure>
+<p>到达文件尾后（不管是真正的文件尾还是模拟的文件尾），cin.get(void)都将返回值 EOF，此时可以如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> ch; <span class="comment">// 声明为int</span></span><br><span class="line"><span class="keyword">while</span>(ch  = cin.<span class="built_in">get</span>() != EOF)</span><br></pre></td></tr></table></figure>
+<p><code>get(char *, int , char)</code>:<br />
+第一个参数是用于放置输入字符串的内存单元的地址。第二个参数比要读取的最大字符数大 1（额外 的一个字符用于存储结尾的空字符，以便将输入存储为一个字符串）。第 3 个参数指定用作分界符的字符。</p>
+<p><code>get(char *, int )</code>:<br />
+和上面一致，但是默认使用换行符作为第三个参数。</p>
+<p><code>getline(char *, int , char)</code>:<br />
+和上面的get类似。不同在于对换行符是否留在缓冲区还是丢弃。get( )将换行符留在输入流中，这样接下来的输入操作首先看到是将是换行 符，而 gerline( )抽取并丢弃输入流中的换行符。</p>
+<p><code>getline(char *, int )</code>:<br />
+和上面一致，但是默认使用换行符作为第三个参数。</p>
+<p><code>ignore(int, char)</code>:<br />
+默认值为1和EOF，返回一个istream对象（因此可以连环调用）。如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cin.<span class="built_in">ignore</span>(<span class="number">255</span>, <span class="string">&#x27;\n&#x27;</span>); \\最多读取<span class="number">255</span>个字符，丢弃<span class="number">255</span>个字符中包括<span class="string">&#x27;\n&#x27;</span>和<span class="string">&#x27;\n&#x27;</span>前面的字符</span><br></pre></td></tr></table></figure>
+<h5 id="意外输入"><a class="markdownIt-Anchor" href="#意外输入"></a> 意外输入</h5>
+<p>get(char *, int)和 getline( )的某些输入形式将影响流状态。与其他输入函数一样，这两个函数在遇到文 件尾时将设置 eofbit，遇到流被破坏（如设备故障）时将设置 badbit。另外两种特殊情况是无输入以及输入 到达或超过函数调用指定的最大字符数。</p>
+<p>对于上述两个方法，如果无法读取字符串，会设置failbit，有两种情况，一个是到了文件末尾。而对于<strong>get函数</strong>存在另一种情况是空行（即只有一个'\n'）。我们可以判断字符串数组第一个值是否为<code>'\0'</code>来选择是否对空行做出处理。</p>
+<p>下面来看输入超出指定最大输入字符数的情况。对于getline()如果指定输入最大字符为n，如果读取了 n-1个字符，并且下一个字符不是换行符，则设置 failbit。而对于get函数，即使输入超过最大字数限制，也不会设置failbit，我们可以通过peak()来查看下一个输入来判断get是否超出超出了最大输入限制。</p>
+<p>总结下，get会对空行设置failbit，不会对超过容量设置。而getline恰好相反。</p>
+<h5 id="其他istream方法"><a class="markdownIt-Anchor" href="#其他istream方法"></a> 其他istream方法：</h5>
+<p>其他 istream 方法包括 read( )、peek( )、gcount( )和 putback( )。</p>
+<p>read( )方法不是专为键盘输入设计的，它最常与 ostream write( )函数结合使用，来完成文件输入和输出（因此不会转换数据到字符串）。</p>
+<p>peek( )函数返回输入中的下一个字符，但不抽取输入流中的字符。也就是说，它使得能够查看下一个 字符。</p>
+<p>gcount( )方法返回最后一个非格式化抽取方法读取的字符数（即不会数据转换），这意味着字符是由 get( )、getline( )、 ignore( )或 read( )方法读取的，不是由抽取运算符（&gt;&gt;）读取的。</p>
+<p>putback( )函数将一个字符插入到输入字符串中，被插入的字符将是下一条输入语句读取的第一个字符，其返回类型为 <code>istream &amp;</code></p>
+<h5 id="文件的输入与输出"><a class="markdownIt-Anchor" href="#文件的输入与输出"></a> 文件的输入与输出</h5>
+<p>C++在头文件 fstream（以前为 fstream.h）中定义了多个新类，其中包括用于文件输入的 ifstream 类和用于文件输出的 ofstream 类。C++还定义了一个 fstream 类，用于同步文件 I/O。这些类都是从 头文件 iostream 中的类派生而来的，因此这些新类的对象可以使用前面介绍过的方法。</p>
+<p>基本使用方法如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果要输出</span></span><br><span class="line">ofstream fout; <span class="comment">// 创建流对象</span></span><br><span class="line">fout.<span class="built_in">open</span>(<span class="string">&quot;jar.txt&quot;</span>); <span class="comment">// 关联文件</span></span><br><span class="line">fout.<span class="built_in">close</span>(); <span class="comment">// fout这个对象仍然存在，只是和文件的连接断开了，此时我们可以使用fout关联其他文件</span></span><br><span class="line"><span class="comment">// 或者上面两句可以直接ofstream fout(&quot;jar.txt&quot;);</span></span><br></pre></td></tr></table></figure>
+<p>ostream 是 ofstream 类的基类，因此可以使用所有的 ostream 方法，包括各种插入运算符定义、格 式化方法和控制符。ofstream 类使用被缓冲的输出，因此程序在创建像 fout 这样的 ofstream 对象时，将为 输出缓冲区分配空间。如果创建了两个 ofstream 对象，程序将创建两个缓冲区，每个对象各一个。</p>
+<h6 id="tips以默认模式打开文件进行输出将自动把文件的长度截短为零这相当于删除已有的内容-相当于w模式直接创建"><a class="markdownIt-Anchor" href="#tips以默认模式打开文件进行输出将自动把文件的长度截短为零这相当于删除已有的内容-相当于w模式直接创建"></a> Tips:以默认模式打开文件进行输出将自动把文件的长度截短为零，这相当于删除已有的内容。(相当于w模式，直接创建)</h6>
+<h5 id="文件流状态"><a class="markdownIt-Anchor" href="#文件流状态"></a> 文件流状态</h5>
+<p>C++文件流类从 ios_base 类那里继承了一个流状态成员。正如前面指出的，该成员存储了指出流状态 的信息：一切顺利、已到达文件尾、I/O 操作失败等。如果一切顺利，则流状态为零（没有消息就是好消 息）。</p>
+<p>例如，试图打开一个不存在的文件进行输入时，将设置 failbit 位，因此 可以这样进行检查：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(fin.<span class="built_in">fail</span>()) <span class="comment">// 尝试打开文件失败</span></span><br><span class="line">&#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于 ifstream 对象和 istream 对象一样，被放在需要 bool 类型的地方时，将被转换为 bool 值，故上面可以写为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fin.<span class="built_in">open</span>(...);</span><br><span class="line"><span class="keyword">if</span>(!fin) <span class="comment">// 尝试打开文件失败</span></span><br><span class="line">&#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然而，较新的 C++实现提供了一种更好的检查文件是否被打开的方法—is_open( )方法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!fin.<span class="built_in">is_open</span>())</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序可能需要打开多个文件。打开多个文件的策略取决于它们将被如何使用。如果需要同时打开两个 文件，则必须为每个文件创建一个流。(也可以只打开一个流，节约资源，但是需要不断断开和上一个文件的连接，与下一个文件连接)。</p>
+<p>和cin一样，遇到异常输入使用clear，使用 fin.clear( )是无害的，即使在不必使用它的时候使用。</p>
+<h5 id="文件模式"><a class="markdownIt-Anchor" href="#文件模式"></a> 文件模式</h5>
+<p>和其他语言一样的文件模式，使用方法和C语言一样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fout.<span class="built_in">open</span>(filename, mode1 | mode2); <span class="comment">// fin默认的mode为w，即覆盖写入</span></span><br></pre></td></tr></table></figure>
+<p>下表列出了所有的文件模式，在ios_base名称空间中：</p>
+<table>
+<thead>
+<tr>
+<th>常量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ios_base::in</td>
+<td>打开文件，以便读取</td>
+</tr>
+<tr>
+<td>ios_base::out</td>
+<td>打开文件，以便写入</td>
+</tr>
+<tr>
+<td>ios_base::ate</td>
+<td>打开文件，并移到文件尾</td>
+</tr>
+<tr>
+<td>ios_base::app</td>
+<td>追加到文件尾</td>
+</tr>
+<tr>
+<td>ios_base::trunc</td>
+<td>如果文件存在，则截短文件</td>
+</tr>
+<tr>
+<td>ios_base::binary</td>
+<td>二进制文件</td>
+</tr>
+</tbody>
+</table>
+<p>和C语言对比：</p>
+<table>
+    <thead>
+        <tr>
+            <th>C++模式</th>
+            <th>C 模式</th>
+            <th>含义</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ios_base::in</td>
+            <td>"r"</td>
+            <td>打开以读取</td>
+        </tr>
+        <tr>
+            <td>ios_base::out</td>
+            <td>"w"</td>
+            <td>等价于 ios_base::out | ios_base::trunc</td>
+        </tr>
+        <tr>
+            <td>ios_base::out | ios_base::trunc</td>
+            <td>"w"</td>
+            <td>打开以写入，如果已经存在，则截短文件</td>
+        </tr>
+        <tr>
+            <td>ios_base::out | ios_base::app</td>
+            <td>"a"</td>
+            <td>打开以写入，只追加</td>
+        </tr>
+        <tr>
+            <td>ios_base::in | ios_base::out</td>
+            <td>"r+"</td>
+            <td>打开以读写，在文件允许的位置写入</td>
+        </tr>
+        <tr>
+            <td>ios_base::out | ios_base::in | ios_base::trunc</td>
+            <td>"w+"</td>
+            <td>打开以读写，如果已经存在，则首先截短文件</td>
+        </tr>
+        <tr>
+            <td>c++mode | ios_base::binary</td>
+            <td>"cmodeb"</td>
+            <td>以 C++mode（或相应的 cmode）和二进制模式打开；例如，ios_base::in | ios_base::binary 成为 "rb"</td>
+        </tr>
+        <tr>
+            <td>c++mode | ios_base::ate</td>
+            <td>"cmode"</td>
+            <td>以指定的模式打开，并移到文件尾。C 使用一个独立的函数调用，而不是模式编码。例如，ios_base::in | ios_base::ate 被转为 "r" 模式和 C 函数调用 fseek(file, 0, SEEK_END)</td>
+        </tr>
+    </tbody>
+</table>
+<p>注意，<code>ios_base::ate</code> 和 <code>ios_base::app</code> 都将文件指针指向打开的文件尾。二者的区别在于，<code>ios_base::app</code> 模式只允许将数据添加到文件尾，而 <code>ios_base::ate</code> 模式将指针放到文件尾。</p>
+<p><strong>Tips：二进制文件与文本文件</strong><br />
+将数据存储在文件中时，可以将其存储为文本格式或二进制格式。文本格式指的是将所有内容（甚至 数字）都存储为文本。每种格式都有自己的优点。文本格式便于读取，可以使用编辑器或字处理器来读取和编辑文本文件， 可以很方便地将文本文件从一个计算机系统传输到另一个计算机系统。二进制格式对于数字来说比较精 确，因为它存储的是值的内部表示，因此不会有转换误差或舍入误差。以二进制格式保存数据的速度更 快，因为不需要转换，并可以大块地存储数据。二进制格式通常占用的空间较小，这取决于数据的特征。</p>
+<p>要用二进制格式存储相同的信息，可以这样做：</p>
+<ol>
+<li>mode 或上 <code>ios_base::binary</code></li>
+<li>使用使用成员函数 write( )写数据，而不是<code>&lt;&lt;</code></li>
+</ol>
+<h6 id="tips文本文件不同操作系统会换行和回车的处理"><a class="markdownIt-Anchor" href="#tips文本文件不同操作系统会换行和回车的处理"></a> Tips：文本文件不同操作系统会换行和回车的处理</h6>
+<p>使用二进制文件模式时，程序将数据从内存传输给文件（反之亦然）时，将不会发生任何隐藏的转换， 而默认的文本模式并非如此。C++是从 UNIX 系统上发展而来的，因此也使用换行（linefeed）来表示换行符。为增加可移植性，Windows C++程序在写文本模式文件时，自动将 C++换行符转换为回车和换行；Macintosh C++程序在 写文件时，将换行符转换为回车。因此，如果使用文本模式读取二进制文件，C++可能会将某些数看作换行，替换为回车和换行，导致数据失真错误。同样，在Linux下，将字符串类型数据写入文件与是否是文本模式还是二进制模式无关，而对于Windows，使用二进制模式写入string字符串，此时不会替换回车等。</p>
+<p>今天的C++学习就到此为止，开始阅读文献和做实验复现。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#cin%E7%9A%84%E5%90%84%E7%A7%8D%E6%A0%87%E5%BF%97%E4%BD%8D"><span class="toc-number">1.</span> <span class="toc-text"> cin的各种标志位</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96istream%E8%BE%93%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text"> 其他istream输入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%84%8F%E5%A4%96%E8%BE%93%E5%85%A5"><span class="toc-number">3.</span> <span class="toc-text"> 意外输入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96istream%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text"> 其他istream方法：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA"><span class="toc-number">5.</span> <span class="toc-text"> 文件的输入与输出</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E4%BB%A5%E9%BB%98%E8%AE%A4%E6%A8%A1%E5%BC%8F%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%87%BA%E5%B0%86%E8%87%AA%E5%8A%A8%E6%8A%8A%E6%96%87%E4%BB%B6%E7%9A%84%E9%95%BF%E5%BA%A6%E6%88%AA%E7%9F%AD%E4%B8%BA%E9%9B%B6%E8%BF%99%E7%9B%B8%E5%BD%93%E4%BA%8E%E5%88%A0%E9%99%A4%E5%B7%B2%E6%9C%89%E7%9A%84%E5%86%85%E5%AE%B9-%E7%9B%B8%E5%BD%93%E4%BA%8Ew%E6%A8%A1%E5%BC%8F%E7%9B%B4%E6%8E%A5%E5%88%9B%E5%BB%BA"><span class="toc-number">5.1.</span> <span class="toc-text"> Tips:以默认模式打开文件进行输出将自动把文件的长度截短为零，这相当于删除已有的内容。(相当于w模式，直接创建)</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%B5%81%E7%8A%B6%E6%80%81"><span class="toc-number">6.</span> <span class="toc-text"> 文件流状态</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%A8%A1%E5%BC%8F"><span class="toc-number">7.</span> <span class="toc-text"> 文件模式</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%E4%B8%8D%E5%90%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%BC%9A%E6%8D%A2%E8%A1%8C%E5%92%8C%E5%9B%9E%E8%BD%A6%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-number">7.1.</span> <span class="toc-text"> Tips：文本文件不同操作系统会换行和回车的处理</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&text=学习Cpp-42"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&title=学习Cpp-42"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&is_video=false&description=学习Cpp-42"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-42&body=Check out this article: https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&title=学习Cpp-42"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&title=学习Cpp-42"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&title=学习Cpp-42"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&title=学习Cpp-42"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&name=学习Cpp-42&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/06/17/life/%E5%AD%A6%E4%B9%A0Cpp-42/&t=学习Cpp-42"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
