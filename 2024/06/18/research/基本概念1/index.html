@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="混吃等死">
 <meta property="og:description" content="天气：晴天	心情：差   LFM信号的幅频特性与时宽带宽积 在满足大时宽带宽积的条件下，LFM信号具有近似矩形的幅频特性。时宽带宽积（Time-Bandwidth Product, TBP）越大，幅频特性越接近矩形，如图3.18所示。时宽带宽积的定义如下： TBP&#x3D;T⋅B&#x3D;T⋅∣K∣⋅T&#x3D;∣K∣⋅T2\mathrm{TBP} &#x3D; T \cdot B &#x3D; T \cdot |K| \cdot T &#x3D;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2024/06/18/aR2tfozJbEqQXFH.png">
+<meta property="og:image" content="https://s2.loli.net/2024/09/22/7syJI3TtGMevwir.png">
 <meta property="article:published_time" content="2024-06-18T13:15:26.000Z">
-<meta property="article:modified_time" content="2024-09-13T02:12:11.175Z">
+<meta property="article:modified_time" content="2024-09-22T03:45:08.073Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s2.loli.net/2024/06/18/aR2tfozJbEqQXFH.png">
+<meta name="twitter:image" content="https://s2.loli.net/2024/09/22/7syJI3TtGMevwir.png">
     
     
       
@@ -73,8 +73,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
 <!-- hexo injector head_end end --></head>
 
-<body class="max-width mx-auto px3 ltr">
-    
+<body class="max-width mx-auto px3 ltr">    
       <div id="header-post">
   <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
@@ -249,7 +248,7 @@ M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">�
 <p>对于广泛分布的多个强散射点场景,PSLR参数更为重要;此时,过小的PSLR可能导致虚假目标。而对于均匀分布的弱散射场景,ISLR的作用更明显;此时,过小的ISLR会降低图像对比度,图像中将充斥大量阴影区域。</p>
 <h5 id="辐射分辨率-2"><a class="markdownIt-Anchor" href="#辐射分辨率-2"></a> 辐射分辨率</h5>
 <p>雷达辐射分辨率是系统区分雷达散射系数相近值的能力。它等效于黑白照片中能够区分的不同的灰度等级。在照片中分辨率由粒径决定,而在雷达图像中,辐射分辨率由目标相干斑(Speckl e)和信噪比决定。相干斑是分辨单元内多个散射体回波信号矢量相互叠加所出现的现象。通过多视处理技术可以减轻图像中的相干斑,改善辐射分辨率,但是它以牺牲空间分辨率为代价。在采用非相干平均降低相干斑的算法中,辐射分辨率r和多视处理视数N及单视信噪比S的关系为<br />
-<img src="https://s2.loli.net/2024/06/18/aR2tfozJbEqQXFH.png" alt="image-20240618200747769" /></p>
+<img src="https://s2.loli.net/2024/09/22/7syJI3TtGMevwir.png" alt="image-20240618200747769" /></p>
 
   </div>
 </article>
@@ -393,5 +392,20 @@ M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">�
 
 <!-- utterances Comments -->
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
