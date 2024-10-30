@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：雨	心情：好   序列式容器 STL种的容器分为两种，序列式和关联式，如下图所示：  所谓序列式容器，其中的元素都可序（ordered），但未必有序（sorted）。  vector vector比较简单，对于vector，大概代码如下所示： 123456789101112131415161718192021222324252627282930313233343536373839404142">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STL_3">
+<meta property="og:url" content="https://nampsec.github.io/2024/10/29/life/STL_3/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：雨	心情：好   序列式容器 STL种的容器分为两种，序列式和关联式，如下图所示：  所谓序列式容器，其中的元素都可序（ordered），但未必有序（sorted）。  vector vector比较简单，对于vector，大概代码如下所示： 123456789101112131415161718192021222324252627282930313233343536373839404142">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/10/29/wmI2hRoSVKl5iFT.png">
+<meta property="article:published_time" content="2024-10-29T13:26:26.000Z">
+<meta property="article:modified_time" content="2024-10-30T02:57:37.117Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/10/29/wmI2hRoSVKl5iFT.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>STL_3</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/10/29/life/STL_2/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/10/29/life/STL_3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/10/29/life/STL_3/&text=STL_3"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/10/29/life/STL_3/&title=STL_3"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/10/29/life/STL_3/&is_video=false&description=STL_3"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=STL_3&body=Check out this article: https://nampsec.github.io/2024/10/29/life/STL_3/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/10/29/life/STL_3/&title=STL_3"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/10/29/life/STL_3/&title=STL_3"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/10/29/life/STL_3/&title=STL_3"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/10/29/life/STL_3/&title=STL_3"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/10/29/life/STL_3/&name=STL_3&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/10/29/life/STL_3/&t=STL_3"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%BC%8F%E5%AE%B9%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text"> 序列式容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vector"><span class="toc-number">2.</span> <span class="toc-text"> vector</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        STL_3
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-10-29T13:26:26.000Z" class="dt-published" itemprop="datePublished">2024-10-29</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">life</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：雨	心情：好</p>
+<hr />
+<h4 id="序列式容器"><a class="markdownIt-Anchor" href="#序列式容器"></a> 序列式容器</h4>
+<p>STL种的容器分为两种，序列式和关联式，如下图所示：<br />
+<img src="https://s2.loli.net/2024/10/29/wmI2hRoSVKl5iFT.png" alt="image-20241029212821297" /></p>
+<p>所谓序列式容器，其中的元素都可序（ordered），但未必有序（sorted）。</p>
+<h4 id="vector"><a class="markdownIt-Anchor" href="#vector"></a> vector</h4>
+<p>vector比较简单，对于vector，大概代码如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_Tp</span>, <span class="keyword">class</span> <span class="title class_">_Alloc</span> = __STL_DEFAULT_ALLOCATOR(_Tp) &gt;</span><br><span class="line"><span class="keyword">class</span> vector : <span class="keyword">protected</span> _Vector_base&lt;_Tp, _Alloc&gt; </span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// requirements:</span></span><br><span class="line"></span><br><span class="line">  __STL_CLASS_REQUIRES(_Tp, _Assignable);</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="keyword">typedef</span> _Vector_base&lt;_Tp, _Alloc&gt; _Base;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="comment">// nested type 定义</span></span><br><span class="line">  <span class="keyword">typedef</span> _Tp value_type;</span><br><span class="line">  <span class="keyword">typedef</span> value_type* pointer;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="type">const</span> value_type* const_pointer;</span><br><span class="line">  <span class="keyword">typedef</span> value_type* iterator;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="type">const</span> value_type* const_iterator;</span><br><span class="line">  <span class="keyword">typedef</span> value_type&amp; reference;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="type">const</span> value_type&amp; const_reference;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="type">size_t</span> size_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="type">ptrdiff_t</span> difference_type;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Base::allocator_type allocator_type;</span><br><span class="line">  <span class="function">allocator_type <span class="title">get_allocator</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> _Base::<span class="built_in">get_allocator</span>(); &#125;</span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function">iterator <span class="title">begin</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> _M_start; &#125;</span><br><span class="line">  <span class="function">const_iterator <span class="title">begin</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> _M_start; &#125;</span><br><span class="line">  <span class="function">iterator <span class="title">end</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> _M_finish; &#125;</span><br><span class="line">  <span class="function">const_iterator <span class="title">end</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> _M_finish; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">reverse_iterator <span class="title">rbegin</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123; <span class="keyword">return</span> <span class="built_in">reverse_iterator</span>(<span class="built_in">end</span>()); &#125;</span><br><span class="line">  <span class="function">const_reverse_iterator <span class="title">rbegin</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123; <span class="keyword">return</span> <span class="built_in">const_reverse_iterator</span>(<span class="built_in">end</span>()); &#125;</span><br><span class="line">  <span class="function">reverse_iterator <span class="title">rend</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123; <span class="keyword">return</span> <span class="built_in">reverse_iterator</span>(<span class="built_in">begin</span>()); &#125;</span><br><span class="line">  <span class="function">const_reverse_iterator <span class="title">rend</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123; <span class="keyword">return</span> <span class="built_in">const_reverse_iterator</span>(<span class="built_in">begin</span>()); &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">size_type <span class="title">size</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123; <span class="keyword">return</span> <span class="built_in">size_type</span>(<span class="built_in">end</span>() - <span class="built_in">begin</span>()); &#125;</span><br><span class="line">  <span class="function">size_type <span class="title">max_size</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123; <span class="keyword">return</span> <span class="built_in">size_type</span>(<span class="number">-1</span>) / <span class="built_in">sizeof</span>(_Tp); &#125;</span><br><span class="line">  <span class="function">size_type <span class="title">capacity</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123; <span class="keyword">return</span> <span class="built_in">size_type</span>(_M_end_of_storage - <span class="built_in">begin</span>()); &#125;</span><br><span class="line">  <span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123; <span class="keyword">return</span> <span class="built_in">begin</span>() == <span class="built_in">end</span>(); &#125;</span><br><span class="line"></span><br><span class="line">  reference <span class="keyword">operator</span>[](size_type __n) &#123; <span class="keyword">return</span> *(<span class="built_in">begin</span>() + __n); &#125;</span><br><span class="line">  const_reference <span class="keyword">operator</span>[](size_type __n) <span class="type">const</span> &#123; <span class="keyword">return</span> *(<span class="built_in">begin</span>() + __n); &#125;</span><br><span class="line"> <span class="function"><span class="keyword">explicit</span> <span class="title">vector</span><span class="params">(<span class="type">const</span> allocator_type&amp; __a = allocator_type())</span></span></span><br><span class="line"><span class="function">    : _Base(__a) &#123;</span>&#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">vector</span>(size_type __n, <span class="type">const</span> _Tp&amp; __value,</span><br><span class="line">         <span class="type">const</span> allocator_type&amp; __a = <span class="built_in">allocator_type</span>()) </span><br><span class="line">    : _Base(__n, __a)</span><br><span class="line">    &#123; _M_finish = <span class="built_in">uninitialized_fill_n</span>(_M_start, __n, __value); &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">explicit</span> <span class="title">vector</span><span class="params">(size_type __n)</span></span></span><br><span class="line"><span class="function">    : _Base(__n, allocator_type())</span></span><br><span class="line"><span class="function">    &#123;</span> _M_finish = <span class="built_in">uninitialized_fill_n</span>(_M_start, __n, _Tp()); &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">vector</span>(<span class="type">const</span> vector&lt;_Tp, _Alloc&gt;&amp; __x) </span><br><span class="line">    : _Base(__x.<span class="built_in">size</span>(), __x.<span class="built_in">get_allocator</span>())</span><br><span class="line">    &#123; _M_finish = <span class="built_in">uninitialized_copy</span>(__x.<span class="built_in">begin</span>(), __x.<span class="built_in">end</span>(), _M_start); &#125;</span><br><span class="line">     <span class="built_in">vector</span>(<span class="type">const</span> _Tp* __first, <span class="type">const</span> _Tp* __last,</span><br><span class="line">         <span class="type">const</span> allocator_type&amp; __a = <span class="built_in">allocator_type</span>())</span><br><span class="line">    : _Base(__last - __first, __a) </span><br><span class="line">    &#123; _M_finish = <span class="built_in">uninitialized_copy</span>(__first, __last, _M_start); &#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">/* __STL_MEMBER_TEMPLATES */</span></span></span><br><span class="line"></span><br><span class="line">  ~<span class="built_in">vector</span>() &#123; <span class="built_in">destroy</span>(_M_start, _M_finish); &#125;</span><br><span class="line"></span><br><span class="line">  vector&lt;_Tp, _Alloc&gt;&amp; <span class="keyword">operator</span>=(<span class="type">const</span> vector&lt;_Tp, _Alloc&gt;&amp; __x);</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">reserve</span><span class="params">(size_type __n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">capacity</span>() &lt; __n) &#123;</span><br><span class="line">      <span class="type">const</span> size_type __old_size = <span class="built_in">size</span>();</span><br><span class="line">      iterator __tmp = _M_allocate_and_copy(__n, _M_start, _M_finish);</span><br><span class="line">      <span class="built_in">destroy</span>(_M_start, _M_finish);</span><br><span class="line">      _M_deallocate(_M_start, _M_end_of_storage - _M_start);</span><br><span class="line">      _M_start = __tmp;</span><br><span class="line">      _M_finish = __tmp + __old_size;</span><br><span class="line">      _M_end_of_storage = _M_start + __n;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// assign(), a generalized assignment member function.  Two</span></span><br><span class="line">  <span class="comment">// versions: one that takes a count, and one that takes a range.</span></span><br><span class="line">  <span class="comment">// The range version is a member template, so we dispatch on whether</span></span><br><span class="line">  <span class="comment">// or not the type is an integer.</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">assign</span><span class="params">(size_type __n, <span class="type">const</span> _Tp&amp; __val)</span> </span>&#123; _M_fill_assign(__n, __val); &#125;</span><br><span class="line">  <span class="type">void</span> _M_fill_assign(size_type __n, <span class="type">const</span> _Tp&amp; __val);</span><br><span class="line">    <span class="comment">// 尾插</span></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">push_back</span><span class="params">(<span class="type">const</span> _Tp&amp; __x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (_M_finish != _M_end_of_storage) &#123;</span><br><span class="line">      <span class="built_in">construct</span>(_M_finish, __x);</span><br><span class="line">      ++_M_finish;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      _M_insert_aux(<span class="built_in">end</span>(), __x);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">push_back</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (_M_finish != _M_end_of_storage) &#123;</span><br><span class="line">      <span class="built_in">construct</span>(_M_finish);  <span class="comment">// 全局函数</span></span><br><span class="line">      ++_M_finish;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      _M_insert_aux(<span class="built_in">end</span>());</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">swap</span><span class="params">(vector&lt;_Tp, _Alloc&gt;&amp; __x)</span> </span>&#123;</span><br><span class="line">    __STD::<span class="built_in">swap</span>(_M_start, __x._M_start);</span><br><span class="line">    __STD::<span class="built_in">swap</span>(_M_finish, __x._M_finish);</span><br><span class="line">    __STD::<span class="built_in">swap</span>(_M_end_of_storage, __x._M_end_of_storage);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">iterator <span class="title">insert</span><span class="params">(iterator __position, <span class="type">const</span> _Tp&amp; __x)</span> </span>&#123;</span><br><span class="line">    size_type __n = __position - <span class="built_in">begin</span>();</span><br><span class="line">    <span class="keyword">if</span> (_M_finish != _M_end_of_storage &amp;&amp; __position == <span class="built_in">end</span>()) &#123;</span><br><span class="line">      <span class="built_in">construct</span>(_M_finish, __x);</span><br><span class="line">      ++_M_finish;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      _M_insert_aux(__position, __x);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">begin</span>() + __n;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">iterator <span class="title">insert</span><span class="params">(iterator __position)</span> </span>&#123;</span><br><span class="line">    size_type __n = __position - <span class="built_in">begin</span>();</span><br><span class="line">    <span class="keyword">if</span> (_M_finish != _M_end_of_storage &amp;&amp; __position == <span class="built_in">end</span>()) &#123;</span><br><span class="line">      <span class="built_in">construct</span>(_M_finish);</span><br><span class="line">      ++_M_finish;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      _M_insert_aux(__position);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">begin</span>() + __n;</span><br><span class="line">  &#125;</span><br><span class="line">     <span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(iterator __position,</span></span></span><br><span class="line"><span class="params"><span class="function">              const_iterator __first, const_iterator __last)</span></span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">/* __STL_MEMBER_TEMPLATES */</span></span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">insert</span> <span class="params">(iterator __pos, size_type __n, <span class="type">const</span> _Tp&amp; __x)</span></span></span><br><span class="line"><span class="function">    </span>&#123; _M_fill_insert(__pos, __n, __x); &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">void</span> _M_fill_insert (iterator __pos, size_type __n, <span class="type">const</span> _Tp&amp; __x);</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">pop_back</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    --_M_finish;     <span class="comment">// 尾端标记前移</span></span><br><span class="line">    <span class="built_in">destroy</span>(_M_finish);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">iterator <span class="title">erase</span><span class="params">(iterator __position)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (__position + <span class="number">1</span> != <span class="built_in">end</span>())</span><br><span class="line">      <span class="built_in">copy</span>(__position + <span class="number">1</span>, _M_finish, __position);  <span class="comment">// 后序元素向前移动</span></span><br><span class="line">    --_M_finish;</span><br><span class="line">    <span class="built_in">destroy</span>(_M_finish);  <span class="comment">// 删除最后一个</span></span><br><span class="line">    <span class="keyword">return</span> __position;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 清除 [first, last)</span></span><br><span class="line">  <span class="function">iterator <span class="title">erase</span><span class="params">(iterator __first, iterator __last)</span> </span>&#123;</span><br><span class="line">    iterator __i = <span class="built_in">copy</span>(__last, _M_finish, __first);</span><br><span class="line">    <span class="built_in">destroy</span>(__i, _M_finish);</span><br><span class="line">    _M_finish = _M_finish - (__last - __first);</span><br><span class="line">    <span class="keyword">return</span> __first;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">resize</span><span class="params">(size_type __new_size, <span class="type">const</span> _Tp&amp; __x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (__new_size &lt; <span class="built_in">size</span>()) </span><br><span class="line">      <span class="built_in">erase</span>(<span class="built_in">begin</span>() + __new_size, <span class="built_in">end</span>());</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="built_in">insert</span>(<span class="built_in">end</span>(), __new_size - <span class="built_in">size</span>(), __x);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">resize</span><span class="params">(size_type __new_size)</span> </span>&#123; <span class="built_in">resize</span>(__new_size, _Tp()); &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123; <span class="built_in">erase</span>(<span class="built_in">begin</span>(), <span class="built_in">end</span>()); &#125;</span><br></pre></td></tr></table></figure>
+<p>从源代码中看出，其实现都比较常规，值得需要特殊注意的是：</p>
+<ol>
+<li><code>_M_end_of_storage</code>：该变量为最大存储值，对于vector我们实际给其分配的内存总是大于其数据量，防止vector在push_back插入时频繁分配内存。只有当<code>end()==_M_end_of_storage</code>时，才表示内存已经使用完，此时需要进行分配，<code>capacity()</code>返回的就是具体分配的存储大小，而<code>size()</code>返回的则是已占用的空间大小。</li>
+<li><code>resize()</code>函数，我们可以看到，对于<code>resize()</code>函数，当n小于当前数据量时，此时其会直接截取前n个数据。而对于n如果大于当前数据量，其会多分配空间。该函数和<code>reverse()</code>对比，<code>resize()</code>调整的是元素个数，而<code>reverse()</code>用于预留内存空间，改变 <code>capacity()</code>，但不改变 <code>size()</code>。当空间大于n时，不会做任何操作。</li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%BC%8F%E5%AE%B9%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text"> 序列式容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vector"><span class="toc-number">2.</span> <span class="toc-text"> vector</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/10/29/life/STL_3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/10/29/life/STL_3/&text=STL_3"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/10/29/life/STL_3/&title=STL_3"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/10/29/life/STL_3/&is_video=false&description=STL_3"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=STL_3&body=Check out this article: https://nampsec.github.io/2024/10/29/life/STL_3/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/10/29/life/STL_3/&title=STL_3"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/10/29/life/STL_3/&title=STL_3"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/10/29/life/STL_3/&title=STL_3"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/10/29/life/STL_3/&title=STL_3"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/10/29/life/STL_3/&name=STL_3&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/10/29/life/STL_3/&t=STL_3"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
