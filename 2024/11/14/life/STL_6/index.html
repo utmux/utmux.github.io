@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天	心情：好   第五章红黑树  5.2 红黑树  5.2.6 RB-tree的构造和内存管理 前面提到红黑树的初始化函数，如下所示： 1234567891011private:void init() &#123;    &#x2F;&#x2F; 产生一个节点空间，令header指向它    header &#x3D; get_node();    color(header) &#x3D; rb_tree_red; &#x2F;&#x2F; 令he">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STL_6">
+<meta property="og:url" content="https://nampsec.github.io/2024/11/14/life/STL_6/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天	心情：好   第五章红黑树  5.2 红黑树  5.2.6 RB-tree的构造和内存管理 前面提到红黑树的初始化函数，如下所示： 1234567891011private:void init() &#123;    &#x2F;&#x2F; 产生一个节点空间，令header指向它    header &#x3D; get_node();    color(header) &#x3D; rb_tree_red; &#x2F;&#x2F; 令he">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/11/22/f3Ii6vwDcHQdLA8.png">
+<meta property="article:published_time" content="2024-11-14T14:11:26.000Z">
+<meta property="article:modified_time" content="2024-11-22T13:28:27.883Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/11/22/f3Ii6vwDcHQdLA8.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>STL_6</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/11/18/life/acwing%E7%AE%97%E6%B3%95_%E7%AC%AC%E4%BA%94%E9%83%A8%E5%88%86/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/11/12/life/acwing%E7%AE%97%E6%B3%95_%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/11/14/life/STL_6/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/11/14/life/STL_6/&text=STL_6"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/11/14/life/STL_6/&title=STL_6"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/11/14/life/STL_6/&is_video=false&description=STL_6"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=STL_6&body=Check out this article: https://nampsec.github.io/2024/11/14/life/STL_6/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/11/14/life/STL_6/&title=STL_6"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/11/14/life/STL_6/&title=STL_6"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/11/14/life/STL_6/&title=STL_6"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/11/14/life/STL_6/&title=STL_6"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/11/14/life/STL_6/&name=STL_6&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/11/14/life/STL_6/&t=STL_6"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0%E7%BA%A2%E9%BB%91%E6%A0%91"><span class="toc-number">1.</span> <span class="toc-text"> 第五章红黑树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#52-%E7%BA%A2%E9%BB%91%E6%A0%91"><span class="toc-number">1.1.</span> <span class="toc-text"> 5.2 红黑树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#526-rb-tree%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 5.2.6 RB-tree的构造和内存管理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#insert_equal"><span class="toc-number">1.1.1.1.</span> <span class="toc-text"> insert_equal()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#insert_unique"><span class="toc-number">1.1.1.2.</span> <span class="toc-text"> insert_unique()</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        STL_6
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-11-14T14:11:26.000Z" class="dt-published" itemprop="datePublished">2024-11-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">life</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天	心情：好</p>
+<hr />
+<h2 id="第五章红黑树"><a class="markdownIt-Anchor" href="#第五章红黑树"></a> 第五章红黑树</h2>
+<h3 id="52-红黑树"><a class="markdownIt-Anchor" href="#52-红黑树"></a> 5.2 红黑树</h3>
+<h4 id="526-rb-tree的构造和内存管理"><a class="markdownIt-Anchor" href="#526-rb-tree的构造和内存管理"></a> 5.2.6 RB-tree的构造和内存管理</h4>
+<p>前面提到红黑树的初始化函数，如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span>:</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 产生一个节点空间，令header指向它</span></span><br><span class="line">    header = <span class="built_in">get_node</span>();</span><br><span class="line">    <span class="built_in">color</span>(header) = rb_tree_red; <span class="comment">// 令header为红色，用来区分header和root（在iterator.operator++中）</span></span><br><span class="line">    <span class="built_in">root</span>() = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 令header的左子节点为自己</span></span><br><span class="line">    <span class="built_in">leftmost</span>() = header;</span><br><span class="line">    <span class="comment">// 令header的右子节点为自己</span></span><br><span class="line">    <span class="built_in">rightmost</span>() = header;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上所示，<code>init()</code>函数中初始化的是<code>header</code>节点，这是因为我们知道，树状结构的各种操作中最需注意的就是边界情况的发生，也就是走到根节点时要有特殊的处理。为了简化处理，SGI STL特别为根节点设计了一个父节点，名为<code>header</code>，并令其初始状态如下图所示。</p>
+<p><img src="https://s2.loli.net/2024/11/22/f3Ii6vwDcHQdLA8.png" alt="image-20241114214217217" /></p>
+<p>每次插入节点时，同时要调整<code>header</code>，使得<code>header</code>的<code>left</code>指向最左边（也就是最小值），右边指向最右边（即最大值）。</p>
+<p>本节主要只谈元素（节点）的插入和搜寻。RB-tree提供两种插入操作：<code>insert_unique()</code>和<code>insert_equal()</code>，前者表示被插入节点的键值（key）在整棵树中必须独一无二（因此，如果树中已存在相同的键值，插入操作就不会真正进行），后者表示被插入节点的键值在整棵树中可以重复，因此，无论如何插入都会成功（除非空间不足导致配置失败）。这两个函数都有数个版本，以下以最简单的版本（单一参数，用以表示将被插入的节点实值（value））作为说明对象。注意，虽然只指定实值，但RB-tree一开始即要求用户必须明确设定所谓的<code>KeyOfValue</code>仿函数，因此，从实值（value）中取出键值（key）是毫无问题的。</p>
+<h5 id="insert_equal"><a class="markdownIt-Anchor" href="#insert_equal"></a> insert_equal()</h5>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 插入新值，节点键值允许重复</span></span><br><span class="line"><span class="comment">// 注意，返回值是一个RB-tree迭代器，指向新增节点</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">Key</span>, <span class="keyword">class</span> <span class="title class_">Value</span>, <span class="keyword">class</span> <span class="title class_">KeyOfValue</span>, <span class="keyword">class</span> <span class="title class_">Compare</span>, <span class="keyword">class</span> <span class="title class_">Alloc</span>&gt;</span><br><span class="line"><span class="keyword">typename</span> rb_tree&lt;Key, Value, KeyOfValue, Compare, Alloc&gt;::iterator</span><br><span class="line">rb_tree&lt;Key, Value, KeyOfValue, Compare, Alloc&gt;::<span class="built_in">insert_equal</span>(<span class="type">const</span> Value&amp; v) &#123;</span><br><span class="line">    Link_type y = header; <span class="comment">// 从根节点开始</span></span><br><span class="line">    Link_type x = <span class="built_in">root</span>();</span><br><span class="line">    <span class="comment">// 从根节点开始，往下寻找适当的插入点</span></span><br><span class="line">    <span class="keyword">while</span> (x != <span class="number">0</span>) &#123;</span><br><span class="line">        y = x; <span class="comment">// 保存当前节点，用于后续插入操作</span></span><br><span class="line">        <span class="comment">// 比较新值和当前节点的键值，决定向左还是向右</span></span><br><span class="line">        x = <span class="built_in">key_compare</span>(<span class="built_in">KeyOfValue</span>()(v), <span class="built_in">key</span>(x)) ? <span class="built_in">left</span>(x) : <span class="built_in">right</span>(x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 以上，y为新值插入点之父节点，v为新值</span></span><br><span class="line">    <span class="keyword">return</span> _insert(x, y, v);</span><br><span class="line">    <span class="comment">// 以上，x为新值插入点，y为插入点之父节点，v为新值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="insert_unique"><a class="markdownIt-Anchor" href="#insert_unique"></a> insert_unique()</h5>
+<p>这里指的注意的时Compare这个Functor是<strong>less</strong>，即小于，而不包括等于。故下面的unique插入代码中，分成两种情况，小于和大于情况：</p>
+<ol>
+<li>小于情况
+<ol>
+<li>小于最小值，此时必定没有重复值。</li>
+<li>小于其他值，该值不是最小值，将y--，即将那个比y小的节点赋值给y</li>
+</ol>
+</li>
+<li>比较y和v的大小，此时结合上面判断即可判断出是否有重复值。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 插入新值：节点键值不允许重复，若重复则插入无效</span></span><br><span class="line"><span class="comment">// 意，返回值是个pair，第一元素是个RB-tree迭代器，指向新增节点，</span></span><br><span class="line"><span class="comment">// 第二元素表示插入成功与否</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">Key</span>, <span class="keyword">class</span> <span class="title class_">Value</span>, <span class="keyword">class</span> <span class="title class_">KeyOfValue</span>, <span class="keyword">class</span> <span class="title class_">Compare</span>, <span class="keyword">class</span> <span class="title class_">Alloc</span>&gt;</span><br><span class="line">pair&lt;<span class="keyword">typename</span> rb_tree&lt;Key, Value, KeyOfValue, Compare, Alloc&gt;::iterator, <span class="type">bool</span>&gt;</span><br><span class="line">rb_tree&lt;Key, Value, KeyOfValue, Compare, Alloc&gt;::<span class="built_in">insert_unique</span>(<span class="type">const</span> Value&amp; v) &#123;</span><br><span class="line">    link_type y = header; <span class="comment">// 从根节点开始</span></span><br><span class="line">    link_type x = <span class="built_in">root</span>();</span><br><span class="line">    <span class="type">bool</span> comp = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">// 从根节点开始，往下寻找适当的插入点</span></span><br><span class="line">    <span class="keyword">while</span> (x != <span class="number">0</span>) &#123;</span><br><span class="line">        y = x;</span><br><span class="line">        comp = <span class="built_in">key_compare</span>(<span class="built_in">KeyOfValue</span>()(v), <span class="built_in">key</span>(x)); <span class="comment">// v 键值小于目前节点之键值?</span></span><br><span class="line">        x = comp ? <span class="built_in">left</span>(x) : <span class="built_in">right</span>(x); <span class="comment">// 遇“大”则往左，遇“小于或等于”则往右</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 离开while循环之后，y所指即插入点之父节点（此时的它必为叶节点）</span></span><br><span class="line">    iterator j = <span class="built_in">iterator</span>(y); <span class="comment">// 令迭代器j指向插入点之父节点y</span></span><br><span class="line">    <span class="keyword">if</span> (comp) &#123; <span class="comment">// 如果离开while循环时comp为真（表示遇“大”，将插入于左侧）</span></span><br><span class="line">        <span class="keyword">if</span> (j == <span class="built_in">begin</span>()) &#123; <span class="comment">// 如果插入点之父节点为最左节点</span></span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">pair</span>&lt;iterator, <span class="type">bool</span>&gt;(_insert(x, y, v), <span class="literal">true</span>); <span class="comment">// 以上，x为插入点，y为插入点之父节点，v为新值</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 否则（插入点之父节点不为最左节点）</span></span><br><span class="line">            --j; <span class="comment">// 调整j、回头准备测试</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">key_compare</span>(<span class="built_in">key</span>(j.node), <span class="built_in">KeyOfValue</span>()(v))) &#123; <span class="comment">// 小于新值（表示遇“小”，将插入于右侧）</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">pair</span>&lt;iterator, <span class="type">bool</span>&gt;(_insert(x, y, v), <span class="literal">true</span>); <span class="comment">// 以上，x为新值插入点，y为插入点之父节点，v为新值</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 进行至此，表示新值一定与树中键值重复，那么就不该插入新值</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">pair</span>&lt;iterator, <span class="type">bool</span>&gt;(j, <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0%E7%BA%A2%E9%BB%91%E6%A0%91"><span class="toc-number">1.</span> <span class="toc-text"> 第五章红黑树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#52-%E7%BA%A2%E9%BB%91%E6%A0%91"><span class="toc-number">1.1.</span> <span class="toc-text"> 5.2 红黑树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#526-rb-tree%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 5.2.6 RB-tree的构造和内存管理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#insert_equal"><span class="toc-number">1.1.1.1.</span> <span class="toc-text"> insert_equal()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#insert_unique"><span class="toc-number">1.1.1.2.</span> <span class="toc-text"> insert_unique()</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nampsec.github.io/2024/11/14/life/STL_6/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nampsec.github.io/2024/11/14/life/STL_6/&text=STL_6"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nampsec.github.io/2024/11/14/life/STL_6/&title=STL_6"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nampsec.github.io/2024/11/14/life/STL_6/&is_video=false&description=STL_6"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=STL_6&body=Check out this article: https://nampsec.github.io/2024/11/14/life/STL_6/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nampsec.github.io/2024/11/14/life/STL_6/&title=STL_6"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nampsec.github.io/2024/11/14/life/STL_6/&title=STL_6"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nampsec.github.io/2024/11/14/life/STL_6/&title=STL_6"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nampsec.github.io/2024/11/14/life/STL_6/&title=STL_6"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nampsec.github.io/2024/11/14/life/STL_6/&name=STL_6&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nampsec.github.io/2024/11/14/life/STL_6/&t=STL_6"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/nampsec">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
