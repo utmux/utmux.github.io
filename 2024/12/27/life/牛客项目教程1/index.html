@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天	心情：好   第一部分：Linux编程基础知识  makefile 两个函数： 12$(wildcard .c .&#x2F;sub&#x2F;.c) # 用于子目录模式匹配$(patsubst %.c, %.o, x.c bar.c) # 用于字符串模式替换  gdb 补充两个东西 12345678l 文件名:函数&#x2F;行数set listsize： 设置每次打印的行数display ： 持久打印，使用un">
+<meta property="og:type" content="article">
+<meta property="og:title" content="牛客项目教程1">
+<meta property="og:url" content="https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天	心情：好   第一部分：Linux编程基础知识  makefile 两个函数： 12$(wildcard .c .&#x2F;sub&#x2F;.c) # 用于子目录模式匹配$(patsubst %.c, %.o, x.c bar.c) # 用于字符串模式替换  gdb 补充两个东西 12345678l 文件名:函数&#x2F;行数set listsize： 设置每次打印的行数display ： 持久打印，使用un">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/.%5Ccandfiledescription.png">
+<meta property="og:image" content="https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/20241227175529.png">
+<meta property="og:image" content="https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/20241228130554.png">
+<meta property="og:image" content="https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/20241228130903.png">
+<meta property="article:published_time" content="2024-12-27T07:01:26.000Z">
+<meta property="article:modified_time" content="2024-12-28T08:29:18.456Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/.%5Ccandfiledescription.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>牛客项目教程1</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/12/12/life/STL_7/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&text=牛客项目教程1"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&title=牛客项目教程1"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&is_video=false&description=牛客项目教程1"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=牛客项目教程1&body=Check out this article: https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&title=牛客项目教程1"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&title=牛客项目教程1"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&title=牛客项目教程1"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&title=牛客项目教程1"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&name=牛客项目教程1&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&t=牛客项目教程1"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86linux%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text"> 第一部分：Linux编程基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#makefile"><span class="toc-number">1.1.</span> <span class="toc-text"> makefile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gdb"><span class="toc-number">1.2.</span> <span class="toc-text"> gdb</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%BA%93%E5%92%8C%E5%8A%A8%E6%80%81%E5%BA%93"><span class="toc-number">1.3.</span> <span class="toc-text"> 静态库和动态库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80"><span class="toc-number">1.4.</span> <span class="toc-text"> 虚拟地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-number">1.5.</span> <span class="toc-text"> 文件描述符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84linux%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9Capi"><span class="toc-number">1.6.</span> <span class="toc-text"> 常见的linux文件操作api</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9Capi"><span class="toc-number">1.6.1.</span> <span class="toc-text"> 文件操作api</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7api"><span class="toc-number">1.6.2.</span> <span class="toc-text"> 文件属性api</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86api"><span class="toc-number">1.6.3.</span> <span class="toc-text"> 目录遍历api</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E4%BF%AE%E6%94%B9"><span class="toc-number">1.6.4.</span> <span class="toc-text"> 文件描述符修改</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86"><span class="toc-number">2.</span> <span class="toc-text"> 第二部分：操作系统知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text"> 进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">2.2.</span> <span class="toc-text"> 进程的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F"><span class="toc-number">2.2.1.</span> <span class="toc-text"> 程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B-2"><span class="toc-number">2.2.2.</span> <span class="toc-text"> 进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E9%81%93%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.2.3.</span> <span class="toc-text"> 单道多道程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%B9%B6%E5%8F%91"><span class="toc-number">2.2.4.</span> <span class="toc-text"> 并行与并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pcb%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%9D%97"><span class="toc-number">2.2.5.</span> <span class="toc-text"> PCB(进程控制块)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E5%88%87%E6%8D%A2"><span class="toc-number">2.2.6.</span> <span class="toc-text"> 进程的状态切换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#linux%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81"><span class="toc-number">2.2.7.</span> <span class="toc-text"> Linux查看进程状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%8F%B7"><span class="toc-number">2.2.8.</span> <span class="toc-text"> 进程号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-number">2.2.9.</span> <span class="toc-text"> 进程的创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gbd%E8%B0%83%E8%AF%95%E5%A4%9A%E8%BF%9B%E7%A8%8B"><span class="toc-number">2.2.10.</span> <span class="toc-text"> GBD调试多进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#exec%E5%87%BD%E6%95%B0%E6%97%8F"><span class="toc-number">2.2.11.</span> <span class="toc-text"> exec函数族</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        牛客项目教程1
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-12-27T07:01:26.000Z" class="dt-published" itemprop="datePublished">2024-12-27</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">life</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天	心情：好</p>
+<hr />
+<h2 id="第一部分linux编程基础知识"><a class="markdownIt-Anchor" href="#第一部分linux编程基础知识"></a> 第一部分：Linux编程基础知识</h2>
+<h3 id="makefile"><a class="markdownIt-Anchor" href="#makefile"></a> makefile</h3>
+<p>两个函数：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(<span class="built_in">wildcard</span> .c ./sub/.c)</span> <span class="comment"># 用于子目录模式匹配</span></span><br><span class="line"><span class="variable">$(<span class="built_in">patsubst</span> %.c, %.o, x.c bar.c)</span> <span class="comment"># 用于字符串模式替换</span></span><br></pre></td></tr></table></figure>
+<h3 id="gdb"><a class="markdownIt-Anchor" href="#gdb"></a> gdb</h3>
+<p>补充两个东西</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">l 文件名:函数/行数</span><br><span class="line">set listsize： 设置每次打印的行数</span><br><span class="line">display ： 持久打印，使用undisplay取消</span><br><span class="line">until： 退出循环</span><br><span class="line">break结合if使用</span><br><span class="line">info display/w/b 查看</span><br><span class="line">d n 删除断点等</span><br><span class="line">dis n 失能断点等</span><br></pre></td></tr></table></figure>
+<h3 id="静态库和动态库"><a class="markdownIt-Anchor" href="#静态库和动态库"></a> 静态库和动态库</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ar rcs libxxx.a xxx.o xxx.o // 注意以lib开头</span><br><span class="line">// 链接的时候就不加lib，如下所示</span><br><span class="line">gcc -o main main.c -l. -lcalc -i .</span><br><span class="line">// 对于动态库</span><br><span class="line">// 1.生成.o文件</span><br><span class="line">gcc -c –fpic/-fpic a.c b.c</span><br><span class="line">// 2.生成动态库</span><br><span class="line">gcc -shared a.o b.o -o libcalc.so</span><br><span class="line">// 3.使用动态库（链接的时候和上面类似加了一个-shared选项）</span><br><span class="line">gcc -o main main.c -l. -lcalc -i .</span><br></pre></td></tr></table></figure>
+<h3 id="虚拟地址"><a class="markdownIt-Anchor" href="#虚拟地址"></a> 虚拟地址</h3>
+<ol>
+<li>虚拟地址分为内核空间和用户空间, 其通过mmu进行映射到实际的物理地址</li>
+<li>32位的机器中，虚拟地址的大小为4gb，64位的为4tb</li>
+<li>实际中的虚拟地址布局如下所示：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">+------------------------+</span><br><span class="line">|        4g 内核区       |</span><br><span class="line">| +--------------------+ |</span><br><span class="line">| |   linux kernel     | |</span><br><span class="line">| |  - 内存管理        | |</span><br><span class="line">| |  - 进程管理        | |</span><br><span class="line">| |  - 设备和文件管理  | |</span><br><span class="line">| +--------------------+ |</span><br><span class="line">|        保护地址区      |</span><br><span class="line">+------------------------+</span><br><span class="line">|        3g 用户区       |</span><br><span class="line">| +--------------------+ |</span><br><span class="line">| | 环境变量           | |</span><br><span class="line">| | 命令行参数         | |</span><br><span class="line">| +--------------------+ |</span><br><span class="line">| +--------------------+ |</span><br><span class="line">| |      栈空间 (小)   | |</span><br><span class="line">| +--------------------+ |</span><br><span class="line">| +--------------------+ |</span><br><span class="line">| |      共享库        | |</span><br><span class="line">| +--------------------+ |</span><br><span class="line">| +--------------------+ |</span><br><span class="line">| |      堆空间 (大)   | |</span><br><span class="line">| +--------------------+ |</span><br><span class="line">| +--------------------+ |</span><br><span class="line">| |.bss (未初始化变量) | |</span><br><span class="line">| |.data (已初始化变量)| |</span><br><span class="line">| |.text (代码段)      | |</span><br><span class="line">| +--------------------+ |</span><br><span class="line">|    受保护的地址(0~4k)  |</span><br><span class="line">+------------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="文件描述符"><a class="markdownIt-Anchor" href="#文件描述符"></a> 文件描述符</h3>
+<p><img src=".%5Ccandfiledescription.png" alt="c语言和底层文件描述符的交互" /></p>
+<h3 id="常见的linux文件操作api"><a class="markdownIt-Anchor" href="#常见的linux文件操作api"></a> 常见的linux文件操作api</h3>
+<h4 id="文件操作api"><a class="markdownIt-Anchor" href="#文件操作api"></a> 文件操作api</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># man 2是系统api的手册</span></span><br><span class="line"><span class="meta"># man 3是库函数的手册</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">open</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname, <span class="type">int</span> flags)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">open</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname, <span class="type">int</span> flags, <span class="type">mode_t</span> mode)</span>;</span><br><span class="line"><span class="type">char</span> *<span class="title function_">perror</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">close</span><span class="params">(<span class="type">int</span> fd)</span>;</span><br><span class="line"><span class="type">ssize_t</span> <span class="title function_">read</span><span class="params">(<span class="type">int</span> fd, <span class="type">void</span> *buf, <span class="type">size_t</span> count)</span>;</span><br><span class="line"><span class="type">ssize_t</span> <span class="title function_">write</span><span class="params">(<span class="type">int</span> fd, <span class="type">const</span> <span class="type">void</span> *buf, <span class="type">size_t</span> count)</span>;</span><br><span class="line"><span class="type">off_t</span> <span class="title function_">lseek</span><span class="params">(<span class="type">int</span> fd, <span class="type">off_t</span> offset, <span class="type">int</span> whence)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">stat</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname, <span class="keyword">struct</span> stat *statbuf)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">lstat</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname, <span class="keyword">struct</span> stat *statbuf)</span>;</span><br></pre></td></tr></table></figure>
+<p>其中stat中的stat结构体的结构如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stat</span> &#123;</span></span><br><span class="line">    <span class="type">dev_t</span> st_dev; <span class="comment">// 文件的设备编号</span></span><br><span class="line">    <span class="type">ino_t</span> st_ino; <span class="comment">// 节点</span></span><br><span class="line">    <span class="type">mode_t</span> st_mode; <span class="comment">// 文件的类型和存取的权限</span></span><br><span class="line">    <span class="type">nlink_t</span> st_nlink; <span class="comment">// 连到该文件的硬连接数目</span></span><br><span class="line">    <span class="type">uid_t</span> st_uid; <span class="comment">// 用户id</span></span><br><span class="line">    <span class="type">gid_t</span> st_gid; <span class="comment">// 组id</span></span><br><span class="line">    <span class="type">dev_t</span> st_rdev; <span class="comment">// 设备文件的设备编号</span></span><br><span class="line">    <span class="type">off_t</span> st_size; <span class="comment">// 文件字节数(文件大小)</span></span><br><span class="line">    <span class="type">blksize_t</span> st_blksize; <span class="comment">// 块大小</span></span><br><span class="line">    <span class="type">blkcnt_t</span> st_blocks; <span class="comment">// 块数</span></span><br><span class="line">    <span class="type">time_t</span> st_atime; <span class="comment">// 最后一次访问时间</span></span><br><span class="line">    <span class="type">time_t</span> st_mtime; <span class="comment">// 最后一次修改时间</span></span><br><span class="line">    <span class="type">time_t</span> st_ctime; <span class="comment">// 最后一次改变时间(指属性</span></span><br><span class="line">&#125;</span><br><span class="line">``` c</span><br><span class="line">其中st_mode变量如下，其各个位的解释如下：</span><br><span class="line">+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+</span><br><span class="line">| 文件类型 | 特殊权限位 |           user           |          group          |          others         |</span><br><span class="line">+---------+---------+----+----+----+----+----+----+----+----+----+----+----+----+</span><br><span class="line">|   <span class="number">15</span>    |   <span class="number">14</span>    | <span class="number">13</span> | <span class="number">12</span> | <span class="number">11</span> | <span class="number">10</span> |  <span class="number">9</span> |  <span class="number">8</span> |  <span class="number">7</span> |  <span class="number">6</span> |  <span class="number">5</span> |  <span class="number">4</span> |  <span class="number">3</span> |  <span class="number">2</span> |</span><br><span class="line">|         |         |  g |  u |  s | rwx| rwx| rwx|    rwx (权限定义)          |</span><br><span class="line">+---------+---------+----+----+----+----+----+</span><br></pre></td></tr></table></figure>
+<p>具体的解释如下:<br />
+<img src="./20241227175529.png" alt="各个位的具体解释" /></p>
+<ol>
+<li>其中特殊权限位是linux中的特殊权限，其含义为：
+<ul>
+<li>s_isuid: 设置uid位，如果设置了这个位，当文件被执行时，文件拥有者的uid会被作为uid运行这个文件。</li>
+<li>s_isgid: 设置gid位，如果设置了这个位，当文件被执行时，文件拥有者的gid会被作为gid运行这个文件。</li>
+<li>s_isvtx: 设置sticky位，如果设置了这个位，只有文件拥有者或者root用户才能删除或者修改文件。</li>
+</ul>
+</li>
+<li>如上图所示，其判断方法是通过和宏定义进行位运算来看是否有权限，如s_irusr，s_iwusr，s_ixusr，s_irgrp，s_iwgrp，s_ixgrp，s_iroth，s_iwoth，s_ixoth，s_isuid，s_isgid，s_isvtx进行位运算，如果结果为0，则没有权限，否则有权限。</li>
+</ol>
+<h4 id="文件属性api"><a class="markdownIt-Anchor" href="#文件属性api"></a> 文件属性api</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">access</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname, <span class="type">int</span> mode)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">chmod</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *filename, <span class="type">int</span> mode)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">chown</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *path, <span class="type">uid_t</span> owner, <span class="type">gid_t</span> group)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">truncate</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *path, <span class="type">off_t</span> length)</span>;</span><br></pre></td></tr></table></figure>
+<p>大致说一下上面的函数的作用：</p>
+<ul>
+<li><code>access</code>函数用于判断文件是否可执行，可读，可写等。</li>
+<li><code>chmod</code>函数用于修改文件的权限，其mode参数为文件权限的八进制表示，如0644。</li>
+<li><code>chown</code>函数用于修改文件的所有者和组所有者。</li>
+<li><code>truncate</code>函数用于截断文件，即将文件截断为指定长度。</li>
+<li>截断文件时，如果文件长度大于指定长度，则截断文件，如果文件长度小于指定长度，则扩展文件。<br />
+其中指的一说的是<code>mode</code>，这里的<code>mode</code>最终会和<code>umask</code>进行位运算，得到最终的权限。</li>
+</ul>
+<ol>
+<li><code>umask</code>函数用于设置文件权限的掩码，其作用是屏蔽掉一些权限，如0666，表示可读可写可执行，如果umask为0022，则表示屏蔽掉0022，即屏蔽掉可执行权限，最终权限为0664。</li>
+<li><code>chmod</code>函数的参数为文件权限的八进制表示，如0644，表示可读可写可执行，如果chmod为0022，则表示屏蔽掉0022，即屏蔽掉可执行权限，最终权限为0664。</li>
+</ol>
+<h4 id="目录遍历api"><a class="markdownIt-Anchor" href="#目录遍历api"></a> 目录遍历api</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dir *<span class="title function_">opendir</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name)</span>;</span><br><span class="line"><span class="keyword">struct</span> dirent *<span class="title function_">readdir</span><span class="params">(dir *dirp)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">closedir</span><span class="params">(dir *dirp)</span>;</span><br></pre></td></tr></table></figure>
+<p>其中，结构体<code>DIR</code>的成员定义如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dirent</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="comment">// 此目录进入点的inode</span></span><br><span class="line"><span class="type">ino_t</span> d_ino;</span><br><span class="line"><span class="comment">// 目录文件开头至此目录进入点的位移</span></span><br><span class="line"><span class="type">off_t</span> d_off;</span><br><span class="line"><span class="comment">// d_name 的长度, 不包含NULL字符</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">short</span> <span class="type">int</span> d_reclen;</span><br><span class="line"><span class="comment">// d_name 所指的文件类型</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span> d_type;</span><br><span class="line"><span class="comment">// 文件名</span></span><br><span class="line"><span class="type">char</span> d_name[<span class="number">256</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>d_type</code>的值如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">d_type</span><br><span class="line">DT_BLK - 块设备</span><br><span class="line">DT_CHR - 字符设备</span><br><span class="line">DT_DIR - 目录</span><br><span class="line">DT_LNK - 软连接</span><br><span class="line">DT_FIFO - 管道</span><br><span class="line">DT_REG - 普通文件</span><br><span class="line">DT_SOCK - 套接字</span><br><span class="line">DT_UNKNOWN - 未知</span><br></pre></td></tr></table></figure>
+<h4 id="文件描述符修改"><a class="markdownIt-Anchor" href="#文件描述符修改"></a> 文件描述符修改</h4>
+<p>我们可以对文件描述符进行复制，重定向等操作。其使用的函数如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对于文件描述符，其存储再PCB的fd数组中，每次创建一个文件描述符，寻找空闲且序号最小的数组中的项</span></span><br><span class="line"><span class="comment">// 复制文件描述符</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">dup</span><span class="params">(<span class="type">int</span> oldfd)</span>;</span><br><span class="line"><span class="comment">// 重定向文件描述符</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">dup2</span><span class="params">(<span class="type">int</span> oldfd, <span class="type">int</span> newfd)</span>;</span><br></pre></td></tr></table></figure>
+<p>其中，dup函数会复制一个文件描述符，返回一个新的文件描述符，如果oldfd已经关闭，则返回-1。dup2函数会复制一个文件描述符，返回一个新的文件描述符，如果oldfd已经关闭，则返回-1，如果newfd已经打开，则关闭newfd，并将oldfd复制到newfd。</p>
+<p>我们可以通过<code>fcntl</code>函数来修改文件描述符，其函数原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 复制文件描述符、设置/获取文件的状态标志</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">fcntl</span><span class="params">(<span class="type">int</span> fd, <span class="type">int</span> cmd, ... <span class="comment">/* arg */</span> )</span>;</span><br></pre></td></tr></table></figure>
+<p>其中，cmd的值如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">F_DUPFD - 复制文件描述符</span><br><span class="line">F_GETFD - 获取文件的状态标志</span><br><span class="line">F_SETFD - 设置文件的状态标志</span><br><span class="line">F_GETFL - 获取文件的访问模式和状态标志</span><br><span class="line">F_SETFL - 设置文件的访问模式和状态标志</span><br><span class="line">F_GETLK - 获取文件锁信息</span><br><span class="line">F_SETLK - 设置文件锁信息</span><br><span class="line">F_SETLKW - 设置文件锁信息，并等待</span><br><span class="line">F_GETOWN - 获取文件所有者</span><br><span class="line">F_SETOWN - 设置文件所有者</span><br><span class="line">F_GETSIG - 获取文件信号</span><br><span class="line">F_SETSIG - 设置文件信号</span><br><span class="line">F_GETPIPE_SZ - 获取管道大小</span><br><span class="line">F_SETPIPE_SZ - 设置管道大小</span><br><span class="line">F_GET_RW_HINT - 获取文件读写提示</span><br><span class="line">F_SET_RW_HINT - 设置文件读写提示</span><br><span class="line">F_GET_FILE_RW_HINT - 获取文件读写提示</span><br><span class="line">F_SET_FILE_RW_HINT - 设置文件读写提示</span><br><span class="line">F_ADD_SEALS - 添加文件封印</span><br><span class="line">.....</span><br></pre></td></tr></table></figure>
+<p>常见的使用函数如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 复制文件描述符</span></span><br><span class="line"><span class="type">int</span> newfd = fnctl(oldfd, F_DUPFD, <span class="number">0</span>);</span><br><span class="line"><span class="comment">// 设置文件的状态标志</span></span><br><span class="line"><span class="type">int</span> flags = fcntl(fd, F_GETFL); <span class="comment">// 获取文件状态标志</span></span><br><span class="line">flags |= O_NONBLOCK;   <span class="comment">// 设置文件状态标志为非阻塞</span></span><br><span class="line">fcntl(fd, F_SETFL, flags); <span class="comment">// 设置文件状态标志</span></span><br></pre></td></tr></table></figure>
+<h2 id="第二部分操作系统知识"><a class="markdownIt-Anchor" href="#第二部分操作系统知识"></a> 第二部分：操作系统知识</h2>
+<h3 id="进程"><a class="markdownIt-Anchor" href="#进程"></a> 进程</h3>
+<h3 id="进程的基本概念"><a class="markdownIt-Anchor" href="#进程的基本概念"></a> 进程的基本概念</h3>
+<h4 id="程序"><a class="markdownIt-Anchor" href="#程序"></a> 程序</h4>
+<p>首先我们要区别程序和进程，对于程序，其为一个二进制文件，包括如下内容：</p>
+<ul>
+<li>二进制格式标识符：每个程序文件都包含用于描述可执行文件格式的元信息。内核利用此信息来解释文件中的其他信息。（ELF可执行连接格式）</li>
+<li>机器语言指令：对程序算法进行编码。</li>
+<li>程序入口地址：标识程序开始执行时的起始指令位置。</li>
+<li>数据：程序文件包含的变量初始值和程序使用的字面量值（比如字符串）。</li>
+<li>符号表及重定位表：描述程序中函数和变量的位置及名称。这些表格有多重用途，其中包括调试和运行时的符号解析（动态链接）。</li>
+<li>共享库和动态链接信息：程序文件所包含的一些字段，列出了程序运行时需要使用的共享库，以及加载共享库的动态连接器的路径名。</li>
+<li>其他信息：程序文件还包含许多其他信息，用以描述如何创建进程。</li>
+</ul>
+<h4 id="进程-2"><a class="markdownIt-Anchor" href="#进程-2"></a> 进程</h4>
+<p>对于进程，其存在于内存中，而不是硬盘中，其包括如下内容：</p>
+<ul>
+<li>进程是正在运行的程序的实例。是一个具有一定独立功能的程序关于某个数据集合的一次运行活动。</li>
+<li>它是操作系统动态执行的基本单元，在传统的操作系统中，进程既是基本的分配单元，也是基本的执行单元。</li>
+<li>可以用一个程序来创建多个进程，进程是由内核定义的抽象实体，并为该实体分配用以执行程序的各项系统资源。</li>
+<li>从内核的角度看，进程由用户内存空间和一系列内核数据结构组成，其中用户内存空间包含了程序代码及代码所使用的变量，而内核数据结构则用于维护进程状态信息。记录在内核数据结构中的信息包括许多与进程相关的标识号（IDs）、虚拟内存表、打开文件的描述符表、信号传递及处理的有关信息、进程资源使用及限制、当前工作目录和大量的其他信息。</li>
+<li>对于一个单 CPU 系统来说，程序同时处于运行状态只是一种宏观上的概念，他们虽然都已经开始运行，但就微观而言，任意时刻，CPU 上运行的程序只有一个。</li>
+<li>在多道程序设计模型中，多个进程轮流使用 CPU。而当下常见 CPU 为纳秒级，1秒可以执行大约10 亿条指令。由于人眼的反应速度是毫秒级，所以看似同时在运行。</li>
+</ul>
+<h4 id="单道多道程序设计"><a class="markdownIt-Anchor" href="#单道多道程序设计"></a> 单道多道程序设计</h4>
+<ul>
+<li>单道程序，即在计算机内存中只允许一个的程序运行。</li>
+<li>多道程序设计技术是在计算机内存中同时存放几道相互独立的程序，使它们在管理程序控制下，相互穿插运行，两个或两个以上程序在计算机系统中同处于开始到结束之间的状态, 这些程序共享计算机系统资源。引入多道程序设计技术的根本目的是为了提高 CPU 的利用率。</li>
+<li>对于一个单 CPU 系统来说，程序同时处于运行状态只是一种宏观上的概念，他们虽然都已经开始运行，但就微观而言，任意时刻，CPU 上运行的程序只有一个。</li>
+<li>在多道程序设计模型中，多个进程轮流使用 CPU。而当下常见 CPU 为纳秒级，1秒可以执行大约10 亿条指令。由于人眼的反应速度是毫秒级，所以看似同时在运行。</li>
+</ul>
+<h4 id="并行与并发"><a class="markdownIt-Anchor" href="#并行与并发"></a> 并行与并发</h4>
+<p>并行（parallelism）和并发（concurrency）是计算机科学中两个非常不同的概念。<br />
+并行（parallelism）是指多个任务同时运行，而并发（concurrency）是指多个任务在某一个时间点上同时发生。</p>
+<h4 id="pcb进程控制块"><a class="markdownIt-Anchor" href="#pcb进程控制块"></a> PCB(进程控制块)</h4>
+<p>PCB（Process Control Block）进程控制块，是操作系统中用来管理进程的运行状态和资源的数据结构。<br />
+对于<code>Linux</code>，PCB特指<code>task_struct</code>结构体，其定义在<code>include/linux/sched.h</code>中。该结构体成员很多，我们只关注下面这几个：</p>
+<ul>
+<li>进程ID</li>
+<li>进程的状态</li>
+<li>进程切换时需要保存和恢复的一些CPU寄存器</li>
+<li>进程的虚拟空间信息</li>
+<li>描述控制终端的信息</li>
+<li>当前工作目录</li>
+<li>umask工作掩码</li>
+<li>文件描述符表，包含很多指向 file 结构体的指针</li>
+<li>和信号相关的信息</li>
+<li>用户id和组id</li>
+<li>会话（Session）和进程组</li>
+<li>进程可以使用的资源上限（Resource Limit）</li>
+</ul>
+<h4 id="进程的状态切换"><a class="markdownIt-Anchor" href="#进程的状态切换"></a> 进程的状态切换</h4>
+<p>在简化的情况下，进程状态切换分为以下几种：</p>
+<ul>
+<li>运行态：进程正在运行，可以执行指令。</li>
+<li>阻塞态：进程因为等待资源、等待信号、等待I/O等，处于阻塞状态。</li>
+<li>停止态：进程因为暂停、挂起等，处于停止状态。</li>
+</ul>
+<p>其转化关系可以用下图来表示：<br />
+<img src="./20241228130554.png" alt="状态转化图" /></p>
+<p>可以看出，对于阻塞态，当阻塞事件结束后，其不能直接返回到运行态，需要先进入就绪态进行排队。</p>
+<p>上面是经过简化后的三种状态，实际的操作系统中，状态会有新建和终止这两种状态，其独立于上面所说的三种状态，如下图所示：<br />
+<img src="./20241228130903.png" alt="状态转化图" /></p>
+<h4 id="linux查看进程状态"><a class="markdownIt-Anchor" href="#linux查看进程状态"></a> Linux查看进程状态</h4>
+<p>在Linux中，我们可以使用<code>ps</code>命令来查看进程的一些基础状态和进程的父进程，进程组和会话信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ps aux <span class="comment"># 显示所有进程的基本信息</span></span><br><span class="line">ps ajx <span class="comment"># 显示进程的父进程，进程组和会话信息</span></span><br><span class="line"><span class="comment"># a：显示终端上的所有进程，包括其他用户的进程</span></span><br><span class="line"><span class="comment"># u：显示进程的详细信息</span></span><br><span class="line"><span class="comment"># x：显示没有控制终端的进程</span></span><br><span class="line"><span class="comment"># j：列出与作业控制相关的信息</span></span><br></pre></td></tr></table></figure>
+<p>其中，如果我们使用<code>ps aux</code>命令，其输出的结果中有一个<code>STAT</code>项，其表示的状态如下表所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">D 不可中断 Uninterruptible（usually IO）</span><br><span class="line">R 正在运行，或在队列中的进程</span><br><span class="line">S 处于休眠状态</span><br><span class="line">T 停止或被追踪</span><br><span class="line">Z 僵尸进程</span><br><span class="line">W 进入内存交换（从内核2.6开始无效）</span><br><span class="line">X 死掉的进程</span><br><span class="line">&lt; 高优先级</span><br><span class="line">N 低优先级</span><br><span class="line">s 包含子进程</span><br><span class="line">+ 位于前台的进程组</span><br></pre></td></tr></table></figure>
+<p><code>top</code>指令也可用于实时查看进程状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">top -d 1 <span class="comment"># 显示1秒的进程状态,其中-d参数表示刷新间隔时间</span></span><br><span class="line">top  <span class="comment"># 显示实时进程状态</span></span><br><span class="line"><span class="comment"># 其中在使用top命令后，我们可以进一步按下按键来使得top命令改变排序，相应的指令如下所示：</span></span><br><span class="line"><span class="comment"># 1. M 按内存排序</span></span><br><span class="line"><span class="comment"># 2. P 按PID排序</span></span><br><span class="line"><span class="comment"># 3. T 按照CPU运行时间排序</span></span><br><span class="line"><span class="comment"># 4. U 按照用户名进行筛选</span></span><br><span class="line"><span class="comment"># 5. K 选择kill某个进程</span></span><br></pre></td></tr></table></figure>
+<p>使用Kill命令可以杀死进程，常见的kill命令如下所示（所谓的杀死进程其实是给进程发送各种signal，而不是真的杀死进程）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> [-signal] pid</span><br><span class="line"><span class="built_in">kill</span> –l 列出所有信号， 即所有可以发送的信号</span><br><span class="line"><span class="built_in">kill</span> –SIGKILL 进程ID</span><br><span class="line"><span class="built_in">kill</span> -9 进程ID，和上面这个命令是一样的</span><br><span class="line">killall name 根据进程名杀死进程</span><br></pre></td></tr></table></figure>
+<h4 id="进程号"><a class="markdownIt-Anchor" href="#进程号"></a> 进程号</h4>
+<p>任何进程的进程号都是唯一的，进程号的方位是0~32767。任何进程，除了init进程，都有父进程。父进程对应的进程号叫做PPID，进程组代表一个进程的集合，默认情况下，当前的进程号就是他的进程组号。<br />
+相关获取进程的pid和ppid以及父进程的pid的命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pid_t getpid(void);</span><br><span class="line">pid_t getppid(void);</span><br><span class="line">pid_t getpgid(pid_t pid);</span><br></pre></td></tr></table></figure>
+<h4 id="进程的创建"><a class="markdownIt-Anchor" href="#进程的创建"></a> 进程的创建</h4>
+<p>进程的创建，即<code>fork</code>函数，<code>fork</code>函数会创建一个新进程，新进程和原进程是完全隔离的，新进程的父进程是原进程。</p>
+<p><code>fork</code>函数针对父进程和子进程有两个不同的返回值，对于子进程，其返回0，对于父进程，其返回子进程的PID，如果<code>fork</code>函数返回-1，则表示创建失败。</p>
+<p>进行fork后，子进程的相关虚拟地址空间会和父进程相同，但是进程号会不同。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">pid_t</span> <span class="title function_">fork</span><span class="params">(<span class="type">void</span>)</span>;</span><br></pre></td></tr></table></figure>
+<p>实际上，更准确来说，Linux 的 fork() 使用是通过写时拷贝 (copy- on-write) 实现。写时拷贝是一种可以<br />
+推迟甚至避免拷贝数据的技术。内核此时并不复制整个进程的地址空间，而是让父子进程共享同一个地址空间。只用在需要写入的时候才会复制地址空间，从而使各个进行拥有各自的地址空间。也就是说，资源的复制是在需要写入的时候才会进行，在此之前，只有以只读方式共享。<br />
+注意：fork之后父子进程共享文件，fork产生的子进程与父进程相同的文件文件描述符指向相同的文件表，引用计数增加，共享文件偏移指针。</p>
+<p>总结：父子进程的共同点和不同点<br />
+共同点：虚拟地址空间一样，未写的变量，此时也是一样。<br />
+不同点：父子进程的进程号不一样，父子进程的父进程号不一样，父子进程的进程组号不一样。当变量进行写入时，此时父子进程的变量值不一样。</p>
+<h4 id="gbd调试多进程"><a class="markdownIt-Anchor" href="#gbd调试多进程"></a> GBD调试多进程</h4>
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>作用</strong></th>
+<th><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>info inferiors</code></td>
+<td>显示当前调试的所有进程（inferior）的列表及状态。</td>
+<td><code>info inferiors</code></td>
+</tr>
+<tr>
+<td><code>inferior &lt;id&gt;</code></td>
+<td>切换到指定的进程（inferior）。</td>
+<td><code>inferior 2</code></td>
+</tr>
+<tr>
+<td><code>detach inferior &lt;id&gt;</code></td>
+<td>分离指定进程，使其继续独立运行而不再受 GDB 控制。</td>
+<td><code>detach inferior 2</code></td>
+</tr>
+<tr>
+<td><code>detach</code></td>
+<td>分离当前调试的进程，使其继续运行而不受 GDB 控制。</td>
+<td><code>detach</code></td>
+</tr>
+<tr>
+<td><code>set follow-fork-mode &lt;mode&gt;</code></td>
+<td>设置在 fork 时是否跟踪父进程或子进程。选项为：<code>parent</code>（跟踪父进程）或 <code>child</code>（跟踪子进程）。</td>
+<td><code>set follow-fork-mode child</code></td>
+</tr>
+<tr>
+<td><code>show follow-fork-mode</code></td>
+<td>显示当前的 fork 跟踪模式（父进程或子进程）。</td>
+<td><code>show follow-fork-mode</code></td>
+</tr>
+<tr>
+<td><code>set detach-on-fork &lt;on/off&gt;</code></td>
+<td>设置 fork 后是否自动分离未被跟踪的进程。<code>on</code> 表示分离，<code>off</code> 表示保留在 GDB 中。</td>
+<td><code>set detach-on-fork off</code></td>
+</tr>
+<tr>
+<td><code>show detach-on-fork</code></td>
+<td>显示当前的 fork 分离设置（是否分离未跟踪的进程）。</td>
+<td><code>show detach-on-fork</code></td>
+</tr>
+<tr>
+<td><code>kill</code></td>
+<td>终止当前调试的进程。</td>
+<td><code>kill</code></td>
+</tr>
+<tr>
+<td><code>kill inferior &lt;id&gt;</code></td>
+<td>终止指定的进程（inferior）。</td>
+<td><code>kill inferior 2</code></td>
+</tr>
+<tr>
+<td><code>quit</code></td>
+<td>退出 GDB（如果当前有正在调试的进程，会提示是否终止进程）。</td>
+<td><code>quit</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="exec函数族"><a class="markdownIt-Anchor" href="#exec函数族"></a> exec函数族</h4>
+<p>所谓函数族，是指函数名不同，但是功能近似的函数。<br />
+exec 函数族的作用是根据指定的文件名找到可执行文件，并用它来取代调用进程的内容，换句话说，就是在调用进程内部执行一个可执行文件。<br />
+exec 函数族的函数执行成功后不会返回，因为调用进程的实体，包括代码段，数据段和堆栈等都已经被新的内容取代，只留下进程 ID 等一些表面上的信息仍保持原样，颇有些神似“三十六计”中的“金蝉脱壳”。看上去还是旧的躯壳，却已经注入了新的灵魂。只有调用失败了，它们才会返回 -1，从原程序的调用点接着往下执行。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86linux%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text"> 第一部分：Linux编程基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#makefile"><span class="toc-number">1.1.</span> <span class="toc-text"> makefile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gdb"><span class="toc-number">1.2.</span> <span class="toc-text"> gdb</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%BA%93%E5%92%8C%E5%8A%A8%E6%80%81%E5%BA%93"><span class="toc-number">1.3.</span> <span class="toc-text"> 静态库和动态库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80"><span class="toc-number">1.4.</span> <span class="toc-text"> 虚拟地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-number">1.5.</span> <span class="toc-text"> 文件描述符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84linux%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9Capi"><span class="toc-number">1.6.</span> <span class="toc-text"> 常见的linux文件操作api</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9Capi"><span class="toc-number">1.6.1.</span> <span class="toc-text"> 文件操作api</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7api"><span class="toc-number">1.6.2.</span> <span class="toc-text"> 文件属性api</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86api"><span class="toc-number">1.6.3.</span> <span class="toc-text"> 目录遍历api</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E4%BF%AE%E6%94%B9"><span class="toc-number">1.6.4.</span> <span class="toc-text"> 文件描述符修改</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86"><span class="toc-number">2.</span> <span class="toc-text"> 第二部分：操作系统知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text"> 进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">2.2.</span> <span class="toc-text"> 进程的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F"><span class="toc-number">2.2.1.</span> <span class="toc-text"> 程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B-2"><span class="toc-number">2.2.2.</span> <span class="toc-text"> 进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E9%81%93%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.2.3.</span> <span class="toc-text"> 单道多道程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%B9%B6%E5%8F%91"><span class="toc-number">2.2.4.</span> <span class="toc-text"> 并行与并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pcb%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%9D%97"><span class="toc-number">2.2.5.</span> <span class="toc-text"> PCB(进程控制块)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E5%88%87%E6%8D%A2"><span class="toc-number">2.2.6.</span> <span class="toc-text"> 进程的状态切换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#linux%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81"><span class="toc-number">2.2.7.</span> <span class="toc-text"> Linux查看进程状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%8F%B7"><span class="toc-number">2.2.8.</span> <span class="toc-text"> 进程号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-number">2.2.9.</span> <span class="toc-text"> 进程的创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gbd%E8%B0%83%E8%AF%95%E5%A4%9A%E8%BF%9B%E7%A8%8B"><span class="toc-number">2.2.10.</span> <span class="toc-text"> GBD调试多进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#exec%E5%87%BD%E6%95%B0%E6%97%8F"><span class="toc-number">2.2.11.</span> <span class="toc-text"> exec函数族</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&text=牛客项目教程1"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&title=牛客项目教程1"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&is_video=false&description=牛客项目教程1"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=牛客项目教程1&body=Check out this article: https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&title=牛客项目教程1"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&title=牛客项目教程1"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&title=牛客项目教程1"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&title=牛客项目教程1"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&name=牛客项目教程1&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/12/27/life/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B1/&t=牛客项目教程1"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
