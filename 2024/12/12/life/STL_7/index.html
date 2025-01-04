@@ -13,13 +13,13 @@
 <meta property="og:site_name" content="混吃等死">
 <meta property="og:description" content="天气：阴冷	心情：好   STL算法 在STL中，不仅仅由标准的数据结构和容器，还有适用于这些容器的算法，我们这里来快速总结一下这些算法，只做成一个可查找表，便于查找和知道有这么一个算法，便于以后用到。 STL中的算法可以分为两类：质变（mutating）和非质变算法（nonmutating），前者表示会改变传入的数据结构，后者表示不会修改传入的数据结构（比如排序std::sort()和std::">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="d:%5Cworkspace%5Cdiary_manager%5Cblog%5Csource_posts%5Clife%5Cimage-20241211215634087.png">
+<meta property="og:image" content="https://s2.loli.net/2025/01/04/2GA5WZBnuIEji6e.png">
 <meta property="og:image" content="https://s2.loli.net/2024/06/15/FWsijSG5YI2pwtV.png">
 <meta property="article:published_time" content="2024-12-12T07:02:26.000Z">
-<meta property="article:modified_time" content="2024-12-12T07:02:08.568Z">
+<meta property="article:modified_time" content="2025-01-04T12:23:41.770Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="d:%5Cworkspace%5Cdiary_manager%5Cblog%5Csource_posts%5Clife%5Cimage-20241211215634087.png">
+<meta name="twitter:image" content="https://s2.loli.net/2025/01/04/2GA5WZBnuIEji6e.png">
     
     
       
@@ -74,7 +74,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
 <!-- hexo injector head_end end --></head>
 
-<body class="max-width mx-auto px3 ltr">    
+<body class="max-width mx-auto px3 ltr">
+    
       <div id="header-post">
   <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
@@ -338,7 +339,7 @@
 </tbody>
 </table>
 <p>对于<code>copy</code>函数，STL中对其做了极值优化，对于指针，<code>char</code>或者已知的基本数据类型，其会调用<code>memmove</code>这种快速复制内存的方法。而对于非平凡类，会调用构造函数深度复制，对于平凡类，其直接调用内存复制函数即可。</p>
-<p><img src="D:%5Cworkspace%5Cdiary_manager%5Cblog%5Csource_posts%5Clife%5Cimage-20241211215634087.png" alt="image-20241211215634087" /></p>
+<p><img src="https://s2.loli.net/2025/01/04/2GA5WZBnuIEji6e.png" alt="image-20241211215634087" /></p>
 <h4 id="set相关算法"><a class="markdownIt-Anchor" href="#set相关算法"></a> set相关算法</h4>
 <p>stl中的set有四种<code>set</code>，<code>multiset</code>，<code>hash_set</code>，<code>hash_multiset</code>。前两者使用红黑树实现，后两者通过hashtable实现，对上面这四种set，stl都提供了相关的函数对set进行操作。</p>
 <table>
@@ -847,7 +848,7 @@
     Copyright &copy;
     
     
-    2016-2024
+    2016-2025
     YQX
   </div>
   <div class="footer-right">
@@ -922,20 +923,5 @@
 
 <!-- utterances Comments -->
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
