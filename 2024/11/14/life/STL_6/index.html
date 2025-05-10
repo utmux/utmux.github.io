@@ -13,13 +13,13 @@
 <meta property="og:site_name" content="混吃等死">
 <meta property="og:description" content="天气：晴天	心情：好   第五章红黑树  5.2 红黑树  5.2.6 RB-tree的构造和内存管理 前面提到红黑树的初始化函数，如下所示： 1234567891011private:void init() &#123;    &#x2F;&#x2F; 产生一个节点空间，令header指向它    header &#x3D; get_node();    color(header) &#x3D; rb_tree_red; &#x2F;&#x2F; 令he">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2024/11/22/f3Ii6vwDcHQdLA8.png">
-<meta property="og:image" content="https://s2.loli.net/2024/12/05/rxWZS15V8euy3CJ.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/f86ebe1c153adbbf1730f8c41bfc25ec.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/2d27adced7747f93554713d19e9ba703.png">
 <meta property="article:published_time" content="2024-11-14T14:11:26.000Z">
-<meta property="article:modified_time" content="2024-12-05T14:10:51.676Z">
+<meta property="article:modified_time" content="2025-05-10T06:40:10.053Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s2.loli.net/2024/11/22/f3Ii6vwDcHQdLA8.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/f86ebe1c153adbbf1730f8c41bfc25ec.png">
     
     
       
@@ -185,7 +185,7 @@
 <p>前面提到红黑树的初始化函数，如下所示：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span>:</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 产生一个节点空间，令header指向它</span></span><br><span class="line">    header = <span class="built_in">get_node</span>();</span><br><span class="line">    <span class="built_in">color</span>(header) = rb_tree_red; <span class="comment">// 令header为红色，用来区分header和root（在iterator.operator++中）</span></span><br><span class="line">    <span class="built_in">root</span>() = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 令header的左子节点为自己</span></span><br><span class="line">    <span class="built_in">leftmost</span>() = header;</span><br><span class="line">    <span class="comment">// 令header的右子节点为自己</span></span><br><span class="line">    <span class="built_in">rightmost</span>() = header;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如上所示，<code>init()</code>函数中初始化的是<code>header</code>节点，这是因为我们知道，树状结构的各种操作中最需注意的就是边界情况的发生，也就是走到根节点时要有特殊的处理。为了简化处理，SGI STL特别为根节点设计了一个父节点，名为<code>header</code>，并令其初始状态如下图所示。</p>
-<p><img src="https://s2.loli.net/2024/11/22/f3Ii6vwDcHQdLA8.png" alt="image-20241114214217217" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/f86ebe1c153adbbf1730f8c41bfc25ec.png" alt="image-20241114214217217" /></p>
 <p>每次插入节点时，同时要调整<code>header</code>，使得<code>header</code>的<code>left</code>指向最左边（也就是最小值），右边指向最右边（即最大值）。</p>
 <p>本节主要只谈元素（节点）的插入和搜寻。RB-tree提供两种插入操作：<code>insert_unique()</code>和<code>insert_equal()</code>，前者表示被插入节点的键值（key）在整棵树中必须独一无二（因此，如果树中已存在相同的键值，插入操作就不会真正进行），后者表示被插入节点的键值在整棵树中可以重复，因此，无论如何插入都会成功（除非空间不足导致配置失败）。这两个函数都有数个版本，以下以最简单的版本（单一参数，用以表示将被插入的节点实值（value））作为说明对象。注意，虽然只指定实值，但RB-tree一开始即要求用户必须明确设定所谓的<code>KeyOfValue</code>仿函数，因此，从实值（value）中取出键值（key）是毫无问题的。</p>
 <h5 id="insert_equal"><a class="markdownIt-Anchor" href="#insert_equal"></a> insert_equal()</h5>
@@ -229,7 +229,7 @@
 <li>
 <p>线性探测：<br />
 在表格足够大，负载系数足够小时，此时只管从头到尾，循环转一圈，哪里有空放哪里。平均情况则是每次插入需要访问一般的表格才能找到空位插入。不过其存在主集团现象，如下图，除非hash function映射的出来的结果恰好在4-7之间，否则其他函数按照从左往右探测，必定会优先使用3号，由于冲突检测这浪费了大量的时间，而且随着3，4的使用，情况会越来越恶化。<br />
-<img src="https://s2.loli.net/2024/12/05/rxWZS15V8euy3CJ.png" alt="image-20241204193546265" /></p>
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/2d27adced7747f93554713d19e9ba703.png" alt="image-20241204193546265" /></p>
 </li>
 <li>
 <p>二次探测<br />

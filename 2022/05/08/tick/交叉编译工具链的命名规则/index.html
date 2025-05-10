@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="混吃等死">
 <meta property="og:description" content="交叉编译工具链的命名规则为：arch [-vendor] [-os] [-(gnu)eabi]  arch - 体系架构，如ARM，MIPS verdor - 工具链提供商 os - 目标操作系统 eabi - 嵌入式应用二进制接口  根据对操作系统的支持与否，ARM GCC可分为支持和不支持操作系统，如  arm-none-eabi：这个是没有操作系统的，自然不可能支持那些跟操作系统关系密切的函">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2024/01/03/ujn7vFOcCgoGZ4i.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/939fe022a3de40b6390eb449737f7bc0.png">
 <meta property="article:published_time" content="2022-05-08T01:20:11.000Z">
-<meta property="article:modified_time" content="2024-01-03T02:42:23.589Z">
+<meta property="article:modified_time" content="2025-05-10T06:44:08.380Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s2.loli.net/2024/01/03/ujn7vFOcCgoGZ4i.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/939fe022a3de40b6390eb449737f7bc0.png">
     
     
       
@@ -247,7 +247,7 @@
 <p>For your question, <code>arm-none-linux-gnueabi</code> and <code>arm-linux-gnueabi</code> is same thing. <code>arm-linux-gcc</code> is actually binary for gcc which produces objects for ARM architecture to be run on Linux with default configuration (abi) provided by toolchain</p>
 <p>来自<a target="_blank" rel="noopener" href="https://localcoder.org/what-is-the-difference-between-arm-linux-gcc-and-arm-none-linux-gnueabi">参考</a></p>
 <p>其中所谓的bare metal 就是指none，不针对特定system。abi中，none一般对应的是eabi，即不带任何其他系统ABI，而linux对应的是gnueabi或者gnueabihf。</p>
-<p>以linaro工具链为例子<img src="https://s2.loli.net/2024/01/03/ujn7vFOcCgoGZ4i.png" alt="image-20220508084440213" /></p>
+<p>以linaro工具链为例子<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/939fe022a3de40b6390eb449737f7bc0.png" alt="image-20220508084440213" /></p>
 <p>其中aarch64/arm/armeb/armv8l分别代表架构，gnu编译器支持的架构有很多，详细见<a target="_blank" rel="noopener" href="https://gcc.gnu.org/install/specific.html">GUN</a></p>
 <p>这里的armeb与arm一样都是arm，但是eb代表Big-endian，同理aarch64_be代表Big-endian的aarch64，这里做一个表格来帮助区分下</p>
 <table>

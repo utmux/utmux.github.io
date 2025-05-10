@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="混吃等死">
 <meta property="og:description" content="title: start详细分析(一) date: 2022-07-05 23:09:41 tags: categories: tick   start.s详细分析 解释名词 123PMSA：Protected Memory System Architecture VMSA：Virtual Memory System Architecture  寄存器 SCTLR: 12345678The Sy">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2024/01/03/DPYrUH15MTFjWcC.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/deae50346257d4d7503fa1f93313fdfd.png">
 <meta property="article:published_time" content="2022-07-09T09:40:00.000Z">
-<meta property="article:modified_time" content="2024-01-03T02:43:37.166Z">
+<meta property="article:modified_time" content="2025-05-10T06:44:05.121Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s2.loli.net/2024/01/03/DPYrUH15MTFjWcC.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/deae50346257d4d7503fa1f93313fdfd.png">
     
     
       
@@ -190,7 +190,7 @@ categories: tick</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">The System Control Register, SCTLR, provides the top level control of the system, including its memory system.</span><br><span class="line">uboot中的清零V（第13位的作用）：</span><br><span class="line">V, bit [13]</span><br><span class="line">Vectors bit. This bit selects the base address of the exception vectors:</span><br><span class="line">0</span><br><span class="line">Normal exception vectors, base address 0x0000 0000.</span><br><span class="line">1</span><br><span class="line">High exception vectors (Hivecs), base address 0xFFFF 0000.</span><br></pre></td></tr></table></figure>
 <p>VBAR:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">When high exception vectors are not selected, the VBAR holds the exception base address for exceptions that are not taken to Monitor mode or to Hyp mode.</span><br><span class="line">也就是说，当V=0，且该地址设置时，向量表的地址会被“重定向”到该地址，而不是0x00。</span><br></pre></td></tr></table></figure>
-<p><img src="https://s2.loli.net/2024/01/03/DPYrUH15MTFjWcC.png" alt="image-20220704155428716" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/deae50346257d4d7503fa1f93313fdfd.png" alt="image-20220704155428716" /></p>
 <p>整体流程：</p>
 <p>1.save_boot_params（待补充）</p>
 <p>2.check for Hypervisor support（待补充）</p>

@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="混吃等死">
 <meta property="og:description" content="天气：阴雨连绵	心情：一般   派生类的友元函数调用基类友元函数 对于派生类hasDMA，如果其含有友元，此时该友元函数如果要访问基类的友元函数，可以如下所示： 12345std::ostream &amp; operator&lt;&lt;(std::ostream &amp; os, const hasDMA &amp; hs) &#123;    os &lt;&lt; (const bas">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2024/04/30/qzbJKrHtlC6DAhs.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/b132942ca4cbb1c896c0c40f0cafe67a.png">
 <meta property="article:published_time" content="2024-04-29T12:40:26.000Z">
-<meta property="article:modified_time" content="2024-04-30T01:56:36.036Z">
+<meta property="article:modified_time" content="2025-05-10T06:40:25.996Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s2.loli.net/2024/04/30/qzbJKrHtlC6DAhs.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/b132942ca4cbb1c896c0c40f0cafe67a.png">
     
     
       
@@ -189,7 +189,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BrassPlus</span>(<span class="type">const</span> Brass &amp;ba, <span class="type">double</span> ml = <span class="number">500</span>, <span class="type">double</span> r= <span class="number">0.01</span>)&#123;...&#125;</span><br><span class="line"><span class="comment">// 在上面这个函数也是一个转换函数，其实现了基类到派生类的转化</span></span><br><span class="line"><span class="comment">// 所以这里打破了两个印象，一个是转化函数参数不一定只有一个</span></span><br><span class="line"><span class="comment">// 第二个基类是可以转化为派生类的</span></span><br></pre></td></tr></table></figure>
 <h5 id="运算符函数总结"><a class="markdownIt-Anchor" href="#运算符函数总结"></a> 运算符函数总结</h5>
 <p>如下是运算符函数的一些总结（见第十三章最后一个表）：<br />
-<img src="https://s2.loli.net/2024/04/30/qzbJKrHtlC6DAhs.png" alt="image-20240429160724463" /></p>
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/b132942ca4cbb1c896c0c40f0cafe67a.png" alt="image-20240429160724463" /></p>
 <h5 id="valarray类"><a class="markdownIt-Anchor" href="#valarray类"></a> valarray类</h5>
 <p>用于处理同类型数值，有将数组所有值相加的方法和找出最大值的方法。该类被定义为一个模板类，以便处于不同的数据类型。故类似于之前的模板函数使用，使用valarray时需要这样：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">valarray&lt;<span class="type">int</span>&gt; q_values; <span class="comment">// an array of int</span></span><br><span class="line">valarray&lt;<span class="type">double</span>&gt; weights; <span class="comment">// an array of double</span></span><br><span class="line"><span class="comment">// 是不是很熟悉，事实上对于之前介绍的vector和array也是一种模板</span></span><br><span class="line">std::array&lt;<span class="type">int</span>, 5&gt; myArray；<span class="comment">// 多个了参数</span></span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt; myVector;</span><br></pre></td></tr></table></figure>

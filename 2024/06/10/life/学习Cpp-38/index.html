@@ -13,16 +13,16 @@
 <meta property="og:site_name" content="混吃等死">
 <meta property="og:description" content="天气：下雨	心情：一般  不该跑步的，跑完喉咙就发炎了，感觉耳朵又开始有点发炎了，耳膜炎都还没好。怎么说，为了消耗精力，我打算这周就不进行跑步这么剧烈的运动了，做一下仰卧起坐俯卧撑差不多了。  16.4 其他迭代器 除了之前提到的ostream_iterator和istream_iterator。头文件iterator提供了下面这几中迭代器类型：   reverse_iterator：该迭代器会默">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2024/06/10/T429GXeZrfiQVLP.png">
-<meta property="og:image" content="https://s2.loli.net/2024/06/10/ZxJeEoAgU7Y6v5t.png">
-<meta property="og:image" content="https://s2.loli.net/2024/06/10/6loW1z3PxZwrcML.png">
-<meta property="og:image" content="https://s2.loli.net/2024/06/10/prDeUThV72yMsjL.png">
-<meta property="og:image" content="https://s2.loli.net/2024/06/10/OFyzNcrVbuXq6hv.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/14ff74adcb3f5e0793602d89616451d4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/b92191a4aae0ee7593703467c432bf06.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/8833877961478f40812619c9486ca521.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/59c3a10888ebcfc099257877b4e07d9f.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/85d0b5ff4a4130300b1bacb4e661c401.png">
 <meta property="article:published_time" content="2024-06-10T14:02:26.000Z">
-<meta property="article:modified_time" content="2024-06-10T14:03:43.297Z">
+<meta property="article:modified_time" content="2025-05-10T06:40:37.040Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s2.loli.net/2024/06/10/T429GXeZrfiQVLP.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/14ff74adcb3f5e0793602d89616451d4.png">
     
     
       
@@ -211,17 +211,17 @@ front_insert_iterator 将元素插入到容器的前端。front_insert_iterator�
 <h5 id="容器种类"><a class="markdownIt-Anchor" href="#容器种类"></a> 容器种类</h5>
 <p>STL具有容器概念和容器类型。不能将任何类型的对象存储在容器中，具体地说，类型必须是可复制构造的和可赋值的。基本类型满足这些要求；只要类定义没有将复制构造函数和赋值运算符声明为私有或保护的，则也满足这种要求。C++11 改进了这些概念，添加了术语可复制插入（CopyInsertable）和可移动插入（MoveInsertable），但这里只进行简单的概述。</p>
 <p>基本容器不能保证其元素都按特定的顺序存储，也不能保证元素的顺序不变，但对概念进行改进后，则可以增加这样的保证。所有的容器都提供某些特征和操作。下表对容器一些<strong>通用特征</strong>进行了总结。其中，X 表示容器类型，如 vector；T 表示存储在容器中的对象类型；a 和 b 表示类型为 X 的值；r 表示类型为<code>X&amp;</code>的值；u 表示类型为 X 的标识符（即如果 X 表示 <code>vector&lt;int&gt;</code>，则 u 是一个 <code>vector&lt;int&gt;</code>对象）。<br />
-<img src="https://s2.loli.net/2024/06/10/T429GXeZrfiQVLP.png" alt="image-20240610093128369" /></p>
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/14ff74adcb3f5e0793602d89616451d4.png" alt="image-20240610093128369" /></p>
 <h6 id="tips编译时间固定时间和线性时间"><a class="markdownIt-Anchor" href="#tips编译时间固定时间和线性时间"></a> Tips:编译时间，固定时间和线性时间</h6>
 <p>如果复杂度为编译时间，则操作将在编译时执行，执行时间为 0。固定复杂度意味着操作发生在运行阶段，但独立于对象中的元素数目。线性复杂度意味着时间与元素数目成正比。即如果 a 和 b 都是容器，则 a = = b 具有线性复杂度，因为= =操作必须用于容器中的每个元素。实际上，这是最糟糕的情况。如果两个容器的长度不同，则不需要作任何的单独比较。</p>
 <p>C++11 在上表上新增的通用容器要求。在这个表中，rv 表示类型为 X 的非常量右值，如函数的返回值。另外，在表中，要求 X::iterator 满足正向迭代器的要求，而以前只要求它不是输出迭代器。<br />
-<img src="https://s2.loli.net/2024/06/10/ZxJeEoAgU7Y6v5t.png" alt="image-20240610093626611" /></p>
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/b92191a4aae0ee7593703467c432bf06.png" alt="image-20240610093626611" /></p>
 <h6 id="tips复制构造函数和移动构造函数"><a class="markdownIt-Anchor" href="#tips复制构造函数和移动构造函数"></a> tips：复制构造函数和移动构造函数</h6>
 <p>复制构造和复制赋值以及移动构造和移动赋值之间的差别在于，复制操作保留源对象，而移动操作可修改源对象，还可能转让所有权，而不做任何复制。如果源对象是临时的，移动操作的效率将高于常规复制。</p>
 <h5 id="序列"><a class="markdownIt-Anchor" href="#序列"></a> 序列</h5>
 <p>如果容器要求数据必须按照某种顺序排列（比如队列必须从队头出队尾进），此时就需要序列约束（sequence）。序列还要求其元素按严格的线性顺序排列，而分支结构的数据不是线性的。因为序列中的元素具有确定的顺序，因此可以执行诸如将值插入到特定位置、删除特定区间等操作。下面是序列的必须要求和可选要求：<br />
-<img src="https://s2.loli.net/2024/06/10/6loW1z3PxZwrcML.png" alt="image-20240610094345489" /><br />
-<img src="https://s2.loli.net/2024/06/10/prDeUThV72yMsjL.png" alt="image-20240610094354678" /><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/8833877961478f40812619c9486ca521.png" alt="image-20240610094345489" /><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/59c3a10888ebcfc099257877b4e07d9f.png" alt="image-20240610094354678" /><br />
 对上表的说明：a[n]<a target="_blank" rel="noopener" href="http://xn--a-re9a.at">和a.at</a>(n)的区别：如果n落在容器的有效区间外，<a target="_blank" rel="noopener" href="http://xn--a-xd8a.at">则a.at</a>(n)将执行边界检查，并引发out_of_range。为什么可选要求中有push_back这些，这是为了提高具体容器的具体效率，比如双向链表可以有push_front()这个方法，而队列就不可能有这个方法了。</p>
 <h5 id="容器介绍"><a class="markdownIt-Anchor" href="#容器介绍"></a> 容器介绍</h5>
 <ol>
@@ -236,7 +236,7 @@ vector是可反转容器，存在两个方法rbegin()，rend()，除非其他类
 <li>
 <p>list<br />
 线性序列，也是可反转容器，与vector不同的是，list不支持数组表示法和随机访问（<strong>因为list底层结构是双向链表</strong>），每次插入和删除都需要将后面的数据进行搬移，<strong>从容器中插入和删除数据，迭代器指向元素将不变</strong>（双向链表的特性而已）。下面是list的一些成员函数：<br />
-<img src="https://s2.loli.net/2024/06/10/OFyzNcrVbuXq6hv.png" alt="image-20240610152818863" /><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/85d0b5ff4a4130300b1bacb4e661c401.png" alt="image-20240610152818863" /><br />
 即上面的splice将x的内容<strong>移动</strong>到pos前面，x中的内容将会被清空，而insert将内容复制到指定位置，unique()只能将相邻的值压缩为单个值，我们可以先sort再unique，此时保证每个值唯一。<br />
 sort()，merge()，unique()，remove()还能<strong>传入一个函数</strong>，来判断某个值是否应该被执行操作，传入的函数应该是谓词函数（返回值为bool的一元函数)</p>
 </li>
