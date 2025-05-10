@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="在合成孔径雷达（SAR）研究的框架内，在进行任何处理（ 外差式下变频器）之前，对机载接收到的信号进行模拟是很方便的。从现在起，这种信号被称为原始信号。模拟典型场景可以简化处理算法的实验，以及模式识别和特征提取技术的开发。模拟可在噪声和杂波抑制研究中发挥重要作用，并有助于优化合成孔径雷达系统参数。模拟代码必须满足一系列严格的要求。要模拟的情况应该比较普遍，可能会随时间变化，可以是确定性的，也可以是随">
+    <meta name="description" content="天气：晴天	心情：差  在合成孔径雷达（SAR）研究的框架内，在进行任何处理（ 外差式下变频器）之前，对机载接收到的信号进行模拟是很方便的。从现在起，这种信号被称为原始信号。模拟典型场景可以简化处理算法的实验，以及模式识别和特征提取技术的开发。模拟可在噪声和杂波抑制研究中发挥重要作用，并有助于优化合成孔径雷达系统参数。模拟代码必须满足一系列严格的要求。要模拟的情况应该比较普遍，可能会随时间变化，可">
 <meta property="og:type" content="article">
-<meta property="og:title" content="混吃等死">
-<meta property="og:url" content="https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/index.html">
+<meta property="og:title" content="SAR仿真设计">
+<meta property="og:url" content="https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="在合成孔径雷达（SAR）研究的框架内，在进行任何处理（ 外差式下变频器）之前，对机载接收到的信号进行模拟是很方便的。从现在起，这种信号被称为原始信号。模拟典型场景可以简化处理算法的实验，以及模式识别和特征提取技术的开发。模拟可在噪声和杂波抑制研究中发挥重要作用，并有助于优化合成孔径雷达系统参数。模拟代码必须满足一系列严格的要求。要模拟的情况应该比较普遍，可能会随时间变化，可以是确定性的，也可以是随">
+<meta property="og:description" content="天气：晴天	心情：差  在合成孔径雷达（SAR）研究的框架内，在进行任何处理（ 外差式下变频器）之前，对机载接收到的信号进行模拟是很方便的。从现在起，这种信号被称为原始信号。模拟典型场景可以简化处理算法的实验，以及模式识别和特征提取技术的开发。模拟可在噪声和杂波抑制研究中发挥重要作用，并有助于优化合成孔径雷达系统参数。模拟代码必须满足一系列严格的要求。要模拟的情况应该比较普遍，可能会随时间变化，可">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-05-08T14:32:25.988Z">
-<meta property="article:modified_time" content="2025-02-27T14:19:44.125Z">
+<meta property="article:published_time" content="2025-05-10T08:07:01.000Z">
+<meta property="article:modified_time" content="2025-05-10T08:07:08.885Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -36,7 +36,7 @@
       
     
     <!-- title -->
-    <title>混吃等死</title>
+    <title>SAR仿真设计</title>
     <!-- async scripts -->
     <!-- Google Analytics -->
 
@@ -110,17 +110,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&text="><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title="><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&is_video=false&description="><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=&body=Check out this article: https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title="><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title="><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title="><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title="><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&name=&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&t="><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&text=SAR仿真设计"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&is_video=false&description=SAR仿真设计"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SAR仿真设计&body=Check out this article: https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&name=SAR仿真设计&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&t=SAR仿真设计"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -136,7 +136,7 @@
   <header>
     
     <h1 class="posttitle p-name" itemprop="name headline">
-        
+        SAR仿真设计
     </h1>
 
 
@@ -148,13 +148,18 @@
       
     <div class="postdate">
       
-        <time datetime="2025-05-08T14:32:25.988Z" class="dt-published" itemprop="datePublished">2025-05-08</time>
+        <time datetime="2025-05-10T08:07:01.000Z" class="dt-published" itemprop="datePublished">2025-05-10</time>
         
       
     </div>
 
 
       
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">life</a>
+    </div>
+
 
       
 
@@ -163,8 +168,9 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <pre><code>在合成孔径雷达（SAR）研究的框架内，在进行任何处理（ 外差式下变频器）之前，对机载接收到的信号进行模拟是很方便的。从现在起，这种信号被称为原始信号。模拟典型场景可以简化处理算法的实验，以及模式识别和特征提取技术的开发。模拟可在噪声和杂波抑制研究中发挥重要作用，并有助于优化合成孔径雷达系统参数。模拟代码必须满足一系列严格的要求。要模拟的情况应该比较普遍，可能会随时间变化，可以是确定性的，也可以是随机性的。它应依赖于必须符合适当统计规则的声散射模型。延伸场景的合成孔径雷达模拟器的一个重要特征是高度剖面，因为浮雕的影响对最终图像的形成起着重要作用。最后，但并非最不重要的一点是，数字代码应高效、快速并节省（计算机）内存。这些特点通常是相互冲突的，最终的解决方案通常是工程上的折衷方案。
-</code></pre>
+    <p>天气：晴天	心情：差</p>
+<hr />
+<p>在合成孔径雷达（SAR）研究的框架内，在进行任何处理（ 外差式下变频器）之前，对机载接收到的信号进行模拟是很方便的。从现在起，这种信号被称为原始信号。模拟典型场景可以简化处理算法的实验，以及模式识别和特征提取技术的开发。模拟可在噪声和杂波抑制研究中发挥重要作用，并有助于优化合成孔径雷达系统参数。模拟代码必须满足一系列严格的要求。要模拟的情况应该比较普遍，可能会随时间变化，可以是确定性的，也可以是随机性的。它应依赖于必须符合适当统计规则的声散射模型。延伸场景的合成孔径雷达模拟器的一个重要特征是高度剖面，因为浮雕的影响对最终图像的形成起着重要作用。最后，但并非最不重要的一点是，数字代码应高效、快速并节省（计算机）内存。这些特点通常是相互冲突的，最终的解决方案通常是工程上的折衷方案。</p>
 <p>​	文献[1]-[4]中提供了许多仿真研究，产生了符合某些（但通常不是全部）先决条件的仿真代码。在所有代码中，场景表面都被离散到一个（通常是）矩形网格中，并对来自网格点的基本回波进行叠加。根据对单个回波的评估、其与其他回波的统计关系以及考虑到合成孔径雷达系统参数的叠加精度，可以使用不同的程序。这些问题值得讨论</p>
 <p>​      首先要解决的问题是单次回波评估。一种可能性是使用简单的点散射体，其强度由局部雷达截面的平方根给出。要进行逼真的模拟，需要访问后者的数据库 [1]、[3]、[5]、[6]。作为另一种方法，可以以网格点为中心，用平面面局部近似表面；只要规定了材料的电磁参数，就可以通过简单地应用电磁理论计算回波。这第二种程序似乎比较灵活，所需的信息量有限，而且是一个健全的物理模型的遗迹：这就是我们提出的模拟器所采用的程序。</p>
 <p>​	需要考虑的第二个要点是每个分辨率单元的散射体或面的数量。显然，较大的面数可以改善对高度剖面的描述，但需要高效的工具来处理内存要求和计算时间。合成孔径雷达高级模拟器（SARAS）依靠创新的两阶段快速傅立叶变换（FFT）算法解决了这两个问题，该算法还可用于并行处理。SAR 模拟器的一个核心问题是实现信号的正确统计特征。可以预见有两种极端程序：我们可以在场景的物理模型上操作，也可以直接在图像上操作。在此，我们不妨作一简要讨论。</p>
@@ -216,17 +222,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&text="><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title="><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&is_video=false&description="><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=&body=Check out this article: https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title="><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title="><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title="><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title="><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&name=&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/05/08/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&t="><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&text=SAR仿真设计"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&is_video=false&description=SAR仿真设计"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SAR仿真设计&body=Check out this article: https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&name=SAR仿真设计&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/05/10/research/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&t=SAR仿真设计"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
