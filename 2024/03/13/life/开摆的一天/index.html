@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：晴天	心情：好  今天天晴，把所有的杯子和换的衣服洗了一下。然后下午在寝室开摆，晚上去上课，开摆的一天。  weak指令 在GCC编译器中，.weak是一个伪指令，用于声明一个弱符号（weak symbol）。弱符号是一种特殊的符号，它允许在链接过程中，如果有多个同名符号存在时，可以选择其中一个来定义最终的符号，而不是报错。这在处理不同平台或不同模块间的接口时非常有用，因为它允许在不影响其他">
+    <meta name="description" content="天气：晴天 心情：好  今天天晴，把所有的杯子和换的衣服洗了一下。然后下午在寝室开摆，晚上去上课，开摆的一天。  weak 指令 在 GCC 编译器中，.weak 是一个伪指令，用于声明一个弱符号（weak symbol）。弱符号是一种特殊的符号，它允许在链接过程中，如果有多个同名符号存在时，可以选择其中一个来定义最终的符号，而不是报错。这在处理不同平台或不同模块间的接口时非常有用，因为它允许在不">
 <meta property="og:type" content="article">
 <meta property="og:title" content="开摆的一天">
 <meta property="og:url" content="https://utmux.github.io/2024/03/13/life/%E5%BC%80%E6%91%86%E7%9A%84%E4%B8%80%E5%A4%A9/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：晴天	心情：好  今天天晴，把所有的杯子和换的衣服洗了一下。然后下午在寝室开摆，晚上去上课，开摆的一天。  weak指令 在GCC编译器中，.weak是一个伪指令，用于声明一个弱符号（weak symbol）。弱符号是一种特殊的符号，它允许在链接过程中，如果有多个同名符号存在时，可以选择其中一个来定义最终的符号，而不是报错。这在处理不同平台或不同模块间的接口时非常有用，因为它允许在不影响其他">
+<meta property="og:description" content="天气：晴天 心情：好  今天天晴，把所有的杯子和换的衣服洗了一下。然后下午在寝室开摆，晚上去上课，开摆的一天。  weak 指令 在 GCC 编译器中，.weak 是一个伪指令，用于声明一个弱符号（weak symbol）。弱符号是一种特殊的符号，它允许在链接过程中，如果有多个同名符号存在时，可以选择其中一个来定义最终的符号，而不是报错。这在处理不同平台或不同模块间的接口时非常有用，因为它允许在不">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-13T15:08:26.000Z">
-<meta property="article:modified_time" content="2024-03-13T15:08:46.954Z">
+<meta property="article:modified_time" content="2025-05-14T08:52:38.641Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -129,7 +129,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#weak%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text"> weak指令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#auto%E5%92%8Cconst%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88"><span class="toc-number">2.</span> <span class="toc-text"> auto和const指针的结合</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#weak-%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text"> weak 指令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#auto-%E5%92%8C-const-%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88"><span class="toc-number">2.</span> <span class="toc-text"> auto 和 const 指针的结合</span></a></li></ol>
       </div>
     
   </span>
@@ -174,50 +174,50 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：晴天	心情：好</p>
+    <p>天气：晴天 心情：好</p>
 <hr />
 <p>今天天晴，把所有的杯子和换的衣服洗了一下。然后下午在寝室开摆，晚上去上课，开摆的一天。</p>
-<h5 id="weak指令"><a class="markdownIt-Anchor" href="#weak指令"></a> weak指令</h5>
-<p>在GCC编译器中，<code>.weak</code>是一个伪指令，用于声明一个弱符号（weak symbol）。弱符号是一种特殊的符号，它允许在链接过程中，如果有多个同名符号存在时，可以选择其中一个来定义最终的符号，而不是报错。这在处理不同平台或不同模块间的接口时非常有用，因为它允许在不影响其他模块的情况下，重写或提供默认的函数或变量实现。</p>
-<p>使用<code>.weak</code>声明的函数或变量被称为弱函数或弱变量。在链接时，如果存在一个同名的强符号（即非弱符号），链接器将优先选择强符号。如果没有强符号存在，链接器将使用弱符号。如果既没有强符号也没有弱符号，链接器将根据上下文决定是否报错。</p>
-<p>下面是一个使用<code>.weak</code>声明弱函数的例子：</p>
+<h5 id="weak-指令"><a class="markdownIt-Anchor" href="#weak-指令"></a> weak 指令</h5>
+<p>在 GCC 编译器中，<code>.weak</code> 是一个伪指令，用于声明一个弱符号（weak symbol）。弱符号是一种特殊的符号，它允许在链接过程中，如果有多个同名符号存在时，可以选择其中一个来定义最终的符号，而不是报错。这在处理不同平台或不同模块间的接口时非常有用，因为它允许在不影响其他模块的情况下，重写或提供默认的函数或变量实现。</p>
+<p>使用 <code>.weak</code> 声明的函数或变量被称为弱函数或弱变量。在链接时，如果存在一个同名的强符号（即非弱符号），链接器将优先选择强符号。如果没有强符号存在，链接器将使用弱符号。如果既没有强符号也没有弱符号，链接器将根据上下文决定是否报错。</p>
+<p>下面是一个使用 <code>.weak</code> 声明弱函数的例子：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __attribute__((weak)) test_lib_a(<span class="type">int</span> a, <span class="type">int</span> b) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;weak %s\n&quot;</span>, __FUNCTION__);</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在这个例子中，<code>test_lib_a</code>函数被声明为一个弱函数。如果在其他地方有一个同名的强函数定义，链接器将选择强函数。如果没有，链接器将使用这个弱函数的定义。</p>
-<p>需要注意的是，<code>.weak</code>属性只在静态库（.o 或 .a）中有效，而在动态库（.so）中不起作用。此外，<code>.weak</code>只对链接器生效，编译器不允许在同一个文件中存在两个同名的符号。</p>
+<p>在这个例子中，<code>test_lib_a</code> 函数被声明为一个弱函数。如果在其他地方有一个同名的强函数定义，链接器将选择强函数。如果没有，链接器将使用这个弱函数的定义。</p>
+<p>需要注意的是，<code>.weak</code> 属性只在静态库（.o 或 .a）中有效，而在动态库（.so）中不起作用。此外，<code>.weak</code> 只对链接器生效，编译器不允许在同一个文件中存在两个同名的符号。</p>
 <p>弱符号在嵌入式开发和跨平台代码中非常有用，因为它们允许开发者在不同的平台或环境中提供不同的实现，同时保持代码的兼容性和可移植性。</p>
-<h5 id="auto和const指针的结合"><a class="markdownIt-Anchor" href="#auto和const指针的结合"></a> auto和const指针的结合</h5>
-<p>在C++中，<code>auto</code>关键字可以用于类型推导，而<code>const</code>关键字用于声明常量。结合使用<code>auto</code>和<code>const</code>时，你需要指定<code>const</code>的位置，这取决于你是想要一个指向常量的指针，还是一个指向常量数据的指针，或者是两者兼有。</p>
-<p>以下是一些使用<code>auto</code>和<code>const</code>的示例：</p>
+<h5 id="auto-和-const-指针的结合"><a class="markdownIt-Anchor" href="#auto-和-const-指针的结合"></a> auto 和 const 指针的结合</h5>
+<p>在 C++中，<code>auto</code> 关键字可以用于类型推导，而 <code>const</code> 关键字用于声明常量。结合使用 <code>auto</code> 和 <code>const</code> 时，你需要指定 <code>const</code> 的位置，这取决于你是想要一个指向常量的指针，还是一个指向常量数据的指针，或者是两者兼有。</p>
+<p>以下是一些使用 <code>auto</code> 和 <code>const</code> 的示例：</p>
 <ol>
 <li>
 <p><strong>指向非常量数据的指针</strong>：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> ptr = &amp;value; <span class="comment">// ptr是一个指针，指向非常量数据</span></span><br></pre></td></tr></table></figure>
-<p>这里，<code>ptr</code>是一个指针，指向一个非常量整数<code>value</code>。</p>
+<p>这里，<code>ptr</code> 是一个指针，指向一个非常量整数 <code>value</code>。</p>
 </li>
 <li>
 <p><strong>指向常量数据的指针</strong>：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> value = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">auto</span> ptr = &amp;value; <span class="comment">// ptr是一个指针，指向常量数据</span></span><br></pre></td></tr></table></figure>
-<p>在这个例子中，<code>value</code>是一个常量整数，<code>ptr</code>是一个指针，指向这个常量数据。注意，这里不需要显式地在<code>auto</code>前声明<code>ptr</code>的类型，因为编译器可以推导出<code>ptr</code>应该是<code>const int*</code>类型。</p>
+<p>在这个例子中，<code>value</code> 是一个常量整数，<code>ptr</code> 是一个指针，指向这个常量数据。注意，这里不需要显式地在 <code>auto</code> 前声明 <code>ptr</code> 的类型，因为编译器可以推导出 <code>ptr</code> 应该是 <code>const int*</code> 类型。</p>
 </li>
 <li>
 <p><strong>常量指针，指向非常量数据</strong>：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> value = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">auto</span> ptr = <span class="built_in">static_cast</span>&lt;<span class="type">const</span> <span class="type">int</span>*&gt;(&amp;value); <span class="comment">// ptr是一个常量指针，指向非常量数据</span></span><br></pre></td></tr></table></figure>
-<p>在这个例子中，<code>ptr</code>是一个常量指针，意味着你不能通过<code>ptr</code>来修改它所指向的地址。然而，<code>value</code>不是常量，所以你仍然可以通过<code>*ptr</code>来修改<code>value</code>的值。</p>
+<p>在这个例子中，<code>ptr</code> 是一个常量指针，意味着你不能通过 <code>ptr</code> 来修改它所指向的地址。然而，<code>value</code> 不是常量，所以你仍然可以通过 <code>*ptr</code> 来修改 <code>value</code> 的值。</p>
 </li>
 <li>
 <p><strong>常量指针，指向常量数据</strong>：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> value = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">auto</span> ptr = &amp;value; <span class="comment">// ptr是一个常量指针，指向常量数据</span></span><br></pre></td></tr></table></figure>
 <p>或者更明确地：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span> ptr = &amp;value; <span class="comment">// ptr是一个常量指针，指向常量数据</span></span><br></pre></td></tr></table></figure>
-<p>在这个例子中，<code>value</code>是一个常量整数，<code>ptr</code>是一个常量指针，指向这个常量数据。这意味着你既不能通过<code>ptr</code>来修改<code>value</code>的值，也不能改变<code>ptr</code>所指向的地址。</p>
+<p>在这个例子中，<code>value</code> 是一个常量整数，<code>ptr</code> 是一个常量指针，指向这个常量数据。这意味着你既不能通过 <code>ptr</code> 来修改 <code>value</code> 的值，也不能改变 <code>ptr</code> 所指向的地址。</p>
 </li>
 <li>
-<p><strong>使用auto推导const修饰的返回类型</strong>：</p>
+<p><strong>使用 auto 推导 const 修饰的返回类型</strong>：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">const</span> <span class="type">int</span>&amp; <span class="title">getConstRef</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> value = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">return</span> value; <span class="comment">// 返回对常量值的引用</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">auto</span> ref = <span class="built_in">getConstRef</span>(); <span class="comment">// ref将被推导为const int&amp;</span></span><br></pre></td></tr></table></figure>
-<p>在这个例子中，<code>getConstRef</code>函数返回一个对常量整数的引用。当你使用<code>auto</code>来接收这个返回值时，<code>ref</code>的类型将被推导为<code>const int&amp;</code>。</p>
+<p>在这个例子中，<code>getConstRef</code> 函数返回一个对常量整数的引用。当你使用 <code>auto</code> 来接收这个返回值时，<code>ref</code> 的类型将被推导为 <code>const int&amp;</code>。</p>
 </li>
 </ol>
-<p>通过这些示例，你可以看到<code>auto</code>和<code>const</code>可以灵活地结合使用，以满足你的编程需求。关键是要清楚你想要表达的意图：是想要一个指向常量数据的指针，还是一个常量指针，或者两者都是。</p>
+<p>通过这些示例，你可以看到 <code>auto</code> 和 <code>const</code> 可以灵活地结合使用，以满足你的编程需求。关键是要清楚你想要表达的意图：是想要一个指向常量数据的指针，还是一个常量指针，或者两者都是。</p>
 
   </div>
 </article>
@@ -247,7 +247,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#weak%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text"> weak指令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#auto%E5%92%8Cconst%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88"><span class="toc-number">2.</span> <span class="toc-text"> auto和const指针的结合</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#weak-%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text"> weak 指令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#auto-%E5%92%8C-const-%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88"><span class="toc-number">2.</span> <span class="toc-text"> auto 和 const 指针的结合</span></a></li></ol>
       </div>
     
 

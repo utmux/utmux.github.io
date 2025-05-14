@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：下雨	心情：一般  不该跑步的，跑完喉咙就发炎了，感觉耳朵又开始有点发炎了，耳膜炎都还没好。怎么说，为了消耗精力，我打算这周就不进行跑步这么剧烈的运动了，做一下仰卧起坐俯卧撑差不多了。  16.4 其他迭代器 除了之前提到的ostream_iterator和istream_iterator。头文件iterator提供了下面这几中迭代器类型：   reverse_iterator：该迭代器会默">
+    <meta name="description" content="天气：下雨 心情：一般  不该跑步的，跑完喉咙就发炎了，感觉耳朵又开始有点发炎了，耳膜炎都还没好。怎么说，为了消耗精力，我打算这周就不进行跑步这么剧烈的运动了，做一下仰卧起坐俯卧撑差不多了。  16.4 其他迭代器 除了之前提到的 ostream_iterator 和 istream_iterator。头文件 iterator 提供了下面这几中迭代器类型：   reverse_iterator：该">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习Cpp-38">
 <meta property="og:url" content="https://utmux.github.io/2024/06/10/life/%E5%AD%A6%E4%B9%A0Cpp-38/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：下雨	心情：一般  不该跑步的，跑完喉咙就发炎了，感觉耳朵又开始有点发炎了，耳膜炎都还没好。怎么说，为了消耗精力，我打算这周就不进行跑步这么剧烈的运动了，做一下仰卧起坐俯卧撑差不多了。  16.4 其他迭代器 除了之前提到的ostream_iterator和istream_iterator。头文件iterator提供了下面这几中迭代器类型：   reverse_iterator：该迭代器会默">
+<meta property="og:description" content="天气：下雨 心情：一般  不该跑步的，跑完喉咙就发炎了，感觉耳朵又开始有点发炎了，耳膜炎都还没好。怎么说，为了消耗精力，我打算这周就不进行跑步这么剧烈的运动了，做一下仰卧起坐俯卧撑差不多了。  16.4 其他迭代器 除了之前提到的 ostream_iterator 和 istream_iterator。头文件 iterator 提供了下面这几中迭代器类型：   reverse_iterator：该">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/14ff74adcb3f5e0793602d89616451d4.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/b92191a4aae0ee7593703467c432bf06.png">
@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/59c3a10888ebcfc099257877b4e07d9f.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/85d0b5ff4a4130300b1bacb4e661c401.png">
 <meta property="article:published_time" content="2024-06-10T14:02:26.000Z">
-<meta property="article:modified_time" content="2025-05-10T06:40:37.040Z">
+<meta property="article:modified_time" content="2025-05-14T08:51:35.892Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/14ff74adcb3f5e0793602d89616451d4.png">
@@ -135,7 +135,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#164-%E5%85%B6%E4%BB%96%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text"> 16.4 其他迭代器</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips-rbegin%E5%92%8Crend"><span class="toc-number">1.1.</span> <span class="toc-text"> Tips: rbegin()和rend()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E7%A7%8D%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text"> 容器种类</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E7%BC%96%E8%AF%91%E6%97%B6%E9%97%B4%E5%9B%BA%E5%AE%9A%E6%97%B6%E9%97%B4%E5%92%8C%E7%BA%BF%E6%80%A7%E6%97%B6%E9%97%B4"><span class="toc-number">2.1.</span> <span class="toc-text"> Tips:编译时间，固定时间和线性时间</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E5%A4%8D%E5%88%B6%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text"> tips：复制构造函数和移动构造函数</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BA%8F%E5%88%97"><span class="toc-number">3.</span> <span class="toc-text"> 序列</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.</span> <span class="toc-text"> 容器介绍</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#164-%E5%85%B6%E4%BB%96%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text"> 16.4 其他迭代器</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips-rbegin%E5%92%8C-rend"><span class="toc-number">1.1.</span> <span class="toc-text"> Tips: rbegin()和 rend()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E7%A7%8D%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text"> 容器种类</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips-%E7%BC%96%E8%AF%91%E6%97%B6%E9%97%B4%E5%9B%BA%E5%AE%9A%E6%97%B6%E9%97%B4%E5%92%8C%E7%BA%BF%E6%80%A7%E6%97%B6%E9%97%B4"><span class="toc-number">2.1.</span> <span class="toc-text"> Tips: 编译时间，固定时间和线性时间</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E5%A4%8D%E5%88%B6%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text"> tips：复制构造函数和移动构造函数</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BA%8F%E5%88%97"><span class="toc-number">3.</span> <span class="toc-text"> 序列</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.</span> <span class="toc-text"> 容器介绍</span></a></li></ol>
       </div>
     
   </span>
@@ -180,18 +180,18 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：下雨	心情：一般</p>
+    <p>天气：下雨 心情：一般</p>
 <hr />
 <p>不该跑步的，跑完喉咙就发炎了，感觉耳朵又开始有点发炎了，耳膜炎都还没好。怎么说，为了消耗精力，我打算这周就不进行跑步这么剧烈的运动了，做一下仰卧起坐俯卧撑差不多了。</p>
 <h5 id="164-其他迭代器"><a class="markdownIt-Anchor" href="#164-其他迭代器"></a> 16.4 其他迭代器</h5>
-<p>除了之前提到的ostream_iterator和istream_iterator。头文件iterator提供了下面这几中迭代器类型：</p>
+<p>除了之前提到的 ostream_iterator 和 istream_iterator。头文件 iterator 提供了下面这几中迭代器类型：</p>
 <ol>
 <li>
-<p>reverse_iterator：该迭代器会默认将递增将自增操作替换成自减操作，等于就是我们对原来的算法不用修改，只需要修改迭代器就能reverse输出，如下：</p>
+<p>reverse_iterator：该迭代器会默认将递增将自增操作替换成自减操作，等于就是我们对原来的算法不用修改，只需要修改迭代器就能 reverse 输出，如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正向打印</span></span><br><span class="line"><span class="function">ostream_iterator&lt;<span class="type">int</span>, <span class="type">char</span>&gt; <span class="title">out_iter</span><span class="params">(cout, <span class="string">&quot; &quot;</span>)</span></span>;</span><br><span class="line"><span class="built_in">copy</span>(dice.<span class="built_in">begin</span>(), dice.<span class="built_in">end</span>(), out_iter);</span><br><span class="line"><span class="comment">// 使用reverse_iterator就能反向打印，而不必去STL库文件修改算法，注意rbegin()和rend()即reverse begin</span></span><br><span class="line"><span class="built_in">copy</span>(dice.<span class="built_in">rbegin</span>(), dice.<span class="built_in">rend</span>(), out_iter);</span><br></pre></td></tr></table></figure>
-<h6 id="tips-rbegin和rend"><a class="markdownIt-Anchor" href="#tips-rbegin和rend"></a> Tips: rbegin()和rend()</h6>
-<p>rbegin()返回的是指向超尾的反向迭代器，rend()返回的是指向第一个元素的反向迭代器。值得注意的是rbegin()和end()返回的是同样的值，同样rend()和begin()返回的值也是一样，但是不同的是类型，前者返回的是一个<code>reverse_iterator</code>，而后者返回<code>iterator</code>。</p>
-<p>对于反向迭代器，我们需要有一个小修改，这是因为rbegin()指向的是最后一个元素的超尾，该地址是不应该被访问的，为了解决这个问题，<code>reverse_iterator</code>会默认将<code>*p++</code>（先访问在加）替换成<code>*--p</code>（先递减再访问）</p>
+<h6 id="tips-rbegin和-rend"><a class="markdownIt-Anchor" href="#tips-rbegin和-rend"></a> Tips: rbegin()和 rend()</h6>
+<p>rbegin()返回的是指向超尾的反向迭代器，rend()返回的是指向第一个元素的反向迭代器。值得注意的是 rbegin()和 end()返回的是同样的值，同样 rend()和 begin()返回的值也是一样，但是不同的是类型，前者返回的是一个 <code>reverse_iterator</code>，而后者返回 <code>iterator</code>。</p>
+<p>对于反向迭代器，我们需要有一个小修改，这是因为 rbegin()指向的是最后一个元素的超尾，该地址是不应该被访问的，为了解决这个问题，<code>reverse_iterator</code> 会默认将 <code>*p++</code>（先访问在加）替换成 <code>*--p</code>（先递减再访问）</p>
 </li>
 <li>
 <p>insert_iterator<br />
@@ -199,22 +199,22 @@ insert_iterator 将元素插入到 insert_iterator 构造函数的 参数指定�
 </li>
 <li>
 <p>back_insert_iterator</p>
-<p>back_insert_iterator 将元素插入到容器尾部，back_insert_iterator 只能用于<strong>允许在尾部快速插入的容器</strong>（快速插入指的是一个时间固定的算法）。该迭代器将会默认容器存在push_back()方法</p>
+<p>back_insert_iterator 将元素插入到容器尾部，back_insert_iterator 只能用于 <strong>允许在尾部快速插入的容器</strong>（快速插入指的是一个时间固定的算法）。该迭代器将会默认容器存在 push_back()方法</p>
 </li>
 <li>
 <p>front_insert_iterator<br />
-front_insert_iterator 将元素插入到容器的前端。front_insert_iterator只能用于允许在起始位置做时间固定插入的容器类型，vector 类不能满足这种要求，但 queue 满足。该迭代器将会默认容器存在push_front()方法</p>
+front_insert_iterator 将元素插入到容器的前端。front_insert_iterator 只能用于允许在起始位置做时间固定插入的容器类型，vector 类不能满足这种要求，但 queue 满足。该迭代器将会默认容器存在 push_front()方法</p>
 </li>
 </ol>
 <p>上面提到的三种插入迭代器（insert_iterator），使用时需要传入插入容器的类型，插入容器的标识符，如下所示：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">back_insert_iterator&lt;vector&lt;<span class="type">int</span>&gt; &gt; <span class="built_in">back_iter</span>(dice);</span><br></pre></td></tr></table></figure>
 <h5 id="容器种类"><a class="markdownIt-Anchor" href="#容器种类"></a> 容器种类</h5>
-<p>STL具有容器概念和容器类型。不能将任何类型的对象存储在容器中，具体地说，类型必须是可复制构造的和可赋值的。基本类型满足这些要求；只要类定义没有将复制构造函数和赋值运算符声明为私有或保护的，则也满足这种要求。C++11 改进了这些概念，添加了术语可复制插入（CopyInsertable）和可移动插入（MoveInsertable），但这里只进行简单的概述。</p>
-<p>基本容器不能保证其元素都按特定的顺序存储，也不能保证元素的顺序不变，但对概念进行改进后，则可以增加这样的保证。所有的容器都提供某些特征和操作。下表对容器一些<strong>通用特征</strong>进行了总结。其中，X 表示容器类型，如 vector；T 表示存储在容器中的对象类型；a 和 b 表示类型为 X 的值；r 表示类型为<code>X&amp;</code>的值；u 表示类型为 X 的标识符（即如果 X 表示 <code>vector&lt;int&gt;</code>，则 u 是一个 <code>vector&lt;int&gt;</code>对象）。<br />
+<p>STL 具有容器概念和容器类型。不能将任何类型的对象存储在容器中，具体地说，类型必须是可复制构造的和可赋值的。基本类型满足这些要求；只要类定义没有将复制构造函数和赋值运算符声明为私有或保护的，则也满足这种要求。C++11 改进了这些概念，添加了术语可复制插入（CopyInsertable）和可移动插入（MoveInsertable），但这里只进行简单的概述。</p>
+<p>基本容器不能保证其元素都按特定的顺序存储，也不能保证元素的顺序不变，但对概念进行改进后，则可以增加这样的保证。所有的容器都提供某些特征和操作。下表对容器一些 <strong>通用特征</strong> 进行了总结。其中，X 表示容器类型，如 vector；T 表示存储在容器中的对象类型；a 和 b 表示类型为 X 的值；r 表示类型为 <code>X&amp;</code> 的值；u 表示类型为 X 的标识符（即如果 X 表示 <code>vector&lt;int&gt;</code>，则 u 是一个 <code>vector&lt;int&gt;</code> 对象）。<br />
 <img src="https://raw.githubusercontent.com/utmux/pictures/main/img/14ff74adcb3f5e0793602d89616451d4.png" alt="image-20240610093128369" /></p>
-<h6 id="tips编译时间固定时间和线性时间"><a class="markdownIt-Anchor" href="#tips编译时间固定时间和线性时间"></a> Tips:编译时间，固定时间和线性时间</h6>
-<p>如果复杂度为编译时间，则操作将在编译时执行，执行时间为 0。固定复杂度意味着操作发生在运行阶段，但独立于对象中的元素数目。线性复杂度意味着时间与元素数目成正比。即如果 a 和 b 都是容器，则 a = = b 具有线性复杂度，因为= =操作必须用于容器中的每个元素。实际上，这是最糟糕的情况。如果两个容器的长度不同，则不需要作任何的单独比较。</p>
-<p>C++11 在上表上新增的通用容器要求。在这个表中，rv 表示类型为 X 的非常量右值，如函数的返回值。另外，在表中，要求 X::iterator 满足正向迭代器的要求，而以前只要求它不是输出迭代器。<br />
+<h6 id="tips-编译时间固定时间和线性时间"><a class="markdownIt-Anchor" href="#tips-编译时间固定时间和线性时间"></a> Tips: 编译时间，固定时间和线性时间</h6>
+<p>如果复杂度为编译时间，则操作将在编译时执行，执行时间为 0。固定复杂度意味着操作发生在运行阶段，但独立于对象中的元素数目。线性复杂度意味着时间与元素数目成正比。即如果 a 和 b 都是容器，则 a = = b 具有线性复杂度，因为 = = 操作必须用于容器中的每个元素。实际上，这是最糟糕的情况。如果两个容器的长度不同，则不需要作任何的单独比较。</p>
+<p>C++11 在上表上新增的通用容器要求。在这个表中，rv 表示类型为 X 的非常量右值，如函数的返回值。另外，在表中，要求 X:: iterator 满足正向迭代器的要求，而以前只要求它不是输出迭代器。<br />
 <img src="https://raw.githubusercontent.com/utmux/pictures/main/img/b92191a4aae0ee7593703467c432bf06.png" alt="image-20240610093626611" /></p>
 <h6 id="tips复制构造函数和移动构造函数"><a class="markdownIt-Anchor" href="#tips复制构造函数和移动构造函数"></a> tips：复制构造函数和移动构造函数</h6>
 <p>复制构造和复制赋值以及移动构造和移动赋值之间的差别在于，复制操作保留源对象，而移动操作可修改源对象，还可能转让所有权，而不做任何复制。如果源对象是临时的，移动操作的效率将高于常规复制。</p>
@@ -222,73 +222,73 @@ front_insert_iterator 将元素插入到容器的前端。front_insert_iterator�
 <p>如果容器要求数据必须按照某种顺序排列（比如队列必须从队头出队尾进），此时就需要序列约束（sequence）。序列还要求其元素按严格的线性顺序排列，而分支结构的数据不是线性的。因为序列中的元素具有确定的顺序，因此可以执行诸如将值插入到特定位置、删除特定区间等操作。下面是序列的必须要求和可选要求：<br />
 <img src="https://raw.githubusercontent.com/utmux/pictures/main/img/8833877961478f40812619c9486ca521.png" alt="image-20240610094345489" /><br />
 <img src="https://raw.githubusercontent.com/utmux/pictures/main/img/59c3a10888ebcfc099257877b4e07d9f.png" alt="image-20240610094354678" /><br />
-对上表的说明：a[n]<a target="_blank" rel="noopener" href="http://xn--a-re9a.at">和a.at</a>(n)的区别：如果n落在容器的有效区间外，<a target="_blank" rel="noopener" href="http://xn--a-xd8a.at">则a.at</a>(n)将执行边界检查，并引发out_of_range。为什么可选要求中有push_back这些，这是为了提高具体容器的具体效率，比如双向链表可以有push_front()这个方法，而队列就不可能有这个方法了。</p>
+对上表的说明：a [n] 和 <a target="_blank" rel="noopener" href="http://a.at">a.at</a>(n)的区别：如果 n 落在容器的有效区间外，则 <a target="_blank" rel="noopener" href="http://a.at">a.at</a>(n)将执行边界检查，并引发 out_of_range。为什么可选要求中有 push_back 这些，这是为了提高具体容器的具体效率，比如双向链表可以有 push_front()这个方法，而队列就不可能有这个方法了。</p>
 <h5 id="容器介绍"><a class="markdownIt-Anchor" href="#容器介绍"></a> 容器介绍</h5>
 <ol>
 <li>
 <p>vector<br />
-vector是可反转容器，存在两个方法rbegin()，rend()，除非其他类型有特殊优点能够更好满足程序要求，否则应该默认使用vector。</p>
+vector 是可反转容器，存在两个方法 rbegin()，rend()，除非其他类型有特殊优点能够更好满足程序要求，否则应该默认使用 vector。</p>
 </li>
 <li>
 <p>deque<br />
-双端队列，支持随机访问，与vector不同的是，vector中插入和删除是线性时间的，而deque对双端的开始位置的插入和删除是固定时间的。</p>
+双端队列，支持随机访问，与 vector 不同的是，vector 中插入和删除是线性时间的，而 deque 对双端的开始位置的插入和删除是固定时间的。</p>
 </li>
 <li>
 <p>list<br />
-线性序列，也是可反转容器，与vector不同的是，list不支持数组表示法和随机访问（<strong>因为list底层结构是双向链表</strong>），每次插入和删除都需要将后面的数据进行搬移，<strong>从容器中插入和删除数据，迭代器指向元素将不变</strong>（双向链表的特性而已）。下面是list的一些成员函数：<br />
+线性序列，也是可反转容器，与 vector 不同的是，list 不支持数组表示法和随机访问（<strong>因为 list 底层结构是双向链表</strong>），每次插入和删除都需要将后面的数据进行搬移，<strong>从容器中插入和删除数据，迭代器指向元素将不变</strong>（双向链表的特性而已）。下面是 list 的一些成员函数：<br />
 <img src="https://raw.githubusercontent.com/utmux/pictures/main/img/85d0b5ff4a4130300b1bacb4e661c401.png" alt="image-20240610152818863" /><br />
-即上面的splice将x的内容<strong>移动</strong>到pos前面，x中的内容将会被清空，而insert将内容复制到指定位置，unique()只能将相邻的值压缩为单个值，我们可以先sort再unique，此时保证每个值唯一。<br />
-sort()，merge()，unique()，remove()还能<strong>传入一个函数</strong>，来判断某个值是否应该被执行操作，传入的函数应该是谓词函数（返回值为bool的一元函数)</p>
+即上面的 splice 将 x 的内容 <strong>移动</strong> 到 pos 前面，x 中的内容将会被清空，而 insert 将内容复制到指定位置，unique()只能将相邻的值压缩为单个值，我们可以先 sort 再 unique，此时保证每个值唯一。<br />
+sort()，merge()，unique()，remove()还能 <strong>传入一个函数</strong>，来判断某个值是否应该被执行操作，传入的函数应该是谓词函数（返回值为 bool 的一元函数)</p>
 </li>
 <li>
 <p>forward_list<br />
-单项链表，forward_list不可反转，相比双向列表list更加简单，功能也更少。</p>
+单项链表，forward_list 不可反转，相比双向列表 list 更加简单，功能也更少。</p>
 </li>
 <li>
 <p>queue<br />
-单向对内，默认底层是dequeue（双向队列），可以更改（C++20新增）。相比dequeue，不允许随机访问队列元素，甚至不允许遍历队列，操作只限制在最基本的队列操作上：队尾添加元素，队首删除元素，查看队尾，查看队首，检查元素数目，测试队列是否为空。</p>
+单向对内，默认底层是 dequeue（双向队列），可以更改（C++20 新增）。相比 dequeue，不允许随机访问队列元素，甚至不允许遍历队列，操作只限制在最基本的队列操作上：队尾添加元素，队首删除元素，查看队尾，查看队首，检查元素数目，测试队列是否为空。</p>
 </li>
 <li>
 <p>priority_queue<br />
-支持操作和上面的queue一样，只不过会保持最大的元素总是在队首，和queue的区别是底层是vector，而queue的底层为dequeue。我们可以修改哪个元素放到队首的比较方式，如下：</p>
+支持操作和上面的 queue 一样，只不过会保持最大的元素总是在队首，和 queue 的区别是底层是 vector，而 queue 的底层为 dequeue。我们可以修改哪个元素放到队首的比较方式，如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">priority_queue&lt;<span class="type">int</span>&gt; pq1; <span class="comment">// 默认比较函数</span></span><br><span class="line"><span class="function">priority_queue&lt;<span class="type">int</span>&gt; <span class="title">pq2</span><span class="params">(greater&lt;<span class="type">int</span>&gt;)</span></span>; <span class="comment">// 使用greater&lt;int&gt;来比较，greater&lt;&gt;()函数是一个预定义的函数对象</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>stack<br />
-和queue类似，在头文件stack中声明，也是一个适配类adapter，stack只提供典型的栈接口，不允许随机访问，不允许遍历栈，只有入栈，出栈，查看栈顶的值，检查元素数目和检查栈是否为空。</p>
+和 queue 类似，在头文件 stack 中声明，也是一个适配类 adapter，stack 只提供典型的栈接口，不允许随机访问，不允许遍历栈，只有入栈，出栈，查看栈顶的值，检查元素数目和检查栈是否为空。</p>
 </li>
 <li>
 <p>array(C++)<br />
-array在头文件array中定义，并非STL容器，因为其长度是固定的，因此array没有定义调整容器大小的操作（如insert和push_back），但是定义了成员函数operator[]和at()，并且适配了STL算法，使得<strong>很多STL算法可以用于array对象（copy()和foreach()等）</strong></p>
+array 在头文件 array 中定义，并非 STL 容器，因为其长度是固定的，因此 array 没有定义调整容器大小的操作（如 insert 和 push_back），但是定义了成员函数 operator [] 和 at()，并且适配了 STL 算法，使得 <strong>很多 STL 算法可以用于 array 对象（copy()和 foreach()等）</strong></p>
 </li>
 </ol>
-<p>下面介绍一些关联容器（associative container），将值和键关联到一起（类似于python的dict？）。上面的容器中，对于容器X，<code>X::value_type</code>表示存储在容器中的值类型。而对于关联容器<code>X::key_type</code>指出了键的类型。关联容器的优点在于，它<strong>提供了对元素的快速访问</strong>。与序列相似，关联容器也允许插入新元素，但<strong>不能指定元素的插入位置</strong>。原因是关联容器通常有用于确定数据放置位置的算法，以便能够快速检索信息。关联容器通常是使用某种树实现的，树的查找速度更快。</p>
+<p>下面介绍一些关联容器（associative container），将值和键关联到一起（类似于 Python 的 dict？）。上面的容器中，对于容器 X，<code>X::value_type</code> 表示存储在容器中的值类型。而对于关联容器 <code>X::key_type</code> 指出了键的类型。关联容器的优点在于，它 <strong>提供了对元素的快速访问</strong>。与序列相似，关联容器也允许插入新元素，但 <strong>不能指定元素的插入位置</strong>。原因是关联容器通常有用于确定数据放置位置的算法，以便能够快速检索信息。关联容器通常是使用某种树实现的，树的查找速度更快。</p>
 <ol>
 <li>
 <p>set<br />
-set在头文件set中，set的键是唯一的，且要求<strong>值和键类型一致</strong>。set也是使用模板参数来指定存储的值的类型如下：</p>
+set 在头文件 set 中，set 的键是唯一的，且要求 <strong>值和键类型一致</strong>。set 也是使用模板参数来指定存储的值的类型如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set&lt;string&gt; A; <span class="comment">// string类型的set</span></span><br></pre></td></tr></table></figure>
-<p>set可以设置比较函数或者对象，默认其使用模板less&lt;&gt;，如下：</p>
+<p>set 可以设置比较函数或者对象，默认其使用模板 less &lt;&gt;，如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set&lt;string, less&lt;string&gt;&gt; A; <span class="comment">//和上面的表达式等价 </span></span><br></pre></td></tr></table></figure>
-<p>set可以使用迭代区间初始化，初始化时set将会进行排序并去掉重复项，如下：</p>
+<p>set 可以使用迭代区间初始化，初始化时 set 将会进行排序并去掉重复项，如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">string s1[<span class="number">4</span>] = &#123;<span class="string">&quot;buffoon&quot;</span>, <span class="string">&quot;thinkers&quot;</span>, <span class="string">&quot;for&quot;</span>, <span class="string">&quot;for&quot;</span>&#125;;</span><br><span class="line">set &lt;string&gt; <span class="built_in">A</span>(s1, s1 + <span class="number">4</span>);</span><br><span class="line"><span class="comment">// set初始化时将会进行排序，并去掉重复项for</span></span><br></pre></td></tr></table></figure>
 <p>集合支持交集和并集等数学操作（这些操作是通用函数，也就是说只要满足使用这些算法的先决条件--即容器经过排序，也能够使用），如下所示：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 并集，最后一个参数是输出的迭代器</span></span><br><span class="line"><span class="built_in">set_union</span>(A.<span class="built_in">begin</span>(), A.<span class="built_in">end</span>(), B.<span class="built_in">begin</span>(), B.<span class="built_in">end</span>(), ostream_iterator&lt;string, <span class="type">char</span>&gt; <span class="built_in">out</span>(cout, <span class="string">&quot; &quot;</span>));</span><br></pre></td></tr></table></figure>
-<p>值得注意的是，如果我们想将A和B的并集/交集输出到另一个容器C中，我们不能传入C.begin()作为最后一个参数，原因如下：</p>
+<p>值得注意的是，如果我们想将 A 和 B 的并集/交集输出到另一个容器 C 中，我们不能传入 C.begin()作为最后一个参数，原因如下：</p>
 <ol>
 <li>C.begin()返回的是常量迭代器，不能用作输出迭代器，即没有写入权限。</li>
-<li>set_union输出的方式是覆盖输出，因此C中的数据将会从头覆盖，并要求C有足量的空间。</li>
+<li>set_union 输出的方式是覆盖输出，因此 C 中的数据将会从头覆盖，并要求 C 有足量的空间。</li>
 </ol>
-<p>我们可以传入insert_iterator来解决这个问题如下：</p>
+<p>我们可以传入 insert_iterator 来解决这个问题如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 并集，最后一个参数是匿名的insert_iterator</span></span><br><span class="line"><span class="built_in">set_union</span>(A.<span class="built_in">begin</span>(), A.<span class="built_in">end</span>(), B.<span class="built_in">begin</span>(), B.<span class="built_in">end</span>(), insert_iterator&lt;set&lt;string&gt;&gt;(C, C.<span class="built_in">begin</span>());</span><br></pre></td></tr></table></figure>
-<p>除了上面展示的并集<code>set_union</code>，还有<code>set_intersection</code>交集，<code>set_difference()</code>集合差，参数和上面相同。</p>
-<p>两个有用的set方法：lower_bound()和uppper_bound()。前者将键作为参数返回一个迭代器，该迭代器指向集合中第一个不小于键参数的成员。后者返回集合中第一个大于键参数的成员。我们可以用这两个参数捕获满足要求的set区间。</p>
-<p>set作为关联方法，其插入不需要指定插入位置，如下：</p>
+<p>除了上面展示的并集 <code>set_union</code>，还有 <code>set_intersection</code> 交集，<code>set_difference()</code> 集合差，参数和上面相同。</p>
+<p>两个有用的 set 方法：lower_bound()和 uppper_bound()。前者将键作为参数返回一个迭代器，该迭代器指向集合中第一个不小于键参数的成员。后者返回集合中第一个大于键参数的成员。我们可以用这两个参数捕获满足要求的 set 区间。</p>
+<p>set 作为关联方法，其插入不需要指定插入位置，如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">string <span class="title">s</span><span class="params">(<span class="string">&quot;tennis&quot;</span>)</span></span>;</span><br><span class="line">A.<span class="built_in">insert</span>(s); <span class="comment">// 插入一个值</span></span><br><span class="line">B.<span class="built_in">insert</span>(A.<span class="built_in">begin</span>(), A.<span class="built_in">end</span>()); <span class="comment">// 插入一个范围区间</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>multiset<br />
-multiset在头文件set中，multiset允许多个值的键相同，比如如果键和值的类型都为int，则multiset的内容可以是1，2，2，2，3，5，7，7。</p>
+multiset 在头文件 set 中，multiset 允许多个值的键相同，比如如果键和值的类型都为 int，则 multiset 的内容可以是 1，2，2，2，3，5，7，7。</p>
 </li>
 </ol>
 
@@ -320,7 +320,7 @@ multiset在头文件set中，multiset允许多个值的键相同，比如如果�
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#164-%E5%85%B6%E4%BB%96%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text"> 16.4 其他迭代器</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips-rbegin%E5%92%8Crend"><span class="toc-number">1.1.</span> <span class="toc-text"> Tips: rbegin()和rend()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E7%A7%8D%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text"> 容器种类</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E7%BC%96%E8%AF%91%E6%97%B6%E9%97%B4%E5%9B%BA%E5%AE%9A%E6%97%B6%E9%97%B4%E5%92%8C%E7%BA%BF%E6%80%A7%E6%97%B6%E9%97%B4"><span class="toc-number">2.1.</span> <span class="toc-text"> Tips:编译时间，固定时间和线性时间</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E5%A4%8D%E5%88%B6%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text"> tips：复制构造函数和移动构造函数</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BA%8F%E5%88%97"><span class="toc-number">3.</span> <span class="toc-text"> 序列</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.</span> <span class="toc-text"> 容器介绍</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#164-%E5%85%B6%E4%BB%96%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text"> 16.4 其他迭代器</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips-rbegin%E5%92%8C-rend"><span class="toc-number">1.1.</span> <span class="toc-text"> Tips: rbegin()和 rend()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E7%A7%8D%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text"> 容器种类</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips-%E7%BC%96%E8%AF%91%E6%97%B6%E9%97%B4%E5%9B%BA%E5%AE%9A%E6%97%B6%E9%97%B4%E5%92%8C%E7%BA%BF%E6%80%A7%E6%97%B6%E9%97%B4"><span class="toc-number">2.1.</span> <span class="toc-text"> Tips: 编译时间，固定时间和线性时间</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E5%A4%8D%E5%88%B6%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text"> tips：复制构造函数和移动构造函数</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BA%8F%E5%88%97"><span class="toc-number">3.</span> <span class="toc-text"> 序列</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.</span> <span class="toc-text"> 容器介绍</span></a></li></ol>
       </div>
     
 

@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：阴雨	心情：差   类中的const成员初始化 我们总结一下类的const与static，首先是C++中的模板中是不允许使用const的，原因是const变量会在声明的时候定义占用内存，而模板中需要先替换才行。 其次是static const和const的不同，const变量属于每个具体的类，仅能由它访问，且存储和其他成员变量，只是在初始化的时候需要在构造函数这样： 1234Classx::">
+    <meta name="description" content="天气：阴雨 心情：差   类中的 const 成员初始化 我们总结一下类的 const 与 static，首先是 C++中的模板中是不允许使用 const 的，原因是 const 变量会在声明的时候定义占用内存，而模板中需要先替换才行。 其次是 static const 和 const 的不同，const 变量属于每个具体的类，仅能由它访问，且存储和其他成员变量，只是在初始化的时候需要在构造函数这">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习Cpp-23">
 <meta property="og:url" content="https://utmux.github.io/2024/04/12/life/%E5%AD%A6%E4%B9%A0Cpp-23/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：阴雨	心情：差   类中的const成员初始化 我们总结一下类的const与static，首先是C++中的模板中是不允许使用const的，原因是const变量会在声明的时候定义占用内存，而模板中需要先替换才行。 其次是static const和const的不同，const变量属于每个具体的类，仅能由它访问，且存储和其他成员变量，只是在初始化的时候需要在构造函数这样： 1234Classx::">
+<meta property="og:description" content="天气：阴雨 心情：差   类中的 const 成员初始化 我们总结一下类的 const 与 static，首先是 C++中的模板中是不允许使用 const 的，原因是 const 变量会在声明的时候定义占用内存，而模板中需要先替换才行。 其次是 static const 和 const 的不同，const 变量属于每个具体的类，仅能由它访问，且存储和其他成员变量，只是在初始化的时候需要在构造函数这">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-12T12:40:26.000Z">
-<meta property="article:modified_time" content="2024-04-23T11:36:29.795Z">
+<meta property="article:modified_time" content="2025-05-14T08:48:54.135Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -129,7 +129,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E4%B8%AD%E7%9A%84const%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text"> 类中的const成员初始化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E5%92%8C%E5%BC%95%E7%94%A8%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text"> const成员变量和引用成员变量的初始化</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E4%B8%AD%E7%9A%84-const-%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text"> 类中的 const 成员初始化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const-%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E5%92%8C%E5%BC%95%E7%94%A8%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text"> const 成员变量和引用成员变量的初始化</span></a></li></ol>
       </div>
     
   </span>
@@ -174,15 +174,15 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：阴雨	心情：差</p>
+    <p>天气：阴雨 心情：差</p>
 <hr />
-<h5 id="类中的const成员初始化"><a class="markdownIt-Anchor" href="#类中的const成员初始化"></a> 类中的const成员初始化</h5>
-<p>我们总结一下类的const与static，首先是C++中的模板中是不允许使用const的，原因是const变量会在声明的时候定义占用内存，而模板中需要先替换才行。</p>
-<p>其次是static const和const的不同，const变量属于每个具体的类，仅能由它访问，且存储和其他成员变量，只是在初始化的时候需要在构造函数这样：</p>
+<h5 id="类中的-const-成员初始化"><a class="markdownIt-Anchor" href="#类中的-const-成员初始化"></a> 类中的 const 成员初始化</h5>
+<p>我们总结一下类的 const 与 static，首先是 C++中的模板中是不允许使用 const 的，原因是 const 变量会在声明的时候定义占用内存，而模板中需要先替换才行。</p>
+<p>其次是 static const 和 const 的不同，const 变量属于每个具体的类，仅能由它访问，且存储和其他成员变量，只是在初始化的时候需要在构造函数这样：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Classx::<span class="built_in">Classx</span>(<span class="type">int</span> n):<span class="built_in">const_int</span> (<span class="number">1</span>+n) <span class="comment">// 初始化</span></span><br><span class="line">&#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>而对于static const，其可以看作static变量，和上面的const变量大有不同，其初始化和static变量一致（应该是）。</p>
-<h5 id="const成员变量和引用成员变量的初始化"><a class="markdownIt-Anchor" href="#const成员变量和引用成员变量的初始化"></a> const成员变量和引用成员变量的初始化</h5>
-<p>对于const成员变量和引用成员变量，如下所示，其初始化代码：</p>
+<p>而对于 static const，其可以看作 static 变量，和上面的 const 变量大有不同，其初始化和 static 变量一致（应该是）。</p>
+<h5 id="const-成员变量和引用成员变量的初始化"><a class="markdownIt-Anchor" href="#const-成员变量和引用成员变量的初始化"></a> const 成员变量和引用成员变量的初始化</h5>
+<p>对于 const 成员变量和引用成员变量，如下所示，其初始化代码：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Classy::<span class="built_in">Classy</span>(<span class="type">int</span> n, <span class="type">int</span> m): <span class="built_in">int_const</span>(n), <span class="built_in">refer_int</span>(m)</span><br><span class="line">&#123;...&#125;</span><br></pre></td></tr></table></figure>
 <p>从概念上说，这些初始化工作是在对象创建时完成的，此时还未执行括号中的任何代码。请注意以下几点：</p>
 <ul>
@@ -222,7 +222,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E4%B8%AD%E7%9A%84const%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text"> 类中的const成员初始化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E5%92%8C%E5%BC%95%E7%94%A8%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text"> const成员变量和引用成员变量的初始化</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E4%B8%AD%E7%9A%84-const-%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text"> 类中的 const 成员初始化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const-%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E5%92%8C%E5%BC%95%E7%94%A8%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text"> const 成员变量和引用成员变量的初始化</span></a></li></ol>
       </div>
     
 

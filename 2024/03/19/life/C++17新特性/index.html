@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：晴天	心情：还好  下面是我读到关于C++14中模板具体化实例的特性联想到了C++17的新特性，问chatgpt得到的回答如下，作为一个mark，未来没准会用到。 C++17 相比于 C++14 引入了许多新特性和改进，这些变化旨在提高语言的性能、功能和易用性。以下是一些主要的改变和新增特性：   结构化绑定（Structured Bindings）: C++17 引入了结构化绑定，允许从数">
+    <meta name="description" content="天气：晴天 心情：还好  下面是我读到关于 C++14 中模板具体化实例的特性联想到了 C++17 的新特性，问 chatgpt 得到的回答如下，作为一个 mark，未来没准会用到。 C++17 相比于 C++14 引入了许多新特性和改进，这些变化旨在提高语言的性能、功能和易用性。以下是一些主要的改变和新增特性：   结构化绑定（Structured Bindings）: C++17 引入了结构化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++17新特性">
 <meta property="og:url" content="https://utmux.github.io/2024/03/19/life/C++17%E6%96%B0%E7%89%B9%E6%80%A7/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：晴天	心情：还好  下面是我读到关于C++14中模板具体化实例的特性联想到了C++17的新特性，问chatgpt得到的回答如下，作为一个mark，未来没准会用到。 C++17 相比于 C++14 引入了许多新特性和改进，这些变化旨在提高语言的性能、功能和易用性。以下是一些主要的改变和新增特性：   结构化绑定（Structured Bindings）: C++17 引入了结构化绑定，允许从数">
+<meta property="og:description" content="天气：晴天 心情：还好  下面是我读到关于 C++14 中模板具体化实例的特性联想到了 C++17 的新特性，问 chatgpt 得到的回答如下，作为一个 mark，未来没准会用到。 C++17 相比于 C++14 引入了许多新特性和改进，这些变化旨在提高语言的性能、功能和易用性。以下是一些主要的改变和新增特性：   结构化绑定（Structured Bindings）: C++17 引入了结构化">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-19T14:05:26.000Z">
-<meta property="article:modified_time" content="2024-03-19T13:27:25.686Z">
+<meta property="article:modified_time" content="2025-05-14T08:39:19.105Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -170,9 +170,9 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：晴天	心情：还好</p>
+    <p>天气：晴天 心情：还好</p>
 <hr />
-<p>下面是我读到关于C++14中模板具体化实例的特性联想到了C++17的新特性，问chatgpt得到的回答如下，作为一个mark，未来没准会用到。</p>
+<p>下面是我读到关于 C++14 中模板具体化实例的特性联想到了 C++17 的新特性，问 chatgpt 得到的回答如下，作为一个 mark，未来没准会用到。</p>
 <p>C++17 相比于 C++14 引入了许多新特性和改进，这些变化旨在提高语言的性能、功能和易用性。以下是一些主要的改变和新增特性：</p>
 <ol>
 <li>
@@ -191,17 +191,17 @@ C++17 允许在头文件中定义内联变量，这意味着它们可以在多�
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> value = <span class="number">42</span>; <span class="comment">// 可以在多个文件中使用</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p>*<em>lambda 捕获 <strong>this</strong> (包括 <em><strong>this</strong>)</em></em>:<br />
+<p><strong>lambda 捕获 ** this ** (包括 ** <em>this</em> *)</strong>:<br />
 C++17 允许 lambda 表达式捕获 <strong>this</strong> 指针，这使得 lambda 可以访问成员对象和成员函数。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> lambda = [*<span class="keyword">this</span>]()&#123; <span class="comment">/* 访问成员变量和函数 */</span> &#125;;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p><strong>auto 关键字的改进</strong>:<br />
-C++17 修改了 auto 关键字的推导规则，特别是对于直接列表初始化。现在，如果花括号中只有一个元素，auto 将推导为该元素的类型，而不是 std::initializer_list。</p>
+C++17 修改了 auto 关键字的推导规则，特别是对于直接列表初始化。现在，如果花括号中只有一个元素，auto 将推导为该元素的类型，而不是 std:: initializer_list。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> x&#123;<span class="number">1</span>&#125;; <span class="comment">// x 被推导为 int，而不是 std::initializer_list&lt;int&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p><strong>std::filesystem</strong>:<br />
+<p><strong>std:: filesystem</strong>:<br />
 C++17 引入了一个新的标准库，提供了跨平台的文件系统操作接口。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;filesystem&gt;</span></span></span><br><span class="line">std::filesystem::path p = <span class="string">&quot;/path/to/file&quot;</span>;</span><br></pre></td></tr></table></figure>
 </li>
@@ -211,12 +211,12 @@ C++17 扩展了标准库算法，允许它们并行执行，以利用多核处�
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line">std::for_each(std::execution::par, c.<span class="built_in">begin</span>(), c.<span class="built_in">end</span>(), func);</span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p><strong>std::optional 和 std::variant</strong>:<br />
+<p><strong>std:: optional 和 std:: variant</strong>:<br />
 这两个模板类提供了更安全和灵活的方式来表示可选值和多种可能类型的值。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;optional&gt;</span></span></span><br><span class="line">std::optional&lt;<span class="type">int</span>&gt; opt = std::<span class="built_in">make_optional</span>(<span class="number">42</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;variant&gt;</span></span></span><br><span class="line">std::variant&lt;<span class="type">int</span>, std::string&gt; var = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p><strong>std::any</strong>:<br />
+<p><strong>std:: any</strong>:<br />
 这是一个可以存储任何类型的容器，类似于 C 语言中的 void*，但更加安全和方便。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;any&gt;</span></span></span><br><span class="line">std::any a = <span class="number">42</span>; <span class="comment">// 存储 int</span></span><br><span class="line">a = <span class="string">&quot;hello&quot;</span>; <span class="comment">// 现在存储 std::string</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -226,12 +226,12 @@ C++17 允许在 if 语句中声明局部变量，这些变量的作用域仅限�
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">auto</span> it = m.<span class="built_in">find</span>(<span class="number">10</span>); it != m.<span class="built_in">end</span>()) &#123;</span><br><span class="line">    <span class="comment">// 使用 it</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p><strong>std::shared_mutex 和 std::shared_lock</strong>:<br />
+<p><strong>std:: shared_mutex 和 std:: shared_lock</strong>:<br />
 这些新的同步原语提供了读写锁的功能，适用于读多写少的场景，提高了并发性能。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;shared_mutex&gt;</span></span></span><br><span class="line">std::shared_mutex m;</span><br><span class="line"><span class="function">std::shared_lock&lt;std::shared_mutex&gt; <span class="title">lock</span><span class="params">(m)</span></span>;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p><strong>std::string_view</strong>:<br />
+<p><strong>std:: string_view</strong>:<br />
 这是一个非拥有的字符串视图，允许访问字符串数据而不进行复制。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string_view&gt;</span></span></span><br><span class="line">std::string_view sv = <span class="string">&quot;Hello, World!&quot;</span>;</span><br></pre></td></tr></table></figure>
 </li>

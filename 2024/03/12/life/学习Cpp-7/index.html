@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：晴天	心情：好  虽然师兄说的是只看前八章节的语法就足够了，但是我觉的后几章节才是重点啊。难不成我是理解错了，前几章需要快速扫完。后几章节才是重中之重，我宣布我是个傻逼，浪费时间看前面。明天就能看完第七和第八章节。再接再厉，后天把第九和第十章节搞完。一共大概十六个章节, 加油一鼓作气, 感觉其实也没有多少, 加油加油!!!! 找工作就要比考研还要努力还要卷。 今天的雷达实验课出乎意料，我是第">
+    <meta name="description" content="天气：晴天 心情：好  虽然师兄说的是只看前八章节的语法就足够了，但是我觉的后几章节才是重点啊。难不成我是理解错了，前几章需要快速扫完。后几章节才是重中之重，我宣布我是个傻逼，浪费时间看前面。明天就能看完第七和第八章节。再接再厉，后天把第九和第十章节搞完。一共大概十六个章节, 加油一鼓作气, 感觉其实也没有多少, 加油加油!!!! 找工作就要比考研还要努力还要卷。 今天的雷达实验课出乎意料，我是第">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习Cpp-7">
 <meta property="og:url" content="https://utmux.github.io/2024/03/12/life/%E5%AD%A6%E4%B9%A0Cpp-7/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：晴天	心情：好  虽然师兄说的是只看前八章节的语法就足够了，但是我觉的后几章节才是重点啊。难不成我是理解错了，前几章需要快速扫完。后几章节才是重中之重，我宣布我是个傻逼，浪费时间看前面。明天就能看完第七和第八章节。再接再厉，后天把第九和第十章节搞完。一共大概十六个章节, 加油一鼓作气, 感觉其实也没有多少, 加油加油!!!! 找工作就要比考研还要努力还要卷。 今天的雷达实验课出乎意料，我是第">
+<meta property="og:description" content="天气：晴天 心情：好  虽然师兄说的是只看前八章节的语法就足够了，但是我觉的后几章节才是重点啊。难不成我是理解错了，前几章需要快速扫完。后几章节才是重中之重，我宣布我是个傻逼，浪费时间看前面。明天就能看完第七和第八章节。再接再厉，后天把第九和第十章节搞完。一共大概十六个章节, 加油一鼓作气, 感觉其实也没有多少, 加油加油!!!! 找工作就要比考研还要努力还要卷。 今天的雷达实验课出乎意料，我是第">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-12T14:11:26.000Z">
-<meta property="article:modified_time" content="2024-03-12T14:18:12.700Z">
+<meta property="article:modified_time" content="2025-05-14T08:46:30.236Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -129,7 +129,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84cin%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text"> 常见的cin使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cinget%E5%92%8Ccingetch%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">2.</span> <span class="toc-text"> cin.get()和cin.get(ch)的比较</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E5%B8%B8%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84"><span class="toc-number">3.</span> <span class="toc-text"> C++常用字符串数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text"> 总结：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const%E5%92%8C%E6%8C%87%E9%92%88%E7%BB%84%E5%90%88%E7%9A%84%E8%BF%B7%E6%83%91"><span class="toc-number">5.</span> <span class="toc-text"> const和指针组合的迷惑</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%8D%E4%B9%A0%E4%B8%80%E4%B8%8Bgetline%E5%92%8Ccingetline%E5%92%8Ccin%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">6.</span> <span class="toc-text"> 复习一下getline和cin.getline和cin重定向</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips-%E7%BC%96%E7%A8%8B%E5%B0%8F%E4%B9%A0%E6%83%AF"><span class="toc-number">7.</span> <span class="toc-text"> Tips 编程小习惯</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cctypes%E5%BA%93"><span class="toc-number">8.</span> <span class="toc-text"> cctypes库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cin%E7%9A%84%E8%BE%93%E5%85%A5%E5%92%8C%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%8C%B9%E9%85%8D%E6%97%B6"><span class="toc-number">9.</span> <span class="toc-text"> cin的输入和对象的类型不匹配时</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84-cin-%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text"> 常见的 cin 使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cinget%E5%92%8C-cingetch%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">2.</span> <span class="toc-text"> cin.get()和 cin.get(ch)的比较</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E5%B8%B8%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84"><span class="toc-number">3.</span> <span class="toc-text"> C++常用字符串数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text"> 总结</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const-%E5%92%8C%E6%8C%87%E9%92%88%E7%BB%84%E5%90%88%E7%9A%84%E8%BF%B7%E6%83%91"><span class="toc-number">5.</span> <span class="toc-text"> const 和指针组合的迷惑</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%8D%E4%B9%A0%E4%B8%80%E4%B8%8B-getline-%E5%92%8C-cingetline-%E5%92%8C-cin-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">6.</span> <span class="toc-text"> 复习一下 getline 和 cin.getline 和 cin 重定向</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips-%E7%BC%96%E7%A8%8B%E5%B0%8F%E4%B9%A0%E6%83%AF"><span class="toc-number">7.</span> <span class="toc-text"> Tips 编程小习惯</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cctypes-%E5%BA%93"><span class="toc-number">8.</span> <span class="toc-text"> cctypes 库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cin-%E7%9A%84%E8%BE%93%E5%85%A5%E5%92%8C%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%8C%B9%E9%85%8D%E6%97%B6"><span class="toc-number">9.</span> <span class="toc-text"> cin 的输入和对象的类型不匹配时</span></a></li></ol>
       </div>
     
   </span>
@@ -174,22 +174,22 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：晴天	心情：好</p>
+    <p>天气：晴天 心情：好</p>
 <hr />
 <p>虽然师兄说的是只看前八章节的语法就足够了，但是我觉的后几章节才是重点啊。难不成我是理解错了，前几章需要快速扫完。后几章节才是重中之重，我宣布我是个傻逼，浪费时间看前面。明天就能看完第七和第八章节。再接再厉，后天把第九和第十章节搞完。一共大概十六个章节, 加油一鼓作气, 感觉其实也没有多少, 加油加油!!!!</p>
 <p>找工作就要比考研还要努力还要卷。</p>
 <p>今天的雷达实验课出乎意料，我是第一个做完的，以后还是要多去锻炼一下身体。</p>
-<h5 id="常见的cin使用"><a class="markdownIt-Anchor" href="#常见的cin使用"></a> 常见的cin使用</h5>
+<h5 id="常见的-cin-使用"><a class="markdownIt-Anchor" href="#常见的-cin-使用"></a> 常见的 cin 使用</h5>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(cin) <span class="comment">// 相比cin.fail()或者cin.eof()更加通用</span></span><br></pre></td></tr></table></figure>
-<p>这比<code>! cin.fail( )</code>或<code>!cin.eof( )</code>更通用，因为它可以检测到其他失败原因，如磁盘故障。<br />
-这里cin虽然是一个istream类，但是其在类中定义了转为bool的转换函数，该转化函数会根据是否正常接受到输入来转化为bool值。</p>
-<h5 id="cinget和cingetch的比较"><a class="markdownIt-Anchor" href="#cinget和cingetch的比较"></a> cin.get()和cin.get(ch)的比较</h5>
+<p>这比 <code>! cin.fail( )</code> 或 <code>!cin.eof( )</code> 更通用，因为它可以检测到其他失败原因，如磁盘故障。<br />
+这里 cin 虽然是一个 istream 类，但是其在类中定义了转为 bool 的转换函数，该转化函数会根据是否正常接受到输入来转化为 bool 值。</p>
+<h5 id="cinget和-cingetch的比较"><a class="markdownIt-Anchor" href="#cinget和-cingetch的比较"></a> cin.get()和 cin.get(ch)的比较</h5>
 <table>
 <thead>
 <tr>
 <th style="text-align:center">属性</th>
 <th style="text-align:center">cin.get(ch)</th>
-<th style="text-align:center">ch=cin.get()</th>
+<th style="text-align:center">ch = cin.get()</th>
 </tr>
 </thead>
 <tbody>
@@ -213,33 +213,33 @@
 <p>对于将多个字符串拼接可以通过</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cin.<span class="built_in">get</span>(ch1).<span class="built_in">get</span>(ch2);</span><br></pre></td></tr></table></figure>
 <h5 id="c常用字符串数组"><a class="markdownIt-Anchor" href="#c常用字符串数组"></a> C++常用字符串数组</h5>
-<p>如下所示，将下面这个指针数组初始化为5个字符串的地址。</p>
+<p>如下所示，将下面这个指针数组初始化为 5 个字符串的地址。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">char</span> * cities[<span class="number">5</span>] = </span><br><span class="line">&#123;</span><br><span class="line">	<span class="string">&quot;Shanghai&quot;</span>,</span><br><span class="line">	<span class="string">&quot;Chengdu&quot;</span>,</span><br><span class="line">	<span class="string">&quot;Beijing&quot;</span>,</span><br><span class="line">	<span class="string">&quot;Chengzhou&quot;</span>,</span><br><span class="line">	<span class="string">&quot;Tianjin&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>除此之外，还有string数组</p>
+<p>除此之外，还有 string 数组</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> string cities[<span class="number">5</span>] = </span><br><span class="line">&#123;</span><br><span class="line">	<span class="string">&quot;Shanghai&quot;</span>,</span><br><span class="line">	<span class="string">&quot;Chengdu&quot;</span>,</span><br><span class="line">	<span class="string">&quot;Beijing&quot;</span>,</span><br><span class="line">	<span class="string">&quot;Chengzhou&quot;</span>,</span><br><span class="line">	<span class="string">&quot;Tianjin&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结：</h5>
-<p><code>cin</code>会根据<code>&gt;&gt;</code>重定向符号右边的值的类型，自动将ASSIC码转化为相对应的值。而<code>cin.get()</code>和<code>cin.get(ch)</code>都是直接赋值为ASSIC码。</p>
-<h5 id="const和指针组合的迷惑"><a class="markdownIt-Anchor" href="#const和指针组合的迷惑"></a> const和指针组合的迷惑</h5>
-<p>对于const和指针相结合，最常用的是：</p>
+<h5 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h5>
+<p><code>cin</code> 会根据 <code>&gt;&gt;</code> 重定向符号右边的值的类型，自动将 ASSIC 码转化为相对应的值。而 <code>cin.get()</code> 和 <code>cin.get(ch)</code> 都是直接赋值为 ASSIC 码。</p>
+<h5 id="const-和指针组合的迷惑"><a class="markdownIt-Anchor" href="#const-和指针组合的迷惑"></a> const 和指针组合的迷惑</h5>
+<p>对于 const 和指针相结合，最常用的是：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">char</span> * str1 = <span class="string">&quot;hello&quot;</span></span><br></pre></td></tr></table></figure>
-<p>该代表str指向的东西是一个常量，而对于二重指针，其更加复杂。<br />
-（等我看完C和指针再来补充一下，之前看过一次）</p>
-<h5 id="复习一下getline和cingetline和cin重定向"><a class="markdownIt-Anchor" href="#复习一下getline和cingetline和cin重定向"></a> 复习一下getline和cin.getline和cin重定向</h5>
+<p>该代表 str 指向的东西是一个常量，而对于二重指针，其更加复杂。<br />
+（等我看完 C 和指针再来补充一下，之前看过一次）</p>
+<h5 id="复习一下-getline-和-cingetline-和-cin-重定向"><a class="markdownIt-Anchor" href="#复习一下-getline-和-cingetline-和-cin-重定向"></a> 复习一下 getline 和 cin.getline 和 cin 重定向</h5>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">car</span></span><br><span class="line">&#123;</span><br><span class="line">    string make;</span><br><span class="line">    <span class="type">int</span> year;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;How many cars do you wish to catalog? &quot;</span>;</span><br><span class="line">    <span class="type">int</span> num_cars;</span><br><span class="line">    cin &gt;&gt; num_cars;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">    <span class="function">vector&lt;car&gt; <span class="title">cars</span><span class="params">(num_cars)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; num_cars; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Enter the make of the car: &quot;</span>; <span class="comment">// 这里注意因为有空格,这里不采用cin&gt;&gt;string,cin类比于scanf</span></span><br><span class="line">        <span class="comment">// cin.getline() 类比C中的getline</span></span><br><span class="line">        cin.<span class="built_in">get</span>();</span><br><span class="line">        <span class="built_in">getline</span>(cin, cars[i].make);</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Enter the year of the car: &quot;</span>; <span class="comment">// 使用cin&gt;&gt;重定向前会将缓冲区的所有换行给去掉</span></span><br><span class="line">        cin &gt;&gt; cars[i].year;</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (car enum_car : cars)</span><br><span class="line">        cout &lt;&lt; enum_car.make &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; enum_car.year &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="tips-编程小习惯"><a class="markdownIt-Anchor" href="#tips-编程小习惯"></a> Tips 编程小习惯</h5>
-<p>在使用比较符号==时，可以采用value == variable，而不是variable == value，这样可以避免漏掉=号导致的编译器不报错。</p>
-<h5 id="cctypes库"><a class="markdownIt-Anchor" href="#cctypes库"></a> cctypes库</h5>
-<p>在cctype库中，继承了C语言的ctype库，能够判断某个字符是否位字母，或者标点等等。该库并不是利用常见的ASSIC码来进行判断，所以移植到那些不使用ASSIC的机器上也具有非常好的移植特性。例如：</p>
+<p>在使用比较符号 ==时，可以采用 value == variable，而不是 variable == value，这样可以避免漏掉 = 号导致的编译器不报错。</p>
+<h5 id="cctypes-库"><a class="markdownIt-Anchor" href="#cctypes-库"></a> cctypes 库</h5>
+<p>在 cctype 库中，继承了 C 语言的 ctype 库，能够判断某个字符是否位字母，或者标点等等。该库并不是利用常见的 ASSIC 码来进行判断，所以移植到那些不使用 ASSIC 的机器上也具有非常好的移植特性。例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">isalpha</span>(ch); <span class="comment">// 相比(ch &gt;= &#x27;a&#x27;) &amp;&amp; (ch &lt;= &#x27;z&#x27;)更好用</span></span><br><span class="line"><span class="built_in">tolower</span>(); <span class="comment">//转化为小写</span></span><br><span class="line"><span class="built_in">islower</span>(); <span class="comment">//判断是否位小写</span></span><br></pre></td></tr></table></figure>
-<h5 id="cin的输入和对象的类型不匹配时"><a class="markdownIt-Anchor" href="#cin的输入和对象的类型不匹配时"></a> cin的输入和对象的类型不匹配时</h5>
+<h5 id="cin-的输入和对象的类型不匹配时"><a class="markdownIt-Anchor" href="#cin-的输入和对象的类型不匹配时"></a> cin 的输入和对象的类型不匹配时</h5>
 <p>如下所示</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> n;</span><br><span class="line">cin &gt;&gt; n;</span><br></pre></td></tr></table></figure>
 <p>当用户不输入数字，而是输入其他乱七八糟的字符时，会导致：</p>
 <ul>
-<li>n的值不会被改变</li>
+<li>n 的值不会被改变</li>
 <li>不匹配的输入仍然会留在缓冲队列中</li>
-<li>cin中的错误标记位会被标记为1，此时需要clear()进行重置</li>
-<li>对cin方法的调用将会返回false</li>
+<li>cin 中的错误标记位会被标记为 1，此时需要 clear()进行重置</li>
+<li>对 cin 方法的调用将会返回 false</li>
 </ul>
 <p>下面是一个防止用户输入错误的常见写法：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; Max; i++)</span><br><span class="line">&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;round #&quot;</span> &lt;&lt; i<span class="number">+1</span> &lt;&lt; <span class="string">&quot;: &quot;</span>;</span><br><span class="line">    <span class="keyword">while</span> (!(cin &gt;&gt; golf[i])) <span class="comment">// 如果输入异常,此时会进入循环</span></span><br><span class="line">    <span class="comment">// i只有在输入正常后才会跳过这个循环增加一</span></span><br><span class="line">    &#123;</span><br><span class="line">        cin.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="keyword">while</span> (cin.<span class="built_in">get</span>() != <span class="string">&#x27;\n&#x27;</span>) <span class="comment">// 后面的都认为是一堆垃圾数据,除非回车</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>; <span class="comment">// </span></span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Please enter a number: &quot;</span>;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -272,7 +272,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84cin%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text"> 常见的cin使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cinget%E5%92%8Ccingetch%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">2.</span> <span class="toc-text"> cin.get()和cin.get(ch)的比较</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E5%B8%B8%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84"><span class="toc-number">3.</span> <span class="toc-text"> C++常用字符串数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text"> 总结：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const%E5%92%8C%E6%8C%87%E9%92%88%E7%BB%84%E5%90%88%E7%9A%84%E8%BF%B7%E6%83%91"><span class="toc-number">5.</span> <span class="toc-text"> const和指针组合的迷惑</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%8D%E4%B9%A0%E4%B8%80%E4%B8%8Bgetline%E5%92%8Ccingetline%E5%92%8Ccin%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">6.</span> <span class="toc-text"> 复习一下getline和cin.getline和cin重定向</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips-%E7%BC%96%E7%A8%8B%E5%B0%8F%E4%B9%A0%E6%83%AF"><span class="toc-number">7.</span> <span class="toc-text"> Tips 编程小习惯</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cctypes%E5%BA%93"><span class="toc-number">8.</span> <span class="toc-text"> cctypes库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cin%E7%9A%84%E8%BE%93%E5%85%A5%E5%92%8C%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%8C%B9%E9%85%8D%E6%97%B6"><span class="toc-number">9.</span> <span class="toc-text"> cin的输入和对象的类型不匹配时</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84-cin-%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text"> 常见的 cin 使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cinget%E5%92%8C-cingetch%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">2.</span> <span class="toc-text"> cin.get()和 cin.get(ch)的比较</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E5%B8%B8%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84"><span class="toc-number">3.</span> <span class="toc-text"> C++常用字符串数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text"> 总结</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const-%E5%92%8C%E6%8C%87%E9%92%88%E7%BB%84%E5%90%88%E7%9A%84%E8%BF%B7%E6%83%91"><span class="toc-number">5.</span> <span class="toc-text"> const 和指针组合的迷惑</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%8D%E4%B9%A0%E4%B8%80%E4%B8%8B-getline-%E5%92%8C-cingetline-%E5%92%8C-cin-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">6.</span> <span class="toc-text"> 复习一下 getline 和 cin.getline 和 cin 重定向</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips-%E7%BC%96%E7%A8%8B%E5%B0%8F%E4%B9%A0%E6%83%AF"><span class="toc-number">7.</span> <span class="toc-text"> Tips 编程小习惯</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cctypes-%E5%BA%93"><span class="toc-number">8.</span> <span class="toc-text"> cctypes 库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cin-%E7%9A%84%E8%BE%93%E5%85%A5%E5%92%8C%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%8C%B9%E9%85%8D%E6%97%B6"><span class="toc-number">9.</span> <span class="toc-text"> cin 的输入和对象的类型不匹配时</span></a></li></ol>
       </div>
     
 

@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="时隔四天没有学习C++，从周一开始就有点不想学习了，然后周一我不记得我干了什么，貌似学了C++？反正是学了点东西的（确实学了C++）。周二在图书馆呆了一天，貌似是玩了一天的手机，不过其实下午和晚上写了大概两个小时的程序，看了一个小时左右的操作系统网课。然后昨天玩了一天的游戏，下午稍微看了半个小时的uboot代码并修改编译了下，前天和大前天在寝室打摆子。今天尝试编写pstree，感觉还行，但是当我尝">
+    <meta name="description" content="时隔四天没有学习 C++，从周一开始就有点不想学习了，然后周一我不记得我干了什么，貌似学了 C++？反正是学了点东西的（确实学了 C++）。周二在图书馆呆了一天，貌似是玩了一天的手机，不过其实下午和晚上写了大概两个小时的程序，看了一个小时左右的操作系统网课。然后昨天玩了一天的游戏，下午稍微看了半个小时的 uboot 代码并修改编译了下，前天和大前天在寝室打摆子。今天尝试编写 pstree，感觉还行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习Cpp-31">
 <meta property="og:url" content="https://utmux.github.io/2024/05/11/life/%E5%AD%A6%E4%B9%A0Cpp-31/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="时隔四天没有学习C++，从周一开始就有点不想学习了，然后周一我不记得我干了什么，貌似学了C++？反正是学了点东西的（确实学了C++）。周二在图书馆呆了一天，貌似是玩了一天的手机，不过其实下午和晚上写了大概两个小时的程序，看了一个小时左右的操作系统网课。然后昨天玩了一天的游戏，下午稍微看了半个小时的uboot代码并修改编译了下，前天和大前天在寝室打摆子。今天尝试编写pstree，感觉还行，但是当我尝">
+<meta property="og:description" content="时隔四天没有学习 C++，从周一开始就有点不想学习了，然后周一我不记得我干了什么，貌似学了 C++？反正是学了点东西的（确实学了 C++）。周二在图书馆呆了一天，貌似是玩了一天的手机，不过其实下午和晚上写了大概两个小时的程序，看了一个小时左右的操作系统网课。然后昨天玩了一天的游戏，下午稍微看了半个小时的 uboot 代码并修改编译了下，前天和大前天在寝室打摆子。今天尝试编写 pstree，感觉还行">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-11T12:32:26.000Z">
-<meta property="article:modified_time" content="2024-05-11T12:38:55.921Z">
+<meta property="article:modified_time" content="2025-05-14T08:50:33.059Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -174,15 +174,15 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>时隔四天没有学习C++，从周一开始就有点不想学习了，然后周一我不记得我干了什么，貌似学了C++？反正是学了点东西的（确实学了C++）。周二在图书馆呆了一天，貌似是玩了一天的手机，不过其实下午和晚上写了大概两个小时的程序，看了一个小时左右的操作系统网课。然后昨天玩了一天的游戏，下午稍微看了半个小时的uboot代码并修改编译了下，前天和大前天在寝室打摆子。今天尝试编写pstree，感觉还行，但是当我尝试将递归转化为循环时，就有点困难了。感觉第十五章快看完了。</p>
+    <p>时隔四天没有学习 C++，从周一开始就有点不想学习了，然后周一我不记得我干了什么，貌似学了 C++？反正是学了点东西的（确实学了 C++）。周二在图书馆呆了一天，貌似是玩了一天的手机，不过其实下午和晚上写了大概两个小时的程序，看了一个小时左右的操作系统网课。然后昨天玩了一天的游戏，下午稍微看了半个小时的 uboot 代码并修改编译了下，前天和大前天在寝室打摆子。今天尝试编写 pstree，感觉还行，但是当我尝试将递归转化为循环时，就有点困难了。感觉第十五章快看完了。</p>
 <p>对了今天最大的喜讯，我小外甥？小侄女出生了，算是生命是一个奇迹，祝他/她一路顺风。</p>
 <h5 id="嵌套类和访问权限"><a class="markdownIt-Anchor" href="#嵌套类和访问权限"></a> 嵌套类和访问权限</h5>
-<p>前面我们提到过嵌套类，类似于之前讲的类中的结构体，嵌套类声明的位置决定了其作用域。和类中的成员一样，分为public，private和protected。</p>
+<p>前面我们提到过嵌套类，类似于之前讲的类中的结构体，嵌套类声明的位置决定了其作用域。和类中的成员一样，分为 public，private 和 protected。</p>
 <ol>
 <li>作用域<br />
-如果嵌套类实在类中的私有部分声明的，则只有该类能够访问该嵌套类的成员，派生与其他类都无法访问。而如果实在protected中声明的，此时派生类也能看到。如果是public，此时公共部分就能访问该嵌套类。</li>
+如果嵌套类实在类中的私有部分声明的，则只有该类能够访问该嵌套类的成员，派生与其他类都无法访问。而如果实在 protected 中声明的，此时派生类也能看到。如果是 public，此时公共部分就能访问该嵌套类。</li>
 <li>访问控制<br />
-嵌套类定义的位置（public，private和protected）决定了该嵌套类的作用域。而类中成员的定义决定了程序对成员的访问特性。</li>
+嵌套类定义的位置（public，private 和 protected）决定了该嵌套类的作用域。而类中成员的定义决定了程序对成员的访问特性。</li>
 </ol>
 <p>总结一下，就是嵌套类作为类成员和其他类成员一样，而嵌套类中的类成员则决定了嵌套类中的成员能否被外部访问到。</p>
 <h5 id="模板中的嵌套"><a class="markdownIt-Anchor" href="#模板中的嵌套"></a> 模板中的嵌套</h5>
@@ -195,25 +195,25 @@
 <ol>
 <li>
 <p>abort():<br />
-abort位于<code>stdlib.h</code>或者说C++中的<code>cstdlib</code>，其典型实现是向标准错误流（即 <code>cerr</code> 使用的错误流）发送 消息 abnormal program termination（程序异常终止），然后终止程序。abort可以根据自己的实现来选择是否刷新缓冲区，而<code>exit()</code>函数会默认刷新缓冲区。</p>
+abort 位于 <code>stdlib.h</code> 或者说 C++中的 <code>cstdlib</code>，其典型实现是向标准错误流（即 <code>cerr</code> 使用的错误流）发送 消息 abnormal program termination（程序异常终止），然后终止程序。abort 可以根据自己的实现来选择是否刷新缓冲区，而 <code>exit()</code> 函数会默认刷新缓冲区。</p>
 </li>
 <li>
 <p>返回错误码<br />
-类似于linux中很多api一样，比如文件的read的api，当包括该头文件时，会包括一个全局变量errno。如果read函数调用失败，此时返回NULL指针，而该全局函数errno中会根据具体错误，设置为不同的值。<br />
-当然你也可以不选择设置全局变量，而是将该errno按指针或者引用传递到函数中，函数如果出错会向该errno写入出错原因的宏定义。</p>
+类似于 linux 中很多 api 一样，比如文件的 read 的 api，当包括该头文件时，会包括一个全局变量 errno。如果 read 函数调用失败，此时返回 NULL 指针，而该全局函数 errno 中会根据具体错误，设置为不同的值。<br />
+当然你也可以不选择设置全局变量，而是将该 errno 按指针或者引用传递到函数中，函数如果出错会向该 errno 写入出错原因的宏定义。</p>
 </li>
 <li>
 <p>异常机制<br />
 我们使用异常处理程序(exception handler)来捕获异常。<br />
 异常处理程序由两个部分组成：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. try和多个catch</span></span><br><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;...&#125;</span><br><span class="line"><span class="built_in">catch</span>(xx) <span class="comment">// 将根据throw的值的类型来匹配catch，比如catch(const char *s),表示如果throw的值的类型为char *会跳转到这</span></span><br><span class="line">&#123;...&#125;</span><br><span class="line"><span class="comment">// 2. 在出错的地方throw</span></span><br><span class="line"><span class="type">double</span> function</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (a == -b) <span class="comment">// 如果出错了</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="string">&quot;bad value&quot;</span>; <span class="comment">// 此时throw会和catch匹配</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">2.0</span> * a *b /(a + b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里需要说明的是，当遇到throw时，其类似于return，但是并不是只返回到上一层继续执行，而是一直返回到父函数的父函数的父函数...，直到该父函数存在try，（这也就为什么java报错往往是从trace开始），如果该try中存在catch匹配该throw则会执行catch中的命令，否则直接调用abort()函数中止执行。<br />
-throw可以throw一个类回去，比如下面</p>
+<p>这里需要说明的是，当遇到 throw 时，其类似于 return，但是并不是只返回到上一层继续执行，而是一直返回到父函数的父函数的父函数...，直到该父函数存在 try，（这也就为什么 Java 报错往往是从 trace 开始），如果该 try 中存在 catch 匹配该 throw 则会执行 catch 中的命令，否则直接调用 abort()函数中止执行。<br />
+throw 可以 throw 一个类回去，比如下面</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">catch</span> (bad_hmean &amp; bg)</span><br><span class="line">&#123;</span><br><span class="line">    bg.<span class="built_in">mesg</span>(); <span class="comment">// 可以调用类中的方法，初始化的值还在</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Try again.\n&quot;</span>;</span><br><span class="line">    <span class="keyword">continue</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">hmean</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (a == -b)</span><br><span class="line">        <span class="keyword">throw</span> <span class="built_in">bad_hmean</span>(a, b);<span class="comment">// 返回一个类，并初始化</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">2.0</span> * a * b / (a + b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h5 id="tips关于异常规范"><a class="markdownIt-Anchor" href="#tips关于异常规范"></a> tips：关于异常规范</h5>
-<p>在C++98中有一个新功能是异常规范，在C++11中又去掉了，了解一下，异常规范是指用户说明某些函数可能会抛出异常，哪些函数一定不会抛出异常（可以用于优化）。</p>
+<p>在 C++98 中有一个新功能是异常规范，在 C++11 中又去掉了，了解一下，异常规范是指用户说明某些函数可能会抛出异常，哪些函数一定不会抛出异常（可以用于优化）。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">double</span> <span class="title">marm</span><span class="params">()</span> <span class="keyword">noexcept</span></span>; <span class="comment">// noexcept关键字，说明该函数不会抛出异常</span></span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">harm</span><span class="params">(<span class="type">double</span> a)</span> <span class="title">throw</span><span class="params">(bad_thing)</span></span>; <span class="comment">// 用于说明该函数可能会抛出bad_thing异常</span></span><br></pre></td></tr></table></figure>
 
   </div>

@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：晴天	心情：差  今天找了导师突然发现自己一事无成。顺便今天开始跑步吧。  继续谈一下文本和二进制 之前提到过二进制和文本模式，write适合二进制写入文件，如果我们需要写入一段内存，或者一个结构体到文件中，可以这样： 1fout.write((char *) &amp;pl, sizeof pl); &#x2F;&#x2F; 注意需要强制把指针转化为char * read函数和write函数功能恰好相反。">
+    <meta name="description" content="天气：晴天 心情：差  今天找了导师突然发现自己一事无成。顺便今天开始跑步吧。  继续谈一下文本和二进制 之前提到过二进制和文本模式，write 适合二进制写入文件，如果我们需要写入一段内存，或者一个结构体到文件中，可以这样： 1fout.write((char *) &amp;pl, sizeof pl); &#x2F;&#x2F; 注意需要强制把指针转化为char * read 函数和 write 函数功能恰好相">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习Cpp-43">
 <meta property="og:url" content="https://utmux.github.io/2024/06/18/life/%E5%AD%A6%E4%B9%A0Cpp-43/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：晴天	心情：差  今天找了导师突然发现自己一事无成。顺便今天开始跑步吧。  继续谈一下文本和二进制 之前提到过二进制和文本模式，write适合二进制写入文件，如果我们需要写入一段内存，或者一个结构体到文件中，可以这样： 1fout.write((char *) &amp;pl, sizeof pl); &#x2F;&#x2F; 注意需要强制把指针转化为char * read函数和write函数功能恰好相反。">
+<meta property="og:description" content="天气：晴天 心情：差  今天找了导师突然发现自己一事无成。顺便今天开始跑步吧。  继续谈一下文本和二进制 之前提到过二进制和文本模式，write 适合二进制写入文件，如果我们需要写入一段内存，或者一个结构体到文件中，可以这样： 1fout.write((char *) &amp;pl, sizeof pl); &#x2F;&#x2F; 注意需要强制把指针转化为char * read 函数和 write 函数功能恰好相">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-06-18T13:13:26.000Z">
-<meta property="article:modified_time" content="2024-06-18T13:13:28.684Z">
+<meta property="article:modified_time" content="2025-05-14T08:52:20.644Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -129,7 +129,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%A7%E7%BB%AD%E8%B0%88%E4%B8%80%E4%B8%8B%E6%96%87%E6%9C%AC%E5%92%8C%E4%BA%8C%E8%BF%9B%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text"> 继续谈一下文本和二进制</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E6%B3%A8%E6%84%8F%E5%86%99%E5%85%A5%E7%B1%BB%E5%88%B0%E6%96%87%E4%BB%B6%E4%B8%AD"><span class="toc-number">1.1.</span> <span class="toc-text"> Tips:注意写入类到文件中</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E5%AD%98%E5%8F%96"><span class="toc-number">2.</span> <span class="toc-text"> 随机存取</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tipsc%E5%92%8Cc%E5%9C%A8%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%8C%87%E9%92%88%E5%8C%BA%E5%88%AB"><span class="toc-number">2.1.</span> <span class="toc-text"> Tips：C和C++在修改文件指针区别</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%A7%E7%BB%AD%E8%B0%88%E4%B8%80%E4%B8%8B%E6%96%87%E6%9C%AC%E5%92%8C%E4%BA%8C%E8%BF%9B%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text"> 继续谈一下文本和二进制</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips-%E6%B3%A8%E6%84%8F%E5%86%99%E5%85%A5%E7%B1%BB%E5%88%B0%E6%96%87%E4%BB%B6%E4%B8%AD"><span class="toc-number">1.1.</span> <span class="toc-text"> Tips: 注意写入类到文件中</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E5%AD%98%E5%8F%96"><span class="toc-number">2.</span> <span class="toc-text"> 随机存取</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tipsc-%E5%92%8C-c%E5%9C%A8%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%8C%87%E9%92%88%E5%8C%BA%E5%88%AB"><span class="toc-number">2.1.</span> <span class="toc-text"> Tips：C 和 C++在修改文件指针区别</span></a></li></ol></li></ol>
       </div>
     
   </span>
@@ -174,21 +174,21 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：晴天	心情：差</p>
+    <p>天气：晴天 心情：差</p>
 <hr />
 <p>今天找了导师突然发现自己一事无成。顺便今天开始跑步吧。</p>
 <h5 id="继续谈一下文本和二进制"><a class="markdownIt-Anchor" href="#继续谈一下文本和二进制"></a> 继续谈一下文本和二进制</h5>
-<p>之前提到过二进制和文本模式，write适合二进制写入文件，如果我们需要写入一段内存，或者一个结构体到文件中，可以这样：</p>
+<p>之前提到过二进制和文本模式，write 适合二进制写入文件，如果我们需要写入一段内存，或者一个结构体到文件中，可以这样：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fout.<span class="built_in">write</span>((<span class="type">char</span> *) &amp;pl, <span class="keyword">sizeof</span> pl); <span class="comment">// 注意需要强制把指针转化为char *</span></span><br></pre></td></tr></table></figure>
-<p>read函数和write函数功能恰好相反。</p>
-<h6 id="tips注意写入类到文件中"><a class="markdownIt-Anchor" href="#tips注意写入类到文件中"></a> Tips:注意写入类到文件中</h6>
-<p>如果我们使用write，将某个类所在的地址写入到文件中，分为两种情况，一种是该类没有虚函数，此时该类只有数据成员会被写入，而方法不会被写入。另一种是该类存在虚函数，此时也将复制虚函数指针表。当下一次运行，虚函数所处的内存位置发生变化时，此时从文件中读取这个类来访问虚函数时就会发生错误。</p>
+<p>read 函数和 write 函数功能恰好相反。</p>
+<h6 id="tips-注意写入类到文件中"><a class="markdownIt-Anchor" href="#tips-注意写入类到文件中"></a> Tips: 注意写入类到文件中</h6>
+<p>如果我们使用 write，将某个类所在的地址写入到文件中，分为两种情况，一种是该类没有虚函数，此时该类只有数据成员会被写入，而方法不会被写入。另一种是该类存在虚函数，此时也将复制虚函数指针表。当下一次运行，虚函数所处的内存位置发生变化时，此时从文件中读取这个类来访问虚函数时就会发生错误。</p>
 <h5 id="随机存取"><a class="markdownIt-Anchor" href="#随机存取"></a> 随机存取</h5>
-<p>为使编程更具创造性，该示例将以读写模式打开文件，以便能够读取和修改记录。为此，可 以创建一个 fstream 对象。**fstream 类是从 iostream 类派生而来的，而后者基于 istream 和 ostream 两个类， 因此它继承了它们的方法。**它还继承了两个缓冲区，一个用于输入，一个用于输出，并能同步化这两个缓 冲区的处理。<strong>也就是说，当程序读写文件时，它将协调地移动输入缓冲区中的输入指针和输出缓冲区中的 输出指针。</strong></p>
-<p>我们要使用随机读取，就需要用到移动输入指针的方法，分别是seekg()和seekp()，前者将输入指针移动到指定的文件位置，后者将输出指针移动到指定的文件位置。（实际上，由于缓冲区的存在，移动的是指针在缓冲区的位置），上面提到的两个移动文件指针的原型如下：</p>
+<p>为使编程更具创造性，该示例将以读写模式打开文件，以便能够读取和修改记录。为此，可 以创建一个 fstream 对象。<strong>fstream 类是从 iostream 类派生而来的，而后者基于 istream 和 ostream 两个类， 因此它继承了它们的方法。</strong> 它还继承了两个缓冲区，一个用于输入，一个用于输出，并能同步化这两个缓 冲区的处理。<strong>也就是说，当程序读写文件时，它将协调地移动输入缓冲区中的输入指针和输出缓冲区中的 输出指针。</strong></p>
+<p>我们要使用随机读取，就需要用到移动输入指针的方法，分别是 seekg()和 seekp()，前者将输入指针移动到指定的文件位置，后者将输出指针移动到指定的文件位置。（实际上，由于缓冲区的存在，移动的是指针在缓冲区的位置），上面提到的两个移动文件指针的原型如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// seekg和seekp都是模板函数，模板如下</span></span><br><span class="line"><span class="function">basic_istream&lt;charT, traits&gt; &amp;<span class="title">seekg</span><span class="params">(off_type, ios_base::seekdir)</span></span>;</span><br><span class="line"><span class="function">basic_istream&lt;charT, traits&gt; &amp;<span class="title">seekg</span><span class="params">(pos_type)</span></span>;</span><br><span class="line"><span class="comment">// 每个函数都存在两个重载</span></span><br><span class="line"><span class="function">istream &amp; <span class="title">seekg</span><span class="params">(streamoff, ios_base::seekdir)</span></span>;</span><br><span class="line"><span class="comment">// 第一个参数为offset表示偏移，以字节为单位。第二个参数为基址</span></span><br><span class="line"><span class="comment">// 即该原型便宜到离基址offset字节的位置</span></span><br><span class="line"><span class="function">istream &amp; <span class="title">seekg</span><span class="params">(streampos)</span></span>;</span><br><span class="line"><span class="comment">// streampos是指相对文件头的偏移offset，相当于上面函数原型第二个参数默认为文件头了</span></span><br></pre></td></tr></table></figure>
-<h6 id="tipsc和c在修改文件指针区别"><a class="markdownIt-Anchor" href="#tipsc和c在修改文件指针区别"></a> Tips：C和C++在修改文件指针区别</h6>
-<p>在C语言中，使用fseek修改文件指针</p>
+<h6 id="tipsc-和-c在修改文件指针区别"><a class="markdownIt-Anchor" href="#tipsc-和-c在修改文件指针区别"></a> Tips：C 和 C++在修改文件指针区别</h6>
+<p>在 C 语言中，使用 fseek 修改文件指针</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fseek</span><span class="params">(FILE *stream, <span class="type">long</span> offset, <span class="type">int</span> whence)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>参数说明：</p>
 <ul>
@@ -202,7 +202,7 @@
 </ol>
 </li>
 </ul>
-<p>可以看出offset偏移量和基址whence都是long或者int，而C++中为了便于移植，修改了这个限制，原因是对于有些文件系统，整数参数无法提供足够的信息。因此 <code>streamoff</code> 和 <code>streampos</code> 允许是结构或类类型，条件是它们允许一些基本的操作，如使用整数值作为初始值等。随后，老版本的 <code>istream</code> 类被 <code>basic_istream</code> 模板取代，<code>streampos</code> 和 <code>streamoff</code> 被 <code>basic_istream</code> 模板取 代。然而，<code>streampos</code> 和 <code>streamoff</code> 继续存在，作为 <code>pos_type</code> 和 <code>off_type</code> 的 char 的具体化（<code>basic_istream</code> 模板类定义了 <code>pos_type</code> 和 <code>off_type</code> 类型，用来表示文件位置和文件偏移）。同样，如果将 seekg( )用于 wistream 对象，可以使用 wstreampos 和 wstreamoff 类型。</p>
+<p>可以看出 offset 偏移量和基址 whence 都是 long 或者 int，而 C++中为了便于移植，修改了这个限制，原因是对于有些文件系统，整数参数无法提供足够的信息。因此 <code>streamoff</code> 和 <code>streampos</code> 允许是结构或类类型，条件是它们允许一些基本的操作，如使用整数值作为初始值等。随后，老版本的 <code>istream</code> 类被 <code>basic_istream</code> 模板取代，<code>streampos</code> 和 <code>streamoff</code> 被 <code>basic_istream</code> 模板取 代。然而，<code>streampos</code> 和 <code>streamoff</code> 继续存在，作为 <code>pos_type</code> 和 <code>off_type</code> 的 char 的具体化（<code>basic_istream</code> 模板类定义了 <code>pos_type</code> 和 <code>off_type</code> 类型，用来表示文件位置和文件偏移）。同样，如果将 seekg( )用于 wistream 对象，可以使用 wstreampos 和 wstreamoff 类型。</p>
 
   </div>
 </article>
@@ -232,7 +232,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%A7%E7%BB%AD%E8%B0%88%E4%B8%80%E4%B8%8B%E6%96%87%E6%9C%AC%E5%92%8C%E4%BA%8C%E8%BF%9B%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text"> 继续谈一下文本和二进制</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E6%B3%A8%E6%84%8F%E5%86%99%E5%85%A5%E7%B1%BB%E5%88%B0%E6%96%87%E4%BB%B6%E4%B8%AD"><span class="toc-number">1.1.</span> <span class="toc-text"> Tips:注意写入类到文件中</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E5%AD%98%E5%8F%96"><span class="toc-number">2.</span> <span class="toc-text"> 随机存取</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tipsc%E5%92%8Cc%E5%9C%A8%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%8C%87%E9%92%88%E5%8C%BA%E5%88%AB"><span class="toc-number">2.1.</span> <span class="toc-text"> Tips：C和C++在修改文件指针区别</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%A7%E7%BB%AD%E8%B0%88%E4%B8%80%E4%B8%8B%E6%96%87%E6%9C%AC%E5%92%8C%E4%BA%8C%E8%BF%9B%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text"> 继续谈一下文本和二进制</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips-%E6%B3%A8%E6%84%8F%E5%86%99%E5%85%A5%E7%B1%BB%E5%88%B0%E6%96%87%E4%BB%B6%E4%B8%AD"><span class="toc-number">1.1.</span> <span class="toc-text"> Tips: 注意写入类到文件中</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E5%AD%98%E5%8F%96"><span class="toc-number">2.</span> <span class="toc-text"> 随机存取</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tipsc-%E5%92%8C-c%E5%9C%A8%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%8C%87%E9%92%88%E5%8C%BA%E5%88%AB"><span class="toc-number">2.1.</span> <span class="toc-text"> Tips：C 和 C++在修改文件指针区别</span></a></li></ol></li></ol>
       </div>
     
 

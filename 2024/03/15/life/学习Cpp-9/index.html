@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：晴天	心情：还行  今天上午没啥说的，睡到了9点，然后起床用电脑搜了会yolo的资料。 中午直接去教学楼自习去了，尝试安装Windows profession版本来更改语言为英语，折腾了半天没成功，然后看了下C++和yolo，晚上去跑步加上散步。 还有图书馆的作业和图论作业，今日成就如下：  [x] 3KM跑步 [x] 沿着湖边散步20min [x] 学习C++ [x] 学习yolo   数">
+    <meta name="description" content="天气：晴天 心情：还行  今天上午没啥说的，睡到了 9 点，然后起床用电脑搜了会 yolo 的资料。 中午直接去教学楼自习去了，尝试安装 Windows profession 版本来更改语言为英语，折腾了半天没成功，然后看了下 C++和 yolo，晚上去跑步加上散步。 还有图书馆的作业和图论作业，今日成就如下：  [x] 3KM 跑步 [x] 沿着湖边散步 20min [x] 学习 C++ [x]">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习Cpp-9">
 <meta property="og:url" content="https://utmux.github.io/2024/03/15/life/%E5%AD%A6%E4%B9%A0Cpp-9/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：晴天	心情：还行  今天上午没啥说的，睡到了9点，然后起床用电脑搜了会yolo的资料。 中午直接去教学楼自习去了，尝试安装Windows profession版本来更改语言为英语，折腾了半天没成功，然后看了下C++和yolo，晚上去跑步加上散步。 还有图书馆的作业和图论作业，今日成就如下：  [x] 3KM跑步 [x] 沿着湖边散步20min [x] 学习C++ [x] 学习yolo   数">
+<meta property="og:description" content="天气：晴天 心情：还行  今天上午没啥说的，睡到了 9 点，然后起床用电脑搜了会 yolo 的资料。 中午直接去教学楼自习去了，尝试安装 Windows profession 版本来更改语言为英语，折腾了半天没成功，然后看了下 C++和 yolo，晚上去跑步加上散步。 还有图书馆的作业和图论作业，今日成就如下：  [x] 3KM 跑步 [x] 沿着湖边散步 20min [x] 学习 C++ [x]">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-15T14:40:26.000Z">
-<meta property="article:modified_time" content="2024-03-15T14:40:21.291Z">
+<meta property="article:modified_time" content="2025-05-14T08:46:48.259Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -129,7 +129,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%90%8D%E5%92%8C%E6%95%B0%E7%BB%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.</span> <span class="toc-text"> 数组名和数组第一个元素的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips"><span class="toc-number">2.</span> <span class="toc-text"> Tips</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%BA%E9%97%B4%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="toc-number">3.</span> <span class="toc-text"> 数据区间的表示</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const%E5%92%8C%E6%8C%87%E9%92%88"><span class="toc-number">4.</span> <span class="toc-text"> const和指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const%E7%9A%84%E5%80%BC%E5%92%8Cconst%E7%9A%84%E6%8C%87%E9%92%88"><span class="toc-number">5.</span> <span class="toc-text"> const的值和const的指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%BD%E9%87%8F%E4%BD%BF%E7%94%A8const"><span class="toc-number">6.</span> <span class="toc-text"> 尽量使用const</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips-2"><span class="toc-number">7.</span> <span class="toc-text"> Tips</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%8E%E6%8C%87%E9%92%88"><span class="toc-number">8.</span> <span class="toc-text"> 结构体与指针</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%90%8D%E5%92%8C%E6%95%B0%E7%BB%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.</span> <span class="toc-text"> 数组名和数组第一个元素的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips"><span class="toc-number">2.</span> <span class="toc-text"> Tips</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%BA%E9%97%B4%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="toc-number">3.</span> <span class="toc-text"> 数据区间的表示</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const-%E5%92%8C%E6%8C%87%E9%92%88"><span class="toc-number">4.</span> <span class="toc-text"> const 和指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const-%E7%9A%84%E5%80%BC%E5%92%8C-const-%E7%9A%84%E6%8C%87%E9%92%88"><span class="toc-number">5.</span> <span class="toc-text"> const 的值和 const 的指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%BD%E9%87%8F%E4%BD%BF%E7%94%A8-const"><span class="toc-number">6.</span> <span class="toc-text"> 尽量使用 const</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips-2"><span class="toc-number">7.</span> <span class="toc-text"> Tips</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%8E%E6%8C%87%E9%92%88"><span class="toc-number">8.</span> <span class="toc-text"> 结构体与指针</span></a></li></ol>
       </div>
     
   </span>
@@ -174,16 +174,16 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：晴天	心情：还行</p>
+    <p>天气：晴天 心情：还行</p>
 <hr />
-<p>今天上午没啥说的，睡到了9点，然后起床用电脑搜了会yolo的资料。</p>
-<p>中午直接去教学楼自习去了，尝试安装Windows profession版本来更改语言为英语，折腾了半天没成功，然后看了下C++和yolo，晚上去跑步加上散步。</p>
+<p>今天上午没啥说的，睡到了 9 点，然后起床用电脑搜了会 yolo 的资料。</p>
+<p>中午直接去教学楼自习去了，尝试安装 Windows profession 版本来更改语言为英语，折腾了半天没成功，然后看了下 C++和 yolo，晚上去跑步加上散步。</p>
 <p>还有图书馆的作业和图论作业，今日成就如下：</p>
 <ul>
-<li>[x] 3KM跑步</li>
-<li>[x] 沿着湖边散步20min</li>
-<li>[x] 学习C++</li>
-<li>[x] 学习yolo</li>
+<li>[x] 3KM 跑步</li>
+<li>[x] 沿着湖边散步 20min</li>
+<li>[x] 学习 C++</li>
+<li>[x] 学习 yolo</li>
 </ul>
 <h5 id="数组名和数组第一个元素的区别"><a class="markdownIt-Anchor" href="#数组名和数组第一个元素的区别"></a> 数组名和数组第一个元素的区别</h5>
 <ol>
@@ -191,42 +191,42 @@
 <li>对数组名使用 <code>sizeof</code> 将得到 整个数组的长度（以字节为单位）；</li>
 <li><strong>正如第 4 章指出的，将地址运算符&amp;用于数组名时，将返回整个 数组的地址，例如&amp;cookies 将返回一个 32 字节内存块的地址（如果 int 长 4 字节）</strong></li>
 </ol>
-<p>相比<code>int* arr</code>来表示数组，<code>int arr[]</code>表示更加清楚，使用数组下标是等效于指针访问的</p>
+<p>相比 <code>int* arr</code> 来表示数组，<code>int arr[]</code> 表示更加清楚，使用数组下标是等效于指针访问的</p>
 <h5 id="tips"><a class="markdownIt-Anchor" href="#tips"></a> Tips</h5>
-<p><strong>为了保证数组和指针指向的数据被不小心修改，使用const修饰符是一个非常好的习惯。</strong></p>
+<p><strong>为了保证数组和指针指向的数据被不小心修改，使用 const 修饰符是一个非常好的习惯。</strong></p>
 <h5 id="数据区间的表示"><a class="markdownIt-Anchor" href="#数据区间的表示"></a> 数据区间的表示</h5>
 <p>传递数据的区间一般有两种方法：<br />
-方法一：传递头节点的指针和数组的长度n，例如：</p>
+方法一：传递头节点的指针和数组的长度 n，例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> process_arr[<span class="type">int</span> arr[], n]; <span class="comment">//数组指针和大小</span></span><br></pre></td></tr></table></figure>
 <p>方法二：传递头节点指针和超尾，所谓的超尾是指最后一个元素的后一个元素，例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> arr[<span class="number">10</span>]; <span class="comment">// arr+9则代表最后一个元素,arr+10为超尾</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">process_arr</span><span class="params">(arr, arr<span class="number">+10</span>)</span></span>; <span class="comment">// 通过超尾来传递数组区间</span></span><br></pre></td></tr></table></figure>
-<h5 id="const和指针"><a class="markdownIt-Anchor" href="#const和指针"></a> const和指针</h5>
-<p>指的注意的是，对于const值，其指针必须是const指针，如下所示：</p>
+<h5 id="const-和指针"><a class="markdownIt-Anchor" href="#const-和指针"></a> const 和指针</h5>
+<p>指的注意的是，对于 const 值，其指针必须是 const 指针，如下所示：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">float</span> g_earth = <span class="number">9.80</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">float</span> * pe = &amp;g_earth; 	<span class="comment">// VALID</span></span><br><span class="line"><span class="type">const</span> <span class="type">float</span> g_moon = <span class="number">1.63</span>;</span><br><span class="line"><span class="type">float</span> * pm = &amp;g_moon;	<span class="comment">// INVALID</span></span><br></pre></td></tr></table></figure>
-<p>当然可以通过强制类型转换来突破这种限制，将const的地址赋值给非const的指针。</p>
-<p>但是，当遇到const变量由于中间有间接关系时：</p>
+<p>当然可以通过强制类型转换来突破这种限制，将 const 的地址赋值给非 const 的指针。</p>
+<p>但是，当遇到 const 变量由于中间有间接关系时：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> age = <span class="number">39</span>;</span><br><span class="line"><span class="type">int</span>* pd = &amp;age; <span class="comment">//通过pd能改变age的值</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> * pt = pd; <span class="comment">// 此时通过pt无法改变age的值</span></span><br><span class="line"><span class="comment">// 我们也可以通过cast_const强制转换将const的指针赋值给普通指针</span></span><br></pre></td></tr></table></figure>
 <p>可以看到，当中间有层级关系时，此时非常混乱且并不安全，我们可以如下编写代码：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> **pp2;</span><br><span class="line"><span class="type">int</span> *p1;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> n = <span class="number">13</span>;</span><br><span class="line">pp2 = &amp;p1;</span><br><span class="line">*pp2 = &amp;n;</span><br><span class="line">*p1 = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
-<p>可以看到，对于const之间不能套接非const，这会导致巨大的危险。</p>
-<p>总结：const指针能够接受const值和非const值的指针，而非const指针只能接受非const值的指针。</p>
-<h5 id="const的值和const的指针"><a class="markdownIt-Anchor" href="#const的值和const的指针"></a> const的值和const的指针</h5>
-<p>如下所示代表所指向的元素为const</p>
+<p>可以看到，对于 const 之间不能套接非 const，这会导致巨大的危险。</p>
+<p>总结：const 指针能够接受 const 值和非 const 值的指针，而非 const 指针只能接受非 const 值的指针。</p>
+<h5 id="const-的值和-const-的指针"><a class="markdownIt-Anchor" href="#const-的值和-const-的指针"></a> const 的值和 const 的指针</h5>
+<p>如下所示代表所指向的元素为 const</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> *pt = xx;</span><br></pre></td></tr></table></figure>
-<p>而如下所示代表该指针的值为const变量</p>
+<p>而如下所示代表该指针的值为 const 变量</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> * <span class="type">const</span> pt = xx;</span><br></pre></td></tr></table></figure>
 <p>当然可以结合起来</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> * <span class="type">const</span> pt = xx;</span><br></pre></td></tr></table></figure>
-<h5 id="尽量使用const"><a class="markdownIt-Anchor" href="#尽量使用const"></a> 尽量使用const</h5>
-<p>尽量使用const指针有下面两条原因：</p>
+<h5 id="尽量使用-const"><a class="markdownIt-Anchor" href="#尽量使用-const"></a> 尽量使用 const</h5>
+<p>尽量使用 const 指针有下面两条原因：</p>
 <ul>
 <li>避免无意修改数据</li>
-<li>能够接受const和非const的实参，否则如果不加const则只能接受非const值，例如<code>foo(int []);</code>将不能接受<code>const arr[4];</code></li>
+<li>能够接受 const 和非 const 的实参，否则如果不加 const 则只能接受非 const 值，例如 <code>foo(int []);</code> 将不能接受 <code>const arr[4];</code></li>
 </ul>
 <h5 id="tips-2"><a class="markdownIt-Anchor" href="#tips-2"></a> Tips</h5>
-<p>在C和指针书上看到的一些技巧：</p>
+<p>在 C 和指针书上看到的一些技巧：</p>
 <ol>
-<li>指针的声明应该为int *b,而不应该把星号与int临近，例如在声明int *a,b;中就能清楚的知道a是指针，而b则为一个整数类型的数据。</li>
+<li>指针的声明应该为 int <em>b, 而不应该把星号与 int 临近，例如在声明 int</em> a, b; 中就能清楚的知道 a 是指针，而 b 则为一个整数类型的数据。</li>
 <li>如果数组时编程时人为指定的，通过计算的到，则一般不用检查，而对于那些数组数据是通过外界用户输入数据的则一定要检查数组下界是否溢出。</li>
 </ol>
 <h5 id="结构体与指针"><a class="markdownIt-Anchor" href="#结构体与指针"></a> 结构体与指针</h5>
@@ -260,7 +260,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%90%8D%E5%92%8C%E6%95%B0%E7%BB%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.</span> <span class="toc-text"> 数组名和数组第一个元素的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips"><span class="toc-number">2.</span> <span class="toc-text"> Tips</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%BA%E9%97%B4%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="toc-number">3.</span> <span class="toc-text"> 数据区间的表示</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const%E5%92%8C%E6%8C%87%E9%92%88"><span class="toc-number">4.</span> <span class="toc-text"> const和指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const%E7%9A%84%E5%80%BC%E5%92%8Cconst%E7%9A%84%E6%8C%87%E9%92%88"><span class="toc-number">5.</span> <span class="toc-text"> const的值和const的指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%BD%E9%87%8F%E4%BD%BF%E7%94%A8const"><span class="toc-number">6.</span> <span class="toc-text"> 尽量使用const</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips-2"><span class="toc-number">7.</span> <span class="toc-text"> Tips</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%8E%E6%8C%87%E9%92%88"><span class="toc-number">8.</span> <span class="toc-text"> 结构体与指针</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%90%8D%E5%92%8C%E6%95%B0%E7%BB%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.</span> <span class="toc-text"> 数组名和数组第一个元素的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips"><span class="toc-number">2.</span> <span class="toc-text"> Tips</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%BA%E9%97%B4%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="toc-number">3.</span> <span class="toc-text"> 数据区间的表示</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const-%E5%92%8C%E6%8C%87%E9%92%88"><span class="toc-number">4.</span> <span class="toc-text"> const 和指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#const-%E7%9A%84%E5%80%BC%E5%92%8C-const-%E7%9A%84%E6%8C%87%E9%92%88"><span class="toc-number">5.</span> <span class="toc-text"> const 的值和 const 的指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%BD%E9%87%8F%E4%BD%BF%E7%94%A8-const"><span class="toc-number">6.</span> <span class="toc-text"> 尽量使用 const</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips-2"><span class="toc-number">7.</span> <span class="toc-text"> Tips</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%8E%E6%8C%87%E9%92%88"><span class="toc-number">8.</span> <span class="toc-text"> 结构体与指针</span></a></li></ol>
       </div>
     
 

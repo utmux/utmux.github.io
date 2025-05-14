@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="这几天属实浑浑噩噩，不知道自己到底在干嘛，沉迷一些低级趣味。 之前说的重构脚本也没有搞好，因为Windows平台的make属实是有点毛病，会默认用GBK编码将参数传递给终端。 修改不同的terminator后使用powershell发现参数传递貌似正常了，但是文件标题中不能含有英文的括号，即 (与)，中文是没有问题的。 以后尝试修复。 今天更新如下：   将博客的文章封面增加了几个。 构想了下如何">
+    <meta name="description" content="这几天属实浑浑噩噩，不知道自己到底在干嘛，沉迷一些低级趣味。 之前说的重构脚本也没有搞好，因为 Windows 平台的 make 属实是有点毛病，会默认用 GBK 编码将参数传递给终端。 修改不同的 terminator 后使用 powershell 发现参数传递貌似正常了，但是文件标题中不能含有英文的括号，即 ( 与 )，中文是没有问题的。 以后尝试修复。 今天更新如下：   将博客的文章封面增">
 <meta property="og:type" content="article">
 <meta property="og:title" content="新阶段新旅程">
 <meta property="og:url" content="https://utmux.github.io/2023/04/27/life/%E6%96%B0%E9%98%B6%E6%AE%B5%E6%96%B0%E6%97%85%E7%A8%8B/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="这几天属实浑浑噩噩，不知道自己到底在干嘛，沉迷一些低级趣味。 之前说的重构脚本也没有搞好，因为Windows平台的make属实是有点毛病，会默认用GBK编码将参数传递给终端。 修改不同的terminator后使用powershell发现参数传递貌似正常了，但是文件标题中不能含有英文的括号，即 (与)，中文是没有问题的。 以后尝试修复。 今天更新如下：   将博客的文章封面增加了几个。 构想了下如何">
+<meta property="og:description" content="这几天属实浑浑噩噩，不知道自己到底在干嘛，沉迷一些低级趣味。 之前说的重构脚本也没有搞好，因为 Windows 平台的 make 属实是有点毛病，会默认用 GBK 编码将参数传递给终端。 修改不同的 terminator 后使用 powershell 发现参数传递貌似正常了，但是文件标题中不能含有英文的括号，即 ( 与 )，中文是没有问题的。 以后尝试修复。 今天更新如下：   将博客的文章封面增">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/88bc38518638eb2797f752e0103c3dfc.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/fd29ad78c347a464df14e75ad083810a.png">
 <meta property="article:published_time" content="2023-04-27T13:28:26.000Z">
-<meta property="article:modified_time" content="2025-05-10T06:40:47.295Z">
+<meta property="article:modified_time" content="2025-05-14T08:53:05.564Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/88bc38518638eb2797f752e0103c3dfc.png">
@@ -174,17 +174,17 @@
 
   <div class="content e-content" itemprop="articleBody">
     <p>这几天属实浑浑噩噩，不知道自己到底在干嘛，沉迷一些低级趣味。</p>
-<p>之前说的重构脚本也没有搞好，因为Windows平台的make属实是有点毛病，会默认用GBK编码将参数传递给终端。</p>
-<p>修改不同的terminator后使用powershell发现参数传递貌似正常了，但是文件标题中不能含有英文的括号，即 <code>(</code>与<code>)</code>，中文是没有问题的。</p>
+<p>之前说的重构脚本也没有搞好，因为 Windows 平台的 make 属实是有点毛病，会默认用 GBK 编码将参数传递给终端。</p>
+<p>修改不同的 terminator 后使用 powershell 发现参数传递貌似正常了，但是文件标题中不能含有英文的括号，即 <code>(</code> 与 <code>)</code>，中文是没有问题的。</p>
 <p>以后尝试修复。</p>
 <p>今天更新如下：</p>
 <hr />
 <ol>
 <li>将博客的文章封面增加了几个。</li>
-<li>构想了下如何同步手机上的日记到GitHub上去</li>
+<li>构想了下如何同步手机上的日记到 GitHub 上去</li>
 </ol>
 <p>这篇文章暂时使用的还是旧的脚本。</p>
-<p>新的makefile和脚本效果如下，会大大减少垃圾文件的体积。</p>
+<p>新的 makefile 和脚本效果如下，会大大减少垃圾文件的体积。</p>
 <p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/88bc38518638eb2797f752e0103c3dfc.png" alt="image-20230427212707041" /></p>
 <p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/fd29ad78c347a464df14e75ad083810a.png" alt="image-test2" /></p>
 

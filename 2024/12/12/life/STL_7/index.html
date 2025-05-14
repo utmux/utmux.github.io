@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：阴冷	心情：好   STL算法 在STL中，不仅仅由标准的数据结构和容器，还有适用于这些容器的算法，我们这里来快速总结一下这些算法，只做成一个可查找表，便于查找和知道有这么一个算法，便于以后用到。 STL中的算法可以分为两类：质变（mutating）和非质变算法（nonmutating），前者表示会改变传入的数据结构，后者表示不会修改传入的数据结构（比如排序std::sort()和std::">
+    <meta name="description" content="天气：阴冷 心情：好   STL 算法 在 STL 中，不仅仅由标准的数据结构和容器，还有适用于这些容器的算法，我们这里来快速总结一下这些算法，只做成一个可查找表，便于查找和知道有这么一个算法，便于以后用到。 STL 中的算法可以分为两类：质变（mutating）和非质变算法（nonmutating），前者表示会改变传入的数据结构，后者表示不会修改传入的数据结构（比如排序 std::sort()">
 <meta property="og:type" content="article">
 <meta property="og:title" content="STL_7">
 <meta property="og:url" content="https://utmux.github.io/2024/12/12/life/STL_7/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：阴冷	心情：好   STL算法 在STL中，不仅仅由标准的数据结构和容器，还有适用于这些容器的算法，我们这里来快速总结一下这些算法，只做成一个可查找表，便于查找和知道有这么一个算法，便于以后用到。 STL中的算法可以分为两类：质变（mutating）和非质变算法（nonmutating），前者表示会改变传入的数据结构，后者表示不会修改传入的数据结构（比如排序std::sort()和std::">
+<meta property="og:description" content="天气：阴冷 心情：好   STL 算法 在 STL 中，不仅仅由标准的数据结构和容器，还有适用于这些容器的算法，我们这里来快速总结一下这些算法，只做成一个可查找表，便于查找和知道有这么一个算法，便于以后用到。 STL 中的算法可以分为两类：质变（mutating）和非质变算法（nonmutating），前者表示会改变传入的数据结构，后者表示不会修改传入的数据结构（比如排序 std::sort()">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/17de0627cc504b8091c6d6df211c30cd.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/7e69d5765ba35194e84aa7f655345d3a.png">
 <meta property="article:published_time" content="2024-12-12T07:02:26.000Z">
-<meta property="article:modified_time" content="2025-05-10T06:40:13.503Z">
+<meta property="article:modified_time" content="2025-05-14T08:42:45.270Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/17de0627cc504b8091c6d6df211c30cd.png">
@@ -132,7 +132,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#stl%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text"> STL算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text"> 数值算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 通用算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.2.</span> <span class="toc-text"> set相关算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#heap%E7%9B%B8%E5%85%B3%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.3.</span> <span class="toc-text"> heap相关的函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 其他算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E7%BA%AF%E7%9A%84%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.4.1.</span> <span class="toc-text"> 单纯的数据处理算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%AE%97%E6%B3%95-2"><span class="toc-number">1.1.4.2.</span> <span class="toc-text"> 其他算法</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BF%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text"> 仿函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#adapter"><span class="toc-number">3.</span> <span class="toc-text"> Adapter</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#stl-%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text"> STL 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text"> 数值算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 通用算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set-%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.2.</span> <span class="toc-text"> set 相关算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#heap-%E7%9B%B8%E5%85%B3%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.3.</span> <span class="toc-text"> heap 相关的函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 其他算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E7%BA%AF%E7%9A%84%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.4.1.</span> <span class="toc-text"> 单纯的数据处理算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%AE%97%E6%B3%95-2"><span class="toc-number">1.1.4.2.</span> <span class="toc-text"> 其他算法</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BF%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text"> 仿函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#adapter"><span class="toc-number">3.</span> <span class="toc-text"> Adapter</span></a></li></ol>
       </div>
     
   </span>
@@ -177,14 +177,14 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：阴冷	心情：好</p>
+    <p>天气：阴冷 心情：好</p>
 <hr />
-<h2 id="stl算法"><a class="markdownIt-Anchor" href="#stl算法"></a> STL算法</h2>
-<p>在STL中，不仅仅由标准的数据结构和容器，还有适用于这些容器的算法，我们这里来快速总结一下这些算法，只做成一个可查找表，便于查找和知道有这么一个算法，便于以后用到。</p>
-<p>STL中的算法可以分为两类：质变（mutating）和非质变算法（nonmutating），前者表示会改变传入的数据结构，后者表示不会修改传入的数据结构（比如排序<code>std::sort()</code>和<code>std::max()</code>）。</p>
-<p>要使用STL的算法，首先传入的迭代器要满足一定的要求，迭代器之间的关系并不是一种具体继承的关系，而是<code>concept</code>关系。</p>
+<h2 id="stl-算法"><a class="markdownIt-Anchor" href="#stl-算法"></a> STL 算法</h2>
+<p>在 STL 中，不仅仅由标准的数据结构和容器，还有适用于这些容器的算法，我们这里来快速总结一下这些算法，只做成一个可查找表，便于查找和知道有这么一个算法，便于以后用到。</p>
+<p>STL 中的算法可以分为两类：质变（mutating）和非质变算法（nonmutating），前者表示会改变传入的数据结构，后者表示不会修改传入的数据结构（比如排序 <code>std::sort()</code> 和 <code>std::max()</code>）。</p>
+<p>要使用 STL 的算法，首先传入的迭代器要满足一定的要求，迭代器之间的关系并不是一种具体继承的关系，而是 <code>concept</code> 关系。</p>
 <h3 id="数值算法"><a class="markdownIt-Anchor" href="#数值算法"></a> 数值算法</h3>
-<p>数值算法是指<code>&lt;stl_numeric.h&gt;</code>中的算法，其用于操作数值</p>
+<p>数值算法是指 <code>&lt;stl_numeric.h&gt;</code> 中的算法，其用于操作数值</p>
 <hr />
 <table>
 <thead>
@@ -200,73 +200,73 @@
 <td><strong><code>accumulate</code></strong></td>
 <td>对范围内的元素累积求和或应用自定义二元操作</td>
 <td><code>accumulate(begin, end, init)</code>  <code>accumulate(begin, end, init, binary_op)</code></td>
-<td>默认对范围内的元素求和，若提供<code>binary_op</code>则使用自定义二元操作（如减法<code>minus&lt;int&gt;()</code>）。</td>
+<td>默认对范围内的元素求和，若提供 <code>binary_op</code> 则使用自定义二元操作（如减法 <code>minus&lt;int&gt;()</code>）。</td>
 </tr>
 <tr>
 <td><strong><code>inner_product</code></strong></td>
 <td>对两个范围做内积运算，同时支持自定义加法和乘法操作</td>
 <td><code>inner_product(begin1, end1, begin2, init)</code>  <code>inner_product(begin1, end1, begin2, init, add_op, mul_op)</code></td>
-<td>默认内积操作是<code>sum += a[i] * b[i]</code>，可通过指定<code>add_op</code>和<code>mul_op</code>实现自定义逻辑（如加法变为减法）。</td>
+<td>默认内积操作是 <code>sum += a[i] * b[i]</code>，可通过指定 <code>add_op</code> 和 <code>mul_op</code> 实现自定义逻辑（如加法变为减法）。</td>
 </tr>
 <tr>
 <td><strong><code>partial_sum</code></strong></td>
 <td>生成范围内的部分和序列，可支持自定义操作</td>
 <td><code>partial_sum(begin, end, output)</code>  <code>partial_sum(begin, end, output, binary_op)</code></td>
-<td>逐步累加序列，默认是求和，<code>binary_op</code>允许自定义操作（如减法）。</td>
+<td>逐步累加序列，默认是求和，<code>binary_op</code> 允许自定义操作（如减法）。</td>
 </tr>
 <tr>
 <td><strong><code>adjacent_difference</code></strong></td>
 <td>计算相邻元素的差值或应用自定义操作</td>
 <td><code>adjacent_difference(begin, end, output)</code>  <code>adjacent_difference(begin, end, output, binary_op)</code></td>
-<td>默认是<code>new[i] = old[i] - old[i-1]</code>，可通过<code>binary_op</code>自定义相邻元素的关系（如相加）。</td>
+<td>默认是 <code>new[i] = old[i] - old[i-1]</code>，可通过 <code>binary_op</code> 自定义相邻元素的关系（如相加）。</td>
 </tr>
 <tr>
 <td><strong><code>iota</code></strong></td>
 <td>用指定的起始值生成连续递增的序列</td>
 <td><code>iota(begin, end, value)</code></td>
-<td>填充范围，使<code>begin</code>的值为<code>value</code>，后续每个元素递增1。</td>
+<td>填充范围，使 <code>begin</code> 的值为 <code>value</code>，后续每个元素递增 1。</td>
 </tr>
 <tr>
 <td><strong><code>power</code></strong></td>
-<td>计算<code>base</code>的<code>exponent</code>次幂，可使用自定义二元操作</td>
+<td>计算 <code>base</code> 的 <code>exponent</code> 次幂，可使用自定义二元操作</td>
 <td><code>power(base, exponent)</code>  <code>power(base, exponent, binary_op)</code></td>
-<td>幂运算函数，通常与数值计算库结合使用；支持自定义乘法规则（如使用<code>plus&lt;int&gt;</code>实现累加幂）。标准库中没有直接实现，但Boost库提供类似功能。</td>
+<td>幂运算函数，通常与数值计算库结合使用；支持自定义乘法规则（如使用 <code>plus&lt;int&gt;</code> 实现累加幂）。标准库中没有直接实现，但 Boost 库提供类似功能。</td>
 </tr>
 <tr>
 <td><strong><code>reduce</code></strong> (C++17)</td>
 <td>对范围内元素进行并行或串行的归约操作</td>
 <td><code>reduce(begin, end, init)</code>  <code>reduce(begin, end, init, binary_op)</code></td>
-<td>类似<code>accumulate</code>，但可以并行计算（如果编译器支持），效率更高。</td>
+<td>类似 <code>accumulate</code>，但可以并行计算（如果编译器支持），效率更高。</td>
 </tr>
 <tr>
 <td><strong><code>exclusive_scan</code></strong> (C++17)</td>
-<td>类似<code>partial_sum</code>，但不包含当前元素</td>
+<td>类似 <code>partial_sum</code>，但不包含当前元素</td>
 <td><code>exclusive_scan(begin, end, output, init)</code>  <code>exclusive_scan(begin, end, output, init, binary_op)</code></td>
-<td>生成排除当前元素的部分和序列，例如对<code>1,2,3</code>，生成<code>0,1,3</code>（初始值为<code>0</code>）。</td>
+<td>生成排除当前元素的部分和序列，例如对 <code>1,2,3</code>，生成 <code>0,1,3</code>（初始值为 <code>0</code>）。</td>
 </tr>
 <tr>
 <td><strong><code>inclusive_scan</code></strong> (C++17)</td>
-<td>类似<code>partial_sum</code>，包含当前元素</td>
+<td>类似 <code>partial_sum</code>，包含当前元素</td>
 <td><code>inclusive_scan(begin, end, output)</code>  <code>inclusive_scan(begin, end, output, binary_op)</code></td>
-<td>生成包含当前元素的部分和序列，例如对<code>1,2,3</code>，生成<code>1,3,6</code>。与<code>exclusive_scan</code>相比结果多一个值。</td>
+<td>生成包含当前元素的部分和序列，例如对 <code>1,2,3</code>，生成 <code>1,3,6</code>。与 <code>exclusive_scan</code> 相比结果多一个值。</td>
 </tr>
 <tr>
 <td><strong><code>transform_reduce</code></strong> (C++17)</td>
-<td>结合<code>transform</code>和<code>reduce</code>，对范围元素转换后再归约</td>
+<td>结合 <code>transform</code> 和 <code>reduce</code>，对范围元素转换后再归约</td>
 <td><code>transform_reduce(begin1, end1, begin2, init, add_op, mul_op)</code></td>
-<td>支持先对两个范围元素进行操作（如<code>a[i]*b[i]</code>），再归约求和（如累加）。类似于<code>inner_product</code>但更灵活。</td>
+<td>支持先对两个范围元素进行操作（如 <code>a[i]*b[i]</code>），再归约求和（如累加）。类似于 <code>inner_product</code> 但更灵活。</td>
 </tr>
 <tr>
 <td><strong><code>transform_exclusive_scan</code></strong> (C++17)</td>
 <td>对范围元素进行变换后，生成排除当前元素的部分和序列</td>
 <td><code>transform_exclusive_scan(begin, end, output, init, unary_op, binary_op)</code></td>
-<td>结合<code>transform</code>和<code>exclusive_scan</code>，如对序列变换为平方后再求部分和。</td>
+<td>结合 <code>transform</code> 和 <code>exclusive_scan</code>，如对序列变换为平方后再求部分和。</td>
 </tr>
 <tr>
 <td><strong><code>transform_inclusive_scan</code></strong> (C++17)</td>
 <td>对范围元素进行变换后，生成包含当前元素的部分和序列</td>
 <td><code>transform_inclusive_scan(begin, end, output, unary_op, binary_op)</code></td>
-<td>结合<code>transform</code>和<code>inclusive_scan</code>，如对序列变换为平方后再求部分和。</td>
+<td>结合 <code>transform</code> 和 <code>inclusive_scan</code>，如对序列变换为平方后再求部分和。</td>
 </tr>
 </tbody>
 </table>
@@ -337,10 +337,10 @@
 </tr>
 </tbody>
 </table>
-<p>对于<code>copy</code>函数，STL中对其做了极值优化，对于指针，<code>char</code>或者已知的基本数据类型，其会调用<code>memmove</code>这种快速复制内存的方法。而对于非平凡类，会调用构造函数深度复制，对于平凡类，其直接调用内存复制函数即可。</p>
+<p>对于 <code>copy</code> 函数，STL 中对其做了极值优化，对于指针，<code>char</code> 或者已知的基本数据类型，其会调用 <code>memmove</code> 这种快速复制内存的方法。而对于非平凡类，会调用构造函数深度复制，对于平凡类，其直接调用内存复制函数即可。</p>
 <p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/17de0627cc504b8091c6d6df211c30cd.png" alt="image-20241211215634087" /></p>
-<h4 id="set相关算法"><a class="markdownIt-Anchor" href="#set相关算法"></a> set相关算法</h4>
-<p>stl中的set有四种<code>set</code>，<code>multiset</code>，<code>hash_set</code>，<code>hash_multiset</code>。前两者使用红黑树实现，后两者通过hashtable实现，对上面这四种set，stl都提供了相关的函数对set进行操作。</p>
+<h4 id="set-相关算法"><a class="markdownIt-Anchor" href="#set-相关算法"></a> set 相关算法</h4>
+<p>stl 中的 set 有四种 <code>set</code>，<code>multiset</code>，<code>hash_set</code>，<code>hash_multiset</code>。前两者使用红黑树实现，后两者通过 hashtable 实现，对上面这四种 set，stl 都提供了相关的函数对 set 进行操作。</p>
 <table>
 <thead>
 <tr>
@@ -372,7 +372,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="heap相关的函数"><a class="markdownIt-Anchor" href="#heap相关的函数"></a> heap相关的函数</h4>
+<h4 id="heap-相关的函数"><a class="markdownIt-Anchor" href="#heap-相关的函数"></a> heap 相关的函数</h4>
 <table>
 <thead>
 <tr>
@@ -679,34 +679,34 @@
 </tr>
 </tbody>
 </table>
-<p><code>next_permutation</code>函数：</p>
+<p><code>next_permutation</code> 函数：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; v = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i : v) std::cout &lt;&lt; i &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        std::cout &lt;&lt; std::endl;</span><br><span class="line">    &#125; <span class="keyword">while</span> (std::<span class="built_in">next_permutation</span>(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>()));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 输出</span></span><br><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span></span><br><span class="line"><span class="number">1</span> <span class="number">3</span> <span class="number">2</span></span><br><span class="line"><span class="number">2</span> <span class="number">1</span> <span class="number">3</span></span><br><span class="line"><span class="number">2</span> <span class="number">3</span> <span class="number">1</span></span><br><span class="line"><span class="number">3</span> <span class="number">1</span> <span class="number">2</span></span><br><span class="line"><span class="number">3</span> <span class="number">2</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <h2 id="仿函数"><a class="markdownIt-Anchor" href="#仿函数"></a> 仿函数</h2>
-<p>STL中的<code>functor</code>分类，如果按照操作数来分类有一元和二元。按照功能分类，可分为算数运算符，关系运算符和逻辑运算符。STL中自带的仿函数在头文件<code>&lt;functional&gt;</code>头文件中。</p>
-<p>仿函数的规定中，类似于迭代器，其有两个基本类型，即一元和二元，从而便于后面的<code>adapter</code>的适配。</p>
+<p>STL 中的 <code>functor</code> 分类，如果按照操作数来分类有一元和二元。按照功能分类，可分为算数运算符，关系运算符和逻辑运算符。STL 中自带的仿函数在头文件 <code>&lt;functional&gt;</code> 头文件中。</p>
+<p>仿函数的规定中，类似于迭代器，其有两个基本类型，即一元和二元，从而便于后面的 <code>adapter</code> 的适配。</p>
 <ol>
 <li>
 <p>unary_function</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">Arg</span>, <span class="keyword">class</span> <span class="title class_">Result</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">unary_function</span> &#123;</span><br><span class="line">    <span class="keyword">typedef</span> Arg argument_type;    <span class="comment">// 参数型别</span></span><br><span class="line">    <span class="keyword">typedef</span> Result result_type;  <span class="comment">// 返回值型别</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>为什么仿函数要继承<code>unary_function</code>，因为早期的C++中并没有对类型推导的实现，比如<code>auto</code>和<code>decltype</code>，为了获取到传入模板的参数型别和返回值型别。通过继承<code>unary_function</code>即可实现。</p>
+<p>为什么仿函数要继承 <code>unary_function</code>，因为早期的 C++中并没有对类型推导的实现，比如 <code>auto</code> 和 <code>decltype</code>，为了获取到传入模板的参数型别和返回值型别。通过继承 <code>unary_function</code> 即可实现。</p>
 <p>使用如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">negate</span> : <span class="keyword">public</span> unary_function&lt;T, T&gt; &#123;</span><br><span class="line">    <span class="function">T <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">const</span> T&amp; x)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> -x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>binary_function</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">Arg1</span>, <span class="keyword">class</span> <span class="title class_">Arg2</span>, <span class="keyword">class</span> <span class="title class_">Result</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">binary_function</span> &#123;</span><br><span class="line">    <span class="keyword">typedef</span> Arg1 first_argument_type;  <span class="comment">// 第一个参数的类型</span></span><br><span class="line">    <span class="keyword">typedef</span> Arg2 second_argument_type; <span class="comment">// 第二个参数的类型</span></span><br><span class="line">    <span class="keyword">typedef</span> Result result_type;        <span class="comment">// 返回值的类型</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>上面两个用法差不多，除此外，可以通过<code>binder1st</code>和<code>binder2nd</code>这两个函数实现二元转化为一元的。</p>
-<p>但是，现代的C++中都抛弃了这两个，原因是现代C++实现的类型推导，不必记录下参数和返回值的类型。而可以通过<code>auto</code>和<code>decltype</code>实现模板参数的定义等。</p>
+<p>上面两个用法差不多，除此外，可以通过 <code>binder1st</code> 和 <code>binder2nd</code> 这两个函数实现二元转化为一元的。</p>
+<p>但是，现代的 C++中都抛弃了这两个，原因是现代 C++实现的类型推导，不必记录下参数和返回值的类型。而可以通过 <code>auto</code> 和 <code>decltype</code> 实现模板参数的定义等。</p>
 </li>
 </ol>
 <p>常见的算数，逻辑和关系仿函数如下表：<br />
 <img src="https://raw.githubusercontent.com/utmux/pictures/main/img/7e69d5765ba35194e84aa7f655345d3a.png" alt="image-20240611173108038" /></p>
-<p>可以参考我之前C++第40天那个帖子。</p>
-<p>在老期的C++内部，还有一些特殊的仿函数，用于传回，选择某些参数，现代C++中都采取了lambda表达式来实现。其中C++ 20中，新增的一个就是<code>std::identity</code>，用于返回参数值本身。如下：</p>
+<p>可以参考我之前 C++第 40 天那个帖子。</p>
+<p>在老期的 C++内部，还有一些特殊的仿函数，用于传回，选择某些参数，现代 C++中都采取了 lambda 表达式来实现。其中 C++ 20 中，新增的一个就是 <code>std::identity</code>，用于返回参数值本身。如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::identity id;</span><br><span class="line">    <span class="type">int</span> value = <span class="number">42</span>;</span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">id</span>(value) &lt;&lt; std::endl; <span class="comment">// 输出：42</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="adapter"><a class="markdownIt-Anchor" href="#adapter"></a> Adapter</h2>
-<p>在经典的STL（现代C++应该不这么说了）中，adapter分为三个，分别是<code>container_adatper</code>，<code>functor_adapter</code>和<code>iterator_adapter</code>。目前部分adapter已经被现代的lambda等新特性代替了，如下表所示：</p>
+<p>在经典的 STL（现代 C++应该不这么说了）中，adapter 分为三个，分别是 <code>container_adatper</code>，<code>functor_adapter</code> 和 <code>iterator_adapter</code>。目前部分 adapter 已经被现代的 lambda 等新特性代替了，如下表所示：</p>
 <table>
 <thead>
 <tr>
@@ -808,7 +808,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#stl%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text"> STL算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text"> 数值算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 通用算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.2.</span> <span class="toc-text"> set相关算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#heap%E7%9B%B8%E5%85%B3%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.3.</span> <span class="toc-text"> heap相关的函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 其他算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E7%BA%AF%E7%9A%84%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.4.1.</span> <span class="toc-text"> 单纯的数据处理算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%AE%97%E6%B3%95-2"><span class="toc-number">1.1.4.2.</span> <span class="toc-text"> 其他算法</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BF%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text"> 仿函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#adapter"><span class="toc-number">3.</span> <span class="toc-text"> Adapter</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#stl-%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text"> STL 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text"> 数值算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 通用算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set-%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.2.</span> <span class="toc-text"> set 相关算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#heap-%E7%9B%B8%E5%85%B3%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.3.</span> <span class="toc-text"> heap 相关的函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 其他算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E7%BA%AF%E7%9A%84%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.4.1.</span> <span class="toc-text"> 单纯的数据处理算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%AE%97%E6%B3%95-2"><span class="toc-number">1.1.4.2.</span> <span class="toc-text"> 其他算法</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BF%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text"> 仿函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#adapter"><span class="toc-number">3.</span> <span class="toc-text"> Adapter</span></a></li></ol>
       </div>
     
 

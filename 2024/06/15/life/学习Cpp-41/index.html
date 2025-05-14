@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：晴天	心情：差   17.1 缓冲流 用于匹配输入和输出速度不一致的问题，比如从内存，硬盘，输入设备读取数据到程序速度不一致。下面是C++中读入读出的架构  1为成为国际语言，C++必须能够处理需要 16 位的国际字符集或更宽的字符类型。因此，该语言在传统的 8 位 char（“窄”）类型的基础上添加了 wchar_t（“宽”）字符类型；而 C++11 添加了类型 char16_t 和 ch">
+    <meta name="description" content="天气：晴天 心情：差   17.1 缓冲流 用于匹配输入和输出速度不一致的问题，比如从内存，硬盘，输入设备读取数据到程序速度不一致。下面是 C++ 中读入读出的架构  1为成为国际语言，C++必须能够处理需要 16 位的国际字符集或更宽的字符类型。因此，该语言在传统的 8 位 char（“窄”）类型的基础上添加了 wchar_t（“宽”）字符类型；而 C++11 添加了类型 char16_t 和">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习Cpp-41">
 <meta property="og:url" content="https://utmux.github.io/2024/06/15/life/%E5%AD%A6%E4%B9%A0Cpp-41/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：晴天	心情：差   17.1 缓冲流 用于匹配输入和输出速度不一致的问题，比如从内存，硬盘，输入设备读取数据到程序速度不一致。下面是C++中读入读出的架构  1为成为国际语言，C++必须能够处理需要 16 位的国际字符集或更宽的字符类型。因此，该语言在传统的 8 位 char（“窄”）类型的基础上添加了 wchar_t（“宽”）字符类型；而 C++11 添加了类型 char16_t 和 ch">
+<meta property="og:description" content="天气：晴天 心情：差   17.1 缓冲流 用于匹配输入和输出速度不一致的问题，比如从内存，硬盘，输入设备读取数据到程序速度不一致。下面是 C++ 中读入读出的架构  1为成为国际语言，C++必须能够处理需要 16 位的国际字符集或更宽的字符类型。因此，该语言在传统的 8 位 char（“窄”）类型的基础上添加了 wchar_t（“宽”）字符类型；而 C++11 添加了类型 char16_t 和">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/a5c9bb6036ea7d89ad6b9beee24a8625.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/5def42c6b84e280c7d4009559cfa1008.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/8569d0881782d4e448a8a5f064f04f31.png">
 <meta property="article:published_time" content="2024-06-15T14:07:26.000Z">
-<meta property="article:modified_time" content="2025-05-10T06:40:44.029Z">
+<meta property="article:modified_time" content="2025-05-14T08:52:02.738Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/a5c9bb6036ea7d89ad6b9beee24a8625.png">
@@ -133,7 +133,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#171-%E7%BC%93%E5%86%B2%E6%B5%81"><span class="toc-number">1.</span> <span class="toc-text"> 17.1 缓冲流</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#172-cout%E8%BE%93%E5%87%BA%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text"> 17.2 cout输出的具体实现</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.1.</span> <span class="toc-text"> 重载&lt;&lt;运算符</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%BE%93%E5%87%BA%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text"> 其他输出方法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%88%B7%E6%96%B0%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-number">2.3.</span> <span class="toc-text"> 刷新缓冲区</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA"><span class="toc-number">2.4.</span> <span class="toc-text"> 格式化输出</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tipsc%E4%B8%AD%E7%9A%84%E7%A7%91%E5%AD%A6%E8%AE%A1%E6%95%B0%E6%B3%95%E4%B8%8E%E9%A1%B6%E7%82%B9%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="toc-number">2.5.</span> <span class="toc-text"> tips：C++中的科学计数法与顶点表示法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E6%8E%A7%E5%88%B6%E7%AC%A6"><span class="toc-number">2.6.</span> <span class="toc-text"> 标准控制符</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6iomanip"><span class="toc-number">2.7.</span> <span class="toc-text"> 头文件iomanip</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#173-cin%E8%BE%93%E5%85%A5%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text"> 17.3 cin输入的具体实现</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#171-%E7%BC%93%E5%86%B2%E6%B5%81"><span class="toc-number">1.</span> <span class="toc-text"> 17.1 缓冲流</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#172-cout-%E8%BE%93%E5%87%BA%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text"> 17.2 cout 输出的具体实现</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.1.</span> <span class="toc-text"> 重载 &lt;&lt; 运算符</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%BE%93%E5%87%BA%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text"> 其他输出方法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%88%B7%E6%96%B0%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-number">2.3.</span> <span class="toc-text"> 刷新缓冲区</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA"><span class="toc-number">2.4.</span> <span class="toc-text"> 格式化输出</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tipsc%E4%B8%AD%E7%9A%84%E7%A7%91%E5%AD%A6%E8%AE%A1%E6%95%B0%E6%B3%95%E4%B8%8E%E9%A1%B6%E7%82%B9%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="toc-number">2.5.</span> <span class="toc-text"> tips：C++中的科学计数法与顶点表示法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E6%8E%A7%E5%88%B6%E7%AC%A6"><span class="toc-number">2.6.</span> <span class="toc-text"> 标准控制符</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6-iomanip"><span class="toc-number">2.7.</span> <span class="toc-text"> 头文件 iomanip</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#173-cin-%E8%BE%93%E5%85%A5%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text"> 17.3 cin 输入的具体实现</span></a></li></ol>
       </div>
     
   </span>
@@ -178,10 +178,10 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：晴天	心情：差</p>
+    <p>天气：晴天 心情：差</p>
 <hr />
 <h5 id="171-缓冲流"><a class="markdownIt-Anchor" href="#171-缓冲流"></a> 17.1 缓冲流</h5>
-<p>用于匹配输入和输出速度不一致的问题，比如从内存，硬盘，输入设备读取数据到程序速度不一致。下面是<code>C++</code>中读入读出的架构</p>
+<p>用于匹配输入和输出速度不一致的问题，比如从内存，硬盘，输入设备读取数据到程序速度不一致。下面是 <code>C++</code> 中读入读出的架构</p>
 <p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/a5c9bb6036ea7d89ad6b9beee24a8625.png" alt="image-20240615201255567" /></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">为成为国际语言，C++必须能够处理需要 16 位的国际字符集或更宽的字符类型。因此，该语言在传统的 8 位 char（“窄”）类型的基础上添加了 wchar_t（“宽”）字符类型；而 C++11 添加了类型 char16_t 和 char32_t。每种类型都需要有自己的 I/O 工具。标准委员会并没有开发两套（现在为 4 套）独立的类，而是开发了 1 套 I/O 类模板，其中包括 basic_istream&lt;charT，traits&lt;charT&gt;&gt;和 basic_ostream&lt;charT，traits&lt;charT&gt;&gt;。traits&lt;charT&gt;模板是一个模板类，为字符类型定义了具体特性，如如何比较字符是否相等以及字符的 EOF 值等。该 C++11 标准提供了 I/O 的 char 和 wchar_t具体化。例如，istream 和 ostream 都是 char 具体化的 typedef。同样，wistream 和 wostream 都是 wchar_t具体化。</span><br></pre></td></tr></table></figure>
 <p>C++的 iostream 类库管理了很多细节。例如，在程序中包含 iostream 文件将自动创建 8 个流对象（4 个用于窄字符流，4 个用于宽字符流）</p>
@@ -201,28 +201,28 @@
 <li>
 <p>对象代表流—这意味着什么呢？当 iostream 文件为程序声明一个 cout 对象时，该对象将包含存 储了与输出有关的信息的数据成员，如显示数据时使用的字段宽度、小数位数、显示整数时采用 的计数方法以及描述用来处理输出流的缓冲区的 streambuf 对象的地址。下面的语句通过指向的 streambuf 对象将字符串“Bjarna free”中的字符放到 cout 管理的缓冲区中：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="string">&quot;Bjarna free&quot;</span>;</span><br></pre></td></tr></table></figure>
-<p>上面提到的三个对象cin，cout和（clog或者cerr）分别代表三种通道，可以重定向将文件输入，也可以重定向将输出输入到文件而不是屏幕。</p>
+<p>上面提到的三个对象 cin，cout 和（clog 或者 cerr）分别代表三种通道，可以重定向将文件输入，也可以重定向将输出输入到文件而不是屏幕。</p>
 </li>
 </ul>
-<h5 id="172-cout输出的具体实现"><a class="markdownIt-Anchor" href="#172-cout输出的具体实现"></a> 17.2 cout输出的具体实现</h5>
-<p>类似于printf要想在屏幕上显示text，需要将数据转化为对应的text，cout负责这部分我们来大致了解一下。</p>
-<h6 id="重载运算符"><a class="markdownIt-Anchor" href="#重载运算符"></a> 重载<code>&lt;&lt;</code>运算符</h6>
-<p>默认情况下，<code>&lt;&lt;</code>运算符为移位运算符，ostream类针对不同数据类型（int，double...）都重载了该运算符。除此之外，ostream还对一些指针类型（const signed char *, void *...）重载了该运算符，能够输出指向字符串的指针（字符串以NUL结尾）。</p>
-<p>上面提到的重载运算符的返回都是ostream类，因此当拼接输出时如下：</p>
+<h5 id="172-cout-输出的具体实现"><a class="markdownIt-Anchor" href="#172-cout-输出的具体实现"></a> 17.2 cout 输出的具体实现</h5>
+<p>类似于 printf 要想在屏幕上显示 text，需要将数据转化为对应的 text，cout 负责这部分我们来大致了解一下。</p>
+<h6 id="重载-运算符"><a class="markdownIt-Anchor" href="#重载-运算符"></a> 重载 <code>&lt;&lt;</code> 运算符</h6>
+<p>默认情况下，<code>&lt;&lt;</code> 运算符为移位运算符，ostream 类针对不同数据类型（int，double...）都重载了该运算符。除此之外，ostream 还对一些指针类型（const signed char <em>, void</em>...）重载了该运算符，能够输出指向字符串的指针（字符串以 NUL 结尾）。</p>
+<p>上面提到的重载运算符的返回都是 ostream 类，因此当拼接输出时如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="string">&quot;Hi&quot;</span> &lt;&lt; <span class="string">&quot;World&quot;</span>;</span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line">cout.<span class="keyword">operator</span>&lt;&lt;(<span class="string">&quot;Hi&quot;</span>).<span class="keyword">operator</span>&lt;&lt;(<span class="string">&quot;World&quot;</span>);</span><br></pre></td></tr></table></figure>
 <h6 id="其他输出方法"><a class="markdownIt-Anchor" href="#其他输出方法"></a> 其他输出方法</h6>
-<p>ostream提供了put和write方法来输出，不同的是put和write不会转化数据到string，而是直接输出数据（需要输入数据本来为char类型），比如：</p>
+<p>ostream 提供了 put 和 write 方法来输出，不同的是 put 和 write 不会转化数据到 string，而是直接输出数据（需要输入数据本来为 char 类型），比如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="string">&#x27;W&#x27;</span>; <span class="comment">// 屏幕上显示87，即W对应的ASSIC码</span></span><br><span class="line">cout.<span class="built_in">put</span>(<span class="string">&#x27;W&#x27;</span>) <span class="comment">// 显示W</span></span><br><span class="line"><span class="comment">// put返回的还是一个ostream，这意味着支持连续调用，或者说stream调用</span></span><br><span class="line">cout.<span class="built_in">put</span>(<span class="string">&#x27;W&#x27;</span>).<span class="built_in">put</span>(<span class="string">&#x27;A&#x27;</span>); <span class="comment">// 输出WA</span></span><br></pre></td></tr></table></figure>
-<p>对于write，其原型为：</p>
+<p>对于 write，其原型为：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">basic_ostream&lt;charT, traits&gt;&amp; <span class="title">write</span><span class="params">(<span class="type">const</span> char_type *s, streamsize n)</span></span>;</span><br><span class="line"><span class="comment">// 第一个是字符串地址，第二个是写入的字符串个数</span></span><br></pre></td></tr></table></figure>
 <p>我们可以：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cout.<span class="built_in">write</span>(<span class="string">&quot;Hello&quot;</span>, <span class="number">2</span>);</span><br><span class="line"><span class="comment">// write方法返回的也是一个ostream</span></span><br></pre></td></tr></table></figure>
 <p><strong>需要注意的是，write( )方法并不会在遇到空字符时自动停止打印字符，而只是打印指定数目的字符， 即使超出了字符串的边界！</strong></p>
 <h6 id="刷新缓冲区"><a class="markdownIt-Anchor" href="#刷新缓冲区"></a> 刷新缓冲区</h6>
-<p>和C一样，刷新缓冲区在某些情形下是非常有用的，一般来说C++中有两个刷新缓冲区的控制符<code>endl</code>和<code>flush</code>。</p>
+<p>和 C 一样，刷新缓冲区在某些情形下是非常有用的，一般来说 C++中有两个刷新缓冲区的控制符 <code>endl</code> 和 <code>flush</code>。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="string">&quot;hello&quot;</span> &lt;&lt; flush;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;hello&quot;</span> &lt;&lt; endl;</span><br><span class="line"><span class="comment">// 上面的&lt;&lt; flush实际上被替换成了flush(cout);</span></span><br><span class="line"><span class="comment">// 故也可以直接flush(cout)</span></span><br></pre></td></tr></table></figure>
 <h6 id="格式化输出"><a class="markdownIt-Anchor" href="#格式化输出"></a> 格式化输出</h6>
-<p>类似于C语言的printf，ostream定义了将值转化为文本格式，但是printf中可以定义输出的宽度和向左右对齐等，ostream在默认情况下的格式化输出为：</p>
+<p>类似于 C 语言的 printf，ostream 定义了将值转化为文本格式，但是 printf 中可以定义输出的宽度和向左右对齐等，ostream 在默认情况下的格式化输出为：</p>
 <ul>
 <li>对于 char 值，如果它代表的是可打印字符，则将被作为一个字符显示在宽度为一个字符的字段中。</li>
 <li>对于数值整型，将以十进制方式显示在一个刚好容纳该数字及负号（如果有的话）的字段中。</li>
@@ -230,14 +230,14 @@
 </ul>
 <p>而对于浮点数，设置了新的规定，下面是规定：</p>
 <ul>
-<li><strong>浮点类型被显示为 6 位</strong>，末尾的 0 不显示（注意，显示的数字位数与数字被存储时精度没 有任何关系）。数字以定点表示法显示还是以科学计数法表示（参见第 3 章），取决于它的值。具 体来说，<strong>当指数大于等于 6 或小于等于−5 时，将使用科学计数法表示</strong>。另外，字段宽度恰好容纳 数字和负号（如果有的话）。默认的行为对应于带%g 说明符的标准 C 库函数 fprintf( )。</li>
+<li><strong>浮点类型被显示为 6 位</strong>，末尾的 0 不显示（注意，显示的数字位数与数字被存储时精度没 有任何关系）。数字以定点表示法显示还是以科学计数法表示（参见第 3 章），取决于它的值。具 体来说，<strong>当指数大于等于 6 或小于等于 −5 时，将使用科学计数法表示</strong>。另外，字段宽度恰好容纳 数字和负号（如果有的话）。默认的行为对应于带%g 说明符的标准 C 库函数 fprintf( )。</li>
 </ul>
-<p>和C语言一样，我们可以设置locate属性，来让<code>C++</code>的输出变化，此时上面的一些输出格式也会根据地区发生变化。</p>
-<p>如果我们需要修改格式化输出的设置，通过ios_base类中修改，ios_base类中存储了描述格式状态的信息，比如控制格式化输出的宽度，小数位数，输出十进制，八进制或者十六进制。</p>
+<p>和 C 语言一样，我们可以设置 locate 属性，来让 <code>C++</code> 的输出变化，此时上面的一些输出格式也会根据地区发生变化。</p>
+<p>如果我们需要修改格式化输出的设置，通过 ios_base 类中修改，ios_base 类中存储了描述格式状态的信息，比如控制格式化输出的宽度，小数位数，输出十进制，八进制或者十六进制。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; hex; <span class="comment">// 设置输出为16进制</span></span><br><span class="line">cout &lt;&lt; oct; <span class="comment">// 设置输出8进制</span></span><br><span class="line">cout &lt;&lt; dec; <span class="comment">// 设置输出10进制</span></span><br><span class="line">cout.<span class="built_in">width</span>(<span class="number">12</span>); <span class="comment">// 设置输出12个字符串长度</span></span><br><span class="line"><span class="comment">// 注意width方法只会影响下一个输出（然后恢复默认），其不会截断数据。</span></span><br><span class="line"><span class="comment">// 填充字符，如果需要填充width中的空格字符</span></span><br><span class="line">cout.<span class="built_in">fill</span>(<span class="string">&#x27;*&#x27;</span>); <span class="comment">// 可以这样，这个设置后会永久有效</span></span><br><span class="line"><span class="comment">// 设置浮点数的显示精度，设置后永久有效</span></span><br><span class="line">cout.<span class="built_in">precision</span>(<span class="number">2</span>); <span class="comment">// 设置为最多两位小数</span></span><br><span class="line"><span class="comment">// 打印浮点数末尾的0</span></span><br><span class="line">cout.<span class="built_in">setf</span>(ios_base::showpoint);</span><br></pre></td></tr></table></figure>
-<p>除了上面提到的，我们来重点说一下setf方法，setf设置了输出的各个配置的标志位，setf函数右两个原型：</p>
+<p>除了上面提到的，我们来重点说一下 setf 方法，setf 设置了输出的各个配置的标志位，setf 函数右两个原型：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fmtflags <span class="title">setf</span><span class="params">(fmtflags)</span></span>;</span><br><span class="line"><span class="comment">// fmtflags为ios_base空间中的类型，返回之前的设置</span></span><br><span class="line"><span class="function">fmtflags <span class="title">setf</span><span class="params">(fmtflags, fmtflags)</span></span>;</span><br><span class="line"><span class="comment">// 第一个为要设置的flags，第二个参数为要清除的flags，返回之前的设置</span></span><br></pre></td></tr></table></figure>
-<p>下面是一些ios_base空间中的格式常量：</p>
+<p>下面是一些 ios_base 空间中的格式常量：</p>
 <table>
 <thead>
 <tr>
@@ -247,43 +247,43 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">ios_base::boolalpha</td>
-<td style="text-align:center">设置输出的bool显示为true或者flase</td>
+<td style="text-align:center">ios_base:: boolalpha</td>
+<td style="text-align:center">设置输出的 bool 显示为 true 或者 flase</td>
 </tr>
 <tr>
-<td style="text-align:center">ios_base::showbase</td>
-<td style="text-align:center">输出进制前缀，比如16进制0x，8进制0</td>
+<td style="text-align:center">ios_base:: showbase</td>
+<td style="text-align:center">输出进制前缀，比如 16 进制 0x，8 进制 0</td>
 </tr>
 <tr>
-<td style="text-align:center">ios_base::uppercase</td>
-<td style="text-align:center">对于16进制，输出为大写</td>
+<td style="text-align:center">ios_base:: uppercase</td>
+<td style="text-align:center">对于 16 进制，输出为大写</td>
 </tr>
 <tr>
-<td style="text-align:center">ios_base::showpos</td>
+<td style="text-align:center">ios_base:: showpos</td>
 <td style="text-align:center">在正数前面加上+</td>
 </tr>
 <tr>
-<td style="text-align:center">ios_base::showpoint</td>
-<td style="text-align:center">显示末尾的小数点，比如整数double</td>
+<td style="text-align:center">ios_base:: showpoint</td>
+<td style="text-align:center">显示末尾的小数点，比如整数 double</td>
 </tr>
 </tbody>
 </table>
-<p>使用第一个setf重载函数直接调用上面的表即可，如果我们要使用第二个setf参数，需要了解一下ios_base中的filed。</p>
-<p>所谓的field定义了属于field下所有的位，便于清除该filed，如下表：<br />
+<p>使用第一个 setf 重载函数直接调用上面的表即可，如果我们要使用第二个 setf 参数，需要了解一下 ios_base 中的 filed。</p>
+<p>所谓的 field 定义了属于 field 下所有的位，便于清除该 filed，如下表：<br />
 <img src="https://raw.githubusercontent.com/utmux/pictures/main/img/5def42c6b84e280c7d4009559cfa1008.png" alt="image-20240615211800500" /></p>
 <p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/8569d0881782d4e448a8a5f064f04f31.png" alt="image-20240615211818507" /></p>
-<p>此时setf将会首先清除掉所有field中的位，再去调整flags，从而不受到上一个位的影响。比如：</p>
+<p>此时 setf 将会首先清除掉所有 field 中的位，再去调整 flags，从而不受到上一个位的影响。比如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ios_base::fmtflags old = cout.<span class="built_in">setf</span>(ios::left, ios::adjustfield);</span><br><span class="line"><span class="comment">// 如果要恢复之前的</span></span><br><span class="line">cout.<span class="built_in">setf</span>(old, ios::adjustfield);</span><br></pre></td></tr></table></figure>
 <h6 id="tipsc中的科学计数法与顶点表示法"><a class="markdownIt-Anchor" href="#tipsc中的科学计数法与顶点表示法"></a> tips：C++中的科学计数法与顶点表示法</h6>
-<p>在C中<code>%e</code>表示科学计数法，定点表示为<code>%f</code>，在 C++标准中，定点表示法和科学表示法都有下面两个特征：</p>
+<p>在 C 中 <code>%e</code> 表示科学计数法，定点表示为 <code>%f</code>，在 C++标准中，定点表示法和科学表示法都有下面两个特征：</p>
 <ul>
 <li>精度指的是小数位数，而不是总位数；</li>
 <li>显示末尾的 0。</li>
 </ul>
-<p>如果我们只是单纯的想要清除某个位，可以用unsetf，其原型为：</p>
+<p>如果我们只是单纯的想要清除某个位，可以用 unsetf，其原型为：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">unsetf</span><span class="params">(fmtflags mask)</span></span>;</span><br><span class="line"><span class="comment">// 比如我们需要设置为默认模式，默认模式都是0</span></span><br><span class="line">cout.<span class="built_in">unsetf</span>(ios_base::floatfiled);</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">cout.<span class="built_in">setf</span>(<span class="number">0</span>, ios_base::floatfiled);</span><br></pre></td></tr></table></figure>
 <h6 id="标准控制符"><a class="markdownIt-Anchor" href="#标准控制符"></a> 标准控制符</h6>
-<p>前面我们通过<code>cout &lt;&lt; hex</code>而不是<code>hex(cout)</code>即可快速设置为16进制输出，<code>C++</code>提供了其他的一些标准控制符，用于我们快速设置。下面是一个表格分别是控制符和其对应的函数调用：</p>
+<p>前面我们通过 <code>cout &lt;&lt; hex</code> 而不是 <code>hex(cout)</code> 即可快速设置为 16 进制输出，<code>C++</code> 提供了其他的一些标准控制符，用于我们快速设置。下面是一个表格分别是控制符和其对应的函数调用：</p>
 <table>
 <thead>
 <tr>
@@ -294,85 +294,85 @@
 <tbody>
 <tr>
 <td>boolalpha</td>
-<td>setf(ios_base::boolalpha)</td>
+<td>setf(ios_base:: boolalpha)</td>
 </tr>
 <tr>
 <td>noboolalpha</td>
-<td>unsetf(ios_base::boolalpha)</td>
+<td>unsetf(ios_base:: boolalpha)</td>
 </tr>
 <tr>
 <td>showbase</td>
-<td>setf(ios_base::showbase)</td>
+<td>setf(ios_base:: showbase)</td>
 </tr>
 <tr>
 <td>noshowbase</td>
-<td>unsetf(ios_base::showbase)</td>
+<td>unsetf(ios_base:: showbase)</td>
 </tr>
 <tr>
 <td>showpoint</td>
-<td>setf(ios_base::showpoint)</td>
+<td>setf(ios_base:: showpoint)</td>
 </tr>
 <tr>
 <td>noshowpoint</td>
-<td>unsetf(ios_base::showpoint)</td>
+<td>unsetf(ios_base:: showpoint)</td>
 </tr>
 <tr>
 <td>showpos</td>
-<td>setf(ios_base::showpos)</td>
+<td>setf(ios_base:: showpos)</td>
 </tr>
 <tr>
 <td>noshowpos</td>
-<td>unsetf(ios_base::showpos)</td>
+<td>unsetf(ios_base:: showpos)</td>
 </tr>
 <tr>
 <td>uppercase</td>
-<td>setf(ios_base::uppercase)</td>
+<td>setf(ios_base:: uppercase)</td>
 </tr>
 <tr>
 <td>nouppercase</td>
-<td>unsetf(ios_base::uppercase)</td>
+<td>unsetf(ios_base:: uppercase)</td>
 </tr>
 <tr>
 <td>internal</td>
-<td>setf(ios_base::internal, ios_base::adjustfield)</td>
+<td>setf(ios_base:: internal, ios_base:: adjustfield)</td>
 </tr>
 <tr>
 <td>left</td>
-<td>setf(ios_base::left, ios_base::adjustfield)</td>
+<td>setf(ios_base:: left, ios_base:: adjustfield)</td>
 </tr>
 <tr>
 <td>right</td>
-<td>setf(ios_base::right, ios_base::adjustfield)</td>
+<td>setf(ios_base:: right, ios_base:: adjustfield)</td>
 </tr>
 <tr>
 <td>dec</td>
-<td>setf(ios_base::dec, ios_base::basefield)</td>
+<td>setf(ios_base:: dec, ios_base:: basefield)</td>
 </tr>
 <tr>
 <td>hex</td>
-<td>setf(ios_base::hex, ios_base::basefield)</td>
+<td>setf(ios_base:: hex, ios_base:: basefield)</td>
 </tr>
 <tr>
 <td>oct</td>
-<td>setf(ios_base::oct, ios_base::basefield)</td>
+<td>setf(ios_base:: oct, ios_base:: basefield)</td>
 </tr>
 <tr>
 <td>fixed</td>
-<td>setf(ios_base::fixed, ios_base::floatfield)</td>
+<td>setf(ios_base:: fixed, ios_base:: floatfield)</td>
 </tr>
 <tr>
 <td>scientific</td>
-<td>setf(ios_base::scientific, ios_base::floatfield)</td>
+<td>setf(ios_base:: scientific, ios_base:: floatfield)</td>
 </tr>
 </tbody>
 </table>
-<h6 id="头文件iomanip"><a class="markdownIt-Anchor" href="#头文件iomanip"></a> 头文件iomanip</h6>
-<p>在头文件iomanip提供了上表之外的控制符，能够设置精度，填充数字，字符宽度等，三个最常见的为setprecision()设置精度，setfill()设置填充字符和setw()设置宽度。相当于对上面的调用的封装。</p>
-<h5 id="173-cin输入的具体实现"><a class="markdownIt-Anchor" href="#173-cin输入的具体实现"></a> 17.3 cin输入的具体实现</h5>
-<p>和cout类似，cin也会默认将str转化为数据，转化类型根据<code>operator&gt;&gt;(type &amp;)</code>的type决定。和cout一样，<code>&gt;&gt;</code>也重载了对指针类型的运算（signed char *, char *），将输入输出到指定的字符串位置。</p>
-<p>为了防止转化失败，cin会检查输入，其会跳过空白字符（空格，换行和制表符），哪怕是对于单字符也是如此，比如输入&quot;123Z&quot;，此时cin会认为仅有一个输入为&quot;123Z&quot;，下面这个式子就是错的：</p>
+<h6 id="头文件-iomanip"><a class="markdownIt-Anchor" href="#头文件-iomanip"></a> 头文件 iomanip</h6>
+<p>在头文件 iomanip 提供了上表之外的控制符，能够设置精度，填充数字，字符宽度等，三个最常见的为 setprecision()设置精度，setfill()设置填充字符和 setw()设置宽度。相当于对上面的调用的封装。</p>
+<h5 id="173-cin-输入的具体实现"><a class="markdownIt-Anchor" href="#173-cin-输入的具体实现"></a> 17.3 cin 输入的具体实现</h5>
+<p>和 cout 类似，cin 也会默认将 str 转化为数据，转化类型根据 <code>operator&gt;&gt;(type &amp;)</code> 的 type 决定。和 cout 一样，<code>&gt;&gt;</code> 也重载了对指针类型的运算（signed char <em>, char</em>），将输入输出到指定的字符串位置。</p>
+<p>为了防止转化失败，cin 会检查输入，其会跳过空白字符（空格，换行和制表符），哪怕是对于单字符也是如此，比如输入 &quot;123Z&quot;，此时 cin 会认为仅有一个输入为 &quot;123Z&quot;，下面这个式子就是错的：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果输入123Z，cin认为只有一个输入，此时下面的代码时错的</span></span><br><span class="line"><span class="type">int</span> x, y, z;</span><br><span class="line"><span class="type">char</span> pos;</span><br><span class="line">cin &gt;&gt; x &gt;&gt; y &gt;&gt; z &gt;&gt; pos;</span><br><span class="line"><span class="comment">// 只有输入1 2 3 Z中间有空格才会分开。</span></span><br></pre></td></tr></table></figure>
-<p>在之前的章节中我们提到过，如果输入错误，比如<code>cin&gt;&gt;temp</code>其如果使用if语句，其会自动返回true和false来表示是否有输入错误，实际上cin中存在很多位来表示不同的输入错误。</p>
+<p>在之前的章节中我们提到过，如果输入错误，比如 <code>cin&gt;&gt;temp</code> 其如果使用 if 语句，其会自动返回 true 和 false 来表示是否有输入错误，实际上 cin 中存在很多位来表示不同的输入错误。</p>
 
   </div>
 </article>
@@ -402,7 +402,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#171-%E7%BC%93%E5%86%B2%E6%B5%81"><span class="toc-number">1.</span> <span class="toc-text"> 17.1 缓冲流</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#172-cout%E8%BE%93%E5%87%BA%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text"> 17.2 cout输出的具体实现</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.1.</span> <span class="toc-text"> 重载&lt;&lt;运算符</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%BE%93%E5%87%BA%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text"> 其他输出方法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%88%B7%E6%96%B0%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-number">2.3.</span> <span class="toc-text"> 刷新缓冲区</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA"><span class="toc-number">2.4.</span> <span class="toc-text"> 格式化输出</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tipsc%E4%B8%AD%E7%9A%84%E7%A7%91%E5%AD%A6%E8%AE%A1%E6%95%B0%E6%B3%95%E4%B8%8E%E9%A1%B6%E7%82%B9%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="toc-number">2.5.</span> <span class="toc-text"> tips：C++中的科学计数法与顶点表示法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E6%8E%A7%E5%88%B6%E7%AC%A6"><span class="toc-number">2.6.</span> <span class="toc-text"> 标准控制符</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6iomanip"><span class="toc-number">2.7.</span> <span class="toc-text"> 头文件iomanip</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#173-cin%E8%BE%93%E5%85%A5%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text"> 17.3 cin输入的具体实现</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#171-%E7%BC%93%E5%86%B2%E6%B5%81"><span class="toc-number">1.</span> <span class="toc-text"> 17.1 缓冲流</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#172-cout-%E8%BE%93%E5%87%BA%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text"> 17.2 cout 输出的具体实现</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.1.</span> <span class="toc-text"> 重载 &lt;&lt; 运算符</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%BE%93%E5%87%BA%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text"> 其他输出方法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%88%B7%E6%96%B0%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-number">2.3.</span> <span class="toc-text"> 刷新缓冲区</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA"><span class="toc-number">2.4.</span> <span class="toc-text"> 格式化输出</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tipsc%E4%B8%AD%E7%9A%84%E7%A7%91%E5%AD%A6%E8%AE%A1%E6%95%B0%E6%B3%95%E4%B8%8E%E9%A1%B6%E7%82%B9%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="toc-number">2.5.</span> <span class="toc-text"> tips：C++中的科学计数法与顶点表示法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E6%8E%A7%E5%88%B6%E7%AC%A6"><span class="toc-number">2.6.</span> <span class="toc-text"> 标准控制符</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6-iomanip"><span class="toc-number">2.7.</span> <span class="toc-text"> 头文件 iomanip</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#173-cin-%E8%BE%93%E5%85%A5%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text"> 17.3 cin 输入的具体实现</span></a></li></ol>
       </div>
     
 

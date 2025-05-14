@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="栈解退 如果在异常处理中，爆出异常的不是try块中调用的函数，而是该函数调用的子函数，则此时涉及到栈解退这个方面。 所谓栈解退，即此时遇到异常，会从该栈一直返回，直到遇到try所在的栈，然后跳到catch对应的异常，而不是继续执行try中的语句。 我们可以在catch中使用break语句跳出该catch，继续执行try-catch代码块的吓一跳语句。  tips： 在catch和throw异常时">
+    <meta name="description" content="栈解退 如果在异常处理中，爆出异常的不是 try 块中调用的函数，而是该函数调用的子函数，则此时涉及到栈解退这个方面。 所谓栈解退，即此时遇到异常，会从该栈一直返回，直到遇到 try 所在的栈，然后跳到 catch 对应的异常，而不是继续执行 try 中的语句。 我们可以在 catch 中使用 break 语句跳出该 catch，继续执行 try-catch 代码块的吓一跳语句。  tips 在">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习Cpp-32">
 <meta property="og:url" content="https://utmux.github.io/2024/05/16/life/%E5%AD%A6%E4%B9%A0Cpp-32/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="栈解退 如果在异常处理中，爆出异常的不是try块中调用的函数，而是该函数调用的子函数，则此时涉及到栈解退这个方面。 所谓栈解退，即此时遇到异常，会从该栈一直返回，直到遇到try所在的栈，然后跳到catch对应的异常，而不是继续执行try中的语句。 我们可以在catch中使用break语句跳出该catch，继续执行try-catch代码块的吓一跳语句。  tips： 在catch和throw异常时">
+<meta property="og:description" content="栈解退 如果在异常处理中，爆出异常的不是 try 块中调用的函数，而是该函数调用的子函数，则此时涉及到栈解退这个方面。 所谓栈解退，即此时遇到异常，会从该栈一直返回，直到遇到 try 所在的栈，然后跳到 catch 对应的异常，而不是继续执行 try 中的语句。 我们可以在 catch 中使用 break 语句跳出该 catch，继续执行 try-catch 代码块的吓一跳语句。  tips 在">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-16T12:32:26.000Z">
-<meta property="article:modified_time" content="2024-05-29T13:20:43.301Z">
+<meta property="article:modified_time" content="2025-05-14T08:50:42.017Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -129,7 +129,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%88%E8%A7%A3%E9%80%80"><span class="toc-number">1.</span> <span class="toc-text"> 栈解退</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips"><span class="toc-number">2.</span> <span class="toc-text"> tips：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#exception%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text"> exception类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips%E5%85%B3%E4%BA%8Eexplicit%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text"> tips:关于explicit的使用</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%88%E8%A7%A3%E9%80%80"><span class="toc-number">1.</span> <span class="toc-text"> 栈解退</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips"><span class="toc-number">2.</span> <span class="toc-text"> tips</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#exception-%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text"> exception 类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips-%E5%85%B3%E4%BA%8E-explicit-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text"> tips: 关于 explicit 的使用</span></a></li></ol>
       </div>
     
   </span>
@@ -175,42 +175,42 @@
 
   <div class="content e-content" itemprop="articleBody">
     <h5 id="栈解退"><a class="markdownIt-Anchor" href="#栈解退"></a> 栈解退</h5>
-<p>如果在异常处理中，爆出异常的不是try块中调用的函数，而是该函数调用的子函数，则此时涉及到栈解退这个方面。<br />
-所谓栈解退，即此时遇到异常，会从该栈一直返回，直到遇到try所在的栈，然后跳到catch对应的异常，而不是继续执行try中的语句。<br />
-我们可以在catch中使用break语句跳出该catch，继续执行try-catch代码块的吓一跳语句。</p>
-<h5 id="tips"><a class="markdownIt-Anchor" href="#tips"></a> tips：</h5>
-<p>在catch和throw异常时，throw出的值总是创建一个临时拷贝，即使异常规范和catch块中指定的引用。例如：</p>
+<p>如果在异常处理中，爆出异常的不是 try 块中调用的函数，而是该函数调用的子函数，则此时涉及到栈解退这个方面。<br />
+所谓栈解退，即此时遇到异常，会从该栈一直返回，直到遇到 try 所在的栈，然后跳到 catch 对应的异常，而不是继续执行 try 中的语句。<br />
+我们可以在 catch 中使用 break 语句跳出该 catch，继续执行 try-catch 代码块的吓一跳语句。</p>
+<h5 id="tips"><a class="markdownIt-Anchor" href="#tips"></a> tips</h5>
+<p>在 catch 和 throw 异常时，throw 出的值总是创建一个临时拷贝，即使异常规范和 catch 块中指定的引用。例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">catch</span>(problem &amp;p)&#123;...&#125; <span class="comment">// 这里即使指明是引用其实也是临时拷贝</span></span><br><span class="line">...</span><br><span class="line">&#123;</span><br><span class="line">    problem oops;</span><br><span class="line">    <span class="keyword">throw</span> oops; <span class="comment">// 将会是临时拷贝，因为栈会销毁</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>已经知道了throw返回的是一个临时拷贝，为什么catch中还是要写引用，这是为了捕捉到派生类对象，<strong>基类引用是默认可以接受派生类的引用的。这就要求为了正确捕捉到异常，使用引用的catch要根据继承关系来排列catch</strong>，如下所示：</p>
+<p>已经知道了 throw 返回的是一个临时拷贝，为什么 catch 中还是要写引用，这是为了捕捉到派生类对象，<strong>基类引用是默认可以接受派生类的引用的。这就要求为了正确捕捉到异常，使用引用的 catch 要根据继承关系来排列 catch</strong>，如下所示：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//假设，bad3继承自bad2，bad2继承自bad1</span></span><br><span class="line"><span class="comment">// 则catch要如下写,将最具体的先放到前面</span></span><br><span class="line"><span class="built_in">catch</span> (bad_3 &amp;be)</span><br><span class="line">&#123;...&#125;</span><br><span class="line"><span class="built_in">catch</span> (bad_2 &amp;be)</span><br><span class="line">&#123;...&#125;</span><br><span class="line"><span class="built_in">catch</span> (bad_1 &amp;be)</span><br><span class="line">&#123;...&#125;</span><br></pre></td></tr></table></figure>
-<p>如果我们不使用引用，而是直接写，此时catch在捕获基类对象将捕获所有派生类对象，但是派生特性将会被全部博取，将会使用虚方法的基类版本。</p>
-<h5 id="exception类"><a class="markdownIt-Anchor" href="#exception类"></a> exception类</h5>
-<p>为了更加好的处理类的异常，我们可以使用exception类，将类继承自exception表示该类的方法有可能出错，然后在该类中定义一个what方法，表示出现异常时该类执行的代码。这样我们仅需在catch中添加一个exception的基类捕捉即可捕捉到所有可能出现异常的派生类，代码如下：</p>
+<p>如果我们不使用引用，而是直接写，此时 catch 在捕获基类对象将捕获所有派生类对象，但是派生特性将会被全部博取，将会使用虚方法的基类版本。</p>
+<h5 id="exception-类"><a class="markdownIt-Anchor" href="#exception-类"></a> exception 类</h5>
+<p>为了更加好的处理类的异常，我们可以使用 exception 类，将类继承自 exception 表示该类的方法有可能出错，然后在该类中定义一个 what 方法，表示出现异常时该类执行的代码。这样我们仅需在 catch 中添加一个 exception 的基类捕捉即可捕捉到所有可能出现异常的派生类，代码如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;exception&gt;</span></span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">bad_hmean</span>: <span class="keyword">public</span> std::exception <span class="comment">//继承exception类</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="type">const</span> <span class="type">char</span> * <span class="title">what</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> <span class="string">&quot;bad arguments to heam()&quot;</span>;&#125;;</span><br><span class="line">    <span class="comment">// 如上所示，what方法的返回为const char *，what方法中需要返回一个字符串</span></span><br><span class="line">...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">bad_gmean</span> : <span class="keyword">public</span> std::exception</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="type">const</span> <span class="type">char</span> *<span class="title">what</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> <span class="string">&quot;bad arguments to gmean()&quot;</span>;&#125;</span><br><span class="line">...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 此时一个catch就能捕捉到所有的类</span></span><br><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">catch</span>(std::exception &amp;e) <span class="comment">// 一个exception类能同时捕捉上面两种类，并区分</span></span><br><span class="line">&#123;</span><br><span class="line">    cout &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl; <span class="comment">// 打印出e中what的返回</span></span><br><span class="line">    <span class="comment">// 注意e是一个临时复制</span></span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>C++中常见的exception类型，我们除了继承上面最基础的exception类型，C++为了方便为我们封装了几种常见的异常类型如下：</p>
+<p>C++中常见的 exception 类型，我们除了继承上面最基础的 exception 类型，C++为了方便为我们封装了几种常见的异常类型如下：</p>
 <ol>
 <li>
-<p>stdexcept异常类：<br />
-在头文件stdexcept中有下面这些：</p>
+<p>stdexcept 异常类：<br />
+在头文件 stdexcept 中有下面这些：</p>
 <ol>
 <li>logic_error<br />
-表示逻辑错误，在logic_error中又细分为：domain_error(定义域错误),invalid_argument(和domain_error区分，一个是定义域范围超出函数正确范围，一个是参数类型不对),length_error(表示空间不足，比如处理string)，还有out_of_bounds，即索引错误或者无效。</li>
+表示逻辑错误，在 logic_error 中又细分为：domain_error(定义域错误), invalid_argument(和 domain_error 区分，一个是定义域范围超出函数正确范围，一个是参数类型不对), length_error(表示空间不足，比如处理 string)，还有 out_of_bounds，即索引错误或者无效。</li>
 <li>runtime_error<br />
-细分为：range_error，overflow_error，underflow_error。runtime_error，表示遇到运行中遇到致命问题，一般只能结束运行，而上面logic_error可以打印提示，让其重新输入。</li>
+细分为：range_error，overflow_error，underflow_error。runtime_error，表示遇到运行中遇到致命问题，一般只能结束运行，而上面 logic_error 可以打印提示，让其重新输入。</li>
 </ol>
 </li>
 <li>
-<p><code>bad_alloc</code>异常和new<br />
-如果我们使用new分配内存失败时，此时会导致抛出bad_alloc异常。</p>
+<p><code>bad_alloc</code> 异常和 new<br />
+如果我们使用 new 分配内存失败时，此时会导致抛出 bad_alloc 异常。</p>
 </li>
 <li>
-<p>空指针和new<br />
-我们在上面是通过<code>bad_alloc</code>异常来表示分配失败，实际大多数情况，是采用空指针来表示分配异常，我们可以通过强制类型转化为nothrow类型，new在分配失败会返回一个空指针：</p>
+<p>空指针和 new<br />
+我们在上面是通过 <code>bad_alloc</code> 异常来表示分配失败，实际大多数情况，是采用空指针来表示分配异常，我们可以通过强制类型转化为 nothrow 类型，new 在分配失败会返回一个空指针：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pd = <span class="built_in">new</span> (std::nothrow) Big[<span class="number">100000</span>];</span><br><span class="line"><span class="comment">//我猜测该强制类型转化，只要返回了异常就会变成null</span></span><br><span class="line"><span class="comment">// 貌似只能使用在new上</span></span><br><span class="line"><span class="keyword">if</span>( pd == <span class="number">0</span>)</span><br><span class="line">&#123;...&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h5 id="tips关于explicit的使用"><a class="markdownIt-Anchor" href="#tips关于explicit的使用"></a> tips:关于explicit的使用</h5>
-<p>为了避免各种转化，是不是需要设置好每个类的explicit属性，比如嵌入类，其就需要设置为explicit。</p>
+<h5 id="tips-关于-explicit-的使用"><a class="markdownIt-Anchor" href="#tips-关于-explicit-的使用"></a> tips: 关于 explicit 的使用</h5>
+<p>为了避免各种转化，是不是需要设置好每个类的 explicit 属性，比如嵌入类，其就需要设置为 explicit。</p>
 
   </div>
 </article>
@@ -240,7 +240,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%88%E8%A7%A3%E9%80%80"><span class="toc-number">1.</span> <span class="toc-text"> 栈解退</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips"><span class="toc-number">2.</span> <span class="toc-text"> tips：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#exception%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text"> exception类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips%E5%85%B3%E4%BA%8Eexplicit%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text"> tips:关于explicit的使用</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%88%E8%A7%A3%E9%80%80"><span class="toc-number">1.</span> <span class="toc-text"> 栈解退</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips"><span class="toc-number">2.</span> <span class="toc-text"> tips</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#exception-%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text"> exception 类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips-%E5%85%B3%E4%BA%8E-explicit-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text"> tips: 关于 explicit 的使用</span></a></li></ol>
       </div>
     
 

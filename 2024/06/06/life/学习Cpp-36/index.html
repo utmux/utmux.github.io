@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：下雨	心情：差  今天早上耳朵突然出血，然后上午就去医院看了下，最近几天一直睡不好，吃也没啥胃口，我感觉我应该吃饭的。不知道是心情的原因还是什么，感觉最近一直很累。跑步也没作用。  智能指针  uniqe_ptr与auto_ptr 前面提到过，auto_ptr和unique_ptr的一个不同就是auto_ptr是在运行的时候如果发现变量没有拥有权（ownership）就会直接退出，而对于un">
+    <meta name="description" content="天气：下雨 心情：差  今天早上耳朵突然出血，然后上午就去医院看了下，最近几天一直睡不好，吃也没啥胃口，我感觉我应该吃饭的。不知道是心情的原因还是什么，感觉最近一直很累。跑步也没作用。  智能指针  uniqe_ptr 与 auto_ptr 前面提到过，auto_ptr 和 unique_ptr 的一个不同就是 auto_ptr 是在运行的时候如果发现变量没有拥有权（ownership）就会直接退">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习Cpp-36">
 <meta property="og:url" content="https://utmux.github.io/2024/06/06/life/%E5%AD%A6%E4%B9%A0Cpp-36/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：下雨	心情：差  今天早上耳朵突然出血，然后上午就去医院看了下，最近几天一直睡不好，吃也没啥胃口，我感觉我应该吃饭的。不知道是心情的原因还是什么，感觉最近一直很累。跑步也没作用。  智能指针  uniqe_ptr与auto_ptr 前面提到过，auto_ptr和unique_ptr的一个不同就是auto_ptr是在运行的时候如果发现变量没有拥有权（ownership）就会直接退出，而对于un">
+<meta property="og:description" content="天气：下雨 心情：差  今天早上耳朵突然出血，然后上午就去医院看了下，最近几天一直睡不好，吃也没啥胃口，我感觉我应该吃饭的。不知道是心情的原因还是什么，感觉最近一直很累。跑步也没作用。  智能指针  uniqe_ptr 与 auto_ptr 前面提到过，auto_ptr 和 unique_ptr 的一个不同就是 auto_ptr 是在运行的时候如果发现变量没有拥有权（ownership）就会直接退">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-06-06T14:22:26.000Z">
-<meta property="article:modified_time" content="2024-06-06T14:23:10.429Z">
+<meta property="article:modified_time" content="2025-05-14T08:51:17.890Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -129,7 +129,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="toc-number">1.</span> <span class="toc-text"> 智能指针</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#uniqe_ptr%E4%B8%8Eauto_ptr"><span class="toc-number">1.1.</span> <span class="toc-text"> uniqe_ptr与auto_ptr</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">1.2.</span> <span class="toc-text"> 智能指针的选择</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="toc-number">1.</span> <span class="toc-text"> 智能指针</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#uniqe_ptr-%E4%B8%8E-auto_ptr"><span class="toc-number">1.1.</span> <span class="toc-text"> uniqe_ptr 与 auto_ptr</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">1.2.</span> <span class="toc-text"> 智能指针的选择</span></a></li></ol></li></ol>
       </div>
     
   </span>
@@ -174,24 +174,24 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：下雨	心情：差</p>
+    <p>天气：下雨 心情：差</p>
 <hr />
 <p>今天早上耳朵突然出血，然后上午就去医院看了下，最近几天一直睡不好，吃也没啥胃口，我感觉我应该吃饭的。不知道是心情的原因还是什么，感觉最近一直很累。跑步也没作用。</p>
 <h5 id="智能指针"><a class="markdownIt-Anchor" href="#智能指针"></a> 智能指针</h5>
-<h6 id="uniqe_ptr与auto_ptr"><a class="markdownIt-Anchor" href="#uniqe_ptr与auto_ptr"></a> uniqe_ptr与auto_ptr</h6>
-<p>前面提到过，<code>auto_ptr</code>和<code>unique_ptr</code>的一个不同就是auto_ptr是在运行的时候如果发现变量没有拥有权（ownership）就会直接退出，而对于<code>unique_ptr</code>是会在编译阶段检查对<code>unique_ptr</code>指针的赋值行为，即不能将一个指针赋值到另一个，防止多个对象指向同一个指针，正如它的名字所示：unique。</p>
-<p>但是为了应对下面这种情况，<code>unique_ptr</code>指针是允许临时右值这种赋值的：</p>
+<h6 id="uniqe_ptr-与-auto_ptr"><a class="markdownIt-Anchor" href="#uniqe_ptr-与-auto_ptr"></a> uniqe_ptr 与 auto_ptr</h6>
+<p>前面提到过，<code>auto_ptr</code> 和 <code>unique_ptr</code> 的一个不同就是 auto_ptr 是在运行的时候如果发现变量没有拥有权（ownership）就会直接退出，而对于 <code>unique_ptr</code> 是会在编译阶段检查对 <code>unique_ptr</code> 指针的赋值行为，即不能将一个指针赋值到另一个，防止多个对象指向同一个指针，正如它的名字所示：unique。</p>
+<p>但是为了应对下面这种情况，<code>unique_ptr</code> 指针是允许临时右值这种赋值的：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">unique_ptr&lt;string&gt; <span class="title">demo</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">unique_ptr&lt;string&gt; <span class="title">temp</span><span class="params">(<span class="keyword">new</span> string(s))</span></span>;</span><br><span class="line">	<span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面这种情况是符合unique的定义的，因为在赋值到另一个<code>unique_ptr</code>变量前，前面的那个unique变量会被销毁，即保证只有一个<code>unique_ptr</code>指向该数据。总之，编译器是允许上面这种如果源<code>unique_ptr</code>是一个临时右值（即赋值完就会被销毁），此时编译器是允许这样做的，但是如果源<code>unique_ptr</code>不是立刻销毁，此时编译器就会报错：</p>
+<p>上面这种情况是符合 unique 的定义的，因为在赋值到另一个 <code>unique_ptr</code> 变量前，前面的那个 unique 变量会被销毁，即保证只有一个 <code>unique_ptr</code> 指向该数据。总之，编译器是允许上面这种如果源 <code>unique_ptr</code> 是一个临时右值（即赋值完就会被销毁），此时编译器是允许这样做的，但是如果源 <code>unique_ptr</code> 不是立刻销毁，此时编译器就会报错：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function">unique_ptr&lt;string&gt; <span class="title">pu1</span><span class="params">(<span class="keyword">new</span> string(<span class="string">&quot;Hi&quot;</span>))</span></span>;</span><br><span class="line">unique_ptr&lt;string&gt; pu2;</span><br><span class="line">pu2 = pu1; <span class="comment">// 这是不允许的因为pu1仍然会存在</span></span><br><span class="line">unique_ptr&lt;string&gt; pu3;</span><br><span class="line">pu3 = <span class="built_in">unique_ptr</span>&lt;string&gt;(<span class="keyword">new</span> string <span class="string">&quot;Yo&quot;</span>); <span class="comment">// 允许的，右边是一个临时变量，赋值完该指针变量就会被销毁</span></span><br></pre></td></tr></table></figure>
-<p>当然如果你确实需要将某个unique_ptr的所有权转移到另一个unique_ptr的上面，你可以使用<code>std::move()</code>这个函数，如下所示：</p>
+<p>当然如果你确实需要将某个 unique_ptr 的所有权转移到另一个 unique_ptr 的上面，你可以使用 <code>std::move()</code> 这个函数，如下所示：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unique_ptr&lt;string&gt; ps1, ps2;</span><br><span class="line">ps1 = <span class="built_in">demo</span>(<span class="string">&quot;ts1&quot;</span>);</span><br><span class="line">ps2 = std::<span class="built_in">move</span>(ps1); <span class="comment">// 使用move函数</span></span><br><span class="line">ps1 = <span class="built_in">demo</span>(<span class="string">&quot; and more&quot;</span>); <span class="comment">// 此时ps解除了指向</span></span><br></pre></td></tr></table></figure>
-<p>unique_ptr的另一个优点是可以用于数组，相比之下auto_ptr只能使用<code>new</code>，原因是auto_ptr写死了内部释放内存是使用<code>delete</code>而不是能切换到<code>delete []</code>，如下所示：</p>
+<p>unique_ptr 的另一个优点是可以用于数组，相比之下 auto_ptr 只能使用 <code>new</code>，原因是 auto_ptr 写死了内部释放内存是使用 <code>delete</code> 而不是能切换到 <code>delete []</code>，如下所示：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">unique_ptr&lt;<span class="type">double</span> []&gt; <span class="title">pda</span><span class="params">(<span class="keyword">new</span> <span class="type">double</span>(<span class="number">5</span>))</span></span>; <span class="comment">// unique_ptr支持数组</span></span><br><span class="line"><span class="comment">// auto_ptr 不支持数组，只能使用auto_ptr&lt;double&gt; pad(new double)</span></span><br></pre></td></tr></table></figure>
 <h6 id="智能指针的选择"><a class="markdownIt-Anchor" href="#智能指针的选择"></a> 智能指针的选择</h6>
-<p>应该选取哪个智能指针，如果需要多个指向同一个对象，则选择share_ptr，即下面这种情况，比如某个数组需要被多处引用，比如很多算法用来查找数组最大最小，或者双轨法。否则使用unique_ptr。如果函数使用new分配内存，则使unique_ptr来接受这个返回指针是一个不错的选择，此时确保该对象不需要调用算法（比如sort()）或者赋值给另一个的方法。unique_ptr可以像下面这样使用：</p>
+<p>应该选取哪个智能指针，如果需要多个指向同一个对象，则选择 share_ptr，即下面这种情况，比如某个数组需要被多处引用，比如很多算法用来查找数组最大最小，或者双轨法。否则使用 unique_ptr。如果函数使用 new 分配内存，则使 unique_ptr 来接受这个返回指针是一个不错的选择，此时确保该对象不需要调用算法（比如 sort()）或者赋值给另一个的方法。unique_ptr 可以像下面这样使用：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">unique_ptr&lt;<span class="type">int</span>&gt; <span class="title">make_int</span><span class="params">(<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">unique_ptr</span>&lt;<span class="type">int</span>&gt;(<span class="keyword">new</span> <span class="built_in">int</span>(n));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">(unique_ptr&lt;<span class="type">int</span>&gt; &amp;pi)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; *pi &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vector&lt;unique_ptr&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">vp</span>(size);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; vp.<span class="built_in">size</span>(); i++)</span><br><span class="line">        vp[i] = <span class="built_in">make_int</span>(<span class="built_in">rand</span>() % <span class="number">100</span>); <span class="comment">//  赋值临时unique_ptr</span></span><br><span class="line">   vp.<span class="built_in">push_back</span>(<span class="built_in">make_int</span>(<span class="built_in">rand</span>() % <span class="number">100</span>)); <span class="comment">// 因为参数是一个临时变量，所以可以</span></span><br><span class="line">    for_each(vp.<span class="built_in">begin</span>(), vp.<span class="built_in">end</span>(), show); <span class="comment">// 使用for_each遍历</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>除此之外智能指针之间，unique_ptr是可以转化为shared_ptr的。</p>
+<p>除此之外智能指针之间，unique_ptr 是可以转化为 shared_ptr 的。</p>
 
   </div>
 </article>
@@ -221,7 +221,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="toc-number">1.</span> <span class="toc-text"> 智能指针</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#uniqe_ptr%E4%B8%8Eauto_ptr"><span class="toc-number">1.1.</span> <span class="toc-text"> uniqe_ptr与auto_ptr</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">1.2.</span> <span class="toc-text"> 智能指针的选择</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="toc-number">1.</span> <span class="toc-text"> 智能指针</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#uniqe_ptr-%E4%B8%8E-auto_ptr"><span class="toc-number">1.1.</span> <span class="toc-text"> uniqe_ptr 与 auto_ptr</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">1.2.</span> <span class="toc-text"> 智能指针的选择</span></a></li></ol></li></ol>
       </div>
     
 

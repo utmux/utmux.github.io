@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：晴天	心情：一般   访问控制：Protected protected关键字在普通类中和private类似，只有公有成员能够访问protected的成员。private和protected的区别只有在基类的派生类才能体现出来，派生类中的成员可以直接访问基类的protected成员，但不能直接访问private。总结：对于外部世界来说，protected的成员和private成员类似，但对于派">
+    <meta name="description" content="天气：晴天 心情：一般   访问控制：Protected protected 关键字在普通类中和 private 类似，只有公有成员能够访问 protected 的成员。private 和 protected 的区别只有在基类的派生类才能体现出来，派生类中的成员可以直接访问基类的 protected 成员，但不能直接访问 private。总结：对于外部世界来说，protected 的成员和 pri">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习Cpp-25">
 <meta property="og:url" content="https://utmux.github.io/2024/04/24/life/%E5%AD%A6%E4%B9%A0Cpp-25/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：晴天	心情：一般   访问控制：Protected protected关键字在普通类中和private类似，只有公有成员能够访问protected的成员。private和protected的区别只有在基类的派生类才能体现出来，派生类中的成员可以直接访问基类的protected成员，但不能直接访问private。总结：对于外部世界来说，protected的成员和private成员类似，但对于派">
+<meta property="og:description" content="天气：晴天 心情：一般   访问控制：Protected protected 关键字在普通类中和 private 类似，只有公有成员能够访问 protected 的成员。private 和 protected 的区别只有在基类的派生类才能体现出来，派生类中的成员可以直接访问基类的 protected 成员，但不能直接访问 private。总结：对于外部世界来说，protected 的成员和 pri">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-24T12:40:26.000Z">
-<meta property="article:modified_time" content="2024-04-29T10:07:26.642Z">
+<meta property="article:modified_time" content="2025-05-14T08:49:12.066Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -129,7 +129,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6protected"><span class="toc-number">1.</span> <span class="toc-text"> 访问控制：Protected</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BBabc"><span class="toc-number">2.</span> <span class="toc-text"> 抽象基类ABC</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E5%92%8C%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-number">3.</span> <span class="toc-text"> 继承和动态内存分配</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6protected"><span class="toc-number">1.</span> <span class="toc-text"> 访问控制：Protected</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB-abc"><span class="toc-number">2.</span> <span class="toc-text"> 抽象基类 ABC</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E5%92%8C%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-number">3.</span> <span class="toc-text"> 继承和动态内存分配</span></a></li></ol>
       </div>
     
   </span>
@@ -174,19 +174,19 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：晴天	心情：一般</p>
+    <p>天气：晴天 心情：一般</p>
 <hr />
 <h5 id="访问控制protected"><a class="markdownIt-Anchor" href="#访问控制protected"></a> 访问控制：Protected</h5>
-<p>protected关键字在普通类中和private类似，只有公有成员能够访问protected的成员。private和protected的区别只有在基类的派生类才能体现出来，派生类中的成员可以直接访问基类的protected成员，但不能直接访问private。总结：对于外部世界来说，protected的成员和private成员类似，但对于派生类，protected成员此时和public类似。</p>
-<p>警告：<strong>最好对类数据成员采用私有访问控制，不要使用保护访问控制；同时通过基类方法使派生类能 够访问基类数据。而对于成员函数，使用protected的可以使得派生类访问公正不能访问的内部函数。</strong></p>
-<h5 id="抽象基类abc"><a class="markdownIt-Anchor" href="#抽象基类abc"></a> 抽象基类ABC</h5>
-<p>对于is-a关系，例如椭圆和圆，如果实际进行编程，此时会发现圆虽然是椭圆，但是很多特性并不通用，各种函数也是。我们虽然可以通过圆这个派生类重新定义虚函数，但是会导致非常多的函数需要重写。这种情况下，我们可以将圆和椭圆的共同特性都放在一个ABC中，然后将圆和椭圆在这个ABC的基础上写圆和椭圆的实现。</p>
-<p>Tips:纯虚数</p>
-<p>如上所说，对于ABC这个类，该类共同点为假设共同点为中心坐标和Move()方法（假设圆和椭圆该方法实现一样）和Area()方法（假设圆和椭圆实现不一样）。对于该ABC类，其包含了圆和椭圆都有的方法:Move()方法和Area()方法，对于Move两者是一样的，而Area两者是不一样的。因此我们只需要在ABC中定义Move方法，而对于Area方法，我们只需要将方法定义为一个纯虚函数，作为一个占位符。其定义方法为在结尾处加一个<code>=0</code>如下所示：</p>
+<p>protected 关键字在普通类中和 private 类似，只有公有成员能够访问 protected 的成员。private 和 protected 的区别只有在基类的派生类才能体现出来，派生类中的成员可以直接访问基类的 protected 成员，但不能直接访问 private。总结：对于外部世界来说，protected 的成员和 private 成员类似，但对于派生类，protected 成员此时和 public 类似。</p>
+<p>警告：<strong>最好对类数据成员采用私有访问控制，不要使用保护访问控制；同时通过基类方法使派生类能 够访问基类数据。而对于成员函数，使用 protected 的可以使得派生类访问公正不能访问的内部函数。</strong></p>
+<h5 id="抽象基类-abc"><a class="markdownIt-Anchor" href="#抽象基类-abc"></a> 抽象基类 ABC</h5>
+<p>对于 is-a 关系，例如椭圆和圆，如果实际进行编程，此时会发现圆虽然是椭圆，但是很多特性并不通用，各种函数也是。我们虽然可以通过圆这个派生类重新定义虚函数，但是会导致非常多的函数需要重写。这种情况下，我们可以将圆和椭圆的共同特性都放在一个 ABC 中，然后将圆和椭圆在这个 ABC 的基础上写圆和椭圆的实现。</p>
+<p>Tips: 纯虚数</p>
+<p>如上所说，对于 ABC 这个类，该类共同点为假设共同点为中心坐标和 Move()方法（假设圆和椭圆该方法实现一样）和 Area()方法（假设圆和椭圆实现不一样）。对于该 ABC 类，其包含了圆和椭圆都有的方法: Move()方法和 Area()方法，对于 Move 两者是一样的，而 Area 两者是不一样的。因此我们只需要在 ABC 中定义 Move 方法，而对于 Area 方法，我们只需要将方法定义为一个纯虚函数，作为一个占位符。其定义方法为在结尾处加一个 <code>=0</code> 如下所示：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BaseEclipse</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">double</span> x,y; <span class="comment">// 椭圆和圆都有的中心坐标</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">BaseEclipse</span>(<span class="type">double</span> x0 = <span class="number">0</span>, y0 = <span class="number">0</span>):<span class="built_in">x</span>(x0),<span class="built_in">y</span>(y0)&#123;&#125;</span><br><span class="line">	<span class="keyword">virtual</span> ~<span class="built_in">BaseEclipse</span>()&#123;&#125; <span class="comment">// 定义基类虚析构函数</span></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Move</span><span class="params">(<span class="type">int</span> nx, <span class="type">int</span> ny)</span></span>&#123;x = nx; y = ny;&#125; <span class="comment">//圆和椭圆Move方法一致</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">double</span> <span class="title">Area</span><span class="params">()</span> <span class="type">const</span> </span>= <span class="number">0</span>;<span class="comment">// 纯虚函数，占位符，使得圆和椭圆能够继承该类都自己重新实现</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>如上所示，在使用该ABC类后，此时我们可以使用该ABC的指针分别来管理这两种对象。</p>
+<p>如上所示，在使用该 ABC 类后，此时我们可以使用该 ABC 的指针分别来管理这两种对象。</p>
 <h5 id="继承和动态内存分配"><a class="markdownIt-Anchor" href="#继承和动态内存分配"></a> 继承和动态内存分配</h5>
-<p>这里探讨以下继承是如何处理new和delete的动态内存分配，例如基类如果使用动态内存分配 ，派生将如何实现。</p>
+<p>这里探讨以下继承是如何处理 new 和 delete 的动态内存分配，例如基类如果使用动态内存分配 ，派生将如何实现。</p>
 <ul>
 <li>
 <p>基类使用动态内存非分配，派生类不使用动态内存分配时：</p>
@@ -235,7 +235,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6protected"><span class="toc-number">1.</span> <span class="toc-text"> 访问控制：Protected</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BBabc"><span class="toc-number">2.</span> <span class="toc-text"> 抽象基类ABC</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E5%92%8C%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-number">3.</span> <span class="toc-text"> 继承和动态内存分配</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6protected"><span class="toc-number">1.</span> <span class="toc-text"> 访问控制：Protected</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB-abc"><span class="toc-number">2.</span> <span class="toc-text"> 抽象基类 ABC</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E5%92%8C%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-number">3.</span> <span class="toc-text"> 继承和动态内存分配</span></a></li></ol>
       </div>
     
 

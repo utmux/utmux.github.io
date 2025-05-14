@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：晴天	心情：差  每天都不知道自己浪费了时间在哪里，今天又没有出去锻炼，我是真的服了我自己了，说好今天锻炼的，上午在睡懒觉，下午在这摆了一下午，结果啥也没做完。然后晚上看了下yolo的论文和C++。就这样。 明天一定要出去锻炼不然我是狗。 今天问chatgpt才知道，不是所有结构都支持迭代器，貌似C++中的array和vector支持，这才是array最大的意义吧，所谓的at保证内存安全也是">
+    <meta name="description" content="天气：晴天 心情：差  每天都不知道自己浪费了时间在哪里，今天又没有出去锻炼，我是真的服了我自己了，说好今天锻炼的，上午在睡懒觉，下午在这摆了一下午，结果啥也没做完。然后晚上看了下 yolo 的论文和 C++。就这样。 明天一定要出去锻炼不然我是狗。 今天问 chatgpt 才知道，不是所有结构都支持迭代器，貌似 C++中的 array 和 vector 支持，这才是 array 最大的意义吧，所">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习Cpp-8">
 <meta property="og:url" content="https://utmux.github.io/2024/03/14/life/%E5%AD%A6%E4%B9%A0Cpp-8/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：晴天	心情：差  每天都不知道自己浪费了时间在哪里，今天又没有出去锻炼，我是真的服了我自己了，说好今天锻炼的，上午在睡懒觉，下午在这摆了一下午，结果啥也没做完。然后晚上看了下yolo的论文和C++。就这样。 明天一定要出去锻炼不然我是狗。 今天问chatgpt才知道，不是所有结构都支持迭代器，貌似C++中的array和vector支持，这才是array最大的意义吧，所谓的at保证内存安全也是">
+<meta property="og:description" content="天气：晴天 心情：差  每天都不知道自己浪费了时间在哪里，今天又没有出去锻炼，我是真的服了我自己了，说好今天锻炼的，上午在睡懒觉，下午在这摆了一下午，结果啥也没做完。然后晚上看了下 yolo 的论文和 C++。就这样。 明天一定要出去锻炼不然我是狗。 今天问 chatgpt 才知道，不是所有结构都支持迭代器，貌似 C++中的 array 和 vector 支持，这才是 array 最大的意义吧，所">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-14T14:13:26.000Z">
-<meta property="article:modified_time" content="2024-03-14T14:40:05.329Z">
+<meta property="article:modified_time" content="2025-05-14T08:46:39.231Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -174,25 +174,25 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：晴天	心情：差</p>
+    <p>天气：晴天 心情：差</p>
 <hr />
-<p>每天都不知道自己浪费了时间在哪里，今天又没有出去锻炼，我是真的服了我自己了，说好今天锻炼的，上午在睡懒觉，下午在这摆了一下午，结果啥也没做完。然后晚上看了下yolo的论文和C++。就这样。</p>
+<p>每天都不知道自己浪费了时间在哪里，今天又没有出去锻炼，我是真的服了我自己了，说好今天锻炼的，上午在睡懒觉，下午在这摆了一下午，结果啥也没做完。然后晚上看了下 yolo 的论文和 C++。就这样。</p>
 <p>明天一定要出去锻炼不然我是狗。</p>
-<p>今天问chatgpt才知道，不是所有结构都支持迭代器，貌似C++中的array和vector支持，这才是array最大的意义吧，所谓的at保证内存安全也是一大意义。</p>
+<p>今天问 chatgpt 才知道，不是所有结构都支持迭代器，貌似 C++中的 array 和 vector 支持，这才是 array 最大的意义吧，所谓的 at 保证内存安全也是一大意义。</p>
 <p>对了还有，和家里人通个电话。</p>
 <h5 id="文件的输出"><a class="markdownIt-Anchor" href="#文件的输出"></a> 文件的输出</h5>
-<p>类似于cout，也能够设置输出的小数和整数的格式，例如：</p>
+<p>类似于 cout，也能够设置输出的小数和整数的格式，例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">outFile &lt;&lt; fixed;</span><br><span class="line">outFile.<span class="built_in">precision</span>(<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
 <p>使用流程如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span> <span class="comment">// 包含头文件</span></span></span><br><span class="line">ofstream outFile; <span class="comment">// 定义一个类</span></span><br><span class="line">outFile.<span class="built_in">open</span>(<span class="string">&quot;xx&quot;</span>); <span class="comment">// 打开一个文件</span></span><br><span class="line">outFIle &lt;&lt; <span class="string">&quot;xx&quot;</span>; <span class="comment">// 写入文件</span></span><br><span class="line">outFile.<span class="built_in">close</span>(); <span class="comment">// 关闭文件，如果忘记关闭会自动在程序结束时关闭</span></span><br></pre></td></tr></table></figure>
 <h5 id="文件的输入"><a class="markdownIt-Anchor" href="#文件的输入"></a> 文件的输入</h5>
-<p>类似于文件的输出，只不过将ofstream换成了instream。</p>
+<p>类似于文件的输出，只不过将 ofstream 换成了 instream。</p>
 <h5 id="文件不存在或重复的情况"><a class="markdownIt-Anchor" href="#文件不存在或重复的情况"></a> 文件不存在或重复的情况</h5>
-<p>对于输出，默认是w模式，故会直接创建一个新的文件，可以通过is_open()方法来检查，例如：</p>
+<p>对于输出，默认是 w 模式，故会直接创建一个新的文件，可以通过 is_open()方法来检查，例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">outFile.<span class="built_in">open</span>(<span class="string">&quot;xx&quot;</span>);</span><br><span class="line"><span class="keyword">if</span>(!outFile.<span class="built_in">is_open</span>())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">exit</span>(EXIT_FAILuRE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>对于输入，其使用的代码是一样的。如何确认读入的数据是否正常，如果最后一次读取操作中发生了类型不匹 配的情况，方法 <code>fail( )</code>将返回 true（如果遇到了 EOF，该方法也将返回 true）。最后，可能出现意外的问题， 如文件受损或硬件故障。如果最后一次读取文件时发生了这样的问题，方法 <code>bad( )</code>将返回 true。不要分别检 查这些情况，一种更简单的方法是使用 <code>good( )</code>方法，该方法在没有发生任何错误时返回 true（即类型不匹配也会返回false），通常代码如下：</p>
+<p>对于输入，其使用的代码是一样的。如何确认读入的数据是否正常，如果最后一次读取操作中发生了类型不匹 配的情况，方法 <code>fail( )</code> 将返回 true（如果遇到了 EOF，该方法也将返回 true）。最后，可能出现意外的问题， 如文件受损或硬件故障。如果最后一次读取文件时发生了这样的问题，方法 <code>bad( )</code> 将返回 true。不要分别检 查这些情况，一种更简单的方法是使用 <code>good( )</code> 方法，该方法在没有发生任何错误时返回 true（即类型不匹配也会返回 false），通常代码如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (inFile.<span class="built_in">good</span>()) <span class="comment">// 依次读入</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 正确读入的情况</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (inFile.<span class="built_in">eof</span>()) <span class="comment">// 确认上面正常读取完了文件</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 正常处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>事实上，类似于cin，对ifstream类进行bool判断，其默认返回的结果是<code>good()</code>方法的值。故其实可以这样写更加常用：</p>
+<p>事实上，类似于 cin，对 ifstream 类进行 bool 判断，其默认返回的结果是 <code>good()</code> 方法的值。故其实可以这样写更加常用：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(inFile &gt;&gt; value) <span class="comment">// 不断读取数值</span></span><br></pre></td></tr></table></figure>
 
   </div>

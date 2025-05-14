@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：阴雨	心情：差  操了妈的, 天天下雨, 下午外卖还被偷了, 图书馆隔壁还是个司马的玩意。  在构造函数中使用new时的注意事项 根据之前学习到的代码，我们可以发现，使用new初始化指针成员必须特别小心，具体如下所示：  如果在构造函数中使用 new 来初始化指针成员，则应在析构函数中使用 delete。 new 和 delete 必须相互兼容。new 对应于 delete，new[ ]对应">
+    <meta name="description" content="天气：阴雨 心情：差  操了妈的, 天天下雨, 下午外卖还被偷了, 图书馆隔壁还是个司马的玩意。  在构造函数中使用 new 时的注意事项 根据之前学习到的代码，我们可以发现，使用 new 初始化指针成员必须特别小心，具体如下所示：  如果在构造函数中使用 new 来初始化指针成员，则应在析构函数中使用 delete。 new 和 delete 必须相互兼容。new 对应于 delete，new">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习Cpp-21">
 <meta property="og:url" content="https://utmux.github.io/2024/04/09/life/%E5%AD%A6%E4%B9%A0Cpp-21/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：阴雨	心情：差  操了妈的, 天天下雨, 下午外卖还被偷了, 图书馆隔壁还是个司马的玩意。  在构造函数中使用new时的注意事项 根据之前学习到的代码，我们可以发现，使用new初始化指针成员必须特别小心，具体如下所示：  如果在构造函数中使用 new 来初始化指针成员，则应在析构函数中使用 delete。 new 和 delete 必须相互兼容。new 对应于 delete，new[ ]对应">
+<meta property="og:description" content="天气：阴雨 心情：差  操了妈的, 天天下雨, 下午外卖还被偷了, 图书馆隔壁还是个司马的玩意。  在构造函数中使用 new 时的注意事项 根据之前学习到的代码，我们可以发现，使用 new 初始化指针成员必须特别小心，具体如下所示：  如果在构造函数中使用 new 来初始化指针成员，则应在析构函数中使用 delete。 new 和 delete 必须相互兼容。new 对应于 delete，new">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-09T12:40:26.000Z">
-<meta property="article:modified_time" content="2024-04-09T12:43:07.975Z">
+<meta property="article:modified_time" content="2025-05-14T08:48:36.151Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -129,7 +129,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9C%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%AD%E4%BD%BF%E7%94%A8new%E6%97%B6%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.</span> <span class="toc-text"> 在构造函数中使用new时的注意事项</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8C%85%E5%90%AB%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text"> 包含类成员的类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%BAconst%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.</span> <span class="toc-text"> 定义为const的返回值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E5%92%8Cc%E4%B8%AD%E7%9A%84%E7%A9%BA%E6%8C%87%E9%92%88%E5%8F%98%E9%87%8Fnull%E5%92%8Cnullptr"><span class="toc-number">4.</span> <span class="toc-text"> C和C++中的空指针变量NULL和nullptr</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9C%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%AD%E4%BD%BF%E7%94%A8-new-%E6%97%B6%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.</span> <span class="toc-text"> 在构造函数中使用 new 时的注意事项</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8C%85%E5%90%AB%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text"> 包含类成员的类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%BA-const-%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.</span> <span class="toc-text"> 定义为 const 的返回值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-%E5%92%8C-c%E4%B8%AD%E7%9A%84%E7%A9%BA%E6%8C%87%E9%92%88%E5%8F%98%E9%87%8F-null-%E5%92%8C-nullptr"><span class="toc-number">4.</span> <span class="toc-text"> C 和 C++中的空指针变量 NULL 和 nullptr</span></a></li></ol>
       </div>
     
   </span>
@@ -174,23 +174,23 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：阴雨	心情：差</p>
+    <p>天气：阴雨 心情：差</p>
 <hr />
 <p>操了妈的, 天天下雨, 下午外卖还被偷了, 图书馆隔壁还是个司马的玩意。</p>
-<h5 id="在构造函数中使用new时的注意事项"><a class="markdownIt-Anchor" href="#在构造函数中使用new时的注意事项"></a> 在构造函数中使用new时的注意事项</h5>
-<p>根据之前学习到的代码，我们可以发现，使用new初始化指针成员必须特别小心，具体如下所示：</p>
+<h5 id="在构造函数中使用-new-时的注意事项"><a class="markdownIt-Anchor" href="#在构造函数中使用-new-时的注意事项"></a> 在构造函数中使用 new 时的注意事项</h5>
+<p>根据之前学习到的代码，我们可以发现，使用 new 初始化指针成员必须特别小心，具体如下所示：</p>
 <ul>
 <li>如果在构造函数中使用 new 来初始化指针成员，则应在析构函数中使用 delete。</li>
-<li>new 和 delete 必须相互兼容。new 对应于 delete，new[ ]对应于 delete[ ]。</li>
+<li>new 和 delete 必须相互兼容。new 对应于 delete，new [ ] 对应于 delete [ ]。</li>
 <li>如果有多个构造函数，则必须以相同的方式使用 new，要么都带中括号，要么都不带。因为只有 一个析构函数，所有的构造函数都必须与它兼容。然而，可以在一个构造函数中使用 new 初始化 指针，而在另一个构造函数中将指针初始化为空（0 或 C++11 中的 nullptr），这是因为 delete（无 论是带中括号还是不带中括号）可以用于空指针。</li>
 <li>应定义一个复制构造函数，通过深度复制将一个对象初始化为另一个对象。（对于指针成员，将指向的对象在内存中复制一份）</li>
 <li>应当定义一个赋值运算符，通过深度复制将一个对象复制给另一个对象。</li>
 </ul>
 <h5 id="包含类成员的类"><a class="markdownIt-Anchor" href="#包含类成员的类"></a> 包含类成员的类</h5>
 <p>我们都知道类会有默认的复制构造函数，对于类中的类成员，其使用等号或者复制赋值时，其默认的复制构造函数将会调用类成员自带的复制构造函数来对其进行赋值。</p>
-<h5 id="定义为const的返回值"><a class="markdownIt-Anchor" href="#定义为const的返回值"></a> 定义为const的返回值</h5>
-<p>对于类中的运算符重载，例如<code>=</code>与<code>==</code>有时候可能会因为手打错导致搞混，例如<code>class_v1 + class_v2 = class_v3</code>（放在左边更加容易避免出错），此时可以将<code>operator+</code>定义为const来避免出错。</p>
-<h5 id="c和c中的空指针变量null和nullptr"><a class="markdownIt-Anchor" href="#c和c中的空指针变量null和nullptr"></a> C和C++中的空指针变量NULL和nullptr</h5>
+<h5 id="定义为-const-的返回值"><a class="markdownIt-Anchor" href="#定义为-const-的返回值"></a> 定义为 const 的返回值</h5>
+<p>对于类中的运算符重载，例如 <code>=</code> 与 <code>==</code> 有时候可能会因为手打错导致搞混，例如 <code>class_v1 + class_v2 = class_v3</code>（放在左边更加容易避免出错），此时可以将 <code>operator+</code> 定义为 const 来避免出错。</p>
+<h5 id="c-和-c中的空指针变量-null-和-nullptr"><a class="markdownIt-Anchor" href="#c-和-c中的空指针变量-null-和-nullptr"></a> C 和 C++中的空指针变量 NULL 和 nullptr</h5>
 <p>NULL、0 还是 nullptr：以前，空指针可以用 0 或 NULL（在很多头文件中，NULL 是一个被定义为 0 的符号常量）来表示。C 程序员通常使用 NULL 而不是 0，以指出这是一个指针，就像使用‘\0’而不是 0 来 表示空字符，以指出这是一个字符一样。然而，C++传统上更喜欢用简单的 0，而不是等价的 NULL。但正 如前面指出的，C++11 提供了关键字 nullptr，这是一种更好的选择。</p>
 
   </div>
@@ -221,7 +221,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9C%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%AD%E4%BD%BF%E7%94%A8new%E6%97%B6%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.</span> <span class="toc-text"> 在构造函数中使用new时的注意事项</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8C%85%E5%90%AB%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text"> 包含类成员的类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%BAconst%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.</span> <span class="toc-text"> 定义为const的返回值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c%E5%92%8Cc%E4%B8%AD%E7%9A%84%E7%A9%BA%E6%8C%87%E9%92%88%E5%8F%98%E9%87%8Fnull%E5%92%8Cnullptr"><span class="toc-number">4.</span> <span class="toc-text"> C和C++中的空指针变量NULL和nullptr</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9C%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%AD%E4%BD%BF%E7%94%A8-new-%E6%97%B6%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.</span> <span class="toc-text"> 在构造函数中使用 new 时的注意事项</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8C%85%E5%90%AB%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text"> 包含类成员的类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%BA-const-%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.</span> <span class="toc-text"> 定义为 const 的返回值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-%E5%92%8C-c%E4%B8%AD%E7%9A%84%E7%A9%BA%E6%8C%87%E9%92%88%E5%8F%98%E9%87%8F-null-%E5%92%8C-nullptr"><span class="toc-number">4.</span> <span class="toc-text"> C 和 C++中的空指针变量 NULL 和 nullptr</span></a></li></ol>
       </div>
     
 

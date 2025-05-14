@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：阴冷	心情：还好  昨晚不知道是不是因为感冒还是啥，鼻子堵住睡不着，估计两点多睡的，然后中间又做了两次噩梦，醒了两次，今早六点就醒了，醒了根本睡不着，然后九点多下床玩了会电脑。 今天把图书馆作业和图论作业给抄完了，中午来教学楼学习的时候看到前面那个大佬在搞雷达仿真，我是真的废物啊。 然后下午首先写了下图书馆的作业，写不下去看了一下C++然后还看了下yolo v1的论文和代码实现，都是看知乎的">
+    <meta name="description" content="天气：阴冷 心情：还好  昨晚不知道是不是因为感冒还是啥，鼻子堵住睡不着，估计两点多睡的，然后中间又做了两次噩梦，醒了两次，今早六点就醒了，醒了根本睡不着，然后九点多下床玩了会电脑。 今天把图书馆作业和图论作业给抄完了，中午来教学楼学习的时候看到前面那个大佬在搞雷达仿真，我是真的废物啊。 然后下午首先写了下图书馆的作业，写不下去看了一下 C++然后还看了下 yolo v1 的论文和代码实现，都是看">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习Cpp-10">
 <meta property="og:url" content="https://utmux.github.io/2024/03/17/life/%E5%AD%A6%E4%B9%A0Cpp-10/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：阴冷	心情：还好  昨晚不知道是不是因为感冒还是啥，鼻子堵住睡不着，估计两点多睡的，然后中间又做了两次噩梦，醒了两次，今早六点就醒了，醒了根本睡不着，然后九点多下床玩了会电脑。 今天把图书馆作业和图论作业给抄完了，中午来教学楼学习的时候看到前面那个大佬在搞雷达仿真，我是真的废物啊。 然后下午首先写了下图书馆的作业，写不下去看了一下C++然后还看了下yolo v1的论文和代码实现，都是看知乎的">
+<meta property="og:description" content="天气：阴冷 心情：还好  昨晚不知道是不是因为感冒还是啥，鼻子堵住睡不着，估计两点多睡的，然后中间又做了两次噩梦，醒了两次，今早六点就醒了，醒了根本睡不着，然后九点多下床玩了会电脑。 今天把图书馆作业和图论作业给抄完了，中午来教学楼学习的时候看到前面那个大佬在搞雷达仿真，我是真的废物啊。 然后下午首先写了下图书馆的作业，写不下去看了一下 C++然后还看了下 yolo v1 的论文和代码实现，都是看">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-17T13:11:26.000Z">
-<meta property="article:modified_time" content="2024-03-17T13:07:10.372Z">
+<meta property="article:modified_time" content="2025-05-14T08:46:57.221Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
     
@@ -129,7 +129,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88"><span class="toc-number">1.</span> <span class="toc-text"> 函数指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text"> 内联函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F"><span class="toc-number">3.</span> <span class="toc-text"> 引用变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text"> 引用变量作为参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">5.</span> <span class="toc-text"> 引用变量参数的函数注意点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips%E5%BA%94%E5%B0%BD%E5%8F%AF%E8%83%BD%E4%BD%BF%E7%94%A8const"><span class="toc-number">6.</span> <span class="toc-text"> Tips：应尽可能使用const</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8"><span class="toc-number">7.</span> <span class="toc-text"> 右值引用</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88"><span class="toc-number">1.</span> <span class="toc-text"> 函数指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text"> 内联函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F"><span class="toc-number">3.</span> <span class="toc-text"> 引用变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text"> 引用变量作为参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">5.</span> <span class="toc-text"> 引用变量参数的函数注意点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips%E5%BA%94%E5%B0%BD%E5%8F%AF%E8%83%BD%E4%BD%BF%E7%94%A8-const"><span class="toc-number">6.</span> <span class="toc-text"> Tips：应尽可能使用 const</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8"><span class="toc-number">7.</span> <span class="toc-text"> 右值引用</span></a></li></ol>
       </div>
     
   </span>
@@ -174,22 +174,22 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>天气：阴冷	心情：还好</p>
+    <p>天气：阴冷 心情：还好</p>
 <hr />
 <p>昨晚不知道是不是因为感冒还是啥，鼻子堵住睡不着，估计两点多睡的，然后中间又做了两次噩梦，醒了两次，今早六点就醒了，醒了根本睡不着，然后九点多下床玩了会电脑。</p>
 <p>今天把图书馆作业和图论作业给抄完了，中午来教学楼学习的时候看到前面那个大佬在搞雷达仿真，我是真的废物啊。</p>
-<p>然后下午首先写了下图书馆的作业，写不下去看了一下C++然后还看了下yolo v1的论文和代码实现，都是看知乎的，原论文我根本看不太懂。</p>
+<p>然后下午首先写了下图书馆的作业，写不下去看了一下 C++然后还看了下 yolo v1 的论文和代码实现，都是看知乎的，原论文我根本看不太懂。</p>
 <p>晚上把图论作业给抄完了，现在回去吃饭去，貌似泡面吃完了，我又买了十包，以后在拼多多买东西一定要在减减减里面九折买。上次忘记了亏了两块多。</p>
-<p>现在不想看了，21点了，隔壁有个逆天的班级在那自习，离谱。对了，昨天下午天非常黄，我还以为是沙尘暴，今天才知道是四川哪里着火了，山火导致的浓烟导致的。</p>
+<p>现在不想看了，21 点了，隔壁有个逆天的班级在那自习，离谱。对了，昨天下午天非常黄，我还以为是沙尘暴，今天才知道是四川哪里着火了，山火导致的浓烟导致的。</p>
 <h5 id="函数指针"><a class="markdownIt-Anchor" href="#函数指针"></a> 函数指针</h5>
 <p>下面这三个函数指针是等价的:</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">const</span> <span class="type">double</span> *<span class="title">f1</span><span class="params">(<span class="type">const</span> <span class="type">double</span> arr[], <span class="type">int</span> n)</span></span>;</span><br><span class="line"><span class="function"><span class="type">const</span> <span class="type">double</span> *<span class="title">f2</span><span class="params">(<span class="type">const</span> <span class="type">double</span>[], <span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">const</span> <span class="type">double</span> *<span class="title">f3</span><span class="params">(<span class="type">const</span> <span class="type">double</span> *, <span class="type">int</span>)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>对于函数指针，要善于使用auto进行自动推断和使用typedef来简化和清晰化程序。</p>
-<p>如何阅读某个定义是否为指针还是函数指针或者数组，下面是方法，首先需要知道的是<code>[]</code>的优先级比<code>*</code>要高。<br />
-对于一个定义首先查看优先级最高的东西，如果是<code>[]</code>则代表为数组，如果是<code>*</code>则代表为指针，例如：</p>
+<p>对于函数指针，要善于使用 auto 进行自动推断和使用 typedef 来简化和清晰化程序。</p>
+<p>如何阅读某个定义是否为指针还是函数指针或者数组，下面是方法，首先需要知道的是 <code>[]</code> 的优先级比 <code>*</code> 要高。<br />
+对于一个定义首先查看优先级最高的东西，如果是 <code>[]</code> 则代表为数组，如果是 <code>*</code> 则代表为指针，例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">double</span> *(*pa[<span class="number">3</span>])(<span class="type">const</span> <span class="type">double</span> *, <span class="type">int</span>); <span class="comment">// 这是一个数组</span></span><br><span class="line"><span class="type">const</span> <span class="type">double</span> *(*(*pd)[<span class="number">3</span>])(<span class="type">const</span> <span class="type">double</span> *, <span class="type">int</span>)<span class="comment">// 这是一个指针</span></span><br></pre></td></tr></table></figure>
 <h5 id="内联函数"><a class="markdownIt-Anchor" href="#内联函数"></a> 内联函数</h5>
-<p>内联函数节省了堆栈和跳转的开销，但是值得注意的是内敛函数会导致编译出的可执行文件以及运行时所占的内存大小变大，原因是如果有10个地方调用该内敛函数，则该内敛函数也会复制十次到调用位置，而不是跳转到某个地方执行。<br />
+<p>内联函数节省了堆栈和跳转的开销，但是值得注意的是内敛函数会导致编译出的可执行文件以及运行时所占的内存大小变大，原因是如果有 10 个地方调用该内敛函数，则该内敛函数也会复制十次到调用位置，而不是跳转到某个地方执行。<br />
 应该有选择的使用内敛函数，内联函数时间太长节省的时间相对执行时间来说微不足道，太短则即使节省相对大部分时间，但是由于这个过程相当快，因此尽管节省了该过程的大部分时间，但节省的时间绝对值并不大，除非该函数经常使用。</p>
 <h5 id="引用变量"><a class="markdownIt-Anchor" href="#引用变量"></a> 引用变量</h5>
 <p>所谓的引用变量是指给一个变量起另一个名字，所谓变量名本质上是变量所谓的地址，故引用变量本质是用两个不同的称呼表示同一个变量地址。</p>
@@ -200,21 +200,21 @@
 <h5 id="引用变量作为参数"><a class="markdownIt-Anchor" href="#引用变量作为参数"></a> 引用变量作为参数</h5>
 <p>使用引用变量作为参数能够直接访问原变量，具有很大的便利性。前面说过，应在定义引用变量时对其进行初始化。函数调用使用实参初始化形参，因此函数的引用参 数被初始化为函数调用传递的实参。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">swapr</span><span class="params">(<span class="type">int</span> &amp;a, <span class="type">int</span> &amp;b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>例如这里的a和b会被自动初始化为调用它的参数值。</p>
-<p>引用传递会修改所指向地址的值，如果想避免修改，可以通过const来限制：</p>
+<p>例如这里的 a 和 b 会被自动初始化为调用它的参数值。</p>
+<p>引用传递会修改所指向地址的值，如果想避免修改，可以通过 const 来限制：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">double</span> <span class="title">refcube</span><span class="params">(<span class="type">const</span> <span class="type">double</span> &amp;ra)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>且对于引用参数，其参数应该时变量，而不能使用例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">refcube</span>(<span class="number">3</span>); <span class="comment">// 错误用法</span></span><br><span class="line"><span class="built_in">refcube</span>(x + <span class="number">3</span>); <span class="comment">// 错误用法</span></span><br></pre></td></tr></table></figure>
 <h5 id="引用变量参数的函数注意点"><a class="markdownIt-Anchor" href="#引用变量参数的函数注意点"></a> 引用变量参数的函数注意点</h5>
-<p>使用引用变量作为函数的参数时，值得注意的是，如果实参与引用参数不匹配，C++将生成临时变量。仅当函数的形参为const时才会，例如：</p>
+<p>使用引用变量作为函数的参数时，值得注意的是，如果实参与引用参数不匹配，C++将生成临时变量。仅当函数的形参为 const 时才会，例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">double</span> <span class="title">refcube</span><span class="params">(<span class="type">const</span> <span class="type">int</span> &amp;x)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>C++会在下面两种情况下生成临时变量：</p>
 <ul>
-<li>实参类型正确，但不能作为左值（左值参数是可被引用的数据对象，例如，变量、数组元素、结构成员、引用和解除引 用的指针都是左值。非左值包括字面常量（用引号括起的字符串除外，它们由其地址表示）和包含多项的 表达式。）这里const也属于左值，只是为不可修改的左值。</li>
+<li>实参类型正确，但不能作为左值（左值参数是可被引用的数据对象，例如，变量、数组元素、结构成员、引用和解除引 用的指针都是左值。非左值包括字面常量（用引号括起的字符串除外，它们由其地址表示）和包含多项的 表达式。）这里 const 也属于左值，只是为不可修改的左值。</li>
 <li>实参的类型不匹配，但可以转化为正确的类型</li>
 </ul>
 <p>这些临时变量只会在函数调用期间存在，此后便可以随意删除。</p>
-<h5 id="tips应尽可能使用const"><a class="markdownIt-Anchor" href="#tips应尽可能使用const"></a> Tips：应尽可能使用const</h5>
+<h5 id="tips应尽可能使用-const"><a class="markdownIt-Anchor" href="#tips应尽可能使用-const"></a> Tips：应尽可能使用 const</h5>
 <p>将引用参数声明为常量数据的引用的理由有三个：</p>
 <ul>
 <li>使用 const 可以避免无意中修改数据的编程错误；</li>
@@ -222,14 +222,14 @@
 <li>使用 const 引用使函数能够正确生成并使用临时变量</li>
 </ul>
 <h5 id="右值引用"><a class="markdownIt-Anchor" href="#右值引用"></a> 右值引用</h5>
-<p>C++11新增了一种引用，右值引用，使用<code>&amp;&amp;</code>来进行声明，这种引用可以指向常量这些右值。</p>
+<p>C++11 新增了一种引用，右值引用，使用 <code>&amp;&amp;</code> 来进行声明，这种引用可以指向常量这些右值。</p>
 <p>引用更加常用的用于结构体。使用引用作为函数参数的输入和函数的返回有利于节省中间的缓存变量，可以直接返回或者重复调用，例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">free_throws &amp; <span class="title">accumulate</span><span class="params">(free_throws &amp; target, <span class="type">const</span> free_throws &amp; source)</span></span>; <span class="comment">// 函数原型,使用引用返回</span></span><br><span class="line"><span class="built_in">accumulate</span>(<span class="built_in">accumulate</span>(team, three), four); <span class="comment">// 多次调用</span></span><br></pre></td></tr></table></figure>
-<p>返回引用时最重要的一点是，应避免返回函数终止时不再存在的内存单元引用。比如指向临时变量的引用之类的，一种方法时返回参数的引用，第二种方法是通过new来划分内存。比如：</p>
+<p>返回引用时最重要的一点是，应避免返回函数终止时不再存在的内存单元引用。比如指向临时变量的引用之类的，一种方法时返回参数的引用，第二种方法是通过 new 来划分内存。比如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">const</span> free_throws &amp; <span class="title">clone</span><span class="params">(free_throws &amp;ft)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	free_throws *pt = <span class="keyword">new</span> free_throws;</span><br><span class="line">	*pt = ft; <span class="comment">//同一结构体可以直接赋值</span></span><br><span class="line">	<span class="keyword">return</span> *pt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>对于引用返回，其可以作为左值进行赋值，例如上面的函数可以有</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">accumulate</span>(<span class="built_in">accumulate</span>(team, three), four) = five;</span><br></pre></td></tr></table></figure>
-<p>因为引用返回的本来就是一个可以修改的内存地址，而不像常量或者表达式一样存在于临时缓存中。为了规避于不小心修改所指向的引用，应当使用const来修饰返回引用，所以标准函数如下所示：</p>
+<p>因为引用返回的本来就是一个可以修改的内存地址，而不像常量或者表达式一样存在于临时缓存中。为了规避于不小心修改所指向的引用，应当使用 const 来修饰返回引用，所以标准函数如下所示：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">const</span> free_throws &amp; <span class="title">accumulate</span><span class="params">(free_throws &amp; target, <span class="type">const</span> free_throws &amp; source)</span></span>; <span class="comment">// 函数原型,使用引用返回</span></span><br></pre></td></tr></table></figure>
 
   </div>
@@ -260,7 +260,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88"><span class="toc-number">1.</span> <span class="toc-text"> 函数指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text"> 内联函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F"><span class="toc-number">3.</span> <span class="toc-text"> 引用变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text"> 引用变量作为参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">5.</span> <span class="toc-text"> 引用变量参数的函数注意点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips%E5%BA%94%E5%B0%BD%E5%8F%AF%E8%83%BD%E4%BD%BF%E7%94%A8const"><span class="toc-number">6.</span> <span class="toc-text"> Tips：应尽可能使用const</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8"><span class="toc-number">7.</span> <span class="toc-text"> 右值引用</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88"><span class="toc-number">1.</span> <span class="toc-text"> 函数指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text"> 内联函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F"><span class="toc-number">3.</span> <span class="toc-text"> 引用变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text"> 引用变量作为参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">5.</span> <span class="toc-text"> 引用变量参数的函数注意点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips%E5%BA%94%E5%B0%BD%E5%8F%AF%E8%83%BD%E4%BD%BF%E7%94%A8-const"><span class="toc-number">6.</span> <span class="toc-text"> Tips：应尽可能使用 const</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8"><span class="toc-number">7.</span> <span class="toc-text"> 右值引用</span></a></li></ol>
       </div>
     
 
