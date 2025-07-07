@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：下雨 心情：一般   嵌入式学习（二）  1. QEMU 设备初始化流程详解   1. QEMU 设备初始化流程详解 在 QEMU 中创建设备实例时，类初始化和实例初始化的调用顺序如下（参考了 100ask 的 QEMU 的 LCD 设备注册流程代码）：  2. 设备创建流程 123456789101112131415161718192021222324sequenceDiagram">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式学习（二）">
+<meta property="og:url" content="https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：下雨 心情：一般   嵌入式学习（二）  1. QEMU 设备初始化流程详解   1. QEMU 设备初始化流程详解 在 QEMU 中创建设备实例时，类初始化和实例初始化的调用顺序如下（参考了 100ask 的 QEMU 的 LCD 设备注册流程代码）：  2. 设备创建流程 123456789101112131415161718192021222324sequenceDiagram">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/assets/image-20250707154805437.png">
+<meta property="article:published_time" content="2025-07-04T05:23:49.000Z">
+<meta property="article:modified_time" content="2025-07-07T07:58:56.632Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/assets/image-20250707154805437.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>嵌入式学习（二）</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2025/07/02/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&text=嵌入式学习（二）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&title=嵌入式学习（二）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&is_video=false&description=嵌入式学习（二）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=嵌入式学习（二）&body=Check out this article: https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&title=嵌入式学习（二）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&title=嵌入式学习（二）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&title=嵌入式学习（二）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&title=嵌入式学习（二）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&name=嵌入式学习（二）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&t=嵌入式学习（二）"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%BA%8C"><span class="toc-number">1.</span> <span class="toc-text"> 嵌入式学习（二）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-qemu-%E8%AE%BE%E5%A4%87%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.1.</span> <span class="toc-text"> 1. QEMU 设备初始化流程详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-qemu-%E8%AE%BE%E5%A4%87%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3-2"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 1. QEMU 设备初始化流程详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AE%BE%E5%A4%87%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 2. 设备创建流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%85%B7%E4%BD%93%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 3. 具体执行顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%85%B3%E9%94%AE%E5%8C%BA%E5%88%AB%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96-vs-%E5%AE%9E%E4%BE%8B%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 4. 关键区别：类初始化 vs 实例初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E5%85%B7%E4%BD%93%E8%A1%A8%E7%8E%B0"><span class="toc-number">1.1.5.</span> <span class="toc-text"> 5. 代码中的具体表现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96-ask100fb_class_init"><span class="toc-number">1.1.5.1.</span> <span class="toc-text"> 类初始化 (ask100fb_class_init)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%88%9D%E5%A7%8B%E5%8C%96-ask100fb_init"><span class="toc-number">1.1.5.2.</span> <span class="toc-text"> 实例初始化 (ask100fb_init)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#realize-%E9%98%B6%E6%AE%B5-ask100fb_realize"><span class="toc-number">1.1.5.3.</span> <span class="toc-text"> Realize 阶段 (ask100fb_realize)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E8%AE%BE%E5%A4%87%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.6.</span> <span class="toc-text"> 完整设备创建流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%88%AB%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.1.7.</span> <span class="toc-text"> 特别注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B8%B8%E8%A7%84-qemu-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E5%A4%87%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text"> 2. 常规 QEMU 自定义设备开发流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-sysbus_realize_and_unref-%E4%B8%AD%E7%9A%84-unref-%E5%90%AB%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 2. sysbus_realize_and_unref() 中的 unref 含义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD"><span class="toc-number">1.2.1.1.</span> <span class="toc-text"> ✅ 功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.2.1.2.</span> <span class="toc-text"> 📌 使用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E4%BD%BF%E7%94%A8-unref-%E7%9A%84%E5%90%8E%E6%9E%9C"><span class="toc-number">1.2.1.3.</span> <span class="toc-text"> ❗ 不使用 unref 的后果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%B8%8F-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.2.1.4.</span> <span class="toc-text"> ⚠️ 注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-mmio-%E6%B3%A8%E5%86%8C%E4%B8%8E%E6%98%A0%E5%B0%84%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 3. MMIO 注册与映射机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.2.1.</span> <span class="toc-text"> ✅ 主要函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E8%AF%B4%E6%98%8E"><span class="toc-number">1.2.2.2.</span> <span class="toc-text"> 🔁 关系说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.2.2.3.</span> <span class="toc-text"> 🧠 总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E8%AE%BE%E5%A4%87%E6%98%AF%E5%90%A6%E6%AD%A3%E5%B8%B8%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 4. 如何测试设备是否正常工作？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%9E%84%E5%BB%BA%E5%92%8C%E9%9B%86%E6%88%90%E8%AE%BE%E5%A4%87%E5%88%B0-qemu-%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 5. 构建和集成设备到 QEMU 流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.2.4.1.</span> <span class="toc-text"> ✅ 步骤</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%BC%80%E5%8F%91%E5%BB%BA%E8%AE%AE%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">1.2.5.</span> <span class="toc-text"> 6. 开发建议与最佳实践</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B7%BB%E5%8A%A0-qemu-%E7%9A%84-lcd-%E5%B1%8F%E5%B9%95%E5%B9%B6%E9%80%9A%E8%BF%87-sdl-%E8%BE%93%E5%87%BA"><span class="toc-number">1.3.</span> <span class="toc-text"> 3. 自定义添加 QEMU 的 LCD 屏幕并通过 sdl 输出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BF%AE%E6%94%B9-qemu-%E5%B9%B6%E7%BC%96%E8%AF%91"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 1. 修改 QEMU 并编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%BA%E5%86%85%E6%A0%B8%E6%B7%BB%E5%8A%A0-fb-%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 2.  为内核添加 fb 驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8-qemu"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 启动 QEMU</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.4.</span> <span class="toc-text"> 4. 其他知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8-busybox-%E5%88%B6%E4%BD%9C%E8%BD%BB%E9%87%8F%E7%BA%A7-initramfs-%E7%8E%AF%E5%A2%83"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 1. 使用 BusyBox 制作轻量级 initramfs 环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E6%AD%A5%E9%AA%A4%E5%8C%85%E6%8B%AC"><span class="toc-number">1.4.1.1.</span> <span class="toc-text"> 🔧 主要步骤包括</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E5%8A%BF"><span class="toc-number">1.4.1.2.</span> <span class="toc-text"> ✅ 优势</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-gdb-qemu-%E8%B0%83%E8%AF%95-linux-%E5%86%85%E6%A0%B8"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 2. 使用 GDB + QEMU 调试 Linux 内核</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%B8%8F-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.4.2.1.</span> <span class="toc-text"> 🛠️ 准备工作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-gdb-%E8%BF%9E%E6%8E%A5%E8%B0%83%E8%AF%95"><span class="toc-number">1.4.2.2.</span> <span class="toc-text"> 💡 使用 GDB 连接调试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B8%E5%9E%8B%E8%B0%83%E8%AF%95%E5%9C%BA%E6%99%AF"><span class="toc-number">1.4.2.3.</span> <span class="toc-text"> 🧪 典型调试场景</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-lcd-%E6%8E%A7%E5%88%B6%E5%99%A8%E6%A8%A1%E5%9E%8B%E4%B8%8E%E8%AE%BE%E5%A4%87%E6%A0%91%E7%90%86%E8%A7%A3"><span class="toc-number">1.4.3.</span> <span class="toc-text"> 3. LCD 控制器模型与设备树理解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%B8%8F-lcd-%E6%8E%A7%E5%88%B6%E5%99%A8%E6%A8%A1%E5%9E%8B%E6%A0%B8%E5%BF%83%E8%A6%81%E7%82%B9"><span class="toc-number">1.4.3.1.</span> <span class="toc-text"> 🖥️ LCD 控制器模型核心要点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E5%A4%87%E6%A0%91%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.4.3.2.</span> <span class="toc-text"> 📄 设备树配置详解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%BB%BA%E8%AE%AE"><span class="toc-number">1.4.3.3.</span> <span class="toc-text"> ✅ 开发建议</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-imx6ull-%E5%BC%95%E8%84%9A%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="toc-number">1.4.4.</span> <span class="toc-text"> 4. IMX6ULL 引脚配置方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B%E5%A6%82%E4%B8%8B"><span class="toc-number">1.4.4.1.</span> <span class="toc-text"> 🧱 配置流程如下</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8-nxp-pin-tool-%E9%85%8D%E7%BD%AE%E5%BC%95%E8%84%9A%E5%8A%9F%E8%83%BD"><span class="toc-number">1.4.4.1.1.</span> <span class="toc-text"> ✅ 1. 使用 NXP Pin Tool 配置引脚功能</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E5%B0%86%E9%85%8D%E7%BD%AE%E5%86%99%E5%85%A5%E8%AE%BE%E5%A4%87%E6%A0%91"><span class="toc-number">1.4.4.1.2.</span> <span class="toc-text"> ✅ 2. 将配置写入设备树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-pinctrl-%E5%AD%90%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E5%BC%95%E8%84%9A"><span class="toc-number">1.4.4.1.3.</span> <span class="toc-text"> ✅ 3. Pinctrl 子系统管理引脚</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-gpio-%E5%AD%90%E7%B3%BB%E7%BB%9F%E6%8E%A7%E5%88%B6%E9%AB%98%E4%BD%8E%E7%94%B5%E5%B9%B3"><span class="toc-number">1.4.4.1.4.</span> <span class="toc-text"> ✅ 4. GPIO 子系统控制高低电平</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        嵌入式学习（二）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-07-04T05:23:49.000Z" class="dt-published" itemprop="datePublished">2025-07-04</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/work/">work</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：下雨 心情：一般</p>
+<hr />
+<h1 id="嵌入式学习二"><a class="markdownIt-Anchor" href="#嵌入式学习二"></a> 嵌入式学习（二）</h1>
+<h2 id="1-qemu-设备初始化流程详解"><a class="markdownIt-Anchor" href="#1-qemu-设备初始化流程详解"></a> 1. QEMU 设备初始化流程详解</h2>
+<hr />
+<h3 id="1-qemu-设备初始化流程详解-2"><a class="markdownIt-Anchor" href="#1-qemu-设备初始化流程详解-2"></a> 1. QEMU 设备初始化流程详解</h3>
+<p>在 QEMU 中创建设备实例时，类初始化和实例初始化的调用顺序如下（参考了 100ask 的 QEMU 的 LCD 设备注册流程代码）：</p>
+<h3 id="2-设备创建流程"><a class="markdownIt-Anchor" href="#2-设备创建流程"></a> 2. 设备创建流程</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant Main as 主程序</span><br><span class="line">    participant TypeSys as 类型系统</span><br><span class="line">    participant Class as 设备类</span><br><span class="line">    participant Instance as 设备实例</span><br><span class="line">    </span><br><span class="line">    Main-&gt;&gt;TypeSys: type_register_static(&amp;ask100fb_info)</span><br><span class="line">    activate TypeSys</span><br><span class="line">    TypeSys-&gt;&gt;Class: ask100fb_class_init() 执行一次</span><br><span class="line">    deactivate TypeSys</span><br><span class="line">    </span><br><span class="line">    Main-&gt;&gt;TypeSys: qdev_create(NULL, TYPE_100ASKFB)</span><br><span class="line">    activate TypeSys</span><br><span class="line">    TypeSys-&gt;&gt;Instance: object_new(TYPE_100ASKFB)</span><br><span class="line">    activate Instance</span><br><span class="line">    Instance-&gt;&gt;Instance: 分配内存(sizeof(ASK100FbState))</span><br><span class="line">    Instance-&gt;&gt;Instance: ask100fb_init() 实例初始化</span><br><span class="line">    deactivate Instance</span><br><span class="line">    TypeSys-&gt;&gt;Instance: qdev_init_nofail(dev)</span><br><span class="line">    activate Instance</span><br><span class="line">    Instance-&gt;&gt;Instance: device_realize()</span><br><span class="line">    Instance-&gt;&gt;Instance: ask100fb_realize() 设备实现</span><br><span class="line">    deactivate Instance</span><br><span class="line">    deactivate TypeSys</span><br></pre></td></tr></table></figure>
+<h3 id="3-具体执行顺序"><a class="markdownIt-Anchor" href="#3-具体执行顺序"></a> 3. 具体执行顺序</h3>
+<ol>
+<li>
+<p><strong>类型注册阶段</strong>（在 QEMU 启动时执行）：</p>
+<ul>
+<li>调用 <code>type_register_static(&amp;ask100fb_info)</code></li>
+<li>触发 <strong>类初始化</strong> <code>ask100fb_class_init()</code>
+<ul>
+<li>这个函数 <strong>只执行一次</strong>，无论创建多少设备实例</li>
+<li>设置设备类别和 realize 回调</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>设备实例化阶段</strong>：</p>
+<ul>
+<li>调用 <code>qdev_create(NULL, TYPE_100ASKFB)</code></li>
+<li>触发以下顺序：<br />
+a. <strong>实例初始化</strong> <code>ask100fb_init()</code>
+<ul>
+<li>为每个设备实例单独执行</li>
+<li>初始化设备特定状态</li>
+<li>设置 I/O 内存区域<br />
+b. <strong>设备实现</strong> <code>ask100fb_realize()</code></li>
+<li>通过类初始化中设置的 realize 回调触发</li>
+<li>执行设备的具体实现逻辑</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-关键区别类初始化-vs-实例初始化"><a class="markdownIt-Anchor" href="#4-关键区别类初始化-vs-实例初始化"></a> 4. 关键区别：类初始化 vs 实例初始化</h3>
+<table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>类初始化 (class_init)</strong></th>
+<th><strong>实例初始化 (instance_init)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>调用时机</strong></td>
+<td>类型注册时</td>
+<td>每次创建设备实例时</td>
+</tr>
+<tr>
+<td><strong>调用次数</strong></td>
+<td>整个生命周期只执行一次</td>
+<td>每个设备实例执行一次</td>
+</tr>
+<tr>
+<td><strong>主要职责</strong></td>
+<td>设置类级别的行为</td>
+<td>初始化实例特定状态</td>
+</tr>
+<tr>
+<td><strong>参数</strong></td>
+<td><code>ObjectClass *klass</code></td>
+<td><code>Object *obj</code></td>
+</tr>
+<tr>
+<td><strong>典型操作</strong></td>
+<td>设置 realize 回调<br>注册设备属性<br>设置设备类别</td>
+<td>初始化设备状态<br>设置默认值<br>创建内存区域</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-代码中的具体表现"><a class="markdownIt-Anchor" href="#5-代码中的具体表现"></a> 5. 代码中的具体表现</h3>
+<h4 id="类初始化-ask100fb_class_init"><a class="markdownIt-Anchor" href="#类初始化-ask100fb_class_init"></a> 类初始化 (<code>ask100fb_class_init</code>)</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">ask100fb_class_init</span><span class="params">(ObjectClass *oc, <span class="type">void</span> *data)</span></span><br><span class="line">&#123;</span><br><span class="line">    DeviceClass *dc = DEVICE_CLASS(oc);</span><br><span class="line">    </span><br><span class="line">    set_bit(DEVICE_CATEGORY_DISPLAY, dc-&gt;categories);</span><br><span class="line">    dc-&gt;realize = ask100fb_realize;  <span class="comment">// 设置realize回调</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="实例初始化-ask100fb_init"><a class="markdownIt-Anchor" href="#实例初始化-ask100fb_init"></a> 实例初始化 (<code>ask100fb_init</code>)</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">ask100fb_init</span><span class="params">(Object *obj)</span></span><br><span class="line">&#123;</span><br><span class="line">    ASK100FbState *s = ASK100FB(obj);</span><br><span class="line">    <span class="comment">// 获取client对应的内存区域</span></span><br><span class="line">    MemoryRegion *address_space = get_system_memory();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化I/O内存区域，QEMU一共有八种内存/存储设备，这里把内存和存储看成一个东西了，首先定义一个内存/存储设备</span></span><br><span class="line">    <span class="comment">// 设置其ops，即访问该内存/存储时触发的函数，然后结果保存在s-&gt;iomem中</span></span><br><span class="line">    memory_region_init_io(&amp;s-&gt;iomem, obj, &amp;ask100_lcdc_ops, s, </span><br><span class="line">                         TYPE_100ASKFB, <span class="number">16</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 将内存区域添加到系统地址空间</span></span><br><span class="line">    <span class="comment">// 将上面定义的内存区域映射到address_space + FSL_IMX6UL_LCDIF_ADDR的位置</span></span><br><span class="line">    memory_region_add_subregion(address_space, </span><br><span class="line">                              FSL_IMX6UL_LCDIF_ADDR, &amp;s-&gt;iomem);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="realize-阶段-ask100fb_realize"><a class="markdownIt-Anchor" href="#realize-阶段-ask100fb_realize"></a> Realize 阶段 (<code>ask100fb_realize</code>)</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">ask100fb_realize</span><span class="params">(DeviceState *dev, Error **errp)</span></span><br><span class="line">&#123;</span><br><span class="line">    ASK100FbState *s = ASK100FB(dev);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 加载开发板背景图片</span></span><br><span class="line">    imx6ul_board_ui_backgroud_prepare();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化图形控制台</span></span><br><span class="line">    s-&gt;con = graphic_console_init(dev, <span class="number">0</span>, &amp;ask100fb_ops, s);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 调整控制台大小</span></span><br><span class="line">    qemu_console_resize(s-&gt;con, s-&gt;board_xres, s-&gt;board_yres);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="完整设备创建流程"><a class="markdownIt-Anchor" href="#完整设备创建流程"></a> 完整设备创建流程</h3>
+<ol>
+<li>
+<p><strong>类型注册</strong>（QEMU 启动时）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type_init(ask100fb_register_types)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>设备创建</strong>（板级代码中）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">create_100ask_qemu_fb</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    DeviceState *dev = qdev_create(<span class="literal">NULL</span>, TYPE_100ASKFB);</span><br><span class="line">    qdev_init_nofail(dev);</span><br><span class="line">    <span class="comment">//  现在用sysbus_realize_and_unref替代，使用qdev_create是有一个引用dev，使用unref解除引用。</span></span><br><span class="line">    <span class="comment">// 然后再使用sysbus_mmio_map映射到目标的地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>执行顺序</strong>：</p>
+<ul>
+<li><code>qdev_create()</code> 调用 <code>object_new()</code> 创建对象</li>
+<li><code>object_new()</code> 调用实例初始化 <code>ask100fb_init()</code></li>
+<li><code>qdev_init_nofail()</code> 调用 <code>device_realize()</code></li>
+<li><code>device_realize()</code> 调用类初始化中设置的 <code>ask100fb_realize()</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="特别注意事项"><a class="markdownIt-Anchor" href="#特别注意事项"></a> 特别注意事项</h3>
+<ol>
+<li>
+<p><strong>类初始化的唯一性</strong>：</p>
+<ul>
+<li>即使创建多个 LCD 设备实例，<code>ask100fb_class_init()</code> 也只会执行一次</li>
+<li>所有实例共享相同的类结构和 realize 回调</li>
+</ul>
+</li>
+<li>
+<p><strong>实例初始化的独立性</strong>：</p>
+<ul>
+<li>每个设备实例都有自己的 <code>ask100fb_init()</code> 调用</li>
+<li>每个实例维护独立的状态（<code>ASK100FbState</code>）</li>
+</ul>
+</li>
+<li>
+<p><strong>Realize 的延迟执行</strong>：</p>
+<ul>
+<li><code>realize</code> 在设备被添加到总线时触发</li>
+<li>可以在实例初始化之后设置设备属性</li>
+<li>允许依赖其他设备完成初始化</li>
+</ul>
+</li>
+</ol>
+<hr />
+<p>以下是根据你提供的文章内容，结合你之前讨论的 QEMU 设备模型和 <code>unref</code> 相关知识点所做的总结，使用 <strong>###</strong> 标题（即 h3）格式整理如下：</p>
+<h2 id="2-常规-qemu-自定义设备开发流程"><a class="markdownIt-Anchor" href="#2-常规-qemu-自定义设备开发流程"></a> 2. 常规 QEMU 自定义设备开发流程</h2>
+<p>QEMU 提供了面向对象的设备模型（QOM），允许开发者模拟自定义硬件设备。开发一个简单的 ROM 设备（如文中提到的 <code>banana_rom</code>）的主要步骤如下：</p>
+<ol>
+<li>
+<p><strong>定义设备状态结构体</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BananaRomState</span> &#123;</span></span><br><span class="line">    SysBusDevice parent_obj;</span><br><span class="line">    MemoryRegion iomem;</span><br><span class="line">    <span class="type">uint64_t</span> chip_id;</span><br><span class="line">&#125; BananaRomState;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>注册设备类型</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">const</span> TypeInfo banana_rom_info = &#123;</span><br><span class="line">    .name = TYPE_BANANA_ROM,</span><br><span class="line">    .parent = TYPE_SYS_BUS_DEVICE,</span><br><span class="line">    .instance_size = <span class="keyword">sizeof</span>(BananaRomState),</span><br><span class="line">    .instance_init = banana_rom_instance_init,</span><br><span class="line">&#125;;</span><br><span class="line">type_init(banana_rom_register_types)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>实现实例初始化函数</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">banana_rom_instance_init</span><span class="params">(Object *obj)</span> &#123;</span><br><span class="line">    BananaRomState *s = BANANA_ROM(obj);</span><br><span class="line">    <span class="comment">// 创建一个存储设备/内存设备，定义其读写等ops操作</span></span><br><span class="line">    memory_region_init_io(&amp;s-&gt;iomem, obj, &amp;banana_rom_ops, s, TYPE_BANANA_ROM, <span class="number">0x100</span>);</span><br><span class="line">    <span class="comment">// 将该内存挂载到总线上，最后在主板层级上使用sysbus_map进行映射到指定地址</span></span><br><span class="line">    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &amp;s-&gt;iomem);</span><br><span class="line">    s-&gt;chip_id = CHIP_ID;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>实现 MMIO 操作函数</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">const</span> MemoryRegionOps banana_rom_ops = &#123;</span><br><span class="line">    .read = banana_rom_read,</span><br><span class="line">    .endianness = DEVICE_NATIVE_ENDIAN,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>创建并映射设备地址</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DeviceState *<span class="title function_">banana_rom_create</span><span class="params">(hwaddr addr)</span> &#123;</span><br><span class="line">    <span class="comment">// 如果主板结构体里面有该指针则无需使用qdev_new和unref，参考imx6ul.c，直接调用realize和map即可</span></span><br><span class="line">    DeviceState *dev = qdev_new(TYPE_BANANA_ROM);</span><br><span class="line">    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &amp;error_fatal);</span><br><span class="line">    <span class="comment">// 将第0个设备进行映射</span></span><br><span class="line">    sysbus_mmio_map(SYS_BUS_DEVICE(dev), <span class="number">0</span>, addr);</span><br><span class="line">    <span class="keyword">return</span> dev;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>在主板中添加设备</strong></p>
+<ul>
+<li>修改内存映射表（memmap）</li>
+<li>在板级初始化函数中调用 <code>banana_rom_create()</code></li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3 id="2-sysbus_realize_and_unref-中的-unref-含义"><a class="markdownIt-Anchor" href="#2-sysbus_realize_and_unref-中的-unref-含义"></a> 2. <code>sysbus_realize_and_unref()</code> 中的 <code>unref</code> 含义</h3>
+<h4 id="功能"><a class="markdownIt-Anchor" href="#功能"></a> ✅ 功能</h4>
+<ul>
+<li>调用 <code>.realize</code> 回调函数（用于设备逻辑初始化）</li>
+<li>然后自动调用 <code>object_unref()</code> 减少一次引用计数，防止内存泄漏</li>
+</ul>
+<h4 id="使用场景"><a class="markdownIt-Anchor" href="#使用场景"></a> 📌 使用场景</h4>
+<p>当你通过 <code>qdev_new()</code> 创建设备实例时，QEMU 会自动增加一次引用计数。</p>
+<h4 id="不使用-unref-的后果"><a class="markdownIt-Anchor" href="#不使用-unref-的后果"></a> ❗ 不使用 <code>unref</code> 的后果</h4>
+<p>如果不调用 <code>unref</code>，会导致设备对象无法释放，造成内存泄漏。</p>
+<h4 id="️-注意事项"><a class="markdownIt-Anchor" href="#️-注意事项"></a> ⚠️ 注意事项</h4>
+<ul>
+<li>如果设备是嵌入式结构体成员（非动态分配），不需要调用 <code>unref</code></li>
+<li>推荐使用 <code>sysbus_realize_and_unref()</code>，它是标准做法</li>
+</ul>
+<hr />
+<h3 id="3-mmio-注册与映射机制"><a class="markdownIt-Anchor" href="#3-mmio-注册与映射机制"></a> 3. MMIO 注册与映射机制</h3>
+<h4 id="主要函数"><a class="markdownIt-Anchor" href="#主要函数"></a> ✅ 主要函数</h4>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>memory_region_init_io()</code></td>
+<td>初始化一个 I/O 内存区域（如寄存器区域）</td>
+</tr>
+<tr>
+<td><code>sysbus_init_mmio()</code></td>
+<td>告诉系统总线该设备有一个 MMIO 区域</td>
+</tr>
+<tr>
+<td><code>sysbus_mmio_map()</code></td>
+<td>将 MMIO 区域映射到指定物理地址</td>
+</tr>
+<tr>
+<td><code>memory_region_add_subregion()</code></td>
+<td>底层函数，完成实际的地址映射</td>
+</tr>
+</tbody>
+</table>
+<h4 id="关系说明"><a class="markdownIt-Anchor" href="#关系说明"></a> 🔁 关系说明</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysbus_mmio_map(SYS_BUS_DEVICE(dev), <span class="number">0</span>, addr); <span class="comment">// 高层封装</span></span><br></pre></td></tr></table></figure>
+<p>等价于：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">memory_region_add_subregion(get_system_memory(), addr, mr);</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 🧠 总结</h4>
+<ul>
+<li><code>sysbus_init_mmio()</code> 和 <code>sysbus_mmio_map()</code> 是推荐的标准方式</li>
+<li>更符合 QEMU 的 SysBus 设备模型设计规范</li>
+</ul>
+<hr />
+<h3 id="4-如何测试设备是否正常工作"><a class="markdownIt-Anchor" href="#4-如何测试设备是否正常工作"></a> 4. 如何测试设备是否正常工作？</h3>
+<ol>
+<li>
+<p><strong>使用 <code>/dev/mem</code> 或用户态工具访问设备寄存器</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">devmem 0x4000000</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>编写 Linux 用户程序或驱动验证设备行为</strong></p>
+</li>
+<li>
+<p><strong>使用 GDB + QEMU 进行调试</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-riscv64 -s -S ...</span><br><span class="line">gdb-multiarch vmlinux</span><br><span class="line">target remote :1234</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr />
+<h3 id="5-构建和集成设备到-qemu-流程"><a class="markdownIt-Anchor" href="#5-构建和集成设备到-qemu-流程"></a> 5. 构建和集成设备到 QEMU 流程</h3>
+<h4 id="步骤"><a class="markdownIt-Anchor" href="#步骤"></a> ✅ 步骤</h4>
+<ol>
+<li>
+<p><strong>配置和编译 QEMU</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --target-list=riscv64-softmmu</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>添加设备支持到 Kconfig 和 Meson</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">config BANANA_ROM</span><br><span class="line">    bool</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">softmmu_ss.add(when: &#x27;CONFIG_BANANA_ROM&#x27;, if_true: files(&#x27;banana_rom.c&#x27;))</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>修改主板内存映射表</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[VIRT_BANANA_ROM] = &#123; <span class="number">0x4000000</span>, <span class="number">0x100</span> &#125;,</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>在主板初始化函数中调用设备创建函数</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">banana_rom_create(memmap[VIRT_BANANA_ROM].base);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr />
+<h3 id="6-开发建议与最佳实践"><a class="markdownIt-Anchor" href="#6-开发建议与最佳实践"></a> 6. 开发建议与最佳实践</h3>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对象生命周期管理</td>
+<td>使用 <code>sysbus_realize_and_unref()</code> 防止内存泄漏</td>
+</tr>
+<tr>
+<td>地址映射</td>
+<td>使用 <code>sysbus_mmio_map()</code> 替代底层 <code>memory_region_add_subregion()</code></td>
+</tr>
+<tr>
+<td>调试设备</td>
+<td>使用 <code>/dev/mem</code>、GDB、printk 日志</td>
+</tr>
+<tr>
+<td>模块化开发</td>
+<td>将设备独立为模块，方便移植和复用</td>
+</tr>
+<tr>
+<td>文档与代码分离</td>
+<td>参考官方文档和社区示例，保持代码风格统一</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-自定义添加-qemu-的-lcd-屏幕并通过-sdl-输出"><a class="markdownIt-Anchor" href="#3-自定义添加-qemu-的-lcd-屏幕并通过-sdl-输出"></a> 3. 自定义添加 QEMU 的 LCD 屏幕并通过 sdl 输出</h2>
+<h3 id="1-修改-qemu-并编译"><a class="markdownIt-Anchor" href="#1-修改-qemu-并编译"></a> 1. 修改 QEMU 并编译</h3>
+<p>根据上面的启动流程，写了如下代码到 <code>hw/display/mylcdfb.c</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 精简版QEMU LCD控制器实现</span></span><br><span class="line"><span class="comment"> * 核心功能：4个寄存器 + 帧缓冲显示</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;qemu/osdep.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;hw/hw.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;hw/sysbus.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ui/console.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;framebuffer.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ui/pixel_ops.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;exec/address-spaces.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TYPE_SIMPLE_LCDC <span class="string">&quot;simple-lcdc&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SIMPLE_LCDC_BASE_ADDR 0x021B9000</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SIMPLE_LCDC_SIZE 0x100</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* LCD控制器寄存器偏移 */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FB_ADDR_REG 0x00 <span class="comment">// 帧缓冲物理地址寄存器</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> XRES_REG 0x04 <span class="comment">// X分辨率寄存器</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> YRES_REG 0x08 <span class="comment">// Y分辨率寄存器</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BPP_REG 0x0C <span class="comment">// 像素深度寄存器</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">create_simple_lcdc</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">SimpleLcdcState</span> &#123;</span></span><br><span class="line">	SysBusDevice parent_obj;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 寄存器状态 */</span></span><br><span class="line">	<span class="type">uint32_t</span> fb_base_phys; <span class="comment">// 帧缓冲物理地址</span></span><br><span class="line">	<span class="type">uint32_t</span> xres; <span class="comment">// X分辨率</span></span><br><span class="line">	<span class="type">uint32_t</span> yres; <span class="comment">// Y分辨率</span></span><br><span class="line">	<span class="type">uint32_t</span> bpp; <span class="comment">// 像素深度(bits per pixel)</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* QEMU相关对象 */</span></span><br><span class="line">	MemoryRegion iomem; <span class="comment">// I/O内存区域</span></span><br><span class="line">	MemoryRegionSection fbsection; <span class="comment">// 帧缓冲内存区域</span></span><br><span class="line">	QemuConsole *con; <span class="comment">// 图形控制台</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 状态标志 */</span></span><br><span class="line">	<span class="type">int</span> invalidate; <span class="comment">// 重绘标志</span></span><br><span class="line">&#125; SimpleLcdcState;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 类型转换宏 */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SIMPLE_LCDC(obj) OBJECT_CHECK(SimpleLcdcState, (obj), TYPE_SIMPLE_LCDC)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 寄存器读操作 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">uint64_t</span> <span class="title function_">simple_lcdc_read</span><span class="params">(<span class="type">void</span> *opaque, hwaddr addr, <span class="type">unsigned</span> size)</span></span><br><span class="line">&#123;</span><br><span class="line">	SimpleLcdcState *s = SIMPLE_LCDC(opaque);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">switch</span> (addr) &#123;</span><br><span class="line">	<span class="keyword">case</span> FB_ADDR_REG:</span><br><span class="line">		<span class="keyword">return</span> s-&gt;fb_base_phys;</span><br><span class="line">	<span class="keyword">case</span> XRES_REG:</span><br><span class="line">		<span class="keyword">return</span> s-&gt;xres;</span><br><span class="line">	<span class="keyword">case</span> YRES_REG:</span><br><span class="line">		<span class="keyword">return</span> s-&gt;yres;</span><br><span class="line">	<span class="keyword">case</span> BPP_REG:</span><br><span class="line">		<span class="keyword">return</span> s-&gt;bpp;</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 寄存器写操作 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">simple_lcdc_write</span><span class="params">(<span class="type">void</span> *opaque, hwaddr addr, <span class="type">uint64_t</span> value,</span></span><br><span class="line"><span class="params">			      <span class="type">unsigned</span> size)</span></span><br><span class="line">&#123;</span><br><span class="line">	SimpleLcdcState *s = SIMPLE_LCDC(opaque);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">switch</span> (addr) &#123;</span><br><span class="line">	<span class="keyword">case</span> FB_ADDR_REG:</span><br><span class="line">		s-&gt;fb_base_phys = value;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> XRES_REG:</span><br><span class="line">		s-&gt;xres = value;</span><br><span class="line">		<span class="comment">// 分辨率改变时更新控制台大小</span></span><br><span class="line">		qemu_console_resize(s-&gt;con, s-&gt;xres, s-&gt;yres);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> YRES_REG:</span><br><span class="line">		s-&gt;yres = value;</span><br><span class="line">		qemu_console_resize(s-&gt;con, s-&gt;xres, s-&gt;yres);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> BPP_REG:</span><br><span class="line">		s-&gt;bpp = value;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 标记需要重绘</span></span><br><span class="line">	s-&gt;invalidate = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 像素转换函数 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">draw_pixel</span><span class="params">(<span class="type">uint8_t</span> *dst, <span class="type">uint32_t</span> rgb, <span class="type">int</span> bpp)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">switch</span> (bpp) &#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">15</span>:</span><br><span class="line">		*(<span class="type">uint16_t</span> *)dst = rgb_to_pixel15(rgb &gt;&gt; <span class="number">16</span>, rgb &gt;&gt; <span class="number">8</span>, rgb);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">16</span>:</span><br><span class="line">		*(<span class="type">uint16_t</span> *)dst = rgb_to_pixel16(rgb &gt;&gt; <span class="number">16</span>, rgb &gt;&gt; <span class="number">8</span>, rgb);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">24</span>:</span><br><span class="line">		*dst++ = rgb &amp; <span class="number">0xFF</span>;</span><br><span class="line">		*dst++ = (rgb &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xFF</span>;</span><br><span class="line">		*dst++ = (rgb &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xFF</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">32</span>:</span><br><span class="line">		*(<span class="type">uint32_t</span> *)dst = rgb;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 帧缓冲绘制函数 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">simple_lcdc_draw_line</span><span class="params">(<span class="type">void</span> *opaque, <span class="type">uint8_t</span> *dst,</span></span><br><span class="line"><span class="params">				  <span class="type">const</span> <span class="type">uint8_t</span> *src, <span class="type">int</span> width, <span class="type">int</span> deststep)</span></span><br><span class="line">&#123;</span><br><span class="line">	SimpleLcdcState *s = SIMPLE_LCDC(opaque);</span><br><span class="line">	<span class="type">uint32_t</span> pixel;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; width; i++) &#123;</span><br><span class="line">		<span class="keyword">switch</span> (s-&gt;bpp) &#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">16</span>:</span><br><span class="line">			pixel = lduw_le_p(src);</span><br><span class="line">			src += <span class="number">2</span>;</span><br><span class="line">			pixel = ((pixel &amp; <span class="number">0xF800</span>) &lt;&lt; <span class="number">8</span>) |</span><br><span class="line">				((pixel &amp; <span class="number">0x07E0</span>) &lt;&lt; <span class="number">5</span>) |</span><br><span class="line">				((pixel &amp; <span class="number">0x001F</span>) &lt;&lt; <span class="number">3</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">24</span>:</span><br><span class="line">			pixel = ldl_le_p(src) &amp; <span class="number">0xFFFFFF</span>;</span><br><span class="line">			src += <span class="number">3</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">32</span>:</span><br><span class="line">			pixel = ldl_le_p(src);</span><br><span class="line">			src += <span class="number">4</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">default</span>: <span class="comment">// 默认使用32位色</span></span><br><span class="line">			pixel = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		draw_pixel(</span><br><span class="line">			dst, pixel,</span><br><span class="line">			surface_bits_per_pixel(qemu_console_surface(s-&gt;con)));</span><br><span class="line">		dst += deststep;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 屏幕更新函数 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">simple_lcdc_update</span><span class="params">(<span class="type">void</span> *opaque)</span></span><br><span class="line">&#123;</span><br><span class="line">	SimpleLcdcState *s = SIMPLE_LCDC(opaque);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!s-&gt;fb_base_phys)</span><br><span class="line">		<span class="keyword">return</span>; <span class="comment">// 帧缓冲未设置</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 更新帧缓冲内存区域</span></span><br><span class="line">	framebuffer_update_memory_section(&amp;s-&gt;fbsection, get_system_memory(),</span><br><span class="line">					  s-&gt;fb_base_phys, s-&gt;yres,</span><br><span class="line">					  s-&gt;xres * s-&gt;bpp / <span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span> dest_bpp = surface_bits_per_pixel(qemu_console_surface(s-&gt;con));</span><br><span class="line">	<span class="type">int</span> dest_width = s-&gt;xres * dest_bpp / <span class="number">8</span>;</span><br><span class="line">	<span class="type">int</span> src_width = s-&gt;xres * s-&gt;bpp / <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span> first = <span class="number">0</span>, last = <span class="number">0</span>;</span><br><span class="line">	framebuffer_update_display(qemu_console_surface(s-&gt;con), &amp;s-&gt;fbsection,</span><br><span class="line">				   s-&gt;xres, s-&gt;yres, src_width, dest_width, <span class="number">0</span>,</span><br><span class="line">				   <span class="number">1</span>, simple_lcdc_draw_line, s, &amp;first, &amp;last);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 更新显示区域</span></span><br><span class="line">	<span class="keyword">if</span> (last &gt; first) &#123;</span><br><span class="line">		dpy_gfx_update(s-&gt;con, <span class="number">0</span>, first, s-&gt;xres, last - first);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	s-&gt;invalidate = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 标记需要重绘 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">simple_lcdc_invalidate</span><span class="params">(<span class="type">void</span> *opaque)</span></span><br><span class="line">&#123;</span><br><span class="line">	SimpleLcdcState *s = SIMPLE_LCDC(opaque);</span><br><span class="line">	s-&gt;invalidate = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 图形操作函数集 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> GraphicHwOps simple_lcdc_ops = &#123;</span><br><span class="line">	.invalidate = simple_lcdc_invalidate,</span><br><span class="line">	.gfx_update = simple_lcdc_update,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 寄存器操作函数集 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> MemoryRegionOps simple_lcdc_mmio_ops = &#123;</span><br><span class="line">    .read = simple_lcdc_read,</span><br><span class="line">    .write = simple_lcdc_write,</span><br><span class="line">    .endianness = DEVICE_NATIVE_ENDIAN,</span><br><span class="line">    .valid = &#123;</span><br><span class="line">        .min_access_size = <span class="number">4</span>,</span><br><span class="line">        .max_access_size = <span class="number">4</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 设备实现函数 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">simple_lcdc_realize</span><span class="params">(DeviceState *dev, Error **errp)</span></span><br><span class="line">&#123;</span><br><span class="line">	SimpleLcdcState *s = SIMPLE_LCDC(dev);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 初始化默认值</span></span><br><span class="line">	s-&gt;xres = <span class="number">640</span>;</span><br><span class="line">	s-&gt;yres = <span class="number">480</span>;</span><br><span class="line">	s-&gt;bpp = <span class="number">32</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 创建图形控制台</span></span><br><span class="line">	s-&gt;con = graphic_console_init(dev, <span class="number">0</span>, &amp;simple_lcdc_ops, s);</span><br><span class="line">	qemu_console_resize(s-&gt;con, s-&gt;xres, s-&gt;yres);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 实例初始化 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">simple_lcdc_init</span><span class="params">(Object *obj)</span></span><br><span class="line">&#123;</span><br><span class="line">	SimpleLcdcState *s = SIMPLE_LCDC(obj);</span><br><span class="line">	SysBusDevice *sbd = SYS_BUS_DEVICE(obj);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 初始化内存区域</span></span><br><span class="line">	memory_region_init_io(&amp;s-&gt;iomem, obj, &amp;simple_lcdc_mmio_ops, s,</span><br><span class="line">			      TYPE_SIMPLE_LCDC, SIMPLE_LCDC_SIZE);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 映射到系统总线</span></span><br><span class="line">	sysbus_init_mmio(sbd, &amp;s-&gt;iomem);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 类初始化 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">simple_lcdc_class_init</span><span class="params">(ObjectClass *klass, <span class="type">void</span> *data)</span></span><br><span class="line">&#123;</span><br><span class="line">	DeviceClass *dc = DEVICE_CLASS(klass);</span><br><span class="line">	dc-&gt;realize = simple_lcdc_realize;</span><br><span class="line">	set_bit(DEVICE_CATEGORY_DISPLAY, dc-&gt;categories);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 类型信息 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> TypeInfo simple_lcdc_info = &#123;</span><br><span class="line">	.name = TYPE_SIMPLE_LCDC,</span><br><span class="line">	.parent = TYPE_SYS_BUS_DEVICE,</span><br><span class="line">	.instance_size = <span class="keyword">sizeof</span>(SimpleLcdcState),</span><br><span class="line">	.instance_init = simple_lcdc_init,</span><br><span class="line">	.class_init = simple_lcdc_class_init,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 类型注册 */</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">simple_lcdc_register_types</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	type_register_static(&amp;simple_lcdc_info);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 创建设备函数 */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">create_simple_lcdc</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	DeviceState *dev = qdev_new(TYPE_SIMPLE_LCDC);</span><br><span class="line">	sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &amp;error_fatal);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type_init(simple_lcdc_register_types)</span><br></pre></td></tr></table></figure>
+<p>然后修改 <code>hw/display/meson.build</code>，添加：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">system_ss.add(files(&#x27;mylcdfb.c&#x27;))</span><br></pre></td></tr></table></figure>
+<p>修改主板 <code>hw/arm/fsl-imx6ul.c</code>，添加 LCD 硬件在原本 LCD 的硬件之后：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*LCD*/</span></span><br><span class="line">create_unimplemented_device(<span class="string">&quot;lcdif&quot;</span>, FSL_IMX6UL_LCDIF_ADDR,</span><br><span class="line">                            FSL_IMX6UL_LCDIF_SIZE);</span><br><span class="line"><span class="comment">// 添加下面</span></span><br><span class="line">DeviceState *mylcddev = qdev_new(<span class="string">&quot;simple-lcdc&quot;</span>); <span class="comment">// 这里的 &#x27;create&#x27; 操作</span></span><br><span class="line">sysbus_realize_and_unref(</span><br><span class="line">    SYS_BUS_DEVICE(mylcddev),</span><br><span class="line">    &amp;error_fatal); <span class="comment">// 这里会调用 my_lcd_realize 函数</span></span><br><span class="line">sysbus_mmio_map(SYS_BUS_DEVICE(mylcddev), <span class="number">0</span>,</span><br><span class="line">                <span class="number">0x021B9000</span>); <span class="comment">// 这里的 &#x27;connect&#x27; 操作</span></span><br></pre></td></tr></table></figure>
+<p>然后对 QEMU 进行编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">../configure   --prefix=<span class="variable">$HOME</span>/qemu-install   --target-list=<span class="string">&quot;arm-softmmu&quot;</span>   --enable-sdl</span><br><span class="line">make -j$(<span class="built_in">nproc</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="2-为内核添加-fb-驱动"><a class="markdownIt-Anchor" href="#2-为内核添加-fb-驱动"></a> 2.  为内核添加 fb 驱动</h3>
+<p>首先下载内核源码并编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/nxp-imx/linux-imx -b imx_5.4.70_2.3.0 --depth=1</span><br><span class="line">make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- imx_v6_v7_defconfig</span><br><span class="line">make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- -j 2 zImage dtbs</span><br></pre></td></tr></table></figure>
+<p>新建一个驱动文件夹 <code>kernel_modules</code>，并写一个 Makefile 指向内核所在文件夹</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">obj-m := mylcd_fb.o</span><br><span class="line">KDIR := /root/linux-imx</span><br><span class="line">PWD := <span class="variable">$(<span class="built_in">shell</span> pwd)</span></span><br><span class="line"></span><br><span class="line"><span class="section">all:</span></span><br><span class="line">	make -C <span class="variable">$(KDIR)</span> M=<span class="variable">$(PWD)</span> ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- modules</span><br><span class="line"></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	make -C <span class="variable">$(KDIR)</span> M=<span class="variable">$(PWD)</span> ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- clean</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/module.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/err.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/mm.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/slab.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/fb.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/init.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/dma-mapping.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/platform_device.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/io.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/of.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/of_address.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 根据 QEMU 实现，定义寄存器偏移</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MYLCD_FB_ADDR_REG 0x00 <span class="comment">// 帧缓冲物理地址寄存器</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MYLCD_XRES_REG 0x04 <span class="comment">// X分辨率寄存器</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MYLCD_YRES_REG 0x08 <span class="comment">// Y分辨率寄存器</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MYLCD_BPP_REG 0x0C <span class="comment">// 像素深度寄存器</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 驱动私有数据结构</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">mylcd_fb_par</span> &#123;</span></span><br><span class="line">	<span class="type">void</span> __iomem *reg_base; <span class="comment">// MMIO 寄存器的虚拟基地址</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">fb_info</span> *<span class="title">info</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* from pxafb.c - 用于设置伪调色板 */</span></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">unsigned</span> <span class="type">int</span> <span class="title function_">chan_to_field</span><span class="params">(<span class="type">unsigned</span> <span class="type">int</span> chan,</span></span><br><span class="line"><span class="params">					 <span class="keyword">struct</span> fb_bitfield *bf)</span></span><br><span class="line">&#123;</span><br><span class="line">	chan &amp;= <span class="number">0xffff</span>;</span><br><span class="line">	chan &gt;&gt;= <span class="number">16</span> - bf-&gt;length;</span><br><span class="line">	<span class="keyword">return</span> chan &lt;&lt; bf-&gt;offset;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">mylcd_fb_setcolreg</span><span class="params">(<span class="type">unsigned</span> regno, <span class="type">unsigned</span> red, <span class="type">unsigned</span> green,</span></span><br><span class="line"><span class="params">			      <span class="type">unsigned</span> blue, <span class="type">unsigned</span> transp,</span></span><br><span class="line"><span class="params">			      <span class="keyword">struct</span> fb_info *info)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> val;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 在 True-Color 模式下，我们只需要设置伪调色板 */</span></span><br><span class="line">	<span class="keyword">if</span> (info-&gt;fix.visual == FB_VISUAL_TRUECOLOR &amp;&amp; regno &lt; <span class="number">16</span>) &#123;</span><br><span class="line">		u32 *pal = info-&gt;pseudo_palette;</span><br><span class="line"></span><br><span class="line">		val = chan_to_field(red, &amp;info-&gt;var.red);</span><br><span class="line">		val |= chan_to_field(green, &amp;info-&gt;var.green);</span><br><span class="line">		val |= chan_to_field(blue, &amp;info-&gt;var.blue);</span><br><span class="line"></span><br><span class="line">		pal[regno] = val;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">/* 对于不支持的模式或超出调色板范围的请求，返回错误 */</span></span><br><span class="line">		dev_err(info-&gt;device, <span class="string">&quot;Unsupported visual or regno=%u\n&quot;</span>,</span><br><span class="line">			regno);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Framebuffer 操作函数集</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">fb_ops</span> <span class="title">mylcd_fb_ops</span> =</span> &#123;</span><br><span class="line">	.owner = THIS_MODULE,</span><br><span class="line">	.fb_setcolreg = mylcd_fb_setcolreg,</span><br><span class="line">	<span class="comment">/* 使用内核提供的通用绘制函数 */</span></span><br><span class="line">	.fb_fillrect = cfb_fillrect,</span><br><span class="line">	.fb_copyarea = cfb_copyarea,</span><br><span class="line">	.fb_imageblit = cfb_imageblit,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">mylcd_fb_probe</span><span class="params">(<span class="keyword">struct</span> platform_device *pdev)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">fb_info</span> *<span class="title">info</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">mylcd_fb_par</span> *<span class="title">par</span>;</span></span><br><span class="line">	<span class="type">dma_addr_t</span> phy_addr;</span><br><span class="line">	<span class="type">int</span> ret;</span><br><span class="line">	u32 xres, yres, bpp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 1. 分配 fb_info 和私有数据结构 */</span></span><br><span class="line">	<span class="comment">// 使用 framebuffer_alloc 分配，私有数据大小为 sizeof(struct mylcd_fb_par)</span></span><br><span class="line">	info = framebuffer_alloc(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> mylcd_fb_par), &amp;pdev-&gt;dev);</span><br><span class="line">	<span class="keyword">if</span> (!info) &#123;</span><br><span class="line">		dev_err(&amp;pdev-&gt;dev, <span class="string">&quot;Failed to allocate framebuffer info\n&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> -ENOMEM;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	par = info-&gt;par;</span><br><span class="line">	par-&gt;info = info;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 2. 获取并映射 MMIO 寄存器 */</span></span><br><span class="line">	<span class="comment">// 使用 devm_ioremap_resource，它会自动处理资源获取和映射</span></span><br><span class="line">	par-&gt;reg_base = devm_ioremap_resource(</span><br><span class="line">		&amp;pdev-&gt;dev, platform_get_resource(pdev, IORESOURCE_MEM, <span class="number">0</span>));</span><br><span class="line">	<span class="keyword">if</span> (IS_ERR(par-&gt;reg_base)) &#123;</span><br><span class="line">		dev_err(&amp;pdev-&gt;dev, <span class="string">&quot;Failed to map MMIO registers\n&quot;</span>);</span><br><span class="line">		ret = PTR_ERR(par-&gt;reg_base);</span><br><span class="line">		<span class="keyword">goto</span> err_release_fb;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 3. 从硬件寄存器读取屏幕参数 */</span></span><br><span class="line">	xres = ioread32(par-&gt;reg_base + MYLCD_XRES_REG);</span><br><span class="line">	yres = ioread32(par-&gt;reg_base + MYLCD_YRES_REG);</span><br><span class="line">	bpp = ioread32(par-&gt;reg_base + MYLCD_BPP_REG);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (xres == <span class="number">0</span> || yres == <span class="number">0</span> || (bpp != <span class="number">16</span> &amp;&amp; bpp != <span class="number">24</span> &amp;&amp; bpp != <span class="number">32</span>)) &#123;</span><br><span class="line">		dev_err(&amp;pdev-&gt;dev,</span><br><span class="line">			<span class="string">&quot;Invalid screen parameters from HW: %ux%u, %u bpp\n&quot;</span>,</span><br><span class="line">			xres, yres, bpp);</span><br><span class="line">		ret = -EINVAL;</span><br><span class="line">		<span class="keyword">goto</span> err_release_fb; <span class="comment">// devm_* 会自动 unmap</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	dev_info(&amp;pdev-&gt;dev, <span class="string">&quot;Detected display: %ux%u, %u bpp\n&quot;</span>, xres, yres,</span><br><span class="line">		 bpp);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 4. 设置 fb_info 结构 */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 4a. 设置固定参数 (info-&gt;fix) */</span></span><br><span class="line">	<span class="built_in">strcpy</span>(info-&gt;fix.id, <span class="string">&quot;mylcd-fb&quot;</span>);</span><br><span class="line">	info-&gt;fix.type = FB_TYPE_PACKED_PIXELS;</span><br><span class="line">	info-&gt;fix.visual = FB_VISUAL_TRUECOLOR;</span><br><span class="line">	info-&gt;fix.smem_len = xres * yres * bpp / <span class="number">8</span>;</span><br><span class="line">	info-&gt;fix.line_length = xres * bpp / <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 4b. 分配帧缓冲内存 (Framebuffer) */</span></span><br><span class="line">	info-&gt;screen_base = dma_alloc_wc(&amp;pdev-&gt;dev, info-&gt;fix.smem_len,</span><br><span class="line">					 &amp;phy_addr, GFP_KERNEL);</span><br><span class="line">	<span class="keyword">if</span> (!info-&gt;screen_base) &#123;</span><br><span class="line">		dev_err(&amp;pdev-&gt;dev, <span class="string">&quot;Failed to allocate framebuffer memory\n&quot;</span>);</span><br><span class="line">		ret = -ENOMEM;</span><br><span class="line">		<span class="keyword">goto</span> err_release_fb;</span><br><span class="line">	&#125;</span><br><span class="line">	info-&gt;fix.smem_start = phy_addr; <span class="comment">// 物理地址</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 4c. 设置可变参数 (info-&gt;var) */</span></span><br><span class="line">	info-&gt;var.xres = xres;</span><br><span class="line">	info-&gt;var.yres = yres;</span><br><span class="line">	info-&gt;var.xres_virtual = xres;</span><br><span class="line">	info-&gt;var.yres_virtual = yres;</span><br><span class="line">	info-&gt;var.bits_per_pixel = bpp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 根据 BPP 设置颜色位域 */</span></span><br><span class="line">	<span class="keyword">switch</span> (bpp) &#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">16</span>: <span class="comment">// RGB565</span></span><br><span class="line">		info-&gt;var.red.offset = <span class="number">11</span>;</span><br><span class="line">		info-&gt;var.red.length = <span class="number">5</span>;</span><br><span class="line">		info-&gt;var.green.offset = <span class="number">5</span>;</span><br><span class="line">		info-&gt;var.green.length = <span class="number">6</span>;</span><br><span class="line">		info-&gt;var.blue.offset = <span class="number">0</span>;</span><br><span class="line">		info-&gt;var.blue.length = <span class="number">5</span>;</span><br><span class="line">		info-&gt;var.transp.offset = <span class="number">0</span>;</span><br><span class="line">		info-&gt;var.transp.length = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">24</span>: <span class="comment">// RGB888</span></span><br><span class="line">	<span class="keyword">case</span> <span class="number">32</span>: <span class="comment">// ARGB8888 or XRGB8888</span></span><br><span class="line">		info-&gt;var.red.offset = <span class="number">16</span>;</span><br><span class="line">		info-&gt;var.red.length = <span class="number">8</span>;</span><br><span class="line">		info-&gt;var.green.offset = <span class="number">8</span>;</span><br><span class="line">		info-&gt;var.green.length = <span class="number">8</span>;</span><br><span class="line">		info-&gt;var.blue.offset = <span class="number">0</span>;</span><br><span class="line">		info-&gt;var.blue.length = <span class="number">8</span>;</span><br><span class="line">		<span class="keyword">if</span> (bpp == <span class="number">32</span>) &#123;</span><br><span class="line">			info-&gt;var.transp.offset = <span class="number">24</span>;</span><br><span class="line">			info-&gt;var.transp.length = <span class="number">8</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			info-&gt;var.transp.offset = <span class="number">0</span>;</span><br><span class="line">			info-&gt;var.transp.length = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 4d. 设置操作函数和伪调色板 */</span></span><br><span class="line">	info-&gt;fbops = &amp;mylcd_fb_ops;</span><br><span class="line">	info-&gt;pseudo_palette =</span><br><span class="line">		devm_kzalloc(&amp;pdev-&gt;dev, <span class="keyword">sizeof</span>(u32) * <span class="number">16</span>, GFP_KERNEL);</span><br><span class="line">	<span class="keyword">if</span> (!info-&gt;pseudo_palette) &#123;</span><br><span class="line">		ret = -ENOMEM;</span><br><span class="line">		<span class="keyword">goto</span> err_free_dma;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 5. 将帧缓冲的物理地址写入硬件寄存器 */</span></span><br><span class="line">	iowrite32(info-&gt;fix.smem_start, par-&gt;reg_base + MYLCD_FB_ADDR_REG);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 6. 注册 framebuffer 设备 */</span></span><br><span class="line">	ret = register_framebuffer(info);</span><br><span class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">		dev_err(&amp;pdev-&gt;dev, <span class="string">&quot;Failed to register framebuffer device\n&quot;</span>);</span><br><span class="line">		<span class="keyword">goto</span> err_free_dma;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 7. 将 info 存储到平台设备的私有数据中，以便在 remove 时访问 */</span></span><br><span class="line">	platform_set_drvdata(pdev, info);</span><br><span class="line"></span><br><span class="line">	dev_info(&amp;pdev-&gt;dev,</span><br><span class="line">		 <span class="string">&quot;mylcd-fb registered successfully. Mapped at 0x%lX\n&quot;</span>,</span><br><span class="line">		 (<span class="type">unsigned</span> <span class="type">long</span>)info-&gt;fix.smem_start);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 错误处理流程 */</span></span><br><span class="line">err_free_dma:</span><br><span class="line">	dma_free_wc(&amp;pdev-&gt;dev, info-&gt;fix.smem_len, info-&gt;screen_base,</span><br><span class="line">		    info-&gt;fix.smem_start);</span><br><span class="line"></span><br><span class="line">err_release_fb:</span><br><span class="line">	framebuffer_release(info);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">mylcd_fb_remove</span><span class="params">(<span class="keyword">struct</span> platform_device *pdev)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/* 从平台设备私有数据中获取 fb_info */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">fb_info</span> *<span class="title">info</span> =</span> platform_get_drvdata(pdev);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (info) &#123;</span><br><span class="line">		<span class="comment">/* 1. 反注册 framebuffer */</span></span><br><span class="line">		unregister_framebuffer(info);</span><br><span class="line"></span><br><span class="line">		<span class="comment">/* 2. 释放帧缓冲内存 */</span></span><br><span class="line">		dma_free_wc(&amp;pdev-&gt;dev, info-&gt;fix.smem_len, info-&gt;screen_base,</span><br><span class="line">			    info-&gt;fix.smem_start);</span><br><span class="line"></span><br><span class="line">		<span class="comment">/* 3. 释放 fb_info */</span></span><br><span class="line">		<span class="comment">// devm_kzalloc 分配的伪调色板会自动释放</span></span><br><span class="line">		framebuffer_release(info);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// devm_ioremap_resource 映射的内存会自动释放</span></span><br><span class="line"></span><br><span class="line">	dev_info(&amp;pdev-&gt;dev, <span class="string">&quot;mylcd-fb removed.\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 设备树兼容性列表</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">of_device_id</span> <span class="title">mylcd_fb_of_match</span>[] =</span> &#123;</span><br><span class="line">	&#123; .compatible = <span class="string">&quot;my,mylcd-fb&quot;</span> &#125;, <span class="comment">// 匹配设备树中的 &quot;my,mylcd-fb&quot;</span></span><br><span class="line">	&#123; .compatible = <span class="string">&quot;qemu,mylcd&quot;</span> &#125;, <span class="comment">// 同时匹配 &quot;qemu,mylcd&quot;</span></span><br><span class="line">	&#123;&#125;,</span><br><span class="line">&#125;;</span><br><span class="line">MODULE_DEVICE_TABLE(of, mylcd_fb_of_match);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 平台驱动结构</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">platform_driver</span> <span class="title">mylcd_fb_driver</span> =</span> &#123;</span><br><span class="line">	.probe	= mylcd_fb_probe,</span><br><span class="line">	.remove	= mylcd_fb_remove,</span><br><span class="line">	.driver	= &#123;</span><br><span class="line">		.name = <span class="string">&quot;mylcd-fb&quot;</span>,</span><br><span class="line">		.of_match_table = mylcd_fb_of_match,</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 使用 module_platform_driver 宏简化注册和卸载</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">module_platform_driver(mylcd_fb_driver);</span><br><span class="line"></span><br><span class="line">MODULE_AUTHOR(<span class="string">&quot;Gemini based on user request&quot;</span>);</span><br><span class="line">MODULE_DESCRIPTION(<span class="string">&quot;Framebuffer driver for the QEMU mylcd device&quot;</span>);</span><br><span class="line">MODULE_LICENSE(<span class="string">&quot;GPL v2&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>编译 modules：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+<p>修改设备树</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">--- a/arch/arm/boot/dts/imx6ul<span class="number">-14</span>x14-evk.dts</span><br><span class="line">+++ b/arch/arm/boot/dts/imx6ul<span class="number">-14</span>x14-evk.dts</span><br><span class="line">@@ <span class="number">-11</span>,<span class="number">3</span> +<span class="number">11</span>,<span class="number">11</span> @@</span><br><span class="line">        model = <span class="string">&quot;Freescale i.MX6 UltraLite 14x14 EVK Board&quot;</span>;</span><br><span class="line">        compatible = <span class="string">&quot;fsl,imx6ul-14x14-evk&quot;</span>, <span class="string">&quot;fsl,imx6ul&quot;</span>;</span><br><span class="line"> &#125;;</span><br><span class="line">+</span><br><span class="line">+&amp;aips1 &#123; <span class="comment">// 或者你将 mylcd 放置的位置</span></span><br><span class="line">+    mylcd: mylcd-controller@<span class="number">021b</span>9000 &#123; <span class="comment">// 控制寄存器</span></span><br><span class="line">+        compatible = <span class="string">&quot;qemu,mylcd&quot;</span>, <span class="string">&quot;my,mylcd-fb&quot;</span>;</span><br><span class="line">+        reg = &lt;<span class="number">0x021b9000</span> <span class="number">0x1000</span>&gt;; <span class="comment">// MMIO 控制寄存器</span></span><br><span class="line">+        status = <span class="string">&quot;okay&quot;</span>;</span><br><span class="line">+    &#125;;</span><br><span class="line">+&#125;;</span><br><span class="line">diff --git a/arch/arm/boot/dts/imx6ul<span class="number">-14</span>x14-evk.dtsi b/arch/arm/boot/dts/imx6ul<span class="number">-14</span>x14-evk.dtsi</span><br><span class="line">index <span class="number">9</span>c8e1c938.<span class="number">.51</span>d4a583e <span class="number">100644</span></span><br><span class="line">--- a/arch/arm/boot/dts/imx6ul<span class="number">-14</span>x14-evk.dtsi</span><br><span class="line">+++ b/arch/arm/boot/dts/imx6ul<span class="number">-14</span>x14-evk.dtsi</span><br><span class="line">@@ <span class="number">-283</span>,<span class="number">7</span> +<span class="number">283</span>,<span class="number">7</span> @@</span><br><span class="line">        pinctrl<span class="number">-0</span> = &lt;&amp;pinctrl_lcdif_dat</span><br><span class="line">                     &amp;pinctrl_lcdif_ctrl&gt;;</span><br><span class="line">        display = &lt;&amp;display0&gt;;</span><br><span class="line">-       status = <span class="string">&quot;okay&quot;</span>;</span><br><span class="line">+       status = <span class="string">&quot;disabled&quot;</span>;</span><br><span class="line"></span><br><span class="line">        display0: display@<span class="number">0</span> &#123;</span><br><span class="line">                bits-per-pixel = &lt;<span class="number">16</span>&gt;;</span><br></pre></td></tr></table></figure>
+<p>编译设备树和 zImage：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- -j 2 zImage dtbs</span><br></pre></td></tr></table></figure>
+<h3 id="启动-qemu"><a class="markdownIt-Anchor" href="#启动-qemu"></a> 启动 QEMU</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/root/qemu-9.2.4/build/qemu-system-arm \</span><br><span class="line">-M mcimx6ul-evk \</span><br><span class="line">-m 512M \</span><br><span class="line">-kernel /root/linux-imx/arch/arm/boot/zImage \</span><br><span class="line">-dtb /root/linux-imx/arch/arm/boot/dts/imx6ul-14x14-evk.dtb \</span><br><span class="line">-initrd /root/initramfs.cpio.gz \</span><br><span class="line">-display sdl  \</span><br><span class="line">-serial mon:stdio \</span><br><span class="line">-append <span class="string">&quot;console=ttymxc0,115200 rdinit=/init&quot;</span></span><br><span class="line"><span class="comment"># 具体的rdinit等参数，可以问ai，我的initramfs.cpio.gz是使用busybox</span></span><br></pre></td></tr></table></figure>
+<p><img src="./assets/image-20250707154805437.png" alt="image-20250707154805437" /></p>
+<h2 id="4-其他知识点"><a class="markdownIt-Anchor" href="#4-其他知识点"></a> 4. 其他知识点</h2>
+<h3 id="1-使用-busybox-制作轻量级-initramfs-环境"><a class="markdownIt-Anchor" href="#1-使用-busybox-制作轻量级-initramfs-环境"></a> 1. 使用 BusyBox 制作轻量级 initramfs 环境</h3>
+<p>在嵌入式开发中，为了快速验证内核驱动功能，可以使用静态编译的 BusyBox 构建一个最小化的 Linux 用户空间环境。</p>
+<h4 id="主要步骤包括"><a class="markdownIt-Anchor" href="#主要步骤包括"></a> 🔧 主要步骤包括</h4>
+<ul>
+<li>
+<p><strong>静态编译 BusyBox</strong></p>
+<ul>
+<li>配置 BusyBox 为静态链接模式（<code>Build Options → Build static binary</code>）</li>
+<li>编译后得到一个不依赖动态库的 <code>busybox</code> 可执行文件</li>
+</ul>
+</li>
+<li>
+<p><strong>构建 rootfs 目录结构</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p rootfs/&#123;bin,sbin,etc,proc,sys,dev&#125;</span><br><span class="line"><span class="built_in">cp</span> busybox rootfs/bin/</span><br><span class="line"><span class="built_in">cd</span> rootfs &amp;&amp; <span class="built_in">ln</span> -s bin/busybox init</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>创建设备节点（mknod）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mknod</span> dev/console c 5 1</span><br><span class="line"><span class="built_in">mknod</span> dev/null c 1 3</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>编写 init 脚本</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">mount -t proc none /proc</span><br><span class="line">mount -t sysfs none /sys</span><br><span class="line"><span class="built_in">exec</span> /sbin/init</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：init 脚本需要有执行权限，并且第一行为 shebang（<code>#!/bin/sh</code>）</p>
+</blockquote>
+</li>
+<li>
+<p><strong>打包成 initramfs</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . | cpio -o -H newc | gzip &gt; ../initramfs.cpio.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>QEMU 启动命令示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-arm -nographic \</span><br><span class="line">  -kernel zImage \</span><br><span class="line">  -initrd initramfs.cpio.gz \</span><br><span class="line">  -append <span class="string">&quot;console=ttyAMA0&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="优势"><a class="markdownIt-Anchor" href="#优势"></a> ✅ 优势</h4>
+<ul>
+<li>快速启动，无需完整根文件系统</li>
+<li>适合调试内核模块、驱动加载顺序等</li>
+<li>易于定制和修改，方便测试</li>
+</ul>
+<hr />
+<h3 id="2-使用-gdb-qemu-调试-linux-内核"><a class="markdownIt-Anchor" href="#2-使用-gdb-qemu-调试-linux-内核"></a> 2. 使用 GDB + QEMU 调试 Linux 内核</h3>
+<p>通过 QEMU 搭配 GDB，可以在用户态对 Linux 内核进行源码级调试。</p>
+<h4 id="️-准备工作"><a class="markdownIt-Anchor" href="#️-准备工作"></a> 🛠️ 准备工作</h4>
+<ul>
+<li>
+<p><strong>内核配置开启调试信息</strong></p>
+<ul>
+<li><code>CONFIG_DEBUG_INFO=y</code></li>
+<li><code>CONFIG_KGDB=y</code>（可选）</li>
+<li><code>CONFIG_MODULES=y</code>（如需加载模块）</li>
+</ul>
+</li>
+<li>
+<p><strong>QEMU 启动参数添加调试支持</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-arm \</span><br><span class="line">  -s -S \</span><br><span class="line">  -kernel zImage \</span><br><span class="line">  -initrd initramfs.cpio.gz \</span><br><span class="line">  -append <span class="string">&quot;console=ttyAMA0&quot;</span> \</span><br><span class="line">  -nographic</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-s</code>：启用 gdbserver，默认监听端口 1234</li>
+<li><code>-S</code>：暂停 CPU，等待 GDB 连接后才开始运行</li>
+</ul>
+</li>
+</ul>
+<h4 id="使用-gdb-连接调试"><a class="markdownIt-Anchor" href="#使用-gdb-连接调试"></a> 💡 使用 GDB 连接调试</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gdb-multiarch vmlinux</span><br><span class="line">(gdb) target remote :1234</span><br><span class="line">(gdb) <span class="built_in">continue</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>vmlinux</code> 是包含调试符号的内核镜像</li>
+<li>可以设置断点、查看寄存器、单步执行等</li>
+</ul>
+<h4 id="典型调试场景"><a class="markdownIt-Anchor" href="#典型调试场景"></a> 🧪 典型调试场景</h4>
+<ul>
+<li>在 <code>start_kernel</code> 设置断点</li>
+<li>查看驱动加载过程中的指针访问异常</li>
+<li>调试中断处理流程</li>
+<li>分析 oops 或 panic 崩溃现场</li>
+</ul>
+<hr />
+<h3 id="3-lcd-控制器模型与设备树理解"><a class="markdownIt-Anchor" href="#3-lcd-控制器模型与设备树理解"></a> 3. LCD 控制器模型与设备树理解</h3>
+<p>在学习 LCD 控制器驱动开发过程中，进一步理解了其硬件抽象方式及设备树配置原理。</p>
+<h4 id="️-lcd-控制器模型核心要点"><a class="markdownIt-Anchor" href="#️-lcd-控制器模型核心要点"></a> 🖥️ LCD 控制器模型核心要点</h4>
+<ul>
+<li>
+<p><strong>控制器寄存器存储的是显存的总线地址</strong></p>
+<ul>
+<li>例如：帧缓冲起始地址寄存器（FB_BASE_REG）保存的是物理内存地址</li>
+<li>控制器通过 DMA 方式直接从该地址读取显存数据并输出到屏幕</li>
+</ul>
+</li>
+<li>
+<p><strong>显存需求随分辨率增大而增加</strong></p>
+<ul>
+<li>800x480 RGB888：约 1.2MB</li>
+<li>1920x1080 RGB888：约 6MB</li>
+</ul>
+</li>
+<li>
+<p><strong>显存映射机制</strong></p>
+<ul>
+<li>在驱动中通过 <code>dma_alloc_coherent()</code> 或 <code>ioremap()</code> 分配显存</li>
+<li>将物理地址写入控制器寄存器供硬件访问</li>
+</ul>
+</li>
+</ul>
+<h4 id="设备树配置详解"><a class="markdownIt-Anchor" href="#设备树配置详解"></a> 📄 设备树配置详解</h4>
+<ul>
+<li>
+<p><strong>LCD 设备节点示例</strong></p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">display-timings</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">native-mode</span> <span class="operator">=</span> <span class="params">&lt;<span class="variable">&amp;timing0</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line"><span class="symbol">    timing0:</span> <span class="title class_">timing0</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">clock-frequency</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">9200000</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">        <span class="attr">hactive</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">480</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">        <span class="attr">vactive</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">272</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">        <span class="attr">hfront-porch</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">8</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">        <span class="attr">hback-porch</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">4</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">        <span class="attr">hsync-len</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">41</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">        <span class="attr">vfront-porch</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">4</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">        <span class="attr">vback-porch</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">2</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">        <span class="attr">vsync-len</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">10</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="punctuation">&#125;;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>参数含义参考数据手册时序图</strong></p>
+<ul>
+<li><code>clock-frequency</code>: 像素时钟频率（Hz）</li>
+<li><code>hactive/vactive</code>: 屏幕有效像素宽高</li>
+<li><code>hfront-porch</code>, <code>hsync-len</code>, <code>hback-porch</code>: 水平同步信号时序参数</li>
+<li>类似地，垂直方向也有相应参数</li>
+</ul>
+</li>
+<li>
+<p><strong>设备树与驱动匹配机制</strong></p>
+<ul>
+<li>驱动通过 <code>.of_match_table</code> 匹配设备树节点的 <code>compatible</code> 字段</li>
+<li>匹配成功后触发 <code>probe()</code> 函数初始化控制器</li>
+</ul>
+</li>
+</ul>
+<h4 id="开发建议"><a class="markdownIt-Anchor" href="#开发建议"></a> ✅ 开发建议</h4>
+<ul>
+<li>对照 LCD 数据手册填写设备树参数</li>
+<li>使用 <code>fb_set_var()</code> 更新显示参数</li>
+<li>使用 <code>framebuffer_alloc()</code> 创建 fb_info 结构体</li>
+<li>避免频繁申请释放显存，使用一致性内存（DMA 内存）</li>
+</ul>
+<hr />
+<h3 id="4-imx6ull-引脚配置方法"><a class="markdownIt-Anchor" href="#4-imx6ull-引脚配置方法"></a> 4. IMX6ULL 引脚配置方法</h3>
+<p>NXP 提供了一个引脚配置工具（Pin Tool），用于配置 IMX6ULL 的 GPIO 引脚复用功能、上拉/下拉电阻、驱动强度等电气属性。</p>
+<h4 id="配置流程如下"><a class="markdownIt-Anchor" href="#配置流程如下"></a> 🧱 配置流程如下</h4>
+<h5 id="1-使用-nxp-pin-tool-配置引脚功能"><a class="markdownIt-Anchor" href="#1-使用-nxp-pin-tool-配置引脚功能"></a> ✅ 1. 使用 NXP Pin Tool 配置引脚功能</h5>
+<ul>
+<li>打开 <a target="_blank" rel="noopener" href="https://www.nxp.com/products/processors-and-microcontrollers/arm-based-processors-and-mcus/i.mx-applications-processors/i.mx-6-processors/processor-expansion-for-i.mx-6ultra-lite:i.MX6UL-Pin-Tool">NXP Pin Tool</a></li>
+<li>选择芯片型号（如 MCIMX6Y2）</li>
+<li>设置以下选项：
+<ul>
+<li><strong>MUX Mode</strong>：选择复用功能（如 UART1_RX_DATA、LCD_CLK 等）</li>
+<li><strong>Pull-up/down</strong>：选择是否启用上下拉电阻</li>
+<li><strong>Drive Strength</strong>：设置驱动能力（低、中、高）</li>
+<li><strong>Slew Rate</strong>：斜率控制（快/慢）</li>
+<li><strong>Open Drain</strong>：是否启用开漏模式</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-将配置写入设备树"><a class="markdownIt-Anchor" href="#2-将配置写入设备树"></a> ✅ 2. 将配置写入设备树</h5>
+<p>生成的配置通常会写入设备树的 <code>pinctrl</code> 子节点中：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">pinctrl_lcd:</span> <span class="title class_">lcdgrp</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">fsl,pins</span> <span class="operator">=</span> <span class="params">&lt;</span></span><br><span class="line"><span class="params">        MX6UL_PAD_LCD_CLK__LCDIF_CLK    <span class="number">0x1b0b0</span></span></span><br><span class="line"><span class="params">        MX6UL_PAD_LCD_ENABLE__LCDIF_ENABLE <span class="number">0x1b0b0</span></span></span><br><span class="line"><span class="params">    &gt;</span><span class="punctuation">;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">lcd-controller@21c8000</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">pinctrl-names</span> <span class="operator">=</span> <span class="string">&quot;default&quot;</span><span class="punctuation">;</span></span><br><span class="line">    pinctrl<span class="number">-0</span> = <span class="params">&lt;<span class="variable">&amp;pinctrl_lcd</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-pinctrl-子系统管理引脚"><a class="markdownIt-Anchor" href="#3-pinctrl-子系统管理引脚"></a> ✅ 3. Pinctrl 子系统管理引脚</h5>
+<p>Linux 中的 pinctrl 子系统负责管理引脚复用和电气属性：</p>
+<ul>
+<li>
+<p><strong>核心作用：</strong></p>
+<ul>
+<li>复用功能选择（pinmux）</li>
+<li>引脚配置（pull-up/down、drive strength 等）</li>
+<li>动态切换引脚功能（如休眠时切换为低功耗模式）</li>
+</ul>
+</li>
+<li>
+<p><strong>驱动侧调用流程：</strong></p>
+<ul>
+<li>
+<p>在 probe 函数中获取 pinctrl：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pinctrl</span> *<span class="title">pinctrl</span>;</span></span><br><span class="line">pinctrl = devm_pinctrl_get_select_default(&amp;pdev-&gt;dev);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="4-gpio-子系统控制高低电平"><a class="markdownIt-Anchor" href="#4-gpio-子系统控制高低电平"></a> ✅ 4. GPIO 子系统控制高低电平</h5>
+<p>对于通用输入输出引脚（GPIO）则使用 GPIO 子系统进行控制：</p>
+<ul>
+<li>
+<p><strong>设备树中定义 GPIO：</strong></p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">mydevice</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">compatible</span> <span class="operator">=</span> <span class="string">&quot;my,gpio-device&quot;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">reset-gpios</span> <span class="operator">=</span> <span class="params">&lt;<span class="variable">&amp;gpio5</span> <span class="number">3</span> GPIO_ACTIVE_LOW&gt;</span><span class="punctuation">;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>驱动中获取和操作 GPIO：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">gpio_desc</span> *<span class="title">reset_gpio</span>;</span></span><br><span class="line">reset_gpio = devm_gpiod_get(&amp;pdev-&gt;dev, <span class="string">&quot;reset&quot;</span>, GPIOD_OUT_LOW);</span><br><span class="line">gpiod_set_value(reset_gpio, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%BA%8C"><span class="toc-number">1.</span> <span class="toc-text"> 嵌入式学习（二）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-qemu-%E8%AE%BE%E5%A4%87%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.1.</span> <span class="toc-text"> 1. QEMU 设备初始化流程详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-qemu-%E8%AE%BE%E5%A4%87%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3-2"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 1. QEMU 设备初始化流程详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AE%BE%E5%A4%87%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 2. 设备创建流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%85%B7%E4%BD%93%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 3. 具体执行顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%85%B3%E9%94%AE%E5%8C%BA%E5%88%AB%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96-vs-%E5%AE%9E%E4%BE%8B%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 4. 关键区别：类初始化 vs 实例初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E5%85%B7%E4%BD%93%E8%A1%A8%E7%8E%B0"><span class="toc-number">1.1.5.</span> <span class="toc-text"> 5. 代码中的具体表现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96-ask100fb_class_init"><span class="toc-number">1.1.5.1.</span> <span class="toc-text"> 类初始化 (ask100fb_class_init)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%88%9D%E5%A7%8B%E5%8C%96-ask100fb_init"><span class="toc-number">1.1.5.2.</span> <span class="toc-text"> 实例初始化 (ask100fb_init)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#realize-%E9%98%B6%E6%AE%B5-ask100fb_realize"><span class="toc-number">1.1.5.3.</span> <span class="toc-text"> Realize 阶段 (ask100fb_realize)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E8%AE%BE%E5%A4%87%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.6.</span> <span class="toc-text"> 完整设备创建流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%88%AB%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.1.7.</span> <span class="toc-text"> 特别注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B8%B8%E8%A7%84-qemu-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E5%A4%87%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text"> 2. 常规 QEMU 自定义设备开发流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-sysbus_realize_and_unref-%E4%B8%AD%E7%9A%84-unref-%E5%90%AB%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 2. sysbus_realize_and_unref() 中的 unref 含义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD"><span class="toc-number">1.2.1.1.</span> <span class="toc-text"> ✅ 功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.2.1.2.</span> <span class="toc-text"> 📌 使用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E4%BD%BF%E7%94%A8-unref-%E7%9A%84%E5%90%8E%E6%9E%9C"><span class="toc-number">1.2.1.3.</span> <span class="toc-text"> ❗ 不使用 unref 的后果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%B8%8F-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.2.1.4.</span> <span class="toc-text"> ⚠️ 注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-mmio-%E6%B3%A8%E5%86%8C%E4%B8%8E%E6%98%A0%E5%B0%84%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 3. MMIO 注册与映射机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.2.1.</span> <span class="toc-text"> ✅ 主要函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E8%AF%B4%E6%98%8E"><span class="toc-number">1.2.2.2.</span> <span class="toc-text"> 🔁 关系说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.2.2.3.</span> <span class="toc-text"> 🧠 总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E8%AE%BE%E5%A4%87%E6%98%AF%E5%90%A6%E6%AD%A3%E5%B8%B8%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 4. 如何测试设备是否正常工作？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%9E%84%E5%BB%BA%E5%92%8C%E9%9B%86%E6%88%90%E8%AE%BE%E5%A4%87%E5%88%B0-qemu-%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 5. 构建和集成设备到 QEMU 流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.2.4.1.</span> <span class="toc-text"> ✅ 步骤</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%BC%80%E5%8F%91%E5%BB%BA%E8%AE%AE%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">1.2.5.</span> <span class="toc-text"> 6. 开发建议与最佳实践</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B7%BB%E5%8A%A0-qemu-%E7%9A%84-lcd-%E5%B1%8F%E5%B9%95%E5%B9%B6%E9%80%9A%E8%BF%87-sdl-%E8%BE%93%E5%87%BA"><span class="toc-number">1.3.</span> <span class="toc-text"> 3. 自定义添加 QEMU 的 LCD 屏幕并通过 sdl 输出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BF%AE%E6%94%B9-qemu-%E5%B9%B6%E7%BC%96%E8%AF%91"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 1. 修改 QEMU 并编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%BA%E5%86%85%E6%A0%B8%E6%B7%BB%E5%8A%A0-fb-%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 2.  为内核添加 fb 驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8-qemu"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 启动 QEMU</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.4.</span> <span class="toc-text"> 4. 其他知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8-busybox-%E5%88%B6%E4%BD%9C%E8%BD%BB%E9%87%8F%E7%BA%A7-initramfs-%E7%8E%AF%E5%A2%83"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 1. 使用 BusyBox 制作轻量级 initramfs 环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E6%AD%A5%E9%AA%A4%E5%8C%85%E6%8B%AC"><span class="toc-number">1.4.1.1.</span> <span class="toc-text"> 🔧 主要步骤包括</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E5%8A%BF"><span class="toc-number">1.4.1.2.</span> <span class="toc-text"> ✅ 优势</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-gdb-qemu-%E8%B0%83%E8%AF%95-linux-%E5%86%85%E6%A0%B8"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 2. 使用 GDB + QEMU 调试 Linux 内核</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%B8%8F-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.4.2.1.</span> <span class="toc-text"> 🛠️ 准备工作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-gdb-%E8%BF%9E%E6%8E%A5%E8%B0%83%E8%AF%95"><span class="toc-number">1.4.2.2.</span> <span class="toc-text"> 💡 使用 GDB 连接调试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B8%E5%9E%8B%E8%B0%83%E8%AF%95%E5%9C%BA%E6%99%AF"><span class="toc-number">1.4.2.3.</span> <span class="toc-text"> 🧪 典型调试场景</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-lcd-%E6%8E%A7%E5%88%B6%E5%99%A8%E6%A8%A1%E5%9E%8B%E4%B8%8E%E8%AE%BE%E5%A4%87%E6%A0%91%E7%90%86%E8%A7%A3"><span class="toc-number">1.4.3.</span> <span class="toc-text"> 3. LCD 控制器模型与设备树理解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%B8%8F-lcd-%E6%8E%A7%E5%88%B6%E5%99%A8%E6%A8%A1%E5%9E%8B%E6%A0%B8%E5%BF%83%E8%A6%81%E7%82%B9"><span class="toc-number">1.4.3.1.</span> <span class="toc-text"> 🖥️ LCD 控制器模型核心要点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E5%A4%87%E6%A0%91%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.4.3.2.</span> <span class="toc-text"> 📄 设备树配置详解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%BB%BA%E8%AE%AE"><span class="toc-number">1.4.3.3.</span> <span class="toc-text"> ✅ 开发建议</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-imx6ull-%E5%BC%95%E8%84%9A%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="toc-number">1.4.4.</span> <span class="toc-text"> 4. IMX6ULL 引脚配置方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B%E5%A6%82%E4%B8%8B"><span class="toc-number">1.4.4.1.</span> <span class="toc-text"> 🧱 配置流程如下</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8-nxp-pin-tool-%E9%85%8D%E7%BD%AE%E5%BC%95%E8%84%9A%E5%8A%9F%E8%83%BD"><span class="toc-number">1.4.4.1.1.</span> <span class="toc-text"> ✅ 1. 使用 NXP Pin Tool 配置引脚功能</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E5%B0%86%E9%85%8D%E7%BD%AE%E5%86%99%E5%85%A5%E8%AE%BE%E5%A4%87%E6%A0%91"><span class="toc-number">1.4.4.1.2.</span> <span class="toc-text"> ✅ 2. 将配置写入设备树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-pinctrl-%E5%AD%90%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E5%BC%95%E8%84%9A"><span class="toc-number">1.4.4.1.3.</span> <span class="toc-text"> ✅ 3. Pinctrl 子系统管理引脚</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-gpio-%E5%AD%90%E7%B3%BB%E7%BB%9F%E6%8E%A7%E5%88%B6%E9%AB%98%E4%BD%8E%E7%94%B5%E5%B9%B3"><span class="toc-number">1.4.4.1.4.</span> <span class="toc-text"> ✅ 4. GPIO 子系统控制高低电平</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&text=嵌入式学习（二）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&title=嵌入式学习（二）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&is_video=false&description=嵌入式学习（二）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=嵌入式学习（二）&body=Check out this article: https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&title=嵌入式学习（二）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&title=嵌入式学习（二）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&title=嵌入式学习（二）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&title=嵌入式学习（二）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&name=嵌入式学习（二）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/&t=嵌入式学习（二）"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
