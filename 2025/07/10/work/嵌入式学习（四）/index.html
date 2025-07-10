@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天 心情：一般   嵌入式学习（四）  I2C 总线技术深度解析 参考资料：   I2CTools：https:&#x2F;&#x2F;mirrors.edge.kernel.org&#x2F;pub&#x2F;software&#x2F;utils&#x2F;i2c-tools&#x2F;   i2c_spec.pdf（TI 官方的 THE I2C-BUS SPECIFICATION VERSION 2.1）   Linux 内核文档：Documentat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式学习（四）">
+<meta property="og:url" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天 心情：一般   嵌入式学习（四）  I2C 总线技术深度解析 参考资料：   I2CTools：https:&#x2F;&#x2F;mirrors.edge.kernel.org&#x2F;pub&#x2F;software&#x2F;utils&#x2F;i2c-tools&#x2F;   i2c_spec.pdf（TI 官方的 THE I2C-BUS SPECIFICATION VERSION 2.1）   Linux 内核文档：Documentat">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/001_i2c_hardware_block.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/002_i2c_software_block.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/003_linux_i2c_software_block.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/004_noos_i2c_software_block.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/005_i2c_hardware_connect.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/006_teacher_and_student.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/007_i2c_write.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/008_i2c_read.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/009_i2c_signal.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/010_i2c_signal_internal.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/011_true_value_table.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/017_i2c_and_smbus.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/019_smbus_quick_command.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/020_smbus_receive_byte.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/021_smbus_send_byte.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/022_smbus_read_byte.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/023_smbus_read_word.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/024_smbus_write_byte.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/025_smbus_write_word.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/026_smbus_block_read.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/027_smbus_block_write.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/033_i2c_block_read.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/034_i2c_block_write.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/028_smbus_block_write_block_read_process_call.png">
+<meta property="og:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/029_smbus_pec_example.png">
+<meta property="article:published_time" content="2025-07-10T09:23:49.000Z">
+<meta property="article:modified_time" content="2025-07-10T09:24:14.139Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/assets/001_i2c_hardware_block.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>嵌入式学习（四）</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2025/07/08/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&text=嵌入式学习（四）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&title=嵌入式学习（四）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&is_video=false&description=嵌入式学习（四）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=嵌入式学习（四）&body=Check out this article: https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&title=嵌入式学习（四）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&title=嵌入式学习（四）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&title=嵌入式学习（四）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&title=嵌入式学习（四）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&name=嵌入式学习（四）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&t=嵌入式学习（四）"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E5%9B%9B"><span class="toc-number">1.</span> <span class="toc-text"> 嵌入式学习（四）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#i2c-%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text"> I2C 总线技术深度解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-i2c-%E7%A1%AC%E4%BB%B6%E6%A1%86%E6%9E%B6%E4%B8%8E%E5%9F%BA%E7%A1%80%E5%AE%8C%E5%96%84%E9%83%A8%E5%88%86"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 1. I2C 硬件框架与基础（完善部分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-i2c-%E8%BD%AF%E4%BB%B6%E6%A1%86%E6%9E%B6%E6%B7%B1%E5%8C%96%E9%83%A8%E5%88%86"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 2. I2C 软件框架（深化部分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-linux-i2c-%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E7%BB%86%E5%8C%96%E5%88%86%E5%B1%82"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 3. Linux I2C 软件架构（细化分层）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-i2c-%E5%8D%8F%E8%AE%AE%E7%BB%86%E8%8A%82%E4%B8%8E%E8%BF%9B%E9%98%B6%E9%87%8D%E7%82%B9%E8%A1%A5%E5%85%85"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 4. I2C 协议细节与进阶（重点补充）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#41-%E7%A1%AC%E4%BB%B6%E8%BF%9E%E6%8E%A5%E4%B8%8E%E5%9F%BA%E6%9C%AC%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.1.4.1.</span> <span class="toc-text"> 4.1 硬件连接与基本信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#42-sda-%E5%8F%8C%E5%90%91%E4%BC%A0%E8%BE%93%E5%8E%9F%E7%90%86%E4%B8%8E%E4%B8%8A%E6%8B%89%E7%94%B5%E9%98%BB%E7%9A%84%E4%BD%9C%E7%94%A8%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.1.4.2.</span> <span class="toc-text"> 4.2 SDA 双向传输原理与上拉电阻的作用（详解）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#43-i2c-%E9%80%9F%E5%BA%A6%E4%B8%8E%E4%B8%8A%E6%8B%89%E7%94%B5%E9%98%BB-%E6%80%BB%E7%BA%BF%E7%94%B5%E5%AE%B9%E7%9A%84%E5%85%B3%E7%B3%BB%E9%87%8D%E7%82%B9%E8%A1%A5%E5%85%85"><span class="toc-number">1.1.4.3.</span> <span class="toc-text"> 4.3 I2C 速度与上拉电阻、总线电容的关系（重点补充）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#44-%E5%A4%9A%E4%B8%BB%E6%8E%A7%E4%BB%B2%E8%A3%81%E6%9C%BA%E5%88%B6-multi-master-arbitration%E9%87%8D%E7%82%B9%E8%A1%A5%E5%85%85"><span class="toc-number">1.1.4.4.</span> <span class="toc-text"> 4.4 多主控仲裁机制 (Multi-Master Arbitration)（重点补充）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-smbus-%E5%8D%8F%E8%AE%AE%E8%A1%A5%E5%85%85%E4%B8%8E%E6%98%8E%E7%A1%AE"><span class="toc-number">1.1.5.</span> <span class="toc-text"> 5. SMBus 协议（补充与明确）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#51-smbus-quick-command-i2c_func_smbus_quick"><span class="toc-number">1.1.5.1.</span> <span class="toc-text"> 5.1 SMBus Quick Command ( I2C_FUNC_SMBUS_QUICK )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#52-smbus-receive-byte-i2c_func_smbus_read_byte"><span class="toc-number">1.1.5.2.</span> <span class="toc-text"> 5.2 SMBus Receive Byte ( I2C_FUNC_SMBUS_READ_BYTE )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#53-smbus-send-byte-i2c_func_smbus_write_byte"><span class="toc-number">1.1.5.3.</span> <span class="toc-text"> 5.3 SMBus Send Byte ( I2C_FUNC_SMBUS_WRITE_BYTE )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#54-smbus-read-byte-data-i2c_func_smbus_read_byte_data"><span class="toc-number">1.1.5.4.</span> <span class="toc-text"> 5.4 SMBus Read Byte Data ( I2C_FUNC_SMBUS_READ_BYTE_DATA )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#55-smbus-read-word-data-i2c_func_smbus_read_word_data"><span class="toc-number">1.1.5.5.</span> <span class="toc-text"> 5.5 SMBus Read Word Data ( I2C_FUNC_SMBUS_READ_WORD_DATA )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#56-smbus-write-byte-data-i2c_func_smbus_write_byte_data"><span class="toc-number">1.1.5.6.</span> <span class="toc-text"> 5.6 SMBus Write Byte Data ( I2C_FUNC_SMBUS_WRITE_BYTE_DATA )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#57-smbus-write-word-data-i2c_func_smbus_write_word_data"><span class="toc-number">1.1.5.7.</span> <span class="toc-text"> 5.7 SMBus Write Word Data ( I2C_FUNC_SMBUS_WRITE_WORD_DATA )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#58-smbus-block-read-i2c_func_smbus_read_block_data"><span class="toc-number">1.1.5.8.</span> <span class="toc-text"> 5.8 SMBus Block Read ( I2C_FUNC_SMBUS_READ_BLOCK_DATA )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#59-smbus-block-write-i2c_func_smbus_write_block_data"><span class="toc-number">1.1.5.9.</span> <span class="toc-text"> 5.9 SMBus Block Write ( I2C_FUNC_SMBUS_WRITE_BLOCK_DATA )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#510-i2c-block-readwrite-i2c_func_smbus_read_i2c_block-i2c_func_smbus_write_i2c_block"><span class="toc-number">1.1.5.10.</span> <span class="toc-text"> 5.10 I2C Block Read&#x2F;Write (I2C_FUNC_SMBUS_READ_I2C_BLOCK, I2C_FUNC_SMBUS_WRITE_I2C_BLOCK)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#511-smbus-block-write-block-read-process-call-i2c_func_smbus_block_proc_call"><span class="toc-number">1.1.5.11.</span> <span class="toc-text"> 5.11 SMBus Block Write - Block Read Process Call (I2C_FUNC_SMBUS_BLOCK_PROC_CALL)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#512-packet-error-checking-pec"><span class="toc-number">1.1.5.12.</span> <span class="toc-text"> 5.12 Packet Error Checking (PEC)</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        嵌入式学习（四）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-07-10T09:23:49.000Z" class="dt-published" itemprop="datePublished">2025-07-10</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/work/">work</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天 心情：一般</p>
+<hr />
+<h1 id="嵌入式学习四"><a class="markdownIt-Anchor" href="#嵌入式学习四"></a> 嵌入式学习（四）</h1>
+<h2 id="i2c-总线技术深度解析"><a class="markdownIt-Anchor" href="#i2c-总线技术深度解析"></a> I2C 总线技术深度解析</h2>
+<p>参考资料：</p>
+<ul>
+<li>
+<p>I2CTools：<a target="_blank" rel="noopener" href="https://mirrors.edge.kernel.org/pub/software/utils/i2c-tools/">https://mirrors.edge.kernel.org/pub/software/utils/i2c-tools/</a></p>
+</li>
+<li>
+<p>i2c_spec.pdf（TI 官方的 THE I2C-BUS SPECIFICATION VERSION 2.1）</p>
+</li>
+<li>
+<p>Linux 内核文档：<code>Documentation\i2c\smbus-protocol.rst</code></p>
+</li>
+<li>
+<p>SMBus 协议：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.smbus.org/specs/">http://www.smbus.org/specs/</a></li>
+</ul>
+</li>
+<li>
+<p><code>SMBus_3_0_20141220.pdf</code></p>
+</li>
+<li>
+<p>I2CTools: <code>https://mirrors.edge.kernel.org/pub/software/utils/i2c-tools/</code></p>
+</li>
+</ul>
+<h3 id="1-i2c-硬件框架与基础完善部分"><a class="markdownIt-Anchor" href="#1-i2c-硬件框架与基础完善部分"></a> 1. I2C 硬件框架与基础（完善部分）</h3>
+<p><img src="./assets/001_i2c_hardware_block.png" alt="image-20210208125100022" /></p>
+<ul>
+<li><strong>总线构成：</strong> I2C 总线仅由两条双向信号线组成：
+<ul>
+<li><strong>SCL (Serial Clock Line)：</strong> 时钟线，由主设备生成并控制。</li>
+<li><strong>SDA (Serial Data Line)：</strong> 数据线，用于传输数据。</li>
+</ul>
+</li>
+<li><strong>上拉电阻：</strong> SCL 和 SDA 两条总线都必须连接到 VCC（电源）的上拉电阻。
+<ul>
+<li><strong>关键特性：</strong> I2C 总线上的所有设备都采用 <strong>开漏 (Open-Drain)</strong> 或 <strong>开集 (Open-Collector)</strong> 输出结构。这意味着设备只能将总线拉低 (输出逻辑 0/Dominant) 或释放总线 (进入高阻态)。</li>
+<li><strong>上拉电阻的作用：</strong> 当设备释放总线时，上拉电阻会将 SCL 和 SDA 线拉高，从而实现逻辑高电平 (逻辑 1/Recessive)。</li>
+</ul>
+</li>
+<li><strong>控制器与设备：</strong>
+<ul>
+<li>一个 SoC（主芯片）内部可以集成一个或多个 I2C 控制器。</li>
+<li>每个 I2C 控制器可以连接（理论上）多个 I2C 从设备，但实际数量受总线电容和地址空间限制。标准的 7 位地址允许连接 128 个设备（但有预留地址）。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="2-i2c-软件框架深化部分"><a class="markdownIt-Anchor" href="#2-i2c-软件框架深化部分"></a> 2. I2C 软件框架（深化部分）</h3>
+<p><img src="./assets/002_i2c_software_block.png" alt="image-20210219173533929" /></p>
+<ul>
+<li><strong>分层设计：</strong> I2C 的软件框架通常采用分层设计，以实现模块化和可移植性。
+<ul>
+<li><strong>应用层 (APP)：</strong>
+<ul>
+<li><strong>职责：</strong> 发出高层次的业务逻辑请求，例如“将字符串‘<a target="_blank" rel="noopener" href="http://www.100ask.net">www.100ask.net</a>’写入 EEPROM 地址 16”。</li>
+<li><strong>特点：</strong> 不关心底层 I2C 通信的细节，只调用标准化（或由特定设备驱动提供）的 API。提供的是“做什么”的命令。</li>
+</ul>
+</li>
+<li><strong>设备层 (I2C Device Driver)：</strong>
+<ul>
+<li><strong>职责：</strong> 理解特定 I2C 从设备的通信协议（如 AT24C02 的内存地址、读写命令、数据格式等）。</li>
+<li><strong>功能：</strong> 将应用层的请求转换为 I2C 从设备能理解的特定字节序列（例如，AT24C02 的写命令、内部地址、数据等），并判断操作结果（如 ACK）。提供的是“如何封装数据”的逻辑。</li>
+<li><strong>交互方式：</strong> 通过 <code>i2c_client</code> 结构体和 <code>i2c_driver</code> 结构体，调用 I2C 控制器驱动提供的通用 API（如 <code>i2c_transfer()</code> 或 <code>i2c_smbus_read/write_xxx()</code>）。</li>
+</ul>
+</li>
+<li><strong>控制器层 (I2C Controller Driver / Adapter Driver)：</strong>
+<ul>
+<li><strong>职责：</strong> 负责实际的 I2C 总线时序生成和物理层的操作。</li>
+<li><strong>功能：</strong> 根据 I2C 协议生成 Start/Stop 信号、收发时钟、读写 SDA 数据、处理 ACK/NACK 信号。将设备层的请求翻译成电信号并直接操作 SoC 的 I2C 控制器硬件寄存器。提供的是“如何发送/接收原始 I2C 信号”的硬件抽象。</li>
+<li><strong>交互方式：</strong> 实现了 <code>i2c_adapter</code> 结构体中定义的一系列操作函数（如 <code>master_xfer</code>）。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="3-linux-i2c-软件架构细化分层"><a class="markdownIt-Anchor" href="#3-linux-i2c-软件架构细化分层"></a> 3. Linux I2C 软件架构（细化分层）</h3>
+<p><img src="./assets/003_linux_i2c_software_block.png" alt="image-20210219173436295" /></p>
+<ul>
+<li>
+<p><strong>Linux 的 I2C 子系统：</strong> 为 I2C 通信提供了统一的框架，包括核心协议层、适配器层和设备层。</p>
+</li>
+<li>
+<p><strong>从上到下：</strong></p>
+<ul>
+<li><strong>I2C 协议层：</strong> 最顶层是用户所需理解的 I2C 通信协议。</li>
+<li><strong>应用层 (APP)：</strong> 与用户空间应用程序交互。
+<ul>
+<li>可以通过两种方式访问 I2C 设备：
+<ul>
+<li><strong>直接使用 I2C 设备驱动：</strong> 如果有特定设备的内核驱动（如 AT24C02 驱动），APP 会通过该驱动提供的 <code>sysfs</code> 节点或 <code>misc device</code> 接口来访问。</li>
+<li><strong>通过 <code>i2c-dev</code> 驱动：</strong> 内核自带的 <code>i2c-dev.c</code> 驱动是一个通用 I2C 控制器接口，它将 I2C 适配器（总线）暴露给用户空间 <code>/dev/i2c-X</code> (X 为总线号)设备文件。应用程序可以直接通过这些设备文件（使用 <code>ioctl</code>）发送原始 I2C 消息。这对于测试和非标准 I2C 设备调试非常有用。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>I2C Device Driver (Client Driver)：</strong>
+<ul>
+<li><strong>特定设备驱动：</strong> 针对具体从设备（如 EEPROM、传感器、RTC 等）编写的内核驱动。它使用 Linux I2C 核心提供的 API 与底层 I2C 控制器交互。它知道如何配置和操作其对应的硬件从设备。</li>
+<li><strong>i2c-dev.c：</strong> 如上所述，是一个特殊的设备驱动，它将 I2C 总线通用化，方便用户空间访问。</li>
+</ul>
+</li>
+<li><strong>I2C Controller Driver (Adapter Driver)：</strong>
+<ul>
+<li><strong>硬件 I2C 控制器驱动：</strong> 针对 SoC 内部的硬件 I2C 控制器编写的驱动程序。它负责操作 I2C 控制器寄存器，实现 I2C 时序、中断处理、DMA 传输等。每个 I2C 控制器都被抽象为一个 <code>i2c_adapter</code>。</li>
+<li><strong>GPIO 模拟 I2C (i2c-gpio.c)：</strong> 对于没有硬件 I2C 控制器或需要额外 I2C 总线的情况，可以通过软件来模拟 I2C 协议。它使用 SoC 的 GPIO 引脚来生成 SCL 和 SDA 信号。这通常用于低速设备或调试。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>对于单片机/裸机（对比理解）：</strong></p>
+</li>
+</ul>
+<p><img src="./assets/004_noos_i2c_software_block.png" alt="image-20210219175747702" /></p>
+<ul>
+<li>在单片机/裸机环境中，层级更少、更直接：
+<ul>
+<li><strong>I2C 协议层：</strong> 仍然是基础。</li>
+<li><strong>应用层 (APP)：</strong> 直接调用由 I2C 设备驱动提供的接口。</li>
+<li><strong>I2C Device Driver：</strong> 完全由开发者自行实现，负责将应用请求转换为设备特定命令，并调用控制器驱动接口。</li>
+<li><strong>I2C Controller Driver (Adapter Driver)：</strong> 完全由开发者自行实现，直接操作单片机 I2C 硬件模块的寄存器，或者手动控制 GPIO 来模拟 I2C 时序。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="4-i2c-协议细节与进阶重点补充"><a class="markdownIt-Anchor" href="#4-i2c-协议细节与进阶重点补充"></a> 4. I2C 协议细节与进阶（重点补充）</h3>
+<h4 id="41-硬件连接与基本信号"><a class="markdownIt-Anchor" href="#41-硬件连接与基本信号"></a> 4.1 硬件连接与基本信号</h4>
+<p><img src="./assets/005_i2c_hardware_connect.png" alt="image-20210220144722044" /></p>
+<ul>
+<li>
+<p><strong>传输数据类比 (比喻很好)：</strong> 体育老师和学生的例子形象地解释了 I2C 通信的 Start、Address/Direction、Data Transfer、ACK/NACK 和 Stop 信号。</p>
+<p>怎么通过 I2C 传输数据，我们需要把数据从主设备发送到从设备上去，也需要把数据从从设备传送到主设备上去，数据涉及到双向传输。</p>
+<p>举个例子：</p>
+<p><img src="./assets/006_teacher_and_student.png" alt="image-20210220145618978" /></p>
+<p>体育老师：可以把球发给学生，也可以把球从学生中接过来。</p>
+<ul>
+<li>
+<p>发球：</p>
+<ul>
+<li>老师：开始了(start)</li>
+<li>老师：A！我要发球给你！(地址/方向)</li>
+<li>学生 A：到！(回应)</li>
+<li>老师把球发出去（传输）</li>
+<li>A 收到球之后，应该告诉老师一声（回应）</li>
+<li>老师：结束（停止）</li>
+</ul>
+</li>
+<li>
+<p>接球：</p>
+<ul>
+<li>老师：开始了(start)</li>
+<li>老师：B！把球发给我！(地址/方向)</li>
+<li>学生 B：到！</li>
+<li>B 把球发给老师（传输）</li>
+<li>老师收到球之后，给 B 说一声，表示收到球了（回应）</li>
+<li>老师：结束（停止）</li>
+</ul>
+</li>
+</ul>
+<p>我们就使用这个简单的例子，来解释一下 IIC 的传输协议：</p>
+<ul>
+<li>老师说开始了，表示开始信号(start)</li>
+<li>老师提醒某个学生要发球，表示发送地址和方向(address/read/write)</li>
+<li>老师发球/接球，表示数据的传输</li>
+<li>收到球要回应：回应信号(ACK)</li>
+<li>老师说结束，表示 IIC 传输结束(P)</li>
+</ul>
+</li>
+<li>
+<p><strong>I2C 信号定义：</strong></p>
+<ul>
+<li><strong>开始信号 (S)：</strong> SCL 高电平时，SDA 由高电平跳变为低电平。</li>
+<li><strong>停止信号 (P)：</strong> SCL 高电平时，SDA 由低电平跳变为高电平。</li>
+<li><strong>数据有效性：</strong> SDA 上的数据在 SCL 为高电平期间必须保持稳定。数据只能在 SCL 为低电平期间改变。</li>
+<li><strong>响应信号 (ACK)：</strong> 接收方在接收到 8 位数据后，在第 9 个时钟周期将 SDA 拉低。表示数据接收成功。</li>
+<li><strong>非响应信号 (NACK)：</strong> 接收方未能响应（如设备不存在、忙、无数据可发或数据已发完），在第 9 个时钟周期保持 SDA 高电平。</li>
+<li><strong>MSB First：</strong> 数据传输时，先传输最高位 (Most Significant Bit)。</li>
+</ul>
+</li>
+</ul>
+<p><img src="./assets/007_i2c_write.png" alt="image-20210220150757825" /><br />
+<img src="./assets/008_i2c_read.png" alt="image-20210220150954993" /><br />
+<img src="./assets/009_i2c_signal.png" alt="image-20210220151524099" /></p>
+<h4 id="42-sda-双向传输原理与上拉电阻的作用详解"><a class="markdownIt-Anchor" href="#42-sda-双向传输原理与上拉电阻的作用详解"></a> 4.2 SDA 双向传输原理与上拉电阻的作用（详解）</h4>
+<p><img src="./assets/010_i2c_signal_internal.png" alt="image-20210220152057547" /><br />
+<img src="./assets/011_true_value_table.png" alt="image-20210220152134970" /></p>
+<ul>
+<li><strong>开漏/开集输出：</strong>
+<ul>
+<li>SDA 和 SCL 线上的所有连接设备都使用 <strong>开漏 (Open-Drain)</strong> 或 <strong>开集 (Open-Collector)</strong> 输出引脚。</li>
+<li>这意味着设备只能将总线 <strong>拉低 (逻辑 0)</strong> 或让总线 <strong>浮空 (开放输出，高阻态)</strong>。它们不能主动输出高电平。</li>
+</ul>
+</li>
+<li><strong>上拉电阻的作用：</strong>
+<ul>
+<li>当设备需要输出高电平（逻辑 1）时，它会 <strong>释放</strong> 总线（进入高阻态），此时 SCL/SDA 线上的 <strong>上拉电阻</strong> 会将总线电压拉高到 VCC。</li>
+<li>当设备需要输出低电平（逻辑 0）时，它会 <strong>驱动</strong> 三极管/MOSFET，将总线直接拉到 GND。</li>
+</ul>
+</li>
+<li><strong>实现双向传输/“线与”逻辑：</strong>
+<ul>
+<li>由于这种开漏特性，I2C 总线上实现了一种天然的“线与” (Wired-AND) 逻辑：只要有一个设备将 SDA/SCL 拉低，总线就会保持低电平。只有当所有设备都释放总线（不拉低）时，总线才会被上拉电阻拉高。</li>
+<li>这使得 SDA 线可以被任何设备拉低，从而实现了数据的双向传输和多主控仲裁的基础。</li>
+</ul>
+</li>
+</ul>
+<h4 id="43-i2c-速度与上拉电阻-总线电容的关系重点补充"><a class="markdownIt-Anchor" href="#43-i2c-速度与上拉电阻-总线电容的关系重点补充"></a> 4.3 I2C 速度与上拉电阻、总线电容的关系（重点补充）</h4>
+<ul>
+<li><strong>总线电容 (<code>C_bus</code>) 的作用：</strong>
+<ul>
+<li>I2C 总线上的每根线 SCL 和 SDA 都有寄生电容，这是由 PCB 走线、连接器、器件引脚等引入的。所有这些电容的总和构成了总线电容 <code>C_bus</code>。</li>
+<li>这个 <code>C_bus</code> 必须在信号从低到高跳变时被充电，从高到低跳变时被放电。</li>
+</ul>
+</li>
+<li><strong>上拉电阻 (<code>R_p</code>) 的选择与速度：</strong>
+<ul>
+<li>当总线从逻辑 0（低电平）切换到逻辑 1（高电平）时，上拉电阻 <code>R_p</code> 会开始为 <code>C_bus</code> 充电，使总线电压上升。这个上升时间 (<code>t_r</code>) 主要由 <code>R_p</code> 和 <code>C_bus</code> 的乘积（即 RC 时间常数）决定。<code>t_r = 0.847 * R_p * C_bus</code> (从 0.3VCC 到 0.7VCC 的时间)。</li>
+<li><strong>速度限制：</strong> I2C 协议对信号的上升时间和下降时间都有严格的限制。如果 <code>R_p * C_bus</code> 乘积过大，上升时间就会太长，导致信号无法在规定的时钟周期内稳定到高电平，从而限制了 I2C 总线的最高工作频率（速度）。</li>
+<li><strong><code>R_p</code> 过小：</strong> 导致流过电阻的电流过大，增加功耗。同时，当设备将总线拉低时，需要有足够的能力来灌入 (<code>sink</code>) 更大的电流，可能超出设备的灌电流能力，导致无法将总线真正拉到低电平。</li>
+<li><strong><code>R_p</code> 过大：</strong> 导致上升时间过长，降低总线速度。同时，对噪声的抗干扰能力下降。</li>
+<li><strong>最佳选择：</strong> <code>R_p</code> 的选择是一个权衡问题，需根据 I2C 总线的长度、连接设备的数量（影响 <code>C_bus</code>）、以及所需的 I2C 速度来综合计算和选择。I2C 规范中会有 <code>R_p * C_bus</code> 的最大值建议。</li>
+</ul>
+</li>
+<li><strong>为何 SCL 也需要上拉电阻？</strong>
+<ul>
+<li>SCL 同样是开漏输出，需要上拉电阻拉高。</li>
+<li><strong>时钟延长 (Clock Stretching)：</strong> 从设备可以在读取或写入数据时，通过将 SCL 线拉低来延长时钟周期（即“抱住”总线）。这表示从设备需要更多时间来处理数据，总线将暂停直到从设备释放 SCL。当从设备处理完毕并释放 SCL 后，上拉电阻会将其拉高，主设备才能继续产生时钟。因此，SCL 线上的上拉电阻是实现时钟延长的关键。</li>
+</ul>
+</li>
+</ul>
+<h4 id="44-多主控仲裁机制-multi-master-arbitration重点补充"><a class="markdownIt-Anchor" href="#44-多主控仲裁机制-multi-master-arbitration重点补充"></a> 4.4 多主控仲裁机制 (Multi-Master Arbitration)（重点补充）</h4>
+<p>I2C 总线允许多个主设备（Master）同时存在并竞争总线使用权。当多个主设备同时尝试发起通信时，会通过一个非破坏性的 <strong>逐位仲裁 (Bit-wise Arbitration)</strong> 机制来决定哪个主设备获胜。</p>
+<ul>
+<li>
+<p><strong>Dominant 和 Recessive 状态：</strong></p>
+<ul>
+<li><strong>Dominant (显性) 状态：</strong> 逻辑 0（低电平）。由于开漏输出，任何一个设备将总线拉低都会使总线处于显性状态。</li>
+<li><strong>Recessive (隐性) 状态：</strong> 逻辑 1（高电平）。只有当所有设备都释放总线时，上拉电阻才能使总线处于隐性状态。</li>
+<li><strong>规则：</strong> 显性状态总是覆盖隐性状态。任何发送显性位的设备都会发现总线处于显性状态，而发送隐性位的设备如果发现总线处于显性状态，就知道有其他设备正在发送显性位。</li>
+</ul>
+</li>
+<li>
+<p><strong>仲裁过程：</strong></p>
+<ol>
+<li><strong>等待总线空闲：</strong> 所有主设备都会在开始通信前等待一个停止 (STOP) 条件，并确保总线（SDA 和 SCL）处于空闲状态（高电平）一段时间。</li>
+<li><strong>同时发出开始 (START) 信号：</strong> 多个主设备可以同时发出 START 信号，并在 SCL 的第一个高电平期间竞争总线。</li>
+<li><strong>发送地址和 R/W 位：</strong> 获胜的主设备继续发送其目标从设备的 7 位地址和 1 位读/写 (R/W) 方向位。<strong>所有竞争的主设备都同时发送自己的地址和 R/W 位。</strong></li>
+<li><strong>逐位判断：</strong>
+<ul>
+<li><strong>每个主设备在发送每一位数据后（在 SDA 保持稳定的 SCL 高电平期间），都会检测 SDA 线上的实际电平。</strong></li>
+<li><strong>如果主设备发送的是一个隐性位（逻辑 1），但检测到 SDA 线是显性位（逻辑 0），</strong> 这意味着有另一个主设备正在发送逻辑 0。此时，发送 1 的主设备就知道自己已经输掉了仲裁，必须立即停止自己的传输，并等待总线释放。</li>
+<li><strong>如果主设备发送的是一个显性位（逻辑 0），并且检测到 SDA 线也是显性位（逻辑 0），</strong> 它会继续传输，因为它并没有检测到冲突。</li>
+</ul>
+</li>
+<li><strong>仲裁胜出：</strong> 这个过程持续到整个地址（及 R/W 位）发送完毕。第一个发送高电平但检测到低电平的主设备将立即停止。最终，只有一个主设备能够成功地发送完其地址和 R/W 位，而未检测到冲突，它就赢得了总线控制权，并继续完成后续的传输。</li>
+<li><strong>数据段仲裁（不常见）：</strong> 如果两个主设备尝试与同一个从设备通信（发送相同的地址和 R/W 位），仲裁将继续到数据段。第一个发送逻辑 1 却检测到逻辑 0 的主设备将再次输掉仲裁。</li>
+</ol>
+</li>
+<li>
+<p><strong>优点：</strong> 这种机制是非破坏性的，意味着不会损坏数据或设备，并且确保了 I2C 总线在使用权上的公平和高效。</p>
+</li>
+</ul>
+<hr />
+<h3 id="5-smbus-协议补充与明确"><a class="markdownIt-Anchor" href="#5-smbus-协议补充与明确"></a> 5. SMBus 协议（补充与明确）</h3>
+<p><img src="./assets/017_i2c_and_smbus.png" alt="image-20210224093827621" /></p>
+<ul>
+<li>
+<p><strong>定义：</strong> SMBus（System Management Bus）是 I2C 协议的一个子集，由 Intel 于 1995 年推出，主要用于智能电池、温度传感器等系统管理领域。</p>
+</li>
+<li>
+<p><strong>关系：</strong> <strong>SMBus 是基于 I2C 协议的，但比 I2C 有更严格的要求和更明确的命令格式。</strong> 所有符合 SMBus 规范的设备都可以工作在 I2C 总线上，但并非所有 I2C 设备都符合 SMBus 规范。</p>
+</li>
+<li>
+<p><strong>更严格的要求：</strong></p>
+<ul>
+<li><strong>电压范围：</strong> SMBus 通常限定在更窄的电压范围 (1.8V~5V)，而 I2C 更宽泛。</li>
+<li><strong>时钟频率：</strong> SMBus 要求最小工作频率（如 10kHz），并对最大时钟延长（Clock Stretching）时间有严格限制（I2C 无此限制），以避免总线长时间被占用。</li>
+<li><strong>地址响应强制：</strong> SMBus 强制要求从设备在接收到自身地址后必须发出 ACK 信号，以便主设备知晓从设备的存在和状态。</li>
+<li><strong>数据格式标准化：</strong> I2C 协议只定义了底层传输机制，数据含义由设备决定。<strong>SMBus 则明确定义了几种标准化的数据传输格式</strong>（如 Quick Command, Send/Receive Byte, Read/Write Byte/Word/Block Data, Process Call 等）。这使得不同厂商的 SMBus 设备具有更好的互操作性。</li>
+<li><strong>重复开始 (Repeated START) Condition：</strong>
+<ul>
+<li>在 I2C 协议中，可以在一次 S-P 对之间进行多次传输（例如，写入寄存器地址后立即重复开始并读取数据），而无需在两次传输之间发出 P 信号（停止）。</li>
+<li>这对于某些设备（如 EEPROM 读操作）非常重要，因为它使得主设备不必释放总线，确保了后续操作的原子性。SMBus 明确支持并使用这种机制。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>SMBus 协议分析：</strong></p>
+<ul>
+<li>下面文档中的 <code>Functionality flag</code> 是 Linux 的某个 I2C 控制器驱动所支持的功能。</li>
+<li>比如 <code>Functionality flag: I2C_FUNC_SMBUS_QUICK</code>，表示需要 I2C 控制器支持 <code>SMBus Quick Command</code> 这些 <code>I2C_FUNC_SMBUS_XXXX</code> 是 Linux 内核 <code>i2c-dev</code> 驱动或 I2C 适配器驱动暴露给上层的一个功能位集合，表示该驱动/硬件支持哪些 SMBus 或 I2C 传输模式。例如，<code>I2C_FUNC_SMBUS_QUICK</code> 表示支持 SMBus 快速命令。</li>
+</ul>
+</li>
+<li>
+<p><strong>SMBus 时序符号：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">S     (1 bit) : Start bit(开始位)</span><br><span class="line">Sr    (1 bit) : 重复的开始位</span><br><span class="line">P     (1 bit) : Stop bit(停止位)</span><br><span class="line"><span class="meta prompt_">R/W# </span><span class="language-bash"> (1 bit) : Read/Write bit. Rd equals 1, Wr equals 0.(读写位)</span></span><br><span class="line">A, N  (1 bit) : Accept and reverse accept bit.(回应位)</span><br><span class="line">Address(7 bits): I2C 7 bit address. Note that this can be expanded as usual to</span><br><span class="line">                get a 10 bit I2C address.</span><br><span class="line">                (地址位，7位地址)</span><br><span class="line">Command Code  (8 bits): Command byte, a data byte which often selects a register on</span><br><span class="line">                the device.</span><br><span class="line">                (命令字节，一般用来选择芯片内部的寄存器)</span><br><span class="line">Data Byte (8 bits): A plain data byte. Sometimes, I write DataLow, DataHigh</span><br><span class="line">                for 16 bit data.</span><br><span class="line">                (数据字节，8位；如果是16位数据的话，用2个字节来表示：DataLow、DataHigh)</span><br><span class="line">Count (8 bits): A data byte containing the length of a block operation.</span><br><span class="line">				(在block操作总，表示数据长度)</span><br><span class="line">[..]:           Data sent by I2C device, as opposed to data sent by the host</span><br><span class="line">                adapter.</span><br><span class="line">                (中括号表示I2C设备发送的数据，没有中括号表示host adapter发送的数据)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="51-smbus-quick-command-i2c_func_smbus_quick"><a class="markdownIt-Anchor" href="#51-smbus-quick-command-i2c_func_smbus_quick"></a> 5.1 SMBus Quick Command ( <code>I2C_FUNC_SMBUS_QUICK</code> )</h4>
+<p><img src="./assets/019_smbus_quick_command.png" alt="image-20210224105224903" /></p>
+<ul>
+<li><strong>用途：</strong> 仅包含地址和读/写位。常用于简单的开关控制，如检测设备是否存在或设置设备状态（开/关）。</li>
+</ul>
+<h4 id="52-smbus-receive-byte-i2c_func_smbus_read_byte"><a class="markdownIt-Anchor" href="#52-smbus-receive-byte-i2c_func_smbus_read_byte"></a> 5.2 SMBus Receive Byte ( <code>I2C_FUNC_SMBUS_READ_BYTE</code> )</h4>
+<p><img src="./assets/020_smbus_receive_byte.png" alt="image-20210224113511225" /></p>
+<ul>
+<li><strong>用途：</strong> 主设备发送地址，从设备立即发送一个数据字节。主设备接收后不回应（NACK）。通常用于从设备读取状态或其他简单数据。</li>
+</ul>
+<h4 id="53-smbus-send-byte-i2c_func_smbus_write_byte"><a class="markdownIt-Anchor" href="#53-smbus-send-byte-i2c_func_smbus_write_byte"></a> 5.3 SMBus Send Byte ( <code>I2C_FUNC_SMBUS_WRITE_BYTE</code> )</h4>
+<p><img src="./assets/021_smbus_send_byte.png" alt="image-20210224110638143" /></p>
+<ul>
+<li><strong>用途：</strong> 主设备发送地址和 R/W = 0，然后发送一个数据字节。应用于简单的控制命令，不附带内部寄存器地址。</li>
+</ul>
+<h4 id="54-smbus-read-byte-data-i2c_func_smbus_read_byte_data"><a class="markdownIt-Anchor" href="#54-smbus-read-byte-data-i2c_func_smbus_read_byte_data"></a> 5.4 SMBus Read Byte Data ( <code>I2C_FUNC_SMBUS_READ_BYTE_DATA</code> )</h4>
+<p><img src="./assets/022_smbus_read_byte.png" alt="image-20210224110812872" /></p>
+<ul>
+<li><strong>用途：</strong> 先写（发送 Command Code，通常是内部寄存器地址），再读（重复开始，然后从该地址读取一个字节）。</li>
+</ul>
+<h4 id="55-smbus-read-word-data-i2c_func_smbus_read_word_data"><a class="markdownIt-Anchor" href="#55-smbus-read-word-data-i2c_func_smbus_read_word_data"></a> 5.5 SMBus Read Word Data ( <code>I2C_FUNC_SMBUS_READ_WORD_DATA</code> )</h4>
+<p><img src="./assets/023_smbus_read_word.png" alt="image-20210224111404096" /></p>
+<ul>
+<li><strong>用途：</strong> 类似 Read Byte Data，但读取 2 个字节数据（一个字）。</li>
+</ul>
+<h4 id="56-smbus-write-byte-data-i2c_func_smbus_write_byte_data"><a class="markdownIt-Anchor" href="#56-smbus-write-byte-data-i2c_func_smbus_write_byte_data"></a> 5.6 SMBus Write Byte Data ( <code>I2C_FUNC_SMBUS_WRITE_BYTE_DATA</code> )</h4>
+<p><img src="./assets/024_smbus_write_byte.png" alt="image-20210224111542576" /></p>
+<ul>
+<li><strong>用途：</strong> 先写 Command Code，再写一个数据字节。</li>
+</ul>
+<h4 id="57-smbus-write-word-data-i2c_func_smbus_write_word_data"><a class="markdownIt-Anchor" href="#57-smbus-write-word-data-i2c_func_smbus_write_word_data"></a> 5.7 SMBus Write Word Data ( <code>I2C_FUNC_SMBUS_WRITE_WORD_DATA</code> )</h4>
+<p><img src="./assets/025_smbus_write_word.png" alt="image-20210224111840257" /></p>
+<ul>
+<li><strong>用途：</strong> 先写 Command Code，再写两个数据字节。</li>
+</ul>
+<h4 id="58-smbus-block-read-i2c_func_smbus_read_block_data"><a class="markdownIt-Anchor" href="#58-smbus-block-read-i2c_func_smbus_read_block_data"></a> 5.8 SMBus Block Read ( <code>I2C_FUNC_SMBUS_READ_BLOCK_DATA</code> )</h4>
+<p><img src="./assets/026_smbus_block_read.png" alt="image-20210224112524185" /></p>
+<ul>
+<li><strong>用途：</strong> 主设备发送 Command Code，从设备回应。然后从设备先发送一个“Block Count”字节（指示后续有效数据长度 N），再发送 N 个数据字节。</li>
+</ul>
+<h4 id="59-smbus-block-write-i2c_func_smbus_write_block_data"><a class="markdownIt-Anchor" href="#59-smbus-block-write-i2c_func_smbus_write_block_data"></a> 5.9 SMBus Block Write ( <code>I2C_FUNC_SMBUS_WRITE_BLOCK_DATA</code> )</h4>
+<p><img src="./assets/027_smbus_block_write.png" alt="image-20210224112629201" /></p>
+<ul>
+<li><strong>用途：</strong> 主设备发送 Command Code，再发送一个“Byte Count”字节（指示后续有效数据长度 N），再发送 N 个数据字节。</li>
+</ul>
+<h4 id="510-i2c-block-readwrite-i2c_func_smbus_read_i2c_block-i2c_func_smbus_write_i2c_block"><a class="markdownIt-Anchor" href="#510-i2c-block-readwrite-i2c_func_smbus_read_i2c_block-i2c_func_smbus_write_i2c_block"></a> 5.10 I2C Block Read/Write (<code>I2C_FUNC_SMBUS_READ_I2C_BLOCK</code>, <code>I2C_FUNC_SMBUS_WRITE_I2C_BLOCK</code>)</h4>
+<p><img src="./assets/033_i2c_block_read.png" alt="image-20210225094024082" /><br />
+<img src="./assets/034_i2c_block_write.png" alt="image-20210225094359443" /></p>
+<ul>
+<li><strong>区别于 SMBus Block：</strong> 普通 I2C 的 Block Read/Write 在数据传输时，不包含前导的“Block Count”字节。接收方持续读取或发送方持续写入数据，直到获得 NACK 或 STOP 信号。</li>
+</ul>
+<h4 id="511-smbus-block-write-block-read-process-call-i2c_func_smbus_block_proc_call"><a class="markdownIt-Anchor" href="#511-smbus-block-write-block-read-process-call-i2c_func_smbus_block_proc_call"></a> 5.11 SMBus Block Write - Block Read Process Call (<code>I2C_FUNC_SMBUS_BLOCK_PROC_CALL</code>)</h4>
+<p><img src="./assets/028_smbus_block_write_block_read_process_call.png" alt="image-20210224112940865" /></p>
+<ul>
+<li><strong>用途：</strong> 这是一个复合事务。主设备先发送一个 Command Code 和一段写入数据（包括数据长度），然后从设备根据接收到的数据进行处理，并立即返回一段读取数据（同样包含返回数据长度）。整个过程在一次事务中完成，中间无需 STOP 信号。</li>
+</ul>
+<h4 id="512-packet-error-checking-pec"><a class="markdownIt-Anchor" href="#512-packet-error-checking-pec"></a> 5.12 Packet Error Checking (PEC)</h4>
+<p><img src="./assets/029_smbus_pec_example.png" alt="image-20210224113416249" /></p>
+<ul>
+<li>
+<p><strong>作用：</strong> PEC 是一种可选的错误校验机制。如果使能，在每次 SMBus 事务的最后，发送方会计算并追加一个 8 位的 CRC-8 校验码（PEC 字节）。接收方收到后也会进行校验，不匹配则认为传输错误。增强了数据传输的可靠性。</p>
+</li>
+<li>
+<p><strong>SMBus 和 I2C 的建议：</strong></p>
+<ul>
+<li><strong>优先使用 SMBus：</strong> 由于 SMBus 协议明确定义了数据格式和更严格的时序要求，这使得其设备更容易互操作，并且功能更可靠。</li>
+<li><strong>Linux 的策略：</strong> Linux 内核鼓励并优先使用 SMBus API，即使底层的 I2C 控制器可能仅是通用 I2C，内核也会尝试用通用 I2C 协议来模拟 SMBus 定义的事务格式。但这需要底层 I2C 控制器驱动的支持能力到位。</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E5%9B%9B"><span class="toc-number">1.</span> <span class="toc-text"> 嵌入式学习（四）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#i2c-%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text"> I2C 总线技术深度解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-i2c-%E7%A1%AC%E4%BB%B6%E6%A1%86%E6%9E%B6%E4%B8%8E%E5%9F%BA%E7%A1%80%E5%AE%8C%E5%96%84%E9%83%A8%E5%88%86"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 1. I2C 硬件框架与基础（完善部分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-i2c-%E8%BD%AF%E4%BB%B6%E6%A1%86%E6%9E%B6%E6%B7%B1%E5%8C%96%E9%83%A8%E5%88%86"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 2. I2C 软件框架（深化部分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-linux-i2c-%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E7%BB%86%E5%8C%96%E5%88%86%E5%B1%82"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 3. Linux I2C 软件架构（细化分层）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-i2c-%E5%8D%8F%E8%AE%AE%E7%BB%86%E8%8A%82%E4%B8%8E%E8%BF%9B%E9%98%B6%E9%87%8D%E7%82%B9%E8%A1%A5%E5%85%85"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 4. I2C 协议细节与进阶（重点补充）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#41-%E7%A1%AC%E4%BB%B6%E8%BF%9E%E6%8E%A5%E4%B8%8E%E5%9F%BA%E6%9C%AC%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.1.4.1.</span> <span class="toc-text"> 4.1 硬件连接与基本信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#42-sda-%E5%8F%8C%E5%90%91%E4%BC%A0%E8%BE%93%E5%8E%9F%E7%90%86%E4%B8%8E%E4%B8%8A%E6%8B%89%E7%94%B5%E9%98%BB%E7%9A%84%E4%BD%9C%E7%94%A8%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.1.4.2.</span> <span class="toc-text"> 4.2 SDA 双向传输原理与上拉电阻的作用（详解）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#43-i2c-%E9%80%9F%E5%BA%A6%E4%B8%8E%E4%B8%8A%E6%8B%89%E7%94%B5%E9%98%BB-%E6%80%BB%E7%BA%BF%E7%94%B5%E5%AE%B9%E7%9A%84%E5%85%B3%E7%B3%BB%E9%87%8D%E7%82%B9%E8%A1%A5%E5%85%85"><span class="toc-number">1.1.4.3.</span> <span class="toc-text"> 4.3 I2C 速度与上拉电阻、总线电容的关系（重点补充）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#44-%E5%A4%9A%E4%B8%BB%E6%8E%A7%E4%BB%B2%E8%A3%81%E6%9C%BA%E5%88%B6-multi-master-arbitration%E9%87%8D%E7%82%B9%E8%A1%A5%E5%85%85"><span class="toc-number">1.1.4.4.</span> <span class="toc-text"> 4.4 多主控仲裁机制 (Multi-Master Arbitration)（重点补充）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-smbus-%E5%8D%8F%E8%AE%AE%E8%A1%A5%E5%85%85%E4%B8%8E%E6%98%8E%E7%A1%AE"><span class="toc-number">1.1.5.</span> <span class="toc-text"> 5. SMBus 协议（补充与明确）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#51-smbus-quick-command-i2c_func_smbus_quick"><span class="toc-number">1.1.5.1.</span> <span class="toc-text"> 5.1 SMBus Quick Command ( I2C_FUNC_SMBUS_QUICK )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#52-smbus-receive-byte-i2c_func_smbus_read_byte"><span class="toc-number">1.1.5.2.</span> <span class="toc-text"> 5.2 SMBus Receive Byte ( I2C_FUNC_SMBUS_READ_BYTE )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#53-smbus-send-byte-i2c_func_smbus_write_byte"><span class="toc-number">1.1.5.3.</span> <span class="toc-text"> 5.3 SMBus Send Byte ( I2C_FUNC_SMBUS_WRITE_BYTE )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#54-smbus-read-byte-data-i2c_func_smbus_read_byte_data"><span class="toc-number">1.1.5.4.</span> <span class="toc-text"> 5.4 SMBus Read Byte Data ( I2C_FUNC_SMBUS_READ_BYTE_DATA )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#55-smbus-read-word-data-i2c_func_smbus_read_word_data"><span class="toc-number">1.1.5.5.</span> <span class="toc-text"> 5.5 SMBus Read Word Data ( I2C_FUNC_SMBUS_READ_WORD_DATA )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#56-smbus-write-byte-data-i2c_func_smbus_write_byte_data"><span class="toc-number">1.1.5.6.</span> <span class="toc-text"> 5.6 SMBus Write Byte Data ( I2C_FUNC_SMBUS_WRITE_BYTE_DATA )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#57-smbus-write-word-data-i2c_func_smbus_write_word_data"><span class="toc-number">1.1.5.7.</span> <span class="toc-text"> 5.7 SMBus Write Word Data ( I2C_FUNC_SMBUS_WRITE_WORD_DATA )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#58-smbus-block-read-i2c_func_smbus_read_block_data"><span class="toc-number">1.1.5.8.</span> <span class="toc-text"> 5.8 SMBus Block Read ( I2C_FUNC_SMBUS_READ_BLOCK_DATA )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#59-smbus-block-write-i2c_func_smbus_write_block_data"><span class="toc-number">1.1.5.9.</span> <span class="toc-text"> 5.9 SMBus Block Write ( I2C_FUNC_SMBUS_WRITE_BLOCK_DATA )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#510-i2c-block-readwrite-i2c_func_smbus_read_i2c_block-i2c_func_smbus_write_i2c_block"><span class="toc-number">1.1.5.10.</span> <span class="toc-text"> 5.10 I2C Block Read&#x2F;Write (I2C_FUNC_SMBUS_READ_I2C_BLOCK, I2C_FUNC_SMBUS_WRITE_I2C_BLOCK)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#511-smbus-block-write-block-read-process-call-i2c_func_smbus_block_proc_call"><span class="toc-number">1.1.5.11.</span> <span class="toc-text"> 5.11 SMBus Block Write - Block Read Process Call (I2C_FUNC_SMBUS_BLOCK_PROC_CALL)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#512-packet-error-checking-pec"><span class="toc-number">1.1.5.12.</span> <span class="toc-text"> 5.12 Packet Error Checking (PEC)</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&text=嵌入式学习（四）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&title=嵌入式学习（四）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&is_video=false&description=嵌入式学习（四）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=嵌入式学习（四）&body=Check out this article: https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&title=嵌入式学习（四）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&title=嵌入式学习（四）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&title=嵌入式学习（四）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&title=嵌入式学习（四）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&name=嵌入式学习（四）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/07/10/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/&t=嵌入式学习（四）"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
