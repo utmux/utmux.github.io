@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天 心情：一般  第七章 输入系统应用编程  7.1 什么是输入系统 首先，我们来了解什么是输入设备？ 常见的输入设备包括键盘、鼠标、游戏摇杆、绘图板、触摸屏等。用户通过这些设备与Linux系统进行数据交互和操作。 那么，什么是输入系统呢？ 面对种类繁多的输入设备，Linux系统设计了一套统一的框架来管理它们，以实现接口的标准化。这意味着无论是驱动开发人员还是应用程序开发人员，都可以在统一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="INPUT输入系统韦东山参考文献">
+<meta property="og:url" content="https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天 心情：一般  第七章 输入系统应用编程  7.1 什么是输入系统 首先，我们来了解什么是输入设备？ 常见的输入设备包括键盘、鼠标、游戏摇杆、绘图板、触摸屏等。用户通过这些设备与Linux系统进行数据交互和操作。 那么，什么是输入系统呢？ 面对种类繁多的输入设备，Linux系统设计了一套统一的框架来管理它们，以实现接口的标准化。这意味着无论是驱动开发人员还是应用程序开发人员，都可以在统一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/5d42fd45c82761c364353a135dd5aaff.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/64b5e4651db1407b1d65d8bed773d42c.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/eaa7d113e7e7cc698124c2d0ec88a156.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/94560e437cd1503459ae3b025fb8aca0.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/42ed1c9975376625a5fc0382c1b431c6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/55e13cf831567a132c8c2b453d0e86e3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/3984a60e34721b2098cd26e73219e10f.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/694bb430f38b51e31d81d064d01ff5b1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/d8a0bedb862cf355ebc26559934776c7.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/1fb7e6aaabad085c1881ee7bd5cc03e6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/c8f89b655e80e4373c859c7907f7ae9c.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/aece3ac28413f4ce33a7f9fd7390c44a.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/88cf342813770c69cdf0cd4deed11d1b.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/3b3ab08166f4e3329158694049e29eec.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/4ad8957b9750bcbe501a3d5955e184c5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/46856e75d7d41cb529144d660e882891.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/85e285eeda894a7df2f054bc4f931f23.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/ede2f05876e07e09165317351ee545dd.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/c864d06eaa8ad40850c83dc643a2d066.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/ee5562ccc5cd14d9aad874653630ba4b.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/2b640d691723980bcb4cf6ca47c09390.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/c11db04edda8974b55250223a3174fdd.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/eb9ff8d9e590de943659f2f410e93d44.emf">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/f760bb3f1d5effaa4a1b2c632a104f4e.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/7e8a1fdc4c9d8e4e88b7a4894750fb75.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/5b7da654488edf23d22bfc215265f1eb.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/629fa144596317ff07b09e42d7623b2e.png">
+<meta property="article:published_time" content="2025-07-14T12:06:15.000Z">
+<meta property="article:modified_time" content="2025-07-14T14:17:45.052Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/5d42fd45c82761c364353a135dd5aaff.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>INPUT输入系统韦东山参考文献</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2025/07/13/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%83%EF%BC%89/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&text=INPUT输入系统韦东山参考文献"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=INPUT输入系统韦东山参考文献"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&is_video=false&description=INPUT输入系统韦东山参考文献"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=INPUT输入系统韦东山参考文献&body=Check out this article: https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=INPUT输入系统韦东山参考文献"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=INPUT输入系统韦东山参考文献"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=INPUT输入系统韦东山参考文献"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=INPUT输入系统韦东山参考文献"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&name=INPUT输入系统韦东山参考文献&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&t=INPUT输入系统韦东山参考文献"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text"> 第七章 输入系统应用编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#71-%E4%BB%80%E4%B9%88%E6%98%AF%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.1.</span> <span class="toc-text"> 7.1 什么是输入系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#72-%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6%E5%8F%8A%E8%B0%83%E8%AF%95"><span class="toc-number">1.2.</span> <span class="toc-text"> 7.2 输入系统框架及调试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#721-%E6%A1%86%E6%9E%B6%E6%A6%82%E8%BF%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 7.2.1 框架概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#722-%E7%BC%96%E5%86%99app%E9%9C%80%E8%A6%81%E6%8E%8C%E6%8F%A1%E7%9A%84%E7%9F%A5%E8%AF%86"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 7.2.2 编写APP需要掌握的知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%86%85%E6%A0%B8%E4%B8%AD%E6%80%8E%E4%B9%88%E8%A1%A8%E7%A4%BA%E4%B8%80%E4%B8%AA%E8%BE%93%E5%85%A5%E8%AE%BE%E5%A4%87"><span class="toc-number">1.2.2.1.</span> <span class="toc-text"> 1. 内核中怎么表示一个输入设备？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-app%E5%8F%AF%E4%BB%A5%E5%BE%97%E5%88%B0%E4%BB%80%E4%B9%88%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.2.2.</span> <span class="toc-text"> 2. APP可以得到什么数据？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%BA%8B%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E7%95%8C%E7%BA%BF%E5%90%8C%E6%AD%A5%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.2.2.3.</span> <span class="toc-text"> 3. 事件之间的界线（同步事件）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E8%BE%93%E5%85%A5%E5%AD%90%E7%B3%BB%E7%BB%9F%E6%94%AF%E6%8C%81%E7%9A%84api%E6%93%8D%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.2.4.</span> <span class="toc-text"> 4. 输入子系统支持的API操作方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#723-%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 7.2.3 调试技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%A1%AE%E5%AE%9A%E8%AE%BE%E5%A4%87%E4%BF%A1%E6%81%AF"><span class="toc-number">1.2.3.1.</span> <span class="toc-text"> 1. 确定设备信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.3.2.</span> <span class="toc-text"> 2. 使用命令读取数据</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#73-%E4%B8%8D%E4%BD%BF%E7%94%A8%E5%BA%93%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.3.</span> <span class="toc-text"> 7.3 不使用库的应用程序示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#731-%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E6%94%AF%E6%8C%81%E5%AE%8C%E6%95%B4%E7%9A%84api%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 7.3.1 输入系统支持完整的API操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#732-app%E8%AE%BF%E9%97%AE%E7%A1%AC%E4%BB%B6%E7%9A%844%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%A6%88%E5%A6%88%E6%80%8E%E4%B9%88%E7%9F%A5%E9%81%93%E5%AD%A9%E5%AD%90%E9%86%92%E4%BA%86"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 7.3.2 APP访问硬件的4种方式：妈妈怎么知道孩子醒了</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#733-%E8%8E%B7%E5%8F%96%E8%AE%BE%E5%A4%87%E4%BF%A1%E6%81%AFioctl"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 7.3.3 获取设备信息（ioctl）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#734-%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F%E9%9D%9E%E9%98%BB%E5%A1%9E"><span class="toc-number">1.3.4.</span> <span class="toc-text"> 7.3.4 查询方式（非阻塞）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#735-%E4%BC%91%E7%9C%A0-%E5%94%A4%E9%86%92%E6%96%B9%E5%BC%8F%E9%98%BB%E5%A1%9E"><span class="toc-number">1.3.5.</span> <span class="toc-text"> 7.3.5 休眠-唤醒方式（阻塞）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#736-pollselect-%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.6.</span> <span class="toc-text"> 7.3.6 POLL&#x2F;SELECT 方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.3.6.1.</span> <span class="toc-text"> 1. 功能介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%A1%A5%E5%85%85poll-vs-select"><span class="toc-number">1.3.6.2.</span> <span class="toc-text"> 2. 补充：poll vs select</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%AF%BE%E5%90%8E%E4%BD%9C%E4%B8%9A-%E6%8F%90%E7%A4%BA"><span class="toc-number">1.3.6.3.</span> <span class="toc-text"> 3. 课后作业 (提示)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#737-%E5%BC%82%E6%AD%A5%E9%80%9A%E7%9F%A5%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.7.</span> <span class="toc-text"> 7.3.7 异步通知方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D-2"><span class="toc-number">1.3.7.1.</span> <span class="toc-text"> 1. 功能介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B"><span class="toc-number">1.3.7.2.</span> <span class="toc-text"> 2. 应用编程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#74-%E7%94%B5%E9%98%BB%E5%B1%8F%E5%92%8C%E7%94%B5%E5%AE%B9%E5%B1%8F"><span class="toc-number">1.4.</span> <span class="toc-text"> 7.4 电阻屏和电容屏</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#741-%E7%94%B5%E9%98%BB%E5%B1%8F"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 7.4.1 电阻屏</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%A4%8D%E4%B9%A0%E4%B8%80%E4%B8%8B%E6%AC%A7%E5%A7%86%E5%AE%9A%E5%BE%8B"><span class="toc-number">1.4.1.1.</span> <span class="toc-text"> 1. 复习一下欧姆定律</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%94%B5%E9%98%BB%E5%B1%8F%E5%8E%9F%E7%90%86"><span class="toc-number">1.4.1.2.</span> <span class="toc-text"> 2. 电阻屏原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%94%B5%E9%98%BB%E5%B1%8F%E6%95%B0%E6%8D%AE%E4%B8%8A%E6%8A%A5"><span class="toc-number">1.4.1.3.</span> <span class="toc-text"> 3. 电阻屏数据上报</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#742-%E7%94%B5%E5%AE%B9%E5%B1%8F"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 7.4.2 电容屏</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8E%9F%E7%90%86"><span class="toc-number">1.4.2.1.</span> <span class="toc-text"> 1. 原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%94%B5%E5%AE%B9%E5%B1%8F%E6%95%B0%E6%8D%AE%E4%B8%8A%E6%8A%A5%E5%A4%9A%E7%82%B9%E8%A7%A6%E6%91%B8%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.4.2.2.</span> <span class="toc-text"> 2. 电容屏数据上报（多点触摸协议）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%94%B5%E5%AE%B9%E5%B1%8F%E7%9A%84%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE"><span class="toc-number">1.4.2.3.</span> <span class="toc-text"> 3. 电容屏的实验数据</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#75-tslib"><span class="toc-number">1.5.</span> <span class="toc-text"> 7.5 tslib</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#751-tslib-%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90"><span class="toc-number">1.5.1.</span> <span class="toc-text"> 7.5.1 tslib 框架分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#752-%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91-%E6%B5%8B%E8%AF%95tslib"><span class="toc-number">1.5.2.</span> <span class="toc-text"> 7.5.2 交叉编译、测试tslib</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91tslib"><span class="toc-number">1.5.2.1.</span> <span class="toc-text"> 1. 交叉编译tslib</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B5%8B%E8%AF%95tslib"><span class="toc-number">1.5.2.2.</span> <span class="toc-text"> 2. 测试tslib</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#753-%E8%87%AA%E5%B7%B1%E5%86%99%E4%B8%80%E4%B8%AA%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.5.3.</span> <span class="toc-text"> 7.5.3 自己写一个测试程序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%8E%A5%E5%8F%A3%E5%87%BD%E6%95%B0%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90"><span class="toc-number">1.5.3.1.</span> <span class="toc-text"> 1. 接口函数深入分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81%E8%AE%A1%E7%AE%97%E4%B8%A4%E4%B8%AA%E8%A7%A6%E7%82%B9%E7%9A%84%E8%B7%9D%E7%A6%BB"><span class="toc-number">1.5.3.2.</span> <span class="toc-text"> 2. 编写代码：计算两个触点的距离</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        INPUT输入系统韦东山参考文献
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-07-14T12:06:15.000Z" class="dt-published" itemprop="datePublished">2025-07-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/work/">work</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天 心情：一般</p>
+<h1 id="第七章-输入系统应用编程"><a class="markdownIt-Anchor" href="#第七章-输入系统应用编程"></a> 第七章 输入系统应用编程</h1>
+<h2 id="71-什么是输入系统"><a class="markdownIt-Anchor" href="#71-什么是输入系统"></a> 7.1 什么是输入系统</h2>
+<p>首先，我们来了解什么是输入设备？<br />
+常见的输入设备包括键盘、鼠标、游戏摇杆、绘图板、触摸屏等。用户通过这些设备与Linux系统进行数据交互和操作。</p>
+<p>那么，什么是输入系统呢？<br />
+面对种类繁多的输入设备，Linux系统设计了一套统一的框架来管理它们，以实现接口的标准化。这意味着无论是驱动开发人员还是应用程序开发人员，都可以在统一的框架下进行开发：驱动层提供统一的接口向内核汇报事件，而应用程序层则可以通过统一的API来操作这些设备。这套框架就是Linux的<strong>输入系统</strong>。</p>
+<h2 id="72-输入系统框架及调试"><a class="markdownIt-Anchor" href="#72-输入系统框架及调试"></a> 7.2 输入系统框架及调试</h2>
+<h3 id="721-框架概述"><a class="markdownIt-Anchor" href="#721-框架概述"></a> 7.2.1 框架概述</h3>
+<p>作为应用程序开发人员，可以直接基于输入子系统提供的API进行开发。但了解内核中输入子系统的框架和数据流，对于遇到硬件或驱动问题时的调试和排查至关重要。</p>
+<p>输入系统框架如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/5d42fd45c82761c364353a135dd5aaff.png" alt="Linux输入系统框架图" /></p>
+<p>假设用户程序直接访问 <code>/dev/input/eventX</code> 设备节点，或者通过 <code>tslib</code> 等库访问设备节点，数据流通常遵循以下过程：</p>
+<ol>
+<li><strong>应用程序 (APP) 发起读操作</strong>：应用程序通过 <code>read()</code> 系统调用尝试从输入设备节点读取数据。如果当前没有数据，应用程序可能会进入休眠状态（取决于其配置为阻塞或非阻塞模式）。</li>
+<li><strong>用户操作设备</strong>：当用户与输入设备（如触摸屏、键盘）进行交互时，硬件会产生相应的中断信号。</li>
+<li><strong>输入系统驱动层处理中断</strong>：内核中的输入设备驱动程序接收到中断后，会读取硬件寄存器获取原始数据，并将其转换为标准的 <code>struct input_event</code> 结构体形式。随后，驱动将这些输入事件汇报给输入子系统的核心层。
+<ul>
+<li><strong><code>struct input_event</code></strong>: 这是Linux输入子系统定义的核心数据结构，用于描述一个输入事件。它包含了事件类型、事件代码、事件值和事件发生的时间戳。</li>
+</ul>
+</li>
+<li><strong>输入核心层转发事件</strong>：输入核心层接收到驱动层汇报的事件后，会根据事件类型将它们转发给相应的“事件处理器”（Handler）。常见的处理器包括：
+<ul>
+<li><strong><code>evdev_handler</code> (Event Device Handler)</strong>：这是最常用的处理器，它将 <code>input_event</code> 结构体保存在内核的缓冲区中，并提供给用户空间应用程序。<code>evdev</code> 支持多个应用程序同时访问同一个输入设备，每个APP都可以独立地获取到输入事件的副本。当有数据可读时，<code>evdev_handler</code> 会唤醒等待数据的APP。</li>
+<li><code>kbd_handler</code> (Keyboard Handler)：专门处理键盘事件。</li>
+<li><code>joydev_handler</code> (Joystick Handler)：专门处理摇杆事件。</li>
+<li><code>mousedev_handler</code> (Mouse Device Handler)：处理鼠标事件。</li>
+</ul>
+</li>
+<li><strong>应用程序处理输入事件</strong>：应用程序获取数据的方式有两种：
+<ul>
+<li><strong>直接访问设备节点</strong>：通过打开 <code>/dev/input/event0, /dev/input/event1</code> 等设备节点，并使用 <code>read()</code> 系统调用直接读取原始的 <code>input_event</code> 数据。</li>
+<li><strong>通过库间接访问</strong>：使用像 <code>tslib</code>、<code>libinput</code> 这样的高级库来访问设备节点。这些库通常提供了更抽象、更易用的API，并可能包含对原始数据进行校准、过滤、去抖动等处理的功能，从而简化了应用程序对输入事件的处理。</li>
+</ul>
+</li>
+</ol>
+<p>要深入理解整个输入系统，需要进一步研究内核中输入子系统的实现细节，这通常在更深入的驱动开发或系统编程资料中讲解。</p>
+<h3 id="722-编写app需要掌握的知识"><a class="markdownIt-Anchor" href="#722-编写app需要掌握的知识"></a> 7.2.2 编写APP需要掌握的知识</h3>
+<p>从编写应用程序的角度出发，主要需要理解以下核心概念：</p>
+<h4 id="1-内核中怎么表示一个输入设备"><a class="markdownIt-Anchor" href="#1-内核中怎么表示一个输入设备"></a> 1. 内核中怎么表示一个输入设备？</h4>
+<p>在内核中，每个输入设备都由一个 <code>struct input_dev</code> 结构体来表示。这个结构体包含了设备的各种属性和能力，例如设备名称、ID、支持的事件类型等。</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/64b5e4651db1407b1d65d8bed773d42c.png" alt="struct input_dev 结构体定义" /></p>
+<h4 id="2-app可以得到什么数据"><a class="markdownIt-Anchor" href="#2-app可以得到什么数据"></a> 2. APP可以得到什么数据？</h4>
+<p>应用程序可以得到一系列的输入事件，每个事件都是一个 <code>struct input_event</code> 结构体。其定义如下：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/eaa7d113e7e7cc698124c2d0ec88a156.png" alt="struct input_event 结构体定义" /></p>
+<p>每个 <code>input_event</code> 结构体都包含以下重要信息：</p>
+<ul>
+<li><strong><code>timeval</code></strong>: 表示事件发生的绝对时间戳，通常是自系统启动以来经过的时间（秒和微秒）。
+<ul>
+<li><code>tv_sec</code>: 秒数。</li>
+<li><code>tv_usec</code>: 微秒数。</li>
+</ul>
+</li>
+<li><strong><code>type</code></strong>: 事件类型，表示该事件属于哪一类。
+<ul>
+<li>例如：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/94560e437cd1503459ae3b025fb8aca0.png" alt="输入事件类型宏定义" />
+<ul>
+<li><code>EV_SYN</code>: 同步事件。</li>
+<li><code>EV_KEY</code>: 按键事件（如键盘按键、鼠标按键、触摸屏的按下/抬起）。</li>
+<li><code>EV_REL</code>: 相对位移事件（如鼠标的移动量）。</li>
+<li><code>EV_ABS</code>: 绝对位置事件（如触摸屏的X/Y坐标、压力值）。</li>
+<li><code>EV_MSC</code>: 其他杂项事件。</li>
+<li><code>EV_SW</code>: 开关事件（如笔记本盖子打开/合上）。</li>
+<li><code>EV_LED</code>: LED灯状态变化事件。</li>
+<li><code>EV_SND</code>: 声音事件。</li>
+<li><code>EV_REP</code>: 重复事件（按键长按）。</li>
+<li><code>EV_FF</code>: 力反馈事件。</li>
+<li><code>EV_PWR</code>: 电源事件。</li>
+<li><code>EV_FF_STATUS</code>: 力反馈状态事件。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><code>code</code></strong>: 事件代码，表示在特定事件类型下发生的具体事件。
+<ul>
+<li>例如，对于 <code>EV_KEY</code> (按键) 类事件，<code>code</code> 可以表示键盘上的具体按键：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/42ed1c9975376625a5fc0382c1b431c6.png" alt="按键事件代码宏定义" /></li>
+<li>对于触摸屏（<code>EV_ABS</code> 绝对位置事件），<code>code</code> 可以表示X/Y坐标或压力值：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/55e13cf831567a132c8c2b453d0e86e3.png" alt="触摸屏事件代码宏定义" /></li>
+</ul>
+</li>
+<li><strong><code>value</code></strong>: 事件值，表示事件的具体状态或数据。
+<ul>
+<li>对于按键，<code>value</code> 通常是：
+<ul>
+<li><code>0</code>: 按键被松开。</li>
+<li><code>1</code>: 按键被按下。</li>
+<li><code>2</code>: 按键被长按（自动重复）。</li>
+</ul>
+</li>
+<li>对于触摸屏，<code>value</code> 就是对应的坐标值、压力值或其他绝对值。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-事件之间的界线同步事件"><a class="markdownIt-Anchor" href="#3-事件之间的界线同步事件"></a> 3. 事件之间的界线（同步事件）</h4>
+<p>当应用程序读取数据时，可能会一次性读取到多个相关的输入事件（例如，触摸屏的一次点击可能涉及X坐标、Y坐标和压力值等多个事件）。为了告诉应用程序一组完整的数据已经上报完毕，驱动程序会在上报完一系列数据后，上报一个特殊的<strong>同步事件</strong>。<br />
+同步事件也是一个 <code>input_event</code> 结构体，其 <code>type</code>、<code>code</code>、<code>value</code> 三项都为 <code>0</code> (<code>EV_SYN</code>, <code>SYN_REPORT</code>, <code>0</code>)。APP读取到同步事件时，就知道当前这批数据已经完整接收。</p>
+<h4 id="4-输入子系统支持的api操作方式"><a class="markdownIt-Anchor" href="#4-输入子系统支持的api操作方式"></a> 4. 输入子系统支持的API操作方式</h4>
+<p>Linux输入子系统支持多种文件操作机制，以便应用程序灵活地读取数据。这些机制包括：</p>
+<ul>
+<li><strong>阻塞 (Blocking)</strong>: <code>read()</code> 调用会在没有数据时暂停程序的执行，直到有数据可用。</li>
+<li><strong>非阻塞 (Non-blocking)</strong>: <code>read()</code> 调用在没有数据时会立即返回错误（通常是 <code>EAGAIN</code> 或 <code>EWOULDBLOCK</code>），不会暂停程序。</li>
+<li><strong>POLL/SELECT</strong>: 允许应用程序同时监控多个文件描述符，并在其中任何一个文件描述符上有数据可读或可写时得到通知。它还支持设置超时时间。</li>
+<li><strong>异步通知 (Asynchronous Notification)</strong>: 允许应用程序在数据可用时通过信号（SIGIO）的方式被内核通知，而无需阻塞或周期性查询。</li>
+</ul>
+<p>深入理解以上机制对于高效的Linux应用程序开发至关重要。您可以参考相关Linux系统编程文档进行学习。</p>
+<h3 id="723-调试技巧"><a class="markdownIt-Anchor" href="#723-调试技巧"></a> 7.2.3 调试技巧</h3>
+<h4 id="1-确定设备信息"><a class="markdownIt-Anchor" href="#1-确定设备信息"></a> 1. 确定设备信息</h4>
+<p>输入设备的设备节点通常命名为 <code>/dev/input/eventX</code> (其中 <code>X</code> 是一个数字，如 <code>0</code>, <code>1</code>, <code>2</code> 等)。为了查看这些设备节点及其对应的硬件信息，可以执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> /dev/input/event* -l</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line"><span class="built_in">ls</span> /dev/event* -l</span><br></pre></td></tr></table></figure>
+<p>您可能会看到类似如下的信息：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/3984a60e34721b2098cd26e73219e10f.png" alt="设备节点列表" /></p>
+<p>要了解这些设备节点具体对应什么硬件设备，可以在目标板上执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /proc/bus/input/devices</span><br></pre></td></tr></table></figure>
+<p>这条指令将显示与 <code>/dev/input/eventX</code> 节点关联的输入设备详细信息，您会看到类似以下结果：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/694bb430f38b51e31d81d064d01ff5b1.png" alt="/proc/bus/input/devices 输出" /></p>
+<p>上述输出中的每一行参数含义如下：</p>
+<ul>
+<li><strong><code>I: id of the device</code> (设备ID)</strong>：<br />
+该参数由 <code>struct input_id</code> 结构体描述，驱动程序会定义此类结构体来标识设备。<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/d8a0bedb862cf355ebc26559934776c7.png" alt="struct input_id 结构体定义" /></li>
+<li><strong><code>N: name of the device</code> (设备名称)</strong>：<br />
+一个可读的设备名称，例如 &quot;Himax Touchscreen&quot; 或 &quot;gpio-keys&quot;。</li>
+<li><strong><code>P: physical path to the device in the system hierarchy</code> (系统层次结构中设备的物理路径)</strong>：<br />
+描述设备在硬件总线上的拓扑位置。</li>
+<li><strong><code>S: sysfs path</code> (sysfs路径)</strong>：<br />
+设备在sysfs文件系统中的路径，通常用于获取更多设备属性或进行设备控制。</li>
+<li><strong><code>U: unique identification code for the device</code> (设备的唯一标识码)</strong>：<br />
+如果设备支持，会提供一个唯一的标识符。</li>
+<li><strong><code>H: list of input handles associated with the device.</code> (与设备关联的输入句柄列表)</strong>：<br />
+列出已连接到此设备的各种事件处理器句柄，例如 <code>evdev</code>。</li>
+<li><strong><code>B: bitmaps</code> (位图)</strong>：<br />
+这些位图详细描述了设备支持的功能和事件类型。
+<ul>
+<li><code>PROP</code>: 设备属性和特性。</li>
+<li><code>EV</code>: 设备支持的事件类型。例如，<code>EV=b</code> 表示二进制 <code>1011</code>，即 <code>bit0 (EV_SYN)</code>、<code>bit1 (EV_KEY)</code>、<code>bit3 (EV_ABS)</code> 为1，表明该设备支持同步事件、按键事件和绝对位置事件。</li>
+<li><code>KEY</code>: 此设备支持的键/按钮。这是一个位图，每一位对应一个按键代码。</li>
+<li><code>MSC</code>: 设备支持的其他杂项事件。</li>
+<li><code>LED</code>: 设备上的指示灯。</li>
+<li><code>ABS</code>: 对于绝对位置设备，这表示它支持哪些具体的绝对位置事件（如X、Y坐标、压力、多点触摸插槽、追踪ID等）。例如，<code>B: ABS=2658000 3</code> 表示一个64位位图 <code>0x0000000026580003</code>。位图中的 <code>1</code> 表示支持的事件，其对应的宏定义如下：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/1fb7e6aaabad085c1881ee7bd5cc03e6.png" alt="ABS事件代码宏定义" /><br />
+这意味着该输入设备支持 <code>ABS_X</code>、<code>ABS_Y</code>、<code>ABS_MT_SLOT</code>、<code>ABS_MT_TOUCH_MAJOR</code>、<code>ABS_MT_WIDTH_MAJOR</code>、<code>ABS_MT_POSITION_X</code>、<code>ABS_MT_POSITION_Y</code> 等绝对位置事件。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-使用命令读取数据"><a class="markdownIt-Anchor" href="#2-使用命令读取数据"></a> 2. 使用命令读取数据</h4>
+<p>在调试输入系统时，可以使用 <code>hexdump</code> 命令直接从设备节点读取原始的 <code>input_event</code> 数据，从而观察设备事件的即时上报。<br />
+例如，假设触摸屏或按键设备的节点是 <code>/dev/input/event0</code>，执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexdump /dev/input/event0</span><br></pre></td></tr></table></figure>
+<p>然后在开发板上操作对应的输入设备（点击按键或触摸屏），就会实时打印出十六进制的事件数据流：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/c8f89b655e80e4373c859c7907f7ae9c.png" alt="hexdump /dev/input/event0 输出" /></p>
+<p>从上图中我们可以解析数据：</p>
+<ul>
+<li><code>type</code> 为 <code>3</code> (<code>0x0003</code>)，对应 <code>EV_ABS</code> (绝对位置事件)。</li>
+<li><code>code</code> 为 <code>0x35</code> (<code>0x0035</code>)，对应 <code>ABS_MT_POSITION_X</code> (多点触摸X坐标)。</li>
+<li><code>code</code> 为 <code>0x36</code> (<code>0x0036</code>)，对应 <code>ABS_MT_POSITION_Y</code> (多点触摸Y坐标)。</li>
+<li>图中还发现了两个同步事件：它们的 <code>type</code>、<code>code</code>、<code>value</code> 都为 <code>0</code> (<code>0x0000</code>)。这表示电容屏上报了两批完整的触摸数据。</li>
+</ul>
+<h2 id="73-不使用库的应用程序示例"><a class="markdownIt-Anchor" href="#73-不使用库的应用程序示例"></a> 7.3 不使用库的应用程序示例</h2>
+<p>本节将探讨如何在不依赖 <code>tslib</code> 等外部库的情况下，直接通过Linux系统调用来访问输入设备。相关源码通常位于您的开发资料中的 <code>04_嵌入式Linux应用开发基础知识/source/11_input/01_app_demo/</code> 目录下。</p>
+<h3 id="731-输入系统支持完整的api操作"><a class="markdownIt-Anchor" href="#731-输入系统支持完整的api操作"></a> 7.3.1 输入系统支持完整的API操作</h3>
+<p>正如前面所述，输入子系统支持多种I/O模型：阻塞、非阻塞、POLL/SELECT以及异步通知。这些机制提供了不同的数据读取策略，以满足应用程序对响应性和系统资源占用的不同需求。</p>
+<p>即使没有深入理解这些机制的底层实现，应用程序开发者也可以通过掌握其API用法来编写有效的程序。</p>
+<h3 id="732-app访问硬件的4种方式妈妈怎么知道孩子醒了"><a class="markdownIt-Anchor" href="#732-app访问硬件的4种方式妈妈怎么知道孩子醒了"></a> 7.3.2 APP访问硬件的4种方式：妈妈怎么知道孩子醒了</h3>
+<p>为了形象地理解这四种I/O模型，我们可以用“妈妈怎么知道卧室里小孩醒了”这个比喻：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/aece3ac28413f4ce33a7f9fd7390c44a.png" alt="妈妈和小孩的比喻" /></p>
+<ol>
+<li>
+<p><strong>时不时进房间看一下：查询方式 (非阻塞 / O_NONBLOCK)</strong></p>
+<ul>
+<li><strong>优点</strong>：实现简单。</li>
+<li><strong>缺点</strong>：持续查询会占用CPU资源，效率低。</li>
+<li><strong>对应I/O模型</strong>：非阻塞I/O。应用程序反复尝试 <code>read()</code>，如果没有数据就立即返回，然后处理其他任务或短暂休眠再尝试。</li>
+</ul>
+</li>
+<li>
+<p><strong>进去房间陪小孩一起睡觉，小孩醒了会吵醒她：休眠-唤醒 (阻塞 / 默认阻塞)</strong></p>
+<ul>
+<li><strong>优点</strong>：不消耗CPU资源进行轮询，效率高。</li>
+<li><strong>缺点</strong>：妈妈（应用程序线程）会完全阻塞在那里，不能执行其他任务。</li>
+<li><strong>对应I/O模型</strong>：阻塞I/O。应用程序调用 <code>read()</code> 后，如果没有数据，线程会进入休眠状态，直到有数据可用时被驱动程序唤醒。</li>
+</ul>
+</li>
+<li>
+<p><strong>妈妈要干很多活，但是可以陪小孩睡一会，定个闹钟：poll/select 方式</strong></p>
+<ul>
+<li><strong>优点</strong>：可以同时监控多个“房间”（文件描述符），并在设定的超时时间内等待事件，效率介于查询和完全阻塞之间。</li>
+<li><strong>缺点</strong>：需要额外设置超时时间和监控事件，相对于阻塞I/O略复杂，但比非阻塞轮询效率高。</li>
+<li><strong>对应I/O模型</strong>：<code>poll()</code> / <code>select()</code>。应用程序可以设置一个超时时间，在此期间等待数据可用。如果没有数据或超时发生，函数会返回。</li>
+</ul>
+</li>
+<li>
+<p><strong>妈妈在客厅干活，小孩醒了他会自己走出房门告诉妈妈：异步通知 (SIGIO)</strong></p>
+<ul>
+<li><strong>优点</strong>：妈妈（应用程序）和小孩（驱动程序）互不打扰，效率最高，适合事件驱动型程序。</li>
+<li><strong>缺点</strong>：实现最复杂，需要处理信号机制。</li>
+<li><strong>对应I/O模型</strong>：异步I/O。应用程序注册一个信号处理函数，当驱动程序有数据时，会发送一个信号通知应用程序，应用程序在信号处理函数中进行数据读取。</li>
+</ul>
+</li>
+</ol>
+<p>这四种方法没有绝对的优劣之分，应根据具体的应用场景和需求选择最合适的方式。</p>
+<h3 id="733-获取设备信息ioctl"><a class="markdownIt-Anchor" href="#733-获取设备信息ioctl"></a> 7.3.3 获取设备信息（ioctl）</h3>
+<p>除了直接读取事件数据，还可以通过 <code>ioctl</code> 系统调用获取输入设备的更多信息或进行控制。<code>ioctl</code> 函数的原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">ioctl</span><span class="params">(<span class="type">int</span> fd, <span class="type">unsigned</span> <span class="type">long</span> request, ...)</span>;</span><br></pre></td></tr></table></figure>
+<p><code>request</code> 参数的格式通常由内核宏定义，其结构如下：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/88cf342813770c69cdf0cd4deed11d1b.png" alt="ioctl request 参数格式" /></p>
+<ul>
+<li><code>dir</code>: 操作方向。
+<ul>
+<li><code>_IOC_NONE</code>: 无数据传输。</li>
+<li><code>_IOC_READ</code>: 数据从内核读到用户空间。</li>
+<li><code>_IOC_WRITE</code>: 数据从用户空间写到内核。</li>
+<li><code>_IOC_READ | _IOC_WRITE</code>: 双向数据传输。</li>
+</ul>
+</li>
+<li><code>size</code>: ioctl能传输数据的最大字节数。</li>
+<li><code>type</code>: 魔术数字，通常用于标识ioctl属于哪个子系统。</li>
+<li><code>nr</code>: 命令编号。</li>
+</ul>
+<p>例如，要读取输入设备的事件位图（<code>evbit</code>），<code>ioctl</code> 的 <code>request</code> 参数可以使用 <code>EVIOCGBIT(type, size)</code> 宏。<code>size</code> 参数由用户决定，表示希望读取多少字节的位图数据。<code>EVIOCGBIT</code> 宏的定义如下：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/3b3ab08166f4e3329158694049e29eec.png" alt="EVIOCGBIT 宏定义" /></p>
+<h3 id="734-查询方式非阻塞"><a class="markdownIt-Anchor" href="#734-查询方式非阻塞"></a> 7.3.4 查询方式（非阻塞）</h3>
+<p>在这种模式下，应用程序调用 <code>open()</code> 函数时，通常会带有 <code>O_NONBLOCK</code> 标志：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> fd = open(<span class="string">&quot;/dev/input/event0&quot;</span>, O_RDWR | O_NONBLOCK);</span><br><span class="line"><span class="keyword">if</span> (fd &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    perror(<span class="string">&quot;Failed to open input device&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当应用程序调用 <code>read()</code> 函数读取数据时，如果驱动程序中有数据，<code>read()</code> 会返回数据；否则，它会立刻返回 <code>-1</code>，并将 <code>errno</code> 设置为 <code>EAGAIN</code> 或 <code>EWOULDBLOCK</code>，表示当前没有数据可读但不应阻塞。应用程序应检查 <code>errno</code> 来判断是否需要重试或执行其他任务。</p>
+<h3 id="735-休眠-唤醒方式阻塞"><a class="markdownIt-Anchor" href="#735-休眠-唤醒方式阻塞"></a> 7.3.5 休眠-唤醒方式（阻塞）</h3>
+<p>在休眠-唤醒（阻塞）方式下，应用程序在调用 <code>open()</code> 函数时，不传入 <code>O_NONBLOCK</code> 标志：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> fd = open(<span class="string">&quot;/dev/input/event0&quot;</span>, O_RDWR); <span class="comment">// 默认是阻塞模式</span></span><br><span class="line"><span class="keyword">if</span> (fd &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    perror(<span class="string">&quot;Failed to open input device&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当应用程序调用 <code>read()</code> 函数读取数据时：</p>
+<ul>
+<li>如果驱动程序中有数据，<code>read()</code> 函数会立即返回数据。</li>
+<li>如果驱动程序中没有数据，应用程序（的线程）就会在内核态休眠。直到有数据可用时，驱动程序会将应用程序唤醒，<code>read()</code> 函数恢复执行并返回数据给应用程序。</li>
+</ul>
+<h3 id="736-pollselect-方式"><a class="markdownIt-Anchor" href="#736-pollselect-方式"></a> 7.3.6 POLL/SELECT 方式</h3>
+<h4 id="1-功能介绍"><a class="markdownIt-Anchor" href="#1-功能介绍"></a> 1. 功能介绍</h4>
+<p><code>poll()</code> 和 <code>select()</code> 机制在功能上非常相似，都允许应用程序同时监控多个文件描述符，等待某个或多个文件描述符上的特定事件发生。它们的主要区别在于API的细节和在处理大量文件描述符时的性能（<code>poll</code> 通常比传统的 <code>select</code> 表现更好，因为它使用 <code>pollfd</code> 结构体数组而不是位图来传递文件描述符集合，避免了 <code>select</code> 中文件描述符数量的限制）。</p>
+<p>简单来说，它们的工作方式是“定个闹钟”：在调用 <code>poll()</code> 或 <code>select()</code> 函数时，可以传入一个“超时时间”。在这段时间内，如果监控的条件（例如，文件描述符上数据可读、缓冲区可写等）满足，函数会立即返回并指示哪个文件描述符上发生了什么事件。如果超时时间内条件一直未满足，函数也会在超时时间结束时返回。</p>
+<p><strong>用法概述：</strong></p>
+<ol>
+<li>应用程序首先调用 <code>open()</code> 函数打开设备文件。</li>
+<li>应用程序不直接调用 <code>read()</code>，而是先调用 <code>poll()</code> 或 <code>select()</code> 函数。这两个函数中可以传入一个超时时间。它们的作用是：
+<ul>
+<li>如果监控的设备文件有数据可读，它们会立即返回。</li>
+<li>否则，应用程序线程会进入休眠状态，直到有数据或超时。</li>
+<li>在休眠期间，如果用户操作了硬件，驱动程序获得数据后会将应用程序唤醒，导致 <code>poll()</code> 或 <code>select()</code> 立刻返回。</li>
+<li>如果在“超时时间”内无人操作硬件，则时间到后 <code>poll()</code> 或 <code>select()</code> 函数也会返回。</li>
+</ul>
+</li>
+<li>应用程序根据 <code>poll()</code> 或 <code>select()</code> 的返回值判断返回原因（例如，是否有数据）。</li>
+<li>如果判断有数据，应用程序再调用 <code>read()</code> 函数读取数据，此时 <code>read()</code> 将会立即成功获得数据。</li>
+</ol>
+<p><code>poll()</code> / <code>select()</code> 函数可以监测多个文件，可以监测多种事件类型：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">事件类型</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>POLLIN</code></td>
+<td style="text-align:left">有数据可读。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>POLLRDNORM</code></td>
+<td style="text-align:left">等同于 <code>POLLIN</code> (普通数据可读)。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>POLLRDBAND</code></td>
+<td style="text-align:left">Priority band data can be read，有优先级较高的&quot;band data&quot;可读。在Linux系统中较少使用。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>POLLPRI</code></td>
+<td style="text-align:left">高优先级数据可读 (如带外数据)。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>POLLOUT</code></td>
+<td style="text-align:left">可以写数据 (缓冲区有空间)。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>POLLWRNORM</code></td>
+<td style="text-align:left">等同于 <code>POLLOUT</code> (普通数据可写)。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>POLLWRBAND</code></td>
+<td style="text-align:left">Priority data may be written。在Linux系统中较少使用。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>POLLERR</code></td>
+<td style="text-align:left">发生了错误。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>POLLHUP</code></td>
+<td style="text-align:left">挂起 (例如，管道的写入端关闭)。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>POLLNVAL</code></td>
+<td style="text-align:left">无效的请求，通常是文件描述符 <code>fd</code> 未打开或无效。</td>
+</tr>
+</tbody>
+</table>
+<p>在调用 <code>poll()</code> 函数时，你需要指明：</p>
+<ul>
+<li>你要监测哪一个文件描述符 (<code>fd</code>)。</li>
+<li>你想监测这个文件的哪种事件（例如 <code>POLLIN</code> 表示可读，<code>POLLOUT</code> 表示可写）。<br />
+最后，在 <code>poll()</code> 函数返回时，要判断实际发生的事件状态（通过 <code>revents</code> 字段）。</li>
+</ul>
+<p>应用程序代码示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;poll.h&gt;</span>      <span class="comment">// For poll functionality</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/input.h&gt;</span> <span class="comment">// For struct input_event</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> &#123;</span><br><span class="line">    <span class="type">int</span> fd;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">input_event</span> <span class="title">event</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span> <span class="title">fds</span>[1];</span></span><br><span class="line">    <span class="type">int</span> timeout_ms = <span class="number">5000</span>; <span class="comment">// 5秒超时</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Usage: %s &lt;input_device_node&gt;\n&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fd = open(argv[<span class="number">1</span>], O_RDWR);</span><br><span class="line">    <span class="keyword">if</span> (fd &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        perror(<span class="string">&quot;Failed to open input device&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Monitoring %s with POLL...\n&quot;</span>, argv[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    fds[<span class="number">0</span>].fd = fd;</span><br><span class="line">    fds[<span class="number">0</span>].events = POLLIN; <span class="comment">// 监测可读事件</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="type">int</span> ret = poll(fds, <span class="number">1</span>, timeout_ms);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (ret == <span class="number">-1</span>) &#123;</span><br><span class="line">            perror(<span class="string">&quot;poll error&quot;</span>);</span><br><span class="line">            close(fd);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ret == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Poll timeout (%dms)! No event from %s\n&quot;</span>, timeout_ms, argv[<span class="number">1</span>]);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// Check if POLLIN event occurred on our fd</span></span><br><span class="line">            <span class="keyword">if</span> (fds[<span class="number">0</span>].revents &amp; POLLIN) &#123;</span><br><span class="line">                <span class="comment">// Data is available, read it</span></span><br><span class="line">                <span class="type">ssize_t</span> bytes_read = read(fd, &amp;event, <span class="keyword">sizeof</span>(event));</span><br><span class="line">                <span class="keyword">if</span> (bytes_read == <span class="keyword">sizeof</span>(event)) &#123;</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">&quot;Event from %s: type=0x%02x, code=0x%02x, value=0x%02x, time=%ld.%06ld\n&quot;</span>,</span><br><span class="line">                           argv[<span class="number">1</span>], event.type, event.code, event.value, event.time.tv_sec, event.time.tv_usec);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 示例：处理按键事件</span></span><br><span class="line">                    <span class="keyword">if</span> (event.type == EV_KEY) &#123;</span><br><span class="line">                        <span class="built_in">printf</span>(<span class="string">&quot;  Key event: Key code 0x%x, %s\n&quot;</span>, event.code,</span><br><span class="line">                               event.value == <span class="number">1</span> ? <span class="string">&quot;Pressed&quot;</span> : (event.value == <span class="number">0</span> ? <span class="string">&quot;Released&quot;</span> : <span class="string">&quot;Repeated&quot;</span>));</span><br><span class="line">                        <span class="keyword">if</span> (event.code == KEY_ESC &amp;&amp; event.value == <span class="number">0</span>) &#123;</span><br><span class="line">                            <span class="built_in">printf</span>(<span class="string">&quot;ESC key released. Exiting...\n&quot;</span>);</span><br><span class="line">                            <span class="keyword">break</span>; <span class="comment">// 退出循环</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; </span><br><span class="line">                    <span class="comment">// 示例：处理触摸屏或鼠标的绝对/相对位移事件 (如果设备支持)</span></span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span> (event.type == EV_ABS || event.type == EV_REL) &#123;</span><br><span class="line">                        <span class="built_in">printf</span>(<span class="string">&quot;  Position event: code 0x%x, value %d\n&quot;</span>, event.code, event.value);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">// 示例：处理同步事件</span></span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span> (event.type == EV_SYN &amp;&amp; event.code == SYN_REPORT) &#123;</span><br><span class="line">                        <span class="built_in">printf</span>(<span class="string">&quot;  Synchronize event received.\n&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (bytes_read == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">&quot;%s disconnected.\n&quot;</span>, argv[<span class="number">1</span>]);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    perror(<span class="string">&quot;read error&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    close(fd);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>编译和运行：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -o input_poll_test input_poll_test.c</span><br><span class="line">./input_poll_test /dev/input/event0 <span class="comment"># 替换为你的输入设备节点</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-补充poll-vs-select"><a class="markdownIt-Anchor" href="#2-补充poll-vs-select"></a> 2. 补充：poll vs select</h4>
+<p>尽管文档指出 <code>poll</code> 和 <code>select</code> &quot;完全一样&quot;，但实际上它们有一些细微的差别，尤其是在性能和可伸缩性方面：</p>
+<ul>
+<li><strong>文件描述符限制</strong>：<code>select</code> 使用一个位掩码（<code>fd_set</code>）来表示文件描述符集合，这通常限制了可监控的文件描述符数量（例如，在Linux上默认是1024）。<code>poll</code> 使用 <code>struct pollfd</code> 数组，没有这种硬性限制，理论上可以监控更多的文件描述符。</li>
+<li><strong>API复杂度</strong>：<code>select</code> 的 <code>fd_set</code> 操作 (<code>FD_SET</code>, <code>FD_CLR</code>, <code>FD_ISSET</code>) 相对繁琐，并且每次调用都需要将整个集合从用户空间复制到内核空间。<code>poll</code> 的 <code>struct pollfd</code> 数组传递更直接，每次调用也需要复制，但在文件描述符数量大时，其内存布局可能更优。</li>
+<li><strong>性能</strong>：对于少量文件描述符，两者的性能差异不明显。但当需要监控大量文件描述符时，<code>poll</code> 通常表现更好。更现代的 <code>epoll</code> (Linux特有) 机制在处理海量并发连接时具有更高的效率，因为它避免了每次调用都传递所有文件描述符，而是通过事件通知的方式工作。</li>
+</ul>
+<h4 id="3-课后作业-提示"><a class="markdownIt-Anchor" href="#3-课后作业-提示"></a> 3. 课后作业 (提示)</h4>
+<ul>
+<li>
+<p><strong>使用 <code>poll</code> 函数监测多个输入设备</strong>：</p>
+<ul>
+<li>在 <code>main</code> 函数中打开多个输入设备文件 (<code>/dev/input/event0</code>, <code>/dev/input/event1</code> 等)。</li>
+<li>声明一个 <code>struct pollfd</code> 数组，其大小等于要监测的设备数量。</li>
+<li>遍历打开的文件描述符，为每个设备填充 <code>pollfd</code> 结构体（<code>fd</code>, <code>events = POLLIN</code>）。</li>
+<li>在 <code>while</code> 循环中调用 <code>poll()</code>，并根据 <code>poll</code> 的返回值和 <code>fds[i].revents</code> 来判断是哪个设备上发生了事件，然后读取相应的数据。</li>
+</ul>
+</li>
+<li>
+<p><strong>使用 <code>select</code> 函数实现同样的功能</strong>：</p>
+<ul>
+<li>熟悉 <code>select</code> 相关的函数和宏：<code>select()</code>, <code>FD_ZERO()</code>, <code>FD_SET()</code>, <code>FD_ISSET()</code>, <code>fd_set</code>。</li>
+<li>需要确定最大的文件描述符 <code>nfds</code>。</li>
+<li>为读、写、异常事件分别创建 <code>fd_set</code> 变量。</li>
+<li>每次调用 <code>select</code> 前，都需要重新设置 <code>fd_set</code>，因为 <code>select</code> 会修改它。</li>
+</ul>
+</li>
+</ul>
+<h3 id="737-异步通知方式"><a class="markdownIt-Anchor" href="#737-异步通知方式"></a> 7.3.7 异步通知方式</h3>
+<h4 id="1-功能介绍-2"><a class="markdownIt-Anchor" href="#1-功能介绍-2"></a> 1. 功能介绍</h4>
+<p><strong>同步</strong>意味着“你慢我等你”，而<strong>异步</strong>则意味着“你慢你就自己玩，我自己做我的事，有情况再通知我”。<br />
+<strong>异步通知</strong>，是指应用程序可以继续处理其它任务，当驱动程序有数据时，它会主动通过信号机制通知应用程序。这将导致应用程序执行预先注册好的信号处理函数。</p>
+<p>理解“发信号”这一过程的关键问题：</p>
+<ul>
+<li><strong>谁发？</strong>：内核空间的驱动程序。</li>
+<li><strong>发什么？</strong>：一个软件中断，即“信号”。</li>
+<li><strong>发什么信号？</strong>：对于I/O事件，通常是 <code>SIGIO</code> 信号，表示有“I/O事件”需要处理。</li>
+<li><strong>怎么发？</strong>：内核提供特定的函数（如 <code>kill_fasync</code>）来向进程发送信号。</li>
+<li><strong>发给谁？</strong>：应用程序进程。应用程序需要告诉驱动程序自己的进程ID (<code>PID</code>)。</li>
+<li><strong>APP收到后做什么？</strong>：执行预先注册的信号处理函数。</li>
+<li><strong>信号处理函数和信号，之间怎么挂钩？</strong>：应用程序通过调用 <code>signal()</code> 或 <code>sigaction()</code> 函数来注册某个信号（例如 <code>SIGIO</code>）的处理函数。</li>
+</ul>
+<p>Linux系统中定义了许多信号，您可以在内核源文件 <code>include/uapi/asm-generic/signal.h</code> 中找到其宏定义：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/4ad8957b9750bcbe501a3d5955e184c5.png" alt="Linux信号宏定义示例" /></p>
+<p>驱动程序通知应用程序时，它会发出 <code>SIGIO</code> 信号，表示有I/O事件（如数据可读）发生。<br />
+就应用程序而言，要接收并处理 <code>SIGIO</code> 信号，需要完成以下几件事：</p>
+<ul>
+<li><strong>注册信号处理函数</strong>：通过 <code>signal()</code> 或更健壮的 <code>sigaction()</code> 函数，将自定义的函数与 <code>SIGIO</code> 信号关联起来。用法示例：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/46856e75d7d41cb529144d660e882891.png" alt="signal() 函数原型" /></li>
+<li><strong>打开驱动</strong>：应用程序需要打开目标设备的设备节点，以获取文件描述符。</li>
+<li><strong>告诉驱动程序自己的进程ID</strong>：驱动程序需要知道应该向哪个进程发送信号。这通过 <code>fcntl()</code> 系统调用，使用 <code>F_SETOWN</code> 命令将当前进程的PID设置给文件描述符的拥有者。</li>
+<li><strong>使能异步通知功能</strong>：应用程序需要通过 <code>fcntl()</code> 系统调用，设置文件描述符的 <code>FASYNC</code> 标志位。只有设置了这个标志位，驱动程序才会在有数据时发送 <code>SIGIO</code> 信号。</li>
+</ul>
+<h4 id="2-应用编程"><a class="markdownIt-Anchor" href="#2-应用编程"></a> 2. 应用编程</h4>
+<p>应用程序实现异步通知通常需要以下步骤：</p>
+<ol>
+<li>
+<p><strong>编写信号处理函数</strong>：这是当 <code>SIGIO</code> 信号到达时会被调用的函数。在此函数中，应用程序通常会读取数据。注意，信号处理函数应该尽可能简单和快速，避免执行可能导致死锁或重入问题的复杂操作。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span> <span class="comment">// For signal handling</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;errno.h&gt;</span>  <span class="comment">// For errno</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/input.h&gt;</span> <span class="comment">// For struct input_event</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> fd; <span class="comment">// Make fd global or pass it safely</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">sig_func</span><span class="params">(<span class="type">int</span> sig)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">input_event</span> <span class="title">event</span>;</span></span><br><span class="line">    <span class="type">ssize_t</span> bytes_read;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sig == SIGIO) &#123;</span><br><span class="line">        <span class="comment">// 注意：在信号处理函数中应避免复杂的I/O操作，</span></span><br><span class="line">        <span class="comment">// 但对于输入事件的read通常是安全的。</span></span><br><span class="line">        bytes_read = read(fd, &amp;event, <span class="keyword">sizeof</span>(event));</span><br><span class="line">        <span class="keyword">if</span> (bytes_read == <span class="keyword">sizeof</span>(event)) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Async Event: type=0x%02x, code=0x%02x, value=0x%02x, time=%ld.%06ld\n&quot;</span>,</span><br><span class="line">                   event.type, event.code, event.value, event.time.tv_sec, event.time.tv_usec);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (event.type == EV_KEY) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;  Key event: Key code 0x%x, %s\n&quot;</span>, event.code,</span><br><span class="line">                       event.value == <span class="number">1</span> ? <span class="string">&quot;Pressed&quot;</span> : (event.value == <span class="number">0</span> ? <span class="string">&quot;Released&quot;</span> : <span class="string">&quot;Repeated&quot;</span>));</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (event.type == EV_SYN &amp;&amp; event.code == SYN_REPORT) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;  Synchronize event received.\n&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (bytes_read &lt; <span class="number">0</span> &amp;&amp; (errno == EAGAIN || errno == EWOULDBLOCK)) &#123;</span><br><span class="line">            <span class="comment">// 这是正常情况，read可能在信号处理函数中因非阻塞而立即返回</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;  Read returned no data immediately (EAGAIN/EWOULDBLOCK).\n&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            perror(<span class="string">&quot;Read error in signal handler&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>注册信号处理函数</strong>：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">signal(SIGIO, sig_func);</span><br></pre></td></tr></table></figure>
+<p>或者使用 <code>sigaction</code> 替代 <code>signal</code>，因为 <code>sigaction</code> 更健壮，提供更精细的控制，尤其是在处理中断和信号重入时。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Alternative using sigaction for robustness */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">sa</span>;</span></span><br><span class="line">sa.sa_handler = sig_func;</span><br><span class="line">sigemptyset(&amp;sa.sa_mask);</span><br><span class="line">sa.sa_flags = <span class="number">0</span>; <span class="comment">// Or SA_RESTART for automatic restart of interrupted system calls</span></span><br><span class="line">sigaction(SIGIO, &amp;sa, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>打开设备文件</strong>：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fd = open(argv[<span class="number">1</span>], O_RDWR); <span class="comment">// 也可以是非阻塞模式，因为信号会唤醒</span></span><br><span class="line"><span class="keyword">if</span> (fd &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    perror(<span class="string">&quot;Failed to open input device&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>将进程ID告诉驱动 (设置文件描述符的拥有者)</strong>：<br />
+<code>F_SETOWN</code> 命令告诉内核，当相关I/O事件发生时，应该向哪个进程发送 <code>SIGIO</code> 信号。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fcntl(fd, F_SETOWN, getpid());</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>使能驱动的 <code>FASYNC</code> 功能 (设置文件描述符为异步)</strong>：<br />
+<code>FASYNC</code> 标志是开启异步I/O通知的关键。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> flags = fcntl(fd, F_GETFL);</span><br><span class="line"><span class="keyword">if</span> (flags == <span class="number">-1</span>) &#123;</span><br><span class="line">    perror(<span class="string">&quot;fcntl F_GETFL error&quot;</span>);</span><br><span class="line">    close(fd);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (fcntl(fd, F_SETFL, flags | FASYNC) == <span class="number">-1</span>) &#123;</span><br><span class="line">    perror(<span class="string">&quot;fcntl F_SETFL FASYNC error&quot;</span>);</span><br><span class="line">    close(fd);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>完整应用程序示例：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span> <span class="comment">// For signal handling</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;errno.h&gt;</span>  <span class="comment">// For errno</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/input.h&gt;</span> <span class="comment">// For struct input_event</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> fd; <span class="comment">// Global file descriptor for use in signal handler</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">sig_func</span><span class="params">(<span class="type">int</span> sig)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">input_event</span> <span class="title">event</span>;</span></span><br><span class="line">    <span class="type">ssize_t</span> bytes_read;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sig == SIGIO) &#123;</span><br><span class="line">        <span class="comment">// Read until EAGAIN to ensure all pending events are consumed</span></span><br><span class="line">        <span class="keyword">while</span> ((bytes_read = read(fd, &amp;event, <span class="keyword">sizeof</span>(event))) == <span class="keyword">sizeof</span>(event)) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Async Event: time=%ld.%06ld, type=0x%02x, code=0x%02x, value=0x%02x\n&quot;</span>,</span><br><span class="line">                   event.time.tv_sec, event.time.tv_usec, event.type, event.code, event.value);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (event.type == EV_KEY) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;  Key: 0x%02x, %s\n&quot;</span>, event.code,</span><br><span class="line">                       event.value == <span class="number">1</span> ? <span class="string">&quot;PRESSED&quot;</span> : (event.value == <span class="number">0</span> ? <span class="string">&quot;RELEASED&quot;</span> : <span class="string">&quot;REPEATED&quot;</span>));</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (event.type == EV_ABS) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;  ABS: code 0x%02x, value %d\n&quot;</span>, event.code, event.value);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (event.type == EV_SYN &amp;&amp; event.code == SYN_REPORT) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;  -- Sync Event --\n&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (bytes_read &lt; <span class="number">0</span> &amp;&amp; (errno != EAGAIN &amp;&amp; errno != EWOULDBLOCK)) &#123;</span><br><span class="line">            perror(<span class="string">&quot;Read error in signal handler&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Usage: %s &lt;input_device_node&gt;\n&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. 注册信号处理函数</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">sa</span>;</span></span><br><span class="line">    <span class="built_in">memset</span>(&amp;sa, <span class="number">0</span>, <span class="keyword">sizeof</span>(sa));</span><br><span class="line">    sa.sa_handler = sig_func;</span><br><span class="line">    <span class="comment">// sa.sa_flags |= SA_RESTART; // 重新启动被信号中断的系统调用</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sigaction(SIGIO, &amp;sa, <span class="literal">NULL</span>) == <span class="number">-1</span>) &#123;</span><br><span class="line">        perror(<span class="string">&quot;Failed to set SIGIO handler&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 打开设备文件</span></span><br><span class="line">    fd = open(argv[<span class="number">1</span>], O_RDWR); <span class="comment">// 可以是阻塞或非阻塞，信号机制会处理唤醒</span></span><br><span class="line">    <span class="keyword">if</span> (fd &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        perror(<span class="string">&quot;Failed to open input device&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 将进程ID告诉驱动 (设置文件描述符的拥有者)</span></span><br><span class="line">    <span class="keyword">if</span> (fcntl(fd, F_SETOWN, getpid()) == <span class="number">-1</span>) &#123;</span><br><span class="line">        perror(<span class="string">&quot;Failed to set F_SETOWN&quot;</span>);</span><br><span class="line">        close(fd);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 4. 使能驱动的 FASYNC 功能 (设置文件描述符为异步)</span></span><br><span class="line">    <span class="type">int</span> flags = fcntl(fd, F_GETFL);</span><br><span class="line">    <span class="keyword">if</span> (flags == <span class="number">-1</span>) &#123;</span><br><span class="line">        perror(<span class="string">&quot;fcntl F_GETFL error&quot;</span>);</span><br><span class="line">        close(fd);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (fcntl(fd, F_SETFL, flags | FASYNC) == <span class="number">-1</span>) &#123;</span><br><span class="line">        perror(<span class="string">&quot;fcntl F_SETFL FASYNC error&quot;</span>);</span><br><span class="line">        close(fd);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Monitoring %s with Async IO. Press Ctrl+C to exit.\n&quot;</span>, argv[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 主线程可以执行其他任务，等待信号</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        sleep(<span class="number">1000</span>); <span class="comment">// 长期休眠，等待SIGIO信号唤醒</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    close(fd);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>编译和运行：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -o input_async_test input_async_test.c</span><br><span class="line">./input_async_test /dev/input/event0 <span class="comment"># 替换为你的输入设备节点</span></span><br></pre></td></tr></table></figure>
+<h2 id="74-电阻屏和电容屏"><a class="markdownIt-Anchor" href="#74-电阻屏和电容屏"></a> 7.4 电阻屏和电容屏</h2>
+<p>触摸屏是常见的输入设备，分为电阻屏和电容屏两大类。电阻屏结构简单， historically 广泛使用；电容屏支持多点触摸，是现代智能手机和平板电脑的主流技术。</p>
+<p><strong>重要提示：</strong> LCD（液晶显示器）和触摸屏是两个相互独立的设备。LCD是输出设备（显示图像），触摸屏是输入设备（检测触摸）。在产品中，触摸屏通常被设计成与LCD尺寸相同，并覆盖在LCD表面，以便用户直接在显示区域进行交互。</p>
+<h3 id="741-电阻屏"><a class="markdownIt-Anchor" href="#741-电阻屏"></a> 7.4.1 电阻屏</h3>
+<h4 id="1-复习一下欧姆定律"><a class="markdownIt-Anchor" href="#1-复习一下欧姆定律"></a> 1. 复习一下欧姆定律</h4>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/85e285eeda894a7df2f054bc4f931f23.png" alt="欧姆定律与均匀电阻" /></p>
+<p>假设上图中的电阻是均匀的，其电阻值与长度成正比。电阻总长度为L，总阻值为R。如果在两端施加 <code>3.3V</code> 电压，并在某一点测得电压为 <code>V</code>，那么该点距离左端的长度 <code>X</code> 可以根据欧姆定律和比例关系计算：</p>
+<p><code>3.3 / R = V / Rx</code> (其中 <code>Rx</code> 是长度 <code>X</code> 对应的电阻值)<br />
+由于电阻与长度成正比，即 <code>Rx / R = X / L</code>，所以 <code>Rx = R * (X / L)</code>。<br />
+代入上式：<code>3.3 / R = V / (R * X / L)</code><br />
+简化后得到：<code>3.3 / 1 = V / (X / L)</code><br />
+最终得出 <code>X = L * V / 3.3</code>。</p>
+<h4 id="2-电阻屏原理"><a class="markdownIt-Anchor" href="#2-电阻屏原理"></a> 2. 电阻屏原理</h4>
+<p>电阻屏正是基于欧姆定律设计的。它通常由上下两层薄膜组成，这两层薄膜的内侧涂有透明的导电层（通常是ITO）。这两层薄膜在平时是相互绝缘并保持微小间隙的。</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/ede2f05876e07e09165317351ee545dd.png" alt="电阻屏结构示意图" /></p>
+<p>当用户点击触摸屏时，上下两层薄膜会在按压点接触：</p>
+<ul>
+<li><strong>测量X坐标</strong>：
+<ol>
+<li>在水平方向的 <code>xp</code> 和 <code>xm</code> 两端施加 <code>3.3V</code> 电压（或电源电压）。</li>
+<li><code>yp</code> 和 <code>ym</code> 端不施加电压（或作为测量探针）。</li>
+<li>通过 <code>yp</code> 探针测量接触点的电压 <code>Vyp</code>。</li>
+<li>根据欧姆定律和电阻膜的均匀性，<code>Vyp</code> 与触摸点的X坐标呈线性关系。通过ADC（模数转换器）将电压转换为数字值，即可估算出X坐标。<br />
+<code>X = Kx * Vyp + Cx</code> (其中 <code>Kx</code> 和 <code>Cx</code> 是校准系数)</li>
+</ol>
+</li>
+<li><strong>测量Y坐标</strong>：
+<ol>
+<li>在垂直方向的 <code>yp</code> 和 <code>ym</code> 两端施加 <code>3.3V</code> 电压。</li>
+<li><code>xp</code> 和 <code>xm</code> 端不施加电压。</li>
+<li>通过 <code>xp</code> 探针测量接触点的电压 <code>Vxp</code>。</li>
+<li><code>Vxp</code> 与触摸点的Y坐标呈线性关系，同样通过ADC转换为数字值。<br />
+<code>Y = Ky * Vxp + Cy</code> (其中 <code>Ky</code> 和 <code>Cy</code> 是校准系数)</li>
+</ol>
+</li>
+</ul>
+<p>在实际使用电阻屏时，由于不同屏幕的电阻层特性和尺寸可能不同，直接根据电压值推算物理坐标存在困难。因此，通常在使用前需要进行<strong>校准</strong>。校准过程通常包括依次点击触摸屏的四个角和中心点等已知点，通过测量这些点的ADC值来推算出精确的X、Y坐标转换公式（即 <code>Kx, Cx, Ky, Cy</code>）。</p>
+<h4 id="3-电阻屏数据上报"><a class="markdownIt-Anchor" href="#3-电阻屏数据上报"></a> 3. 电阻屏数据上报</h4>
+<p>Linux输入驱动程序会根据触摸屏控制器读取到的电压值，计算出触点的X、Y数据，并将其以 <code>input_event</code> 结构体的形式上报。需要注意的是，这些原始的X、Y数据通常是ADC的读数范围值，而不是LCD的像素坐标值。应用程序通常需要根据校准结果再次处理这些数据，将其转换为LCD的实际像素坐标。</p>
+<p>一个典型的电阻屏事件序列（<code>type, code, value</code>）如下：</p>
+<p><strong>按下时：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">EV_KEY       BTN_TOUCH    <span class="number">1</span>         <span class="comment">/* 表示按键被按下，BTN_TOUCH代表触摸屏点击 */</span></span><br><span class="line">EV_ABS       ABS_PRESSURE <span class="number">1</span>         <span class="comment">/* 压力值，可以上报，也可以不报，或为其他压力值（如特定阈值，表示有按压） */</span></span><br><span class="line">EV_ABS       ABS_X        x_value   <span class="comment">/* X坐标（ADC读数或经初步处理的值） */</span></span><br><span class="line">EV_ABS       ABS_Y        y_value   <span class="comment">/* Y坐标（ADC读数或经初步处理的值） */</span></span><br><span class="line">EV_SYN       SYN_REPORT   <span class="number">0</span>         <span class="comment">/* 同步事件，表示本批数据上报完毕 */</span></span><br></pre></td></tr></table></figure>
+<p><strong>松开时：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EV_KEY       BTN_TOUCH    <span class="number">0</span>         <span class="comment">/* 表示按键被松开 */</span></span><br><span class="line">EV_ABS       ABS_PRESSURE <span class="number">0</span>         <span class="comment">/* 压力值归零（可以上报，也可以不报） */</span></span><br><span class="line">EV_SYN       SYN_REPORT   <span class="number">0</span>         <span class="comment">/* 同步事件，表示本批数据上报完毕 */</span></span><br></pre></td></tr></table></figure>
+<h3 id="742-电容屏"><a class="markdownIt-Anchor" href="#742-电容屏"></a> 7.4.2 电容屏</h3>
+<h4 id="1-原理"><a class="markdownIt-Anchor" href="#1-原理"></a> 1. 原理</h4>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/c864d06eaa8ad40850c83dc643a2d066.png" alt="电容屏原理示意图" /></p>
+<p>电容屏通常由多层玻璃或塑料构成，其表面覆盖有一层透明导电材料（如ITO）。屏幕的四周或表面会布满密集的X-Y轴透明电极（或称传感网格）。<br />
+电容屏内部含有一个控制芯片（如I2C接口的触摸控制器）。这个控制器会周期性地在驱动电极上产生高频驱动信号。接收电极会感应到这些信号，并测量其电荷大小。<br />
+当用户的手指（或任何导电物体）触摸到屏幕表面时，由于人体是导体，它会引入一个新的电容（耦合电容），从而改变触摸点附近电极之间的原有电容值，并影响到接收电极接收到的电荷大小。电容屏的控制芯片通过检测这些电荷大小的变化，结合复杂的算法，即可精确地计算出触摸点的位置。</p>
+<p><strong>如何通过电荷计算出触点位置？</strong> 这个复杂的计算过程通常由触摸屏的控制芯片硬件及其内部固件完成。这些芯片通常通过I2C、SPI等串行接口与主控芯片通信。我们编写程序时，主要是通过I2C/SPI总线读取触摸芯片的寄存器，这些寄存器中包含了已经经过芯片内部处理和计算的触点坐标、压力、ID等数据。</p>
+<h4 id="2-电容屏数据上报多点触摸协议"><a class="markdownIt-Anchor" href="#2-电容屏数据上报多点触摸协议"></a> 2. 电容屏数据上报（多点触摸协议）</h4>
+<p>参考文档：Linux内核 <code>Documentation/input/multi-touch-protocol.rst</code>。</p>
+<p>电容屏通常支持多点触摸（Multi-Touch, MT），即可以同时识别多个触点。Linux 输入子系统定义了两种多点触摸协议来上报数据：Type A 和 Type B。</p>
+<ul>
+<li>
+<p><strong>Type A (过时)</strong>：<br />
+该类型的触摸屏不能区分是哪一个具体的触点（即没有触点ID）。它只是将所有检测到的触点的原始坐标数据一股脑地上报给内核。应用程序或更高级的库需要自行分析这些数据，并通过算法（如聚类）来尝试分辨不同的触点。Type A 协议由于其局限性，在较新的Linux内核中已经很少使用，甚至大部分相关源码已被移除。</p>
+</li>
+<li>
+<p><strong>Type B (主流)</strong>：<br />
+这是目前主流的多点触摸协议。该类型的触摸屏能够明确区分不同的触点，并在上报数据时，先上报触点ID，再上报该触点的具体数据。这大大简化了应用程序对多点触摸事件的处理。</p>
+</li>
+</ul>
+<p>Type B 多点触摸协议通过 <code>ABS_MT_SLOT</code> 和 <code>ABS_MT_TRACKING_ID</code> 两个关键事件来管理和区分触点：</p>
+<ul>
+<li><code>ABS_MT_SLOT</code>: 指定当前操作的触点“槽位”。一个触摸屏可能支持多个并发的触点，每个触点被分配一个唯一的“槽位”ID。驱动程序在每次上报一个触点的消息时，都会先切换到该触点的槽位。</li>
+<li><code>ABS_MT_TRACKING_ID</code>: 为当前槽位中的触点分配一个唯一的追踪ID。这个ID在触点从按下到抬起（完整的一次触摸过程）期间保持不变。当一个触点松开时，其 <code>TRACKING_ID</code> 被设置为 <code>-1</code>。</li>
+</ul>
+<p><strong>具体事件上报示例 (type, code, value)：</strong></p>
+<p><strong>当有两个触点同时按下时：</strong><br />
+（假设一个触点ID为45，另一个为46）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">EV_ABS ABS_MT_SLOT        <span class="number">0</span>         <span class="comment">// 切换到槽位0</span></span><br><span class="line">EV_ABS ABS_MT_TRACKING_ID <span class="number">45</span>        <span class="comment">// 槽位0的触点ID是45</span></span><br><span class="line">EV_ABS ABS_MT_POSITION_X   x[<span class="number">0</span>]      <span class="comment">// 触点45的X坐标</span></span><br><span class="line">EV_ABS ABS_MT_POSITION_Y   y[<span class="number">0</span>]      <span class="comment">// 触点45的Y坐标</span></span><br><span class="line">EV_ABS ABS_MT_PRESSURE     p[<span class="number">0</span>]      <span class="comment">// 触点45的压力值 (可选)</span></span><br><span class="line"></span><br><span class="line">EV_ABS ABS_MT_SLOT        <span class="number">1</span>         <span class="comment">// 切换到槽位1</span></span><br><span class="line">EV_ABS ABS_MT_TRACKING_ID <span class="number">46</span>        <span class="comment">// 槽位1的触点ID是46</span></span><br><span class="line">EV_ABS ABS_MT_POSITION_X   x[<span class="number">1</span>]      <span class="comment">// 触点46的X坐标</span></span><br><span class="line">EV_ABS ABS_MT_POSITION_Y   y[<span class="number">1</span>]      <span class="comment">// 触点46的Y坐标</span></span><br><span class="line">EV_ABS ABS_MT_PRESSURE     p[<span class="number">1</span>]      <span class="comment">// 触点46的压力值 (可选)</span></span><br><span class="line"></span><br><span class="line">EV_SYN SYN_REPORT         <span class="number">0</span>         <span class="comment">// 全部数据上报完毕</span></span><br></pre></td></tr></table></figure>
+<p><strong>当ID为45的触点正在移动时 (ID 46保持不动)：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">EV_ABS ABS_MT_SLOT        <span class="number">0</span>         <span class="comment">// 切换到槽位0 (无需再次上报ID，因为slot保持不变)</span></span><br><span class="line">EV_ABS ABS_MT_POSITION_X   x_new[<span class="number">0</span>]  <span class="comment">// 触点45的新的X坐标</span></span><br><span class="line">EV_ABS ABS_MT_POSITION_Y   y_new[<span class="number">0</span>]  <span class="comment">// 触点45的新的Y坐标</span></span><br><span class="line"><span class="comment">// 可以只上报变化的坐标，没有变化的可以不上报</span></span><br><span class="line">EV_SYN SYN_REPORT         <span class="number">0</span>         <span class="comment">// 全部数据上报完毕</span></span><br></pre></td></tr></table></figure>
+<p><strong>松开ID为45的触点时：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EV_ABS ABS_MT_SLOT        <span class="number">0</span>         <span class="comment">// 切换回槽位0 (如果当前 slot 不是 0)</span></span><br><span class="line">EV_ABS ABS_MT_TRACKING_ID <span class="number">-1</span>        <span class="comment">// 将槽位0的追踪ID设为-1，表示其对应的触点（ID 45）被松开</span></span><br><span class="line">EV_SYN SYN_REPORT         <span class="number">0</span>         <span class="comment">// 全部数据上报完毕</span></span><br></pre></td></tr></table></figure>
+<p><strong>最后，松开ID为46的触点时：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EV_ABS ABS_MT_SLOT        <span class="number">1</span>         <span class="comment">// 切换到槽位1</span></span><br><span class="line">EV_ABS ABS_MT_TRACKING_ID <span class="number">-1</span>        <span class="comment">// 将槽位1的追踪ID设为-1，表示其对应的触点（ID 46）被松开</span></span><br><span class="line">EV_SYN SYN_REPORT         <span class="number">0</span>         <span class="comment">// 全部数据上报完毕</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-电容屏的实验数据"><a class="markdownIt-Anchor" href="#3-电容屏的实验数据"></a> 3. 电容屏的实验数据</h4>
+<p>假设您的开发板上电容屏对应的设备节点是 <code>/dev/input/event0</code>，执行 <code>hexdump /dev/input/event0</code> 命令。</p>
+<p><strong>用一个手指点击触摸屏，得到类似如下的数据：</strong></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/ee5562ccc5cd14d9aad874653630ba4b.png" alt="单指点击触摸屏 hexdump 输出" /></p>
+<p>在上述数据中，您会注意到除了 <code>ABS_MT_SLOT</code>, <code>ABS_MT_TRACKING_ID</code>, <code>ABS_MT_POSITION_X</code>, <code>ABS_MT_POSITION_Y</code> 外，还上报了 <code>ABS_X</code> 和 <code>ABS_Y</code> 数据。这是为了<strong>向后兼容</strong>。许多基于电阻触摸屏（只上报 <code>ABS_X</code>, <code>ABS_Y</code>）开发的旧应用程序可以不经修改地在电容屏上运行，因为电容屏驱动会模拟单点触摸数据。</p>
+<p><strong>使用两个手指点击触摸屏时，得到类似如下的数据：</strong></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/2b640d691723980bcb4cf6ca47c09390.png" alt="两指点击触摸屏 hexdump 输出" /></p>
+<p>同样，为了兼容旧程序，即使是多点触摸，也会上报 <code>ABS_X</code> 和 <code>ABS_Y</code>，但通常<strong>只上报第一个触点</strong>（即槽位0）的 <code>ABS_X</code> 和 <code>ABS_Y</code> 数据。真正的多点信息则需要解析 <code>ABS_MT</code> 系列的事件。</p>
+<h2 id="75-tslib"><a class="markdownIt-Anchor" href="#75-tslib"></a> 7.5 tslib</h2>
+<p><code>tslib</code> 是一个广泛应用于嵌入式Linux系统的触摸屏开源库，它提供了一个统一的API来访问触摸屏设备，并可以为触摸事件数据添加各种“过滤器”（filters）进行处理，例如校准、去抖动、线性化等功能。<code>tslib</code> 的官方网站是 <a target="_blank" rel="noopener" href="http://www.tslib.org/">http://www.tslib.org/</a>。</p>
+<p>编译 <code>tslib</code> 后，您会得到核心库 <code>libts</code>，以及一系列有用的工具，如触摸屏校准工具 <code>ts_calibrate</code> 和触摸屏测试工具 <code>ts_test</code>。</p>
+<p>相关源码通常位于您的开发资料中的 <code>04_嵌入式Linux应用开发基础知识/source/11_input/02_tslib/</code> 目录下，其中包含 <code>tslib-1.21.tar.xz</code> 等压缩包。</p>
+<h3 id="751-tslib-框架分析"><a class="markdownIt-Anchor" href="#751-tslib-框架分析"></a> 7.5.1 tslib 框架分析</h3>
+<p><code>tslib</code> 的核心思想是模块化和插件化，通过链式调用不同的处理模块来对原始触摸数据进行加工。<code>tslib</code> 的主要代码结构如下：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/c11db04edda8974b55250223a3174fdd.png" alt="tslib 目录结构概览" /></p>
+<p>核心功能位于 <code>plugins</code> 目录中的“插件”或“模块”。<code>plugins</code> 目录下的每个 <code>.so</code> 文件都是一个动态加载模块，每个模块通常都会提供 <code>read</code> 和 <code>read_mt</code> 两个函数指针：前者用于读取单点触摸屏数据，后者用于读取多点触摸屏数据。</p>
+<p>为了分析 <code>tslib</code> 的框架，我们可以参考其自带的示例程序 <code>ts_test.c</code>（用于普通触摸屏，如电阻屏或单点电容屏）和 <code>ts_test_mt.c</code>（用于多点触摸屏）。</p>
+<p>下图清晰地展示了 <code>tslib</code> 的框架和数据流：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/eb9ff8d9e590de943659f2f410e93d44.emf" alt="tslib 框架和数据流" /></p>
+<ol>
+<li>
+<p><strong><code>ts_open(device_node, nonblock)</code></strong>：<br />
+应用程序首先调用 <code>ts_open()</code> 函数来打开指定的触摸屏设备节点（如 <code>/dev/input/event0</code>），并创建一个 <code>tsdev</code> 结构体实例。<code>tsdev</code> 是 <code>tslib</code> 用来表示和管理一个触摸屏设备的上下文。</p>
+</li>
+<li>
+<p><strong><code>ts_config(tsdev)</code></strong>：<br />
+接着，调用 <code>ts_config()</code> 函数来读取 <code>/etc/ts.conf</code> 配置文件。这个配置文件定义了要加载和应用的模块链。例如，一个典型的 <code>ts.conf</code> 内容可能如下：</p>
+ <figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">module_raw input</span><br><span class="line">module pthres <span class="attr">pmin</span>=<span class="number">1</span></span><br><span class="line">module dejitter <span class="attr">delta</span>=<span class="number">100</span></span><br><span class="line">module linear</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>module_raw input</code></strong>: 这行通常是必须的，它指定了用于读取原始输入设备事件的模块。<code>input</code> 模块负责直接打开 <code>/dev/input/eventX</code> 并读取 <code>struct input_event</code> 数据。这个模块是数据处理链的起始点。</li>
+<li><strong><code>module pthres pmin=1</code></strong>: <code>pthres</code> (Pressure Threshold) 模块用于压力阈值过滤。<code>pmin=1</code> 表示只有当压力值大于或等于1时，才认为是一个有效的触摸事件。它可以过滤掉轻微的触碰或噪声。</li>
+<li><strong><code>module dejitter delta=100</code></strong>: <code>dejitter</code> (De-jitter) 模块用于去抖动和平滑事件数据。<code>delta=100</code> 指定了一个抖动阈值，如果连续的触摸点在某个很小的范围内跳动，它会尝试返回一个更稳定的点，以消除触摸抖动。</li>
+<li><strong><code>module linear</code></strong>: <code>linear</code> 模块用于将原始的ADC坐标（对于电阻屏）或触摸控制器报告的坐标转换为屏幕的物理像素坐标，并进行线性校准。这是将触摸事件映射到LCD显示区域的关键步骤。</li>
+</ul>
+<p><code>ts_config</code> 的加载机制：</p>
+<ul>
+<li>所有的 <code>module</code>（非 <code>module_raw</code> 的）会被插入到 <code>tsdev-&gt;list</code> 链表的头部。这意味着 <code>ts.conf</code> 中最后定义的 <code>module</code> 将位于 <code>tsdev-&gt;list</code> 的最前端。</li>
+<li>通常只有一个 <code>module_raw</code>，它会被插入到 <code>tsdev-&gt;list_raw</code> 链表的头部（通常也是唯一一个）。</li>
+<li>最重要的一点是，<code>tsdev-&gt;list</code> 中的最后一个 <code>module</code> 会指向 <code>tsdev-&gt;list_raw</code> 的头部。这形成了一个完整的模块处理链：<code>tsdev-&gt;list_head</code> -&gt; ... -&gt; <code>linear_module</code> -&gt; <code>raw_input_module</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>数据处理流程（递归调用）</strong>：<br />
+无论是调用 <code>ts_read()</code> (单点) 还是 <code>ts_read_mt()</code> (多点)，数据处理都是通过 <code>tsdev-&gt;list</code> 中的模块链来完成的。这些模块是递归调用的，形成了一个“管道”：</p>
+<ul>
+<li>应用程序调用 <code>ts_read()</code> / <code>ts_read_mt()</code>。</li>
+<li>这个调用会首先进入 <code>tsdev-&gt;list</code> 中最前端的模块（例如 <code>linear</code> 模块）。</li>
+<li><code>linear</code> 模块的 <code>read</code> (或 <code>read_mt_raw</code>) 函数会<strong>递归调用</strong>其前一个模块 (<code>next-&gt;read()</code> 或 <code>next-&gt;read_raw_mt()</code>) 的读取函数，以此类推。</li>
+<li>最终，链条会传递到 <code>module_raw input</code> 模块。<code>input</code> 模块直接调用底层的 <code>read()</code> 系统调用来从 <code>/dev/input/eventX</code> 设备节点读取原始的 <code>struct input_event</code> 数据。</li>
+<li>原始数据返回后，会逐级向上（从 <code>input</code> -&gt; <code>dejitter</code> -&gt; <code>pthres</code> -&gt; <code>linear</code>）经过每个模块的处理和过滤，最终转换成校准后的、去抖动的、符合应用程序需求的触摸事件数据，返回给应用程序。</li>
+</ul>
+<p>例如，<code>linear</code> 模块处理函数的简化逻辑（<code>read_raw</code> 版本）：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/f760bb3f1d5effaa4a1b2c632a104f4e.png" alt="linear 模块的 read 函数示意" /><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/7e8a1fdc4c9d8e4e88b7a4894750fb75.png" alt="linear 模块的 read_raw 函数示意" /></p>
+<p>这种递归调用确保了原始数据从底层设备驱动（通过 <code>input</code> 模块）被读取，然后依次经过配置文件中指定的各个过滤器（如 <code>pthres</code>, <code>dejitter</code>），最后由 <code>linear</code> 模块进行校准和坐标转换，才返回给应用程序。</p>
+</li>
+</ol>
+<h3 id="752-交叉编译-测试tslib"><a class="markdownIt-Anchor" href="#752-交叉编译-测试tslib"></a> 7.5.2 交叉编译、测试tslib</h3>
+<p>本节将涵盖 <code>tslib</code> 的交叉编译过程，以及如何运行 <code>tslib</code> 自带的测试程序。相关源码位于您资料中的 <code>04_嵌入式Linux应用开发基础知识/source/11_input/02_tslib/tslib-1.21.tar.xz</code>。</p>
+<h4 id="1-交叉编译tslib"><a class="markdownIt-Anchor" href="#1-交叉编译tslib"></a> 1. 交叉编译tslib</h4>
+<p>在开始编译之前，请确保您的交叉编译工具链已正确配置。这通常涉及到设置 <code>ARCH</code>、<code>CROSS_COMPILE</code> 和 <code>PATH</code> 环境变量。</p>
+<p><strong>配置工具链（以IMX6ULL为例）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> ARCH=arm</span><br><span class="line"><span class="built_in">export</span> CROSS_COMPILE=arm-linux-gnueabihf-</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/home/book/100ask_imx6ull-sdk/ToolChain/gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf/bin</span><br></pre></td></tr></table></figure>
+<p>（对于STM32MP157，请替换为对应的工具链路径：<code>export PATH=$PATH:/home/book/100ask_stm32mp157_pro-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-buildroot/bin</code>，并调整<code>CROSS_COMPILE</code>。）</p>
+<p><strong>解压并进入tslib源码目录：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -xf tslib-1.21.tar.xz</span><br><span class="line"><span class="built_in">cd</span> tslib-1.21</span><br></pre></td></tr></table></figure>
+<p><strong>配置tslib的编译选项：</strong><br />
+使用 <code>configure</code> 脚本进行配置。<code>--host</code> 参数指定目标平台，<code>--prefix</code> 指定安装到目标文件系统中的根目录（通常是 <code>/</code>，这样库文件会安装到 <code>/usr/lib</code>，头文件到 <code>/usr/include</code> 等）。</p>
+<p><strong>对于IMX6ULL：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --host=arm-linux-gnueabihf --prefix=/</span><br><span class="line">make -j$(<span class="built_in">nproc</span>)</span><br><span class="line">make install DESTDIR=<span class="variable">$PWD</span>/tmp <span class="comment"># 安装到当前目录下的tmp子目录，方便打包</span></span><br></pre></td></tr></table></figure>
+<p><strong>对于STM32MP157：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --host=arm-buildroot-linux-gnueabihf --prefix=/</span><br><span class="line">make -j$(<span class="built_in">nproc</span>)</span><br><span class="line">make install DESTDIR=<span class="variable">$PWD</span>/tmp</span><br></pre></td></tr></table></figure>
+<p><strong>确定工具链中头文件、库文件目录：</strong><br />
+通常，交叉编译工具链的sysroot路径可以通过以下命令获取：<br />
+<strong>对于IMX6ULL：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;main()&#123;&#125;&#x27;</span> | arm-linux-gnueabihf-gcc -E -v - 2&gt;&amp;1 | grep <span class="string">&quot;SEARCH_DIR&quot;</span> | <span class="built_in">head</span> -n 1</span><br><span class="line"><span class="comment"># 或者根据具体工具链的结构，通常在 bin/../arm-linux-gnueabihf/libc/usr/include 或 sysroot/usr/include</span></span><br></pre></td></tr></table></figure>
+<p><strong>对于STM32MP157：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;main()&#123;&#125;&#x27;</span> | arm-buildroot-linux-gnueabihf-gcc -E -v - 2&gt;&amp;1 | grep <span class="string">&quot;SEARCH_DIR&quot;</span> | <span class="built_in">head</span> -n 1</span><br><span class="line"><span class="comment"># 通常在 toolchain_root/arm-buildroot-linux-gnueabihf/sysroot/usr/include</span></span><br></pre></td></tr></table></figure>
+<p><strong>将编译好的头文件和库文件复制到交叉工具链的对应目录：</strong><br />
+这一步是为了让您在后续编译自己的应用程序时，交叉工具链能够找到 <code>tslib</code> 的头文件和库文件。</p>
+<p><strong>对于IMX6ULL (假设您的工具链 sysroot 为 <code>/home/book/100ask_imx6ull-sdk/ToolChain/gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr</code>):</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> tslib-1.21/tmp/</span><br><span class="line"><span class="built_in">cp</span> include/* /home/book/100ask_imx6ull-sdk/ToolChain/gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/include</span><br><span class="line"><span class="built_in">cp</span> -d lib/*so* /home/book/100ask_imx6ull-sdk/ToolChain/gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/lib/</span><br></pre></td></tr></table></figure>
+<p><strong>对于STM32MP157 (假设您的工具链 sysroot 为 <code>/home/book/100ask_stm32mp157_pro-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-buildroot/arm-buildroot-linux-gnueabihf/sysroot/usr</code>):</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> tslib-1.21/tmp/</span><br><span class="line"><span class="built_in">cp</span> include/* /home/book/100ask_stm32mp157_pro-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-buildroot/arm-buildroot-linux-gnueabihf/sysroot/usr/include</span><br><span class="line"><span class="built_in">cp</span> -d lib/*so* /home/book/100ask_stm32mp157_pro-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-buildroot/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/</span><br></pre></td></tr></table></figure>
+<h4 id="2-测试tslib"><a class="markdownIt-Anchor" href="#2-测试tslib"></a> 2. 测试tslib</h4>
+<p>为了在目标板上运行 <code>tslib</code> 程序，您需要将编译生成的 <code>tslib</code> 库文件、二进制工具和配置文件部署到开发板上。一种常见做法是使用NFS将Ubuntu宿主机的相应目录挂载到开发板上，然后进行复制或直接运行。</p>
+<p><strong>部署文件到开发板：</strong><br />
+假设您已通过NFS将 <code>/mnt</code> 挂载到Ubuntu的 <code>tslib-1.21/tmp</code> 目录。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入tslib的安装目录</span></span><br><span class="line"><span class="built_in">cd</span> /mnt/tslib-1.21/tmp/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制库文件到开发板的库路径（如 /lib 或 /usr/lib）</span></span><br><span class="line"><span class="built_in">cp</span> lib/* -drf /lib</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制二进制工具到开发板的执行路径（如 /bin 或 /usr/bin）</span></span><br><span class="line"><span class="built_in">cp</span> bin/* /bin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制配置文件到 /etc</span></span><br><span class="line"><span class="built_in">cp</span> etc/ts.conf /etc</span><br><span class="line"><span class="built_in">cp</span> -drf lib/ts /usr/lib/ <span class="comment"># 确保插件动态库也复制过去</span></span><br></pre></td></tr></table></figure>
+<p><strong>重要环境变量配置：</strong><br />
+在运行 <code>tslib</code> 程序之前，需要在开发板上设置以下重要的环境变量：</p>
+<ul>
+<li><code>TSLIB_FBDEVICE</code>: 指定帧缓冲设备，通常是 <code>/dev/fb0</code>。</li>
+<li><code>TSLIB_TSDEVICE</code>: 指定触摸屏设备节点，通常是 <code>/dev/input/eventX</code>。</li>
+<li><code>TSLIB_CONFFILE</code>: 指定 <code>tslib</code> 配置文件的路径，通常是 <code>/etc/ts.conf</code>。</li>
+<li><code>TSLIB_PLUGINDIR</code>: 指定 <code>tslib</code> 插件（模块）的动态库目录，通常是 <code>/usr/lib/ts</code> 或 <code>./lib/ts</code>。</li>
+<li><code>TSLIB_CALIBFILE</code>: 指定校准文件的路径，通常是 <code>/etc/pointercal</code>。</li>
+</ul>
+<p>在终端中设置（或写入 <code>/etc/profile</code> 或您的启动脚本）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> TSLIB_FBDEVICE=/dev/fb0</span><br><span class="line"><span class="built_in">export</span> TSLIB_TSDEVICE=/dev/input/event0 <span class="comment"># 请根据实际触摸屏设备节点修改</span></span><br><span class="line"><span class="built_in">export</span> TSLIB_CONFFILE=/etc/ts.conf</span><br><span class="line"><span class="built_in">export</span> TSLIB_PLUGINDIR=/usr/lib/ts</span><br><span class="line"><span class="built_in">export</span> TSLIB_CALIBFILE=/etc/pointercal</span><br></pre></td></tr></table></figure>
+<p><strong>关闭默认GUI程序（如果存在）：</strong><br />
+为了避免触摸屏被其他GUI程序占用，您可能需要关闭默认的图形界面程序。<br />
+<strong>对于STM32MP157：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop myir <span class="comment"># 关闭Qt GUI程序，根据实际服务名调整</span></span><br></pre></td></tr></table></figure>
+<p><strong>对于IMX6ULL：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> /etc/init.d/S07hmi /root <span class="comment"># 移动启动脚本，阻止HMI程序启动</span></span><br><span class="line">reboot <span class="comment"># 重启系统</span></span><br></pre></td></tr></table></figure>
+<p><strong>执行tslib自带测试程序 <code>ts_test_mt</code>：</strong><br />
+在单板上执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ts_test_mt</span><br></pre></td></tr></table></figure>
+<p>如果这是首次使用，程序可能会提示您进行触摸屏校准。按照屏幕指示依次点击校准点，完成后会生成 <code>/etc/pointercal</code> 文件。之后，您可以尝试多点触摸，观察程序是否正确识别和显示。</p>
+<h3 id="753-自己写一个测试程序"><a class="markdownIt-Anchor" href="#753-自己写一个测试程序"></a> 7.5.3 自己写一个测试程序</h3>
+<p>本节将指导您编写一个简单的 <code>tslib</code> 应用程序，用于处理多点触摸数据，例如计算两个触点之间的距离。相关源码位置通常为：<code>04_嵌入式Linux应用开发基础知识/source/11_input/02_tslib/mt_cal_distance.c</code>。</p>
+<h4 id="1-接口函数深入分析"><a class="markdownIt-Anchor" href="#1-接口函数深入分析"></a> 1. 接口函数深入分析</h4>
+<p>前面我们已经看到，当有两个手指点击屏幕时，<code>hexdump</code> 会显示包含了 <code>ABS_MT_SLOT</code> 和 <code>ABS_MT_TRACKING_ID</code> 等事件的数据。</p>
+<p><code>tslib</code> 提供了 <code>ts_read_mt()</code> 函数来简化多点触摸数据的读取。这个函数会返回一个包含所有活跃触点信息的数据结构。</p>
+<p><code>ts_read_mt()</code> 函数原型如下：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/5b7da654488edf23d22bfc215265f1eb.png" alt="ts_read_mt 函数原型" /></p>
+<ul>
+<li><code>tsdev_t dev</code>: <code>ts_open()</code> 返回的触摸屏设备句柄。</li>
+<li><code>struct ts_sample_mt **p_smp</code>: 指向一个 <code>struct ts_sample_mt</code> 结构体指针的指针。<code>ts_read_mt</code> 会分配内存并填充这个数组，返回触点数据。</li>
+<li><code>int nr</code>: 表示本次读取期望获取多少个事件帧。通常设置为1，表示读取一个同步事件周期内的所有触点数据。</li>
+<li><code>int max_slots</code>: 表示触摸屏支持的最大触点数量。例如，如果是5点触摸屏，可以设置为5。<code>ts_read_mt</code> 会返回一个包含 <code>max_slots</code> 个触摸槽位信息的数组，即使实际只有少数触点活跃。</li>
+</ul>
+<p><strong>举例：</strong> 如果 <code>nr</code> 设置为1，<code>max_slots</code> 设置为5，那么读取到的数据将保存在 <code>p_smp[0]</code> 所指向的 <code>ts_sample_mt</code> 数组中，该数组将有5个元素：<code>p_smp[0][0]</code>, <code>p_smp[0][1]</code>, ..., <code>p_smp[0][4]</code>。每个元素代表一个触摸槽位的数据。你需要检查每个槽位的 <code>valid</code> 标志或 <code>tracking_id</code> 来判断该槽位的数据是否有效或活跃。</p>
+<p><code>ts_sample_mt</code> 结构体定义如下：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/629fa144596317ff07b09e42d7623b2e.png" alt="ts_sample_mt 结构体定义" /></p>
+<p><code>ts_sample_mt</code> 结构体中的关键字段：</p>
+<ul>
+<li><code>x</code>, <code>y</code>: 触点的X、Y坐标，通常是已经过校准的屏幕像素坐标。</li>
+<li><code>pressure</code>: 触点的压力值。</li>
+<li><code>id</code>: 触点追踪ID (<code>ABS_MT_TRACKING_ID</code>)。当 <code>id</code> 为 <code>-1</code> 时，表示该槽位当前没有活跃触点。</li>
+<li><code>slot</code>: 对应的槽位ID (<code>ABS_MT_SLOT</code>)。</li>
+<li><code>valid</code>: 一个位掩码，指示哪些事件数据是有效的。例如，<code>MT_TOOL_FINGER</code>, <code>MT_PRESSURE</code>, <code>MT_POSITION_X</code>, <code>MT_POSITION_Y</code> 等宏可以用来检查相应数据是否有效。</li>
+</ul>
+<h4 id="2-编写代码计算两个触点的距离"><a class="markdownIt-Anchor" href="#2-编写代码计算两个触点的距离"></a> 2. 编写代码：计算两个触点的距离</h4>
+<p>我们将实现一个程序，它能够识别屏幕上的两个触点，并实时计算并打印它们之间的距离。</p>
+<p><strong>思路：</strong></p>
+<ol>
+<li>初始化 <code>tslib</code> 并打开触摸屏设备。</li>
+<li>循环调用 <code>ts_read_mt()</code> 来获取最新的多点触摸数据。</li>
+<li>遍历 <code>ts_sample_mt</code> 数组中返回的槽位数据，识别出有效的活跃触点。</li>
+<li>如果检测到至少两个活跃触点，提取它们的X、Y坐标。</li>
+<li>使用勾股定理计算这两个触点之间的欧几里得距离。</li>
+<li>打印距离信息。</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;math.h&gt;</span> <span class="comment">// For sqrt()</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;tslib.h&gt;</span> <span class="comment">// tslib primary header</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Function to calculate distance between two points</span></span><br><span class="line"><span class="type">double</span> <span class="title function_">calculate_distance</span><span class="params">(<span class="type">int</span> x1, <span class="type">int</span> y1, <span class="type">int</span> x2, <span class="type">int</span> y2)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sqrt</span>(<span class="built_in">pow</span>(x2 - x1, <span class="number">2</span>) + <span class="built_in">pow</span>(y2 - y1, <span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tsdev</span> *<span class="title">ts</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ts_sample_mt</span> *<span class="title">mtsamples</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="type">int</span> ret;</span><br><span class="line">    <span class="type">int</span> max_slots;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Check usage</span></span><br><span class="line">    <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Usage: %s &lt;input_device_node&gt;\n&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Example: %s /dev/input/event0\n&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. Open and configure tslib</span></span><br><span class="line">    ts = ts_open(argv[<span class="number">1</span>], <span class="number">0</span>); <span class="comment">// 0 for blocking mode</span></span><br><span class="line">    <span class="keyword">if</span> (!ts) &#123;</span><br><span class="line">        perror(<span class="string">&quot;ts_open failed&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Read config file /etc/ts.conf</span></span><br><span class="line">    ret = ts_config(ts);</span><br><span class="line">    <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        perror(<span class="string">&quot;ts_config failed&quot;</span>);</span><br><span class="line">        ts_close(ts);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get max slots supported by the device (from tslib, may query driver)</span></span><br><span class="line">    max_slots = ts_get_max_slots(ts);</span><br><span class="line">    <span class="keyword">if</span> (max_slots &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Device does not report multi-touch slots or max_slots unsupported.\n&quot;</span>);</span><br><span class="line">        <span class="comment">// Proceed with a default, or exit if multi-touch is required</span></span><br><span class="line">        max_slots = <span class="number">5</span>; <span class="comment">// Default for many modern touchscreens</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Max touch slots reported: %d\n&quot;</span>, max_slots);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Allocate memory for multi-touch samples</span></span><br><span class="line">    mtsamples = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ts_sample_mt) * max_slots);</span><br><span class="line">    <span class="keyword">if</span> (!mtsamples) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Failed to allocate memory for mtsamples\n&quot;</span>);</span><br><span class="line">        ts_close(ts);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Ready to read multi-touch events. Tap two fingers to see distance.\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// Read one frame of multi-touch data</span></span><br><span class="line">        <span class="comment">// The &#x27;1&#x27; in ts_read_mt means we want to read events until the next SYN_REPORT</span></span><br><span class="line">        ret = ts_read_mt(ts, mtsamples, max_slots, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (errno == EINTR) &#123; <span class="comment">// Interrupted system call, retry</span></span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            perror(<span class="string">&quot;ts_read_mt error&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ret == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">// No data or timeout (if timeout was set)</span></span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Process the multi-touch data</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ts_sample_mt</span> *<span class="title">touch_points</span>[2] =</span> &#123;<span class="literal">NULL</span>, <span class="literal">NULL</span>&#125;; <span class="comment">// Store up to 2 active touch points</span></span><br><span class="line">        <span class="type">int</span> active_count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; max_slots; i++) &#123;</span><br><span class="line">            <span class="comment">// Check if the slot is valid and has a tracking ID (i.e., finger is down)</span></span><br><span class="line">            <span class="comment">// A tracking_id of -1 means the slot is inactive or released</span></span><br><span class="line">            <span class="keyword">if</span> (mtsamples[i].valid &amp;&amp; mtsamples[i].id != <span class="number">-1</span> &amp;&amp; active_count &lt; <span class="number">2</span>) &#123;</span><br><span class="line">                touch_points[active_count++] = &amp;mtsamples[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (active_count == <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="comment">// Two fingers detected, calculate distance</span></span><br><span class="line">            <span class="type">int</span> x1 = touch_points[<span class="number">0</span>]-&gt;x;</span><br><span class="line">            <span class="type">int</span> y1 = touch_points[<span class="number">0</span>]-&gt;y;</span><br><span class="line">            <span class="type">int</span> x2 = touch_points[<span class="number">1</span>]-&gt;x;</span><br><span class="line">            <span class="type">int</span> y2 = touch_points[<span class="number">1</span>]-&gt;y;</span><br><span class="line"></span><br><span class="line">            <span class="type">double</span> dist = calculate_distance(x1, y1, x2, y2);</span><br><span class="line"></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Two fingers detected! Point 1: (%d, %d, ID:%d), Point 2: (%d, %d, ID:%d)\n&quot;</span>,</span><br><span class="line">                   x1, y1, touch_points[<span class="number">0</span>]-&gt;id, x2, y2, touch_points[<span class="number">1</span>]-&gt;id);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Distance: %.2f pixels\n&quot;</span>, dist);</span><br><span class="line">            fflush(<span class="built_in">stdout</span>); <span class="comment">// Ensure output is printed immediately</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (active_count == <span class="number">1</span>) &#123;</span><br><span class="line">             <span class="built_in">printf</span>(<span class="string">&quot;One finger detected! Point: (%d, %d, ID:%d)\n&quot;</span>, </span><br><span class="line">                    touch_points[<span class="number">0</span>]-&gt;x, touch_points[<span class="number">0</span>]-&gt;y, touch_points[<span class="number">0</span>]-&gt;id);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// If active_count is 0, no active touches, just continue monitoring</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Cleanup</span></span><br><span class="line">    <span class="built_in">free</span>(mtsamples);</span><br><span class="line">    ts_close(ts);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>编译和运行：</strong><br />
+在您的交叉编译环境中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入您存放此C文件的目录，例如 /home/user/my_input_app</span></span><br><span class="line"><span class="comment"># 确保 tslib 的头文件和库文件已复制到交叉工具链的 sysroot 中</span></span><br><span class="line">arm-linux-gnueabihf-gcc mt_cal_distance.c -o mt_cal_distance -lts -lm -I/usr/include/tslib/</span><br><span class="line"><span class="comment"># 或如果头文件在其他地方: -I/path/to/tslib/include</span></span><br><span class="line"><span class="comment"># 或者，如果您已经将 tslib 的头文件和库文件复制到交叉工具链的默认搜索路径，则无需 -I</span></span><br><span class="line"><span class="comment"># -lts 链接 tslib 库</span></span><br><span class="line"><span class="comment"># -lm 链接数学库，因为使用了 sqrt() 和 pow()</span></span><br></pre></td></tr></table></figure>
+<p>将编译生成的 <code>mt_cal_distance</code> 可执行文件复制到开发板上，并确保 <code>tslib</code> 的库文件和配置文件已部署。还需要设置 <code>TSLIB</code> 相关的环境变量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在开发板上：</span></span><br><span class="line"><span class="built_in">export</span> TSLIB_FBDEVICE=/dev/fb0</span><br><span class="line"><span class="built_in">export</span> TSLIB_TSDEVICE=/dev/input/event0 <span class="comment"># 根据实际情况调整</span></span><br><span class="line"><span class="built_in">export</span> TSLIB_CONFFILE=/etc/ts.conf</span><br><span class="line"><span class="built_in">export</span> TSLIB_PLUGINDIR=/usr/lib/ts <span class="comment"># 根据实际情况调整</span></span><br><span class="line"><span class="built_in">export</span> TSLIB_CALIBFILE=/etc/pointercal <span class="comment"># 如果需要校准，确保此文件存在</span></span><br><span class="line"></span><br><span class="line">./mt_cal_distance /dev/input/event0 <span class="comment"># 替换为你的触摸屏设备节点</span></span><br></pre></td></tr></table></figure>
+<p>现在，当您在触摸屏上使用两个手指触摸时，程序应该会实时打印出这两个触点之间的距离。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text"> 第七章 输入系统应用编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#71-%E4%BB%80%E4%B9%88%E6%98%AF%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.1.</span> <span class="toc-text"> 7.1 什么是输入系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#72-%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6%E5%8F%8A%E8%B0%83%E8%AF%95"><span class="toc-number">1.2.</span> <span class="toc-text"> 7.2 输入系统框架及调试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#721-%E6%A1%86%E6%9E%B6%E6%A6%82%E8%BF%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 7.2.1 框架概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#722-%E7%BC%96%E5%86%99app%E9%9C%80%E8%A6%81%E6%8E%8C%E6%8F%A1%E7%9A%84%E7%9F%A5%E8%AF%86"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 7.2.2 编写APP需要掌握的知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%86%85%E6%A0%B8%E4%B8%AD%E6%80%8E%E4%B9%88%E8%A1%A8%E7%A4%BA%E4%B8%80%E4%B8%AA%E8%BE%93%E5%85%A5%E8%AE%BE%E5%A4%87"><span class="toc-number">1.2.2.1.</span> <span class="toc-text"> 1. 内核中怎么表示一个输入设备？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-app%E5%8F%AF%E4%BB%A5%E5%BE%97%E5%88%B0%E4%BB%80%E4%B9%88%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.2.2.</span> <span class="toc-text"> 2. APP可以得到什么数据？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%BA%8B%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E7%95%8C%E7%BA%BF%E5%90%8C%E6%AD%A5%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.2.2.3.</span> <span class="toc-text"> 3. 事件之间的界线（同步事件）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E8%BE%93%E5%85%A5%E5%AD%90%E7%B3%BB%E7%BB%9F%E6%94%AF%E6%8C%81%E7%9A%84api%E6%93%8D%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.2.4.</span> <span class="toc-text"> 4. 输入子系统支持的API操作方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#723-%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 7.2.3 调试技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%A1%AE%E5%AE%9A%E8%AE%BE%E5%A4%87%E4%BF%A1%E6%81%AF"><span class="toc-number">1.2.3.1.</span> <span class="toc-text"> 1. 确定设备信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.3.2.</span> <span class="toc-text"> 2. 使用命令读取数据</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#73-%E4%B8%8D%E4%BD%BF%E7%94%A8%E5%BA%93%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.3.</span> <span class="toc-text"> 7.3 不使用库的应用程序示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#731-%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E6%94%AF%E6%8C%81%E5%AE%8C%E6%95%B4%E7%9A%84api%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 7.3.1 输入系统支持完整的API操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#732-app%E8%AE%BF%E9%97%AE%E7%A1%AC%E4%BB%B6%E7%9A%844%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%A6%88%E5%A6%88%E6%80%8E%E4%B9%88%E7%9F%A5%E9%81%93%E5%AD%A9%E5%AD%90%E9%86%92%E4%BA%86"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 7.3.2 APP访问硬件的4种方式：妈妈怎么知道孩子醒了</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#733-%E8%8E%B7%E5%8F%96%E8%AE%BE%E5%A4%87%E4%BF%A1%E6%81%AFioctl"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 7.3.3 获取设备信息（ioctl）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#734-%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F%E9%9D%9E%E9%98%BB%E5%A1%9E"><span class="toc-number">1.3.4.</span> <span class="toc-text"> 7.3.4 查询方式（非阻塞）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#735-%E4%BC%91%E7%9C%A0-%E5%94%A4%E9%86%92%E6%96%B9%E5%BC%8F%E9%98%BB%E5%A1%9E"><span class="toc-number">1.3.5.</span> <span class="toc-text"> 7.3.5 休眠-唤醒方式（阻塞）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#736-pollselect-%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.6.</span> <span class="toc-text"> 7.3.6 POLL&#x2F;SELECT 方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.3.6.1.</span> <span class="toc-text"> 1. 功能介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%A1%A5%E5%85%85poll-vs-select"><span class="toc-number">1.3.6.2.</span> <span class="toc-text"> 2. 补充：poll vs select</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%AF%BE%E5%90%8E%E4%BD%9C%E4%B8%9A-%E6%8F%90%E7%A4%BA"><span class="toc-number">1.3.6.3.</span> <span class="toc-text"> 3. 课后作业 (提示)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#737-%E5%BC%82%E6%AD%A5%E9%80%9A%E7%9F%A5%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.7.</span> <span class="toc-text"> 7.3.7 异步通知方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D-2"><span class="toc-number">1.3.7.1.</span> <span class="toc-text"> 1. 功能介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B"><span class="toc-number">1.3.7.2.</span> <span class="toc-text"> 2. 应用编程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#74-%E7%94%B5%E9%98%BB%E5%B1%8F%E5%92%8C%E7%94%B5%E5%AE%B9%E5%B1%8F"><span class="toc-number">1.4.</span> <span class="toc-text"> 7.4 电阻屏和电容屏</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#741-%E7%94%B5%E9%98%BB%E5%B1%8F"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 7.4.1 电阻屏</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%A4%8D%E4%B9%A0%E4%B8%80%E4%B8%8B%E6%AC%A7%E5%A7%86%E5%AE%9A%E5%BE%8B"><span class="toc-number">1.4.1.1.</span> <span class="toc-text"> 1. 复习一下欧姆定律</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%94%B5%E9%98%BB%E5%B1%8F%E5%8E%9F%E7%90%86"><span class="toc-number">1.4.1.2.</span> <span class="toc-text"> 2. 电阻屏原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%94%B5%E9%98%BB%E5%B1%8F%E6%95%B0%E6%8D%AE%E4%B8%8A%E6%8A%A5"><span class="toc-number">1.4.1.3.</span> <span class="toc-text"> 3. 电阻屏数据上报</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#742-%E7%94%B5%E5%AE%B9%E5%B1%8F"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 7.4.2 电容屏</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8E%9F%E7%90%86"><span class="toc-number">1.4.2.1.</span> <span class="toc-text"> 1. 原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%94%B5%E5%AE%B9%E5%B1%8F%E6%95%B0%E6%8D%AE%E4%B8%8A%E6%8A%A5%E5%A4%9A%E7%82%B9%E8%A7%A6%E6%91%B8%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.4.2.2.</span> <span class="toc-text"> 2. 电容屏数据上报（多点触摸协议）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%94%B5%E5%AE%B9%E5%B1%8F%E7%9A%84%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE"><span class="toc-number">1.4.2.3.</span> <span class="toc-text"> 3. 电容屏的实验数据</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#75-tslib"><span class="toc-number">1.5.</span> <span class="toc-text"> 7.5 tslib</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#751-tslib-%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90"><span class="toc-number">1.5.1.</span> <span class="toc-text"> 7.5.1 tslib 框架分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#752-%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91-%E6%B5%8B%E8%AF%95tslib"><span class="toc-number">1.5.2.</span> <span class="toc-text"> 7.5.2 交叉编译、测试tslib</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91tslib"><span class="toc-number">1.5.2.1.</span> <span class="toc-text"> 1. 交叉编译tslib</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B5%8B%E8%AF%95tslib"><span class="toc-number">1.5.2.2.</span> <span class="toc-text"> 2. 测试tslib</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#753-%E8%87%AA%E5%B7%B1%E5%86%99%E4%B8%80%E4%B8%AA%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.5.3.</span> <span class="toc-text"> 7.5.3 自己写一个测试程序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%8E%A5%E5%8F%A3%E5%87%BD%E6%95%B0%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90"><span class="toc-number">1.5.3.1.</span> <span class="toc-text"> 1. 接口函数深入分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81%E8%AE%A1%E7%AE%97%E4%B8%A4%E4%B8%AA%E8%A7%A6%E7%82%B9%E7%9A%84%E8%B7%9D%E7%A6%BB"><span class="toc-number">1.5.3.2.</span> <span class="toc-text"> 2. 编写代码：计算两个触点的距离</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&text=INPUT输入系统韦东山参考文献"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=INPUT输入系统韦东山参考文献"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&is_video=false&description=INPUT输入系统韦东山参考文献"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=INPUT输入系统韦东山参考文献&body=Check out this article: https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=INPUT输入系统韦东山参考文献"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=INPUT输入系统韦东山参考文献"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=INPUT输入系统韦东山参考文献"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=INPUT输入系统韦东山参考文献"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&name=INPUT输入系统韦东山参考文献&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/07/14/work/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&t=INPUT输入系统韦东山参考文献"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
