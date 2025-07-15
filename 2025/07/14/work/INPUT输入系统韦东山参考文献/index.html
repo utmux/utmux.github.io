@@ -35,13 +35,13 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/ee5562ccc5cd14d9aad874653630ba4b.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/2b640d691723980bcb4cf6ca47c09390.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/c11db04edda8974b55250223a3174fdd.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/eb9ff8d9e590de943659f2f410e93d44.emf">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/8ec418eabf9d559c59cfd0aeb1e36f3b.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/f760bb3f1d5effaa4a1b2c632a104f4e.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/7e8a1fdc4c9d8e4e88b7a4894750fb75.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/5b7da654488edf23d22bfc215265f1eb.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/629fa144596317ff07b09e42d7623b2e.png">
 <meta property="article:published_time" content="2025-07-14T12:06:15.000Z">
-<meta property="article:modified_time" content="2025-07-14T14:17:45.052Z">
+<meta property="article:modified_time" content="2025-07-15T03:10:52.272Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/5d42fd45c82761c364353a135dd5aaff.png">
@@ -695,7 +695,7 @@
 <p>核心功能位于 <code>plugins</code> 目录中的“插件”或“模块”。<code>plugins</code> 目录下的每个 <code>.so</code> 文件都是一个动态加载模块，每个模块通常都会提供 <code>read</code> 和 <code>read_mt</code> 两个函数指针：前者用于读取单点触摸屏数据，后者用于读取多点触摸屏数据。</p>
 <p>为了分析 <code>tslib</code> 的框架，我们可以参考其自带的示例程序 <code>ts_test.c</code>（用于普通触摸屏，如电阻屏或单点电容屏）和 <code>ts_test_mt.c</code>（用于多点触摸屏）。</p>
 <p>下图清晰地展示了 <code>tslib</code> 的框架和数据流：</p>
-<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/eb9ff8d9e590de943659f2f410e93d44.emf" alt="tslib 框架和数据流" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/8ec418eabf9d559c59cfd0aeb1e36f3b.png" alt="tslib 框架和数据流" /></p>
 <ol>
 <li>
 <p><strong><code>ts_open(device_node, nonblock)</code></strong>：<br />
