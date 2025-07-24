@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="天气：下雨 心情：一般   嵌入式学习（二）  1. QEMU 设备初始化流程详解   1. QEMU 设备初始化流程详解 在 QEMU 中创建设备实例时，类初始化和实例初始化的调用顺序如下（参考了 100ask 的 QEMU 的 LCD 设备注册流程代码）：  2. 设备创建流程 123456789101112131415161718192021222324sequenceDiagram">
+    <meta name="description" content="天气：下雨 心情：一般   嵌入式学习（二）  1. QEMU 设备初始化流程详解   1. QEMU 设备初始化流程详解 在 QEMU 中创建设备实例时，类初始化和实例初始化的调用顺序如下（参考了 100ask 的 QEMU 的 LCD 设备注册流程代码）：  2. 设备创建流程 sequenceDiagram     participant Main as 主程序     participan">
 <meta property="og:type" content="article">
 <meta property="og:title" content="嵌入式学习（二）">
 <meta property="og:url" content="https://utmux.github.io/2025/07/04/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
 <meta property="og:site_name" content="混吃等死">
-<meta property="og:description" content="天气：下雨 心情：一般   嵌入式学习（二）  1. QEMU 设备初始化流程详解   1. QEMU 设备初始化流程详解 在 QEMU 中创建设备实例时，类初始化和实例初始化的调用顺序如下（参考了 100ask 的 QEMU 的 LCD 设备注册流程代码）：  2. 设备创建流程 123456789101112131415161718192021222324sequenceDiagram">
+<meta property="og:description" content="天气：下雨 心情：一般   嵌入式学习（二）  1. QEMU 设备初始化流程详解   1. QEMU 设备初始化流程详解 在 QEMU 中创建设备实例时，类初始化和实例初始化的调用顺序如下（参考了 100ask 的 QEMU 的 LCD 设备注册流程代码）：  2. 设备创建流程 sequenceDiagram     participant Main as 主程序     participan">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/6f8869b87bc431bd11100f6218100994.png">
 <meta property="article:published_time" content="2025-07-04T05:23:49.000Z">
@@ -73,7 +73,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
 <!-- hexo injector head_end end --></head>
 
-<body class="max-width mx-auto px3 ltr">    
+<body class="max-width mx-auto px3 ltr">
+    
       <div id="header-post">
   <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
@@ -184,7 +185,30 @@
 <h3 id="1-qemu-设备初始化流程详解-2"><a class="markdownIt-Anchor" href="#1-qemu-设备初始化流程详解-2"></a> 1. QEMU 设备初始化流程详解</h3>
 <p>在 QEMU 中创建设备实例时，类初始化和实例初始化的调用顺序如下（参考了 100ask 的 QEMU 的 LCD 设备注册流程代码）：</p>
 <h3 id="2-设备创建流程"><a class="markdownIt-Anchor" href="#2-设备创建流程"></a> 2. 设备创建流程</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant Main as 主程序</span><br><span class="line">    participant TypeSys as 类型系统</span><br><span class="line">    participant Class as 设备类</span><br><span class="line">    participant Instance as 设备实例</span><br><span class="line">    </span><br><span class="line">    Main-&gt;&gt;TypeSys: type_register_static(&amp;ask100fb_info)</span><br><span class="line">    activate TypeSys</span><br><span class="line">    TypeSys-&gt;&gt;Class: ask100fb_class_init() 执行一次</span><br><span class="line">    deactivate TypeSys</span><br><span class="line">    </span><br><span class="line">    Main-&gt;&gt;TypeSys: qdev_create(NULL, TYPE_100ASKFB)</span><br><span class="line">    activate TypeSys</span><br><span class="line">    TypeSys-&gt;&gt;Instance: object_new(TYPE_100ASKFB)</span><br><span class="line">    activate Instance</span><br><span class="line">    Instance-&gt;&gt;Instance: 分配内存(sizeof(ASK100FbState))</span><br><span class="line">    Instance-&gt;&gt;Instance: ask100fb_init() 实例初始化</span><br><span class="line">    deactivate Instance</span><br><span class="line">    TypeSys-&gt;&gt;Instance: qdev_init_nofail(dev)</span><br><span class="line">    activate Instance</span><br><span class="line">    Instance-&gt;&gt;Instance: device_realize()</span><br><span class="line">    Instance-&gt;&gt;Instance: ask100fb_realize() 设备实现</span><br><span class="line">    deactivate Instance</span><br><span class="line">    deactivate TypeSys</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">sequenceDiagram
+    participant Main as 主程序
+    participant TypeSys as 类型系统
+    participant Class as 设备类
+    participant Instance as 设备实例
+    
+    Main->>TypeSys: type_register_static(&ask100fb_info)
+    activate TypeSys
+    TypeSys->>Class: ask100fb_class_init() 执行一次
+    deactivate TypeSys
+    
+    Main->>TypeSys: qdev_create(NULL, TYPE_100ASKFB)
+    activate TypeSys
+    TypeSys->>Instance: object_new(TYPE_100ASKFB)
+    activate Instance
+    Instance->>Instance: 分配内存(sizeof(ASK100FbState))
+    Instance->>Instance: ask100fb_init() 实例初始化
+    deactivate Instance
+    TypeSys->>Instance: qdev_init_nofail(dev)
+    activate Instance
+    Instance->>Instance: device_realize()
+    Instance->>Instance: ask100fb_realize() 设备实现
+    deactivate Instance
+    deactivate TypeSys</pre>
 <h3 id="3-具体执行顺序"><a class="markdownIt-Anchor" href="#3-具体执行顺序"></a> 3. 具体执行顺序</h3>
 <ol>
 <li>
@@ -780,6 +804,17 @@ b. <strong>设备实现</strong> <code>ask100fb_realize()</code></li>
 
 
 
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
 <!-- clipboard -->
 
   
@@ -818,20 +853,5 @@ b. <strong>设备实现</strong> <code>ask100fb_realize()</code></li>
 
 <!-- utterances Comments -->
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

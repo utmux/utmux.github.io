@@ -71,7 +71,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
 <!-- hexo injector head_end end --></head>
 
-<body class="max-width mx-auto px3 ltr">    
+<body class="max-width mx-auto px3 ltr">
+    
       <div id="header-post">
   <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
@@ -424,7 +425,12 @@
 <hr />
 <h3 id="2-核心组件与架构"><a class="markdownIt-Anchor" href="#2-核心组件与架构"></a> <strong>2. 核心组件与架构</strong></h3>
 <h4 id="1-input-子系统分层架构"><a class="markdownIt-Anchor" href="#1-input-子系统分层架构"></a> <strong>(1) Input 子系统分层架构</strong></h4>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    Hardware-&gt;&gt;Driver: 触发中断 (IRQ)</span><br><span class="line">    Driver-&gt;&gt;Input Core: input_event(EV_KEY, KEY_A, 1)</span><br><span class="line">    Input Core-&gt;&gt;Handler: 分发事件 (evdev/mousedev)</span><br><span class="line">    Handler-&gt;&gt;Userspace: 写入 /dev/input/eventX</span><br><span class="line">    Userspace-&gt;&gt;Application: read() 读取事件</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">sequenceDiagram
+    Hardware->>Driver: 触发中断 (IRQ)
+    Driver->>Input Core: input_event(EV_KEY, KEY_A, 1)
+    Input Core->>Handler: 分发事件 (evdev/mousedev)
+    Handler->>Userspace: 写入 /dev/input/eventX
+    Userspace->>Application: read() 读取事件</pre>
 <p><strong>说明：</strong></p>
 <ul>
 <li><strong>Input Drivers</strong>：最底层，直接与硬件寄存器交互，负责从硬件读取原始数据，并将其转换为标准化的 Input 事件（<code>struct input_event</code>）。驱动程序将自己注册到 <code>Input Core</code>。</li>
@@ -467,7 +473,17 @@
 <hr />
 <h3 id="3-数据流与函数调用流程"><a class="markdownIt-Anchor" href="#3-数据流与函数调用流程"></a> <strong>3. 数据流与函数调用流程</strong></h3>
 <h4 id="1-完整数据流"><a class="markdownIt-Anchor" href="#1-完整数据流"></a> <strong>(1) 完整数据流</strong></h4>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    Hardware--&gt;&gt;Input Driver: 触发中断 (IRQ) / 轮询数据就绪</span><br><span class="line">    Input Driver(ISR)--&gt;&gt;Input Driver(Top Half): 读取硬件数据, 准备报告内容</span><br><span class="line">    Input Driver(Top Half)--&gt;&gt;Input Core: input_report_key(dev, KEY_A, 1)</span><br><span class="line">    Input Driver(Top Half)--&gt;&gt;Input Core: input_report_abs(dev, ABS_X, 320)</span><br><span class="line">    Input Driver(Top Half)--&gt;&gt;Input Core: input_sync(dev) (发送EV_SYN, SYN_REPORT)</span><br><span class="line">    Input Core--&gt;&gt;Input Handler(evdev): 将 struct input_event 分发给已绑定的 Handler</span><br><span class="line">    Input Handler(evdev)--&gt;&gt;/dev/input/eventX: 将 struct input_event 写入字符设备文件</span><br><span class="line">    Userspace Application--&gt;&gt;/dev/input/eventX: read() 系统调用读取事件数据</span><br><span class="line">    /dev/input/eventX--&gt;&gt;Userspace Application: 返回 struct input_event 数据</span><br><span class="line">    Userspace Application--&gt;&gt;Application Logic: 处理事件</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">sequenceDiagram
+    Hardware-->>Input Driver: 触发中断 (IRQ) / 轮询数据就绪
+    Input Driver(ISR)-->>Input Driver(Top Half): 读取硬件数据, 准备报告内容
+    Input Driver(Top Half)-->>Input Core: input_report_key(dev, KEY_A, 1)
+    Input Driver(Top Half)-->>Input Core: input_report_abs(dev, ABS_X, 320)
+    Input Driver(Top Half)-->>Input Core: input_sync(dev) (发送EV_SYN, SYN_REPORT)
+    Input Core-->>Input Handler(evdev): 将 struct input_event 分发给已绑定的 Handler
+    Input Handler(evdev)-->>/dev/input/eventX: 将 struct input_event 写入字符设备文件
+    Userspace Application-->>/dev/input/eventX: read() 系统调用读取事件数据
+    /dev/input/eventX-->>Userspace Application: 返回 struct input_event 数据
+    Userspace Application-->>Application Logic: 处理事件</pre>
 <h4 id="2-关键函数调用链"><a class="markdownIt-Anchor" href="#2-关键函数调用链"></a> <strong>(2) 关键函数调用链</strong></h4>
 <ol>
 <li>
@@ -1174,6 +1190,17 @@
 
 
 
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
 <!-- clipboard -->
 
   
@@ -1212,20 +1239,5 @@
 
 <!-- utterances Comments -->
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
