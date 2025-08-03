@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天 心情：好  好的，非常抱歉！我马上将修订后的 Mermaid 图和中断上下半部的详细概念、三种主要机制及其区别，重新添加到前面详细的 Linux 中断机制解析中。通过图与文字的结合，希望能更清晰地展示整个流程。   Linux 中断机制：从硬件到软件的深度解析 (结合 ARM GIC) Linux 内核的中断处理机制是其高效响应硬件事件的基础。它设计精巧，将硬件细节抽象化，为设备驱动提">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式学习（十一）">
+<meta property="og:url" content="https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天 心情：好  好的，非常抱歉！我马上将修订后的 Mermaid 图和中断上下半部的详细概念、三种主要机制及其区别，重新添加到前面详细的 Linux 中断机制解析中。通过图与文字的结合，希望能更清晰地展示整个流程。   Linux 中断机制：从硬件到软件的深度解析 (结合 ARM GIC) Linux 内核的中断处理机制是其高效响应硬件事件的基础。它设计精巧，将硬件细节抽象化，为设备驱动提">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-08-03T06:00:33.000Z">
+<meta property="article:modified_time" content="2025-08-03T14:47:05.497Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>嵌入式学习（十一）</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%EF%BC%89/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&text=嵌入式学习（十一）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&title=嵌入式学习（十一）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&is_video=false&description=嵌入式学习（十一）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=嵌入式学习（十一）&body=Check out this article: https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&title=嵌入式学习（十一）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&title=嵌入式学习（十一）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&title=嵌入式学习（十一）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&title=嵌入式学习（十一）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&name=嵌入式学习（十一）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&t=嵌入式学习（十一）"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#linux-%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E4%BB%8E%E7%A1%AC%E4%BB%B6%E5%88%B0%E8%BD%AF%E4%BB%B6%E7%9A%84%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E7%BB%93%E5%90%88-arm-gic"><span class="toc-number">1.</span> <span class="toc-text"> Linux 中断机制：从硬件到软件的深度解析 (结合 ARM GIC)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E4%B8%AD%E6%96%AD%E7%9A%84%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80arm-gic-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text"> 一、中断的硬件基础：ARM GIC 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-linux-%E4%B8%AD%E6%96%AD%E6%A0%B8%E5%BF%83%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.2.</span> <span class="toc-text"> 二、Linux 中断核心数据结构详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-linux-%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B-%E7%BB%93%E5%90%88-mermaid-%E5%9B%BE%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.</span> <span class="toc-text"> 三、Linux 中断处理流程 (结合 Mermaid 图和数据结构)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%A1%AC%E4%BB%B6%E4%BA%8B%E4%BB%B6%E4%B8%8E-gic-%E4%B8%AD%E6%96%AD%E7%94%9F%E6%88%90-mermaid-%E7%A1%AC%E4%BB%B6%E4%BA%8B%E4%BB%B6-%E5%AD%90%E5%9B%BE"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 1. 硬件事件与 GIC 中断生成 (Mermaid: &quot;硬件事件&quot; 子图)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-gic-%E4%B8%8E-cpu-interrupt-%E5%A4%84%E7%90%86-mermaid-gic-cpu-%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86-level-1"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 2. GIC 与 CPU Interrupt 处理 (Mermaid: &quot;GIC &amp; CPU 中断处理&quot; Level 1)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-gpio-%E9%A9%B1%E5%8A%A8%E4%B8%8E%E4%B8%8B%E5%8D%8A%E9%83%A8%E8%B0%83%E5%BA%A6-mermaid-gpio-%E9%A9%B1%E5%8A%A8%E5%A4%84%E7%90%86-level-2"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 3. GPIO 驱动与下半部调度 (Mermaid: &quot;GPIO 驱动处理&quot; Level 2)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B-%E4%B8%AD%E6%96%AD%E7%9A%84%E4%B8%8A%E5%8D%8A%E9%83%A8%E4%B8%8E%E4%B8%8B%E5%8D%8A%E9%83%A8%E6%A6%82%E5%BF%B5"><span class="toc-number">1.4.</span> <span class="toc-text"> 四、中断的上半部与下半部概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%B8%AD%E6%96%AD%E4%B8%8A%E5%8D%8A%E9%83%A8-top-half"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 1. 中断上半部 (Top Half)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%B8%AD%E6%96%AD%E4%B8%8B%E5%8D%8A%E9%83%A8-bottom-half"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 2. 中断下半部 (Bottom Half)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94-%E4%B8%AD%E6%96%AD%E4%B8%8B%E5%8D%8A%E9%83%A8%E7%9A%84%E4%B8%89%E7%A7%8D%E4%B8%BB%E8%A6%81%E6%9C%BA%E5%88%B6%E5%8F%8A%E5%8C%BA%E5%88%AB"><span class="toc-number">1.5.</span> <span class="toc-text"> 五、中断下半部的三种主要机制及区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-tasklets-%E5%B0%8F%E4%BB%BB%E5%8A%A1"><span class="toc-number">1.5.1.</span> <span class="toc-text"> 1. Tasklets (小任务)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-workqueues-%E5%B7%A5%E4%BD%9C%E9%98%9F%E5%88%97"><span class="toc-number">1.5.2.</span> <span class="toc-text"> 2. Workqueues (工作队列)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-threaded-irqs-%E7%BA%BF%E7%A8%8B%E5%8C%96%E4%B8%AD%E6%96%AD"><span class="toc-number">1.5.3.</span> <span class="toc-text"> 3. Threaded IRQs (线程化中断)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E6%9C%BA%E5%88%B6%E6%AF%94%E8%BE%83%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.4.</span> <span class="toc-text"> 三种机制比较总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E5%AE%8C%E6%88%90-mermaid-%E5%89%A9%E4%BD%99%E9%83%A8%E5%88%86"><span class="toc-number">1.5.5.</span> <span class="toc-text"> 4. 中断处理完成 (Mermaid: 剩余部分)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text"> 总结</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        嵌入式学习（十一）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-08-03T06:00:33.000Z" class="dt-published" itemprop="datePublished">2025-08-03</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">life</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天 心情：好</p>
+<hr />
+<p>好的，非常抱歉！我马上将修订后的 Mermaid 图和中断上下半部的详细概念、三种主要机制及其区别，重新添加到前面详细的 Linux 中断机制解析中。通过图与文字的结合，希望能更清晰地展示整个流程。</p>
+<hr />
+<h2 id="linux-中断机制从硬件到软件的深度解析-结合-arm-gic"><a class="markdownIt-Anchor" href="#linux-中断机制从硬件到软件的深度解析-结合-arm-gic"></a> Linux 中断机制：从硬件到软件的深度解析 (结合 ARM GIC)</h2>
+<p>Linux 内核的中断处理机制是其高效响应硬件事件的基础。它设计精巧，将硬件细节抽象化，为设备驱动提供统一的接口。以下将结合一张详细的流程图和 ARM GIC (Generic Interrupt Controller) 的知识点，详细阐述整个流程及其中的核心数据结构。</p>
+<p><strong>Linux 中断处理核心流程图：</strong></p>
+<pre class="mermaid">graph TD
+subgraph "硬件事件"
+A["按键按下"] --> B["GPIO引脚状态变化"]
+B --> C["GPIO控制器检测到中断事件"]
+C --> D{"GPIO控制器生成 GPIO HWIRQs"}
+end
+
+subgraph "GIC & CPU中断处理 (Level 1)"
+D --> E["GPIO HWIRQ信号送至GIC (GIC_HWIRQ)"]
+E --> F["CPU响应GIC中断"]
+F --> G["GIC_irq_domain映射GIC_HWIRQ到IRQ_GLOBAL_GIC"]
+G --> H["找到irq_desc[IRQ_GLOBAL_GIC]"]
+H --> I["调用irq_ack() (GIC中断确认)"]
+I --> J["执行handle_gic_irq (读取IAR寄存器)"]
+J --> K{"GIC识别GPIO控制器中断"}
+end
+
+subgraph "GPIO驱动处理 (Level 2)"
+K --> L["GPIO_irq_domain映射HWIRQ到IRQ_GLOBAL_GPIO"]
+L --> M["找到irq_desc[IRQ_GLOBAL_GPIO]"]
+M --> N["调用irq_ack() (GPIO中断确认)"]
+N --> O["执行中断处理函数(Level/Edge)"]
+O --> P["遍历irqaction链表"]
+P --> Q{"调用irqaction->handler()"}
+Q --> R["中断上半部执行:清除中断位/读取数据/快速操作"]
+R --> S{"需要调度下半部?"}
+end
+
+subgraph "下半部调度与执行"
+S -- "Tasklet" --> T["调用tasklet_schedule()"]
+T --> T_async["异步: 软中断执行tasklet下半部"]
+T_async --> Z["下半部完成"]
+
+S -- "工作队列" --> U["调用schedule_work()"]
+U --> U_async["异步: 内核线程执行工作队列"]
+U_async --> Z
+
+S -- "线程化中断" --> V["专用内核线程执行下半部"]
+V --> V_async["异步: 进程上下文执行thread_fn"]
+V_async --> Z
+
+S -- "否" --> W["上半部立即返回"]
+
+R --> X["CPU恢复现场/重开中断"]
+X --> Y["CPU返回任务"]
+Z --- Z_final["中断流程完成"]
+end</pre>
+<hr />
+<h3 id="一-中断的硬件基础arm-gic-简介"><a class="markdownIt-Anchor" href="#一-中断的硬件基础arm-gic-简介"></a> 一、中断的硬件基础：ARM GIC 简介</h3>
+<p>在 ARM 架构中，Generic Interrupt Controller (GIC) 是一个标准化的中断控制器，负责管理来自各种外设的中断请求，并将其高效地路由到 CPU 核。</p>
+<p><strong>GIC 的两个主要组件：</strong></p>
+<ol>
+<li>
+<p><strong>GIC Distributor (GICD):</strong></p>
+<ul>
+<li>负责收集、启用/禁用、设置优先级、配置中断类型（电平触发/边沿触发）、以及将中断路由到目标 CPU 核。</li>
+<li>它包含中断控制寄存器，如：
+<ul>
+<li><strong>ICENABLER/ICDDCR:</strong> 中断使能/禁用。</li>
+<li><strong>ICSPENDR:</strong> 中断挂起状态。</li>
+<li><strong>ICLARGER:</strong> 中断优先级。</li>
+<li><strong>ICTARGETSR:</strong> 中断目标 CPU 核选择。</li>
+<li><strong>ICTRCONFIGR:</strong> 中断类型配置。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>GIC CPU Interface (GICC):</strong></p>
+<ul>
+<li>每个 CPU 核都有一个。它负责接收来自 Distributor 的中断，并将其送达 CPU。</li>
+<li>它包含 CPU 特定的寄存器，主要用于 CPU 与 GIC 之间的交互：
+<ul>
+<li><strong>ICC_IAR (Interrupt Acknowledge Register):</strong> CPU 读取此寄存器，以获取当前处理的中断 ID。这会告知 GIC 该中断已被 CPU“认知”，GIC 会将其状态从“挂起”变为“处理中”。</li>
+<li><strong>ICC_EOIR (End Of Interrupt Register):</strong> CPU 写入此寄存器，以告知 GIC 当前中断处理已完成。GIC 可以清除中断状态，允许该中断源再次触发中断。</li>
+<li><strong>ICC_PMR/ICC_BPR:</strong> 优先级设置。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>GIC 支持的中断类型：</strong></p>
+<ul>
+<li><strong>SGI (Software Generated Interrupts):</strong> 软件生成中断，用于 CPU 核间通信。</li>
+<li><strong>PPI (Private Peripheral Interrupts):</strong> 私有外设中断，每个 CPU 核独有的中断源（如定时器中断）。</li>
+<li><strong>SPI (Shared Peripheral Interrupts):</strong> 共享外设中断，可路由到任何 CPU 核的通用外设中断。</li>
+</ul>
+<h3 id="二-linux-中断核心数据结构详解"><a class="markdownIt-Anchor" href="#二-linux-中断核心数据结构详解"></a> 二、Linux 中断核心数据结构详解</h3>
+<p>Linux 内核通过一系列精心设计的数据结构来管理中断，实现硬件无关性，并提供灵活的中断处理机制。</p>
+<ol>
+<li>
+<p><strong><code>struct irq_desc</code> (中断描述符):</strong></p>
+<ul>
+<li><strong>核心作用:</strong> 它是 Linux 内核管理每个中断请求线（IRQ）的“总管”。每个 Linux IRQ 号（0, 1, 2...）都对应一个 <code>irq_desc</code> 实例。这个数组通常是 <code>irq_desc[NR_IRQS]</code>。</li>
+<li><strong>关键成员:</strong>
+<ul>
+<li><code>irq_data</code>: <code>struct irq_data</code> 类型的成员，包含特定于中断控制器和中断域的数据。</li>
+<li><code>handler</code>: <code>irq_flow_handler_t</code> 函数指针，指向处理该 IRQ 流的函数（如 <code>handle_edge_irq</code>, <code>handle_level_irq</code>, <code>handle_fasteoi_irq</code> 等）。这些函数定义了中断从硬件到高层处理的通用流程。</li>
+<li><code>action</code>: <code>struct irqaction</code> 链表头，连接所有注册到该 IRQ 号的设备驱动中断处理函数（上半部）。</li>
+<li><code>lock</code>: 自旋锁，保护 <code>irq_desc</code> 结构体的并发访问。</li>
+<li><code>status</code>: 中断状态标志，如 <code>IRQ_PENDING</code>, <code>IRQ_DISABLED</code>, <code>IRQ_NOREQUEST</code>, <code>IRQ_NESTED_THREAD</code> 等。</li>
+<li><code>name</code>: 中断线的名称，用于 <code>/proc/interrupts</code> 显示。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>struct irq_data</code> (中断数据):</strong></p>
+<ul>
+<li><strong>核心作用:</strong> 将特定 IRQ 线上与中断控制器相关的状态和操作封装起来。它是 <code>irq_desc</code> 的一部分。</li>
+<li><strong>关键成员:</strong>
+<ul>
+<li><code>irq</code>: 对应的 Linux IRQ 号。</li>
+<li><code>hwirq</code>: 对应的硬件中断号（如 GIC 的 SPI ID，或者 GPIO 控制器内部的引脚号）。这是 <code>irq_domain</code> 映射的源。</li>
+<li><code>chip</code>: <code>struct irq_chip</code> 指针，指向与该中断线关联的硬件中断控制器操作集合。</li>
+<li><code>domain</code>: <code>struct irq_domain</code> 指针，指向该中断所属的中断域。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>struct irq_chip</code> (中断芯片操作):</strong></p>
+<ul>
+<li><strong>核心作用:</strong> 抽象了不同硬件中断控制器的具体操作。每种中断控制器（如 GIC、GPIO 控制器、VIC 等）都会实现一个 <code>irq_chip</code> 实例。</li>
+<li><strong>关键成员 (函数指针):</strong>
+<ul>
+<li><code>irq_mask(struct irq_data *data)</code>: 禁用（屏蔽）特定硬件中断。</li>
+<li><code>irq_unmask(struct irq_data *data)</code>: 启用（去屏蔽）特定硬件中断。</li>
+<li><code>irq_ack(struct irq_data *data)</code>: 中断确认，通知中断控制器该中断已被 CPU 接收。对于 GIC，这通常涉及读取 IAR 寄存器。</li>
+<li><code>irq_eoi(struct irq_data *data)</code>: 中断结束，通知中断控制器中断处理完成。对于 GIC，这通常涉及写入 EOIR 寄存器。</li>
+<li><code>irq_set_type(struct irq_data *data, unsigned int flow_type)</code>: 设置中断触发类型（电平/边沿）。</li>
+<li><code>irq_retrigger(struct irq_data *data)</code>: 重新触发中断。</li>
+<li>... 以及其他用于中断管理的功能。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>struct irqaction</code> (中断动作/处理函数):</strong></p>
+<ul>
+<li><strong>核心作用:</strong> 代表一个设备驱动程序注册的中断回调函数（上半部）。因为多个设备可以共享同一个 IRQ 线，所以 <code>irq_desc</code> 的 <code>action</code> 成员是一个链表。</li>
+<li><strong>关键成员:</strong>
+<ul>
+<li><code>handler</code>: <code>irq_handler_t</code> 函数指针，指向设备驱动的中断上半部处理函数。</li>
+<li><code>dev_id</code>: 传递给处理函数的设备 ID，用于区分共享中断线上的不同设备。</li>
+<li><code>flags</code>: 中断处理标志，如 <code>IRQF_SHARED</code> (共享中断), <code>IRQF_ONESHOT</code> (一次性中断), <code>IRQF_THREADED</code> (线程化中断), <code>IRQF_NO_SUSPEND</code> 等。</li>
+<li><code>name</code>: 中断的处理名称，通常是设备名称。</li>
+<li><code>thread</code>: <code>task_struct</code> 指针，如果为线程化中断，指向其对应的内核线程。</li>
+<li><code>thread_fn</code>: <code>irq_handler_t</code> 函数指针，如果为线程化中断，指向其中断下半部处理函数。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>struct irq_domain</code> (中断域):</strong></p>
+<ul>
+<li><strong>核心作用:</strong> 解决硬件中断号（hwirq/控制器内部 ID）与 Linux 内核抽象中断号（linux_irq）之间的映射问题。这对于分层中断控制器（如 GIC 管理 GPIO 控制器，GPIO 控制器再管理 GPIO 引脚）非常关键。</li>
+<li><strong>关键成员:</strong>
+<ul>
+<li><code>type</code>: 映射类型，如 <code>IRQ_DOMAIN_MAP_LINEAR</code> (线性映射) 或 <code>IRQ_DOMAIN_MAP_NOMAP</code> (无需映射，如 GIC 的 SPI)。</li>
+<li><code>ops</code>: <code>struct irq_domain_ops</code> 函数指针集，定义了中断域的映射/解除映射操作。
+<ul>
+<li><code>map(struct irq_domain *d, unsigned int irq, irq_hw_number_t hwirq)</code>: 将 <code>hwirq</code> 映射到 <code>irq</code>。</li>
+<li><code>unmap(struct irq_domain *d, unsigned int irq, irq_hw_number_t hwirq)</code>: 解除映射。</li>
+</ul>
+</li>
+<li><code>parent</code>: 如果是分层中断域，指向上一级中断域（例如，GPIO 控制器的中断域的 <code>parent</code> 可能指向 GIC 的中断域）。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="三-linux-中断处理流程-结合-mermaid-图和数据结构"><a class="markdownIt-Anchor" href="#三-linux-中断处理流程-结合-mermaid-图和数据结构"></a> 三、Linux 中断处理流程 (结合 Mermaid 图和数据结构)</h3>
+<p>现在，我们将 Mermaid 图中的流程细化，并将其与上述数据结构和 GIC 的功能关联起来。</p>
+<h4 id="1-硬件事件与-gic-中断生成-mermaid-硬件事件-子图"><a class="markdownIt-Anchor" href="#1-硬件事件与-gic-中断生成-mermaid-硬件事件-子图"></a> 1. 硬件事件与 GIC 中断生成 (Mermaid: &quot;硬件事件&quot; 子图)</h4>
+<ul>
+<li><strong>A [&quot;按键按下&quot;] --&gt; B [&quot;GPIO 引脚状态变化&quot;]:</strong> 用户行为触发GPIO引脚电平变化。</li>
+<li>
+<ul>
+<li><em>B --&gt; C [&quot;GPIO 控制器检测到中断事件&quot;]:</em>* GPIO控制器硬件检测到引脚状态变化，并生成一个内部的硬件中断请求信号（GPIO内部HWIRQ）。</li>
+</ul>
+</li>
+<li><strong>C --&gt; D{&quot;GPIO 控制器生成 GPIO HWIRQs&quot;}:</strong> GPIO 控制器通过其中断输出线将这个 GPIO 内部 HWIRQ 信号发送给上级中断控制器——ARM GIC。</li>
+</ul>
+<h4 id="2-gic-与-cpu-interrupt-处理-mermaid-gic-cpu-中断处理-level-1"><a class="markdownIt-Anchor" href="#2-gic-与-cpu-interrupt-处理-mermaid-gic-cpu-中断处理-level-1"></a> 2. GIC 与 CPU Interrupt 处理 (Mermaid: &quot;GIC &amp; CPU 中断处理&quot; Level 1)</h4>
+<ul>
+<li><strong>D --&gt; E [&quot;GPIO HWIRQ 信号送至 GIC (GIC_HWIRQ)&quot;]:</strong> GIC Distributor接收来自GPIO控制器的中断信号，这个信号对于GIC而言是一个SPI (Shared Peripheral Interrupt)。GIC将其内部挂起。</li>
+<li>
+<ul>
+<li><em>E --&gt; F [&quot;CPU 响应 GIC 中断: 保存寄存器, 进入 IRQ 模式&quot;]:</em>* GIC根据其编程（优先级等），将最高优先级的中断路由到目标CPU。CPU检测到中断信号，CPU硬跳转到中断向量表中的中断处理入口点。这里会保存当前CPU寄存器上下文，切换到IRQ模式。</li>
+</ul>
+</li>
+<li><strong>F --&gt; G [&quot;GIC_irq_domain 映射 GIC_HWIRQ 到 IRQ_GLOBAL_GIC&quot;]:</strong>
+<ul>
+<li>CPU 进入中断处理后，首先会调用一个 GIC 专用的中断入口函数（通常在汇编或特定于架构的代码中）。</li>
+<li>这个函数会读取 GIC CPU Interface 的 <strong>ICC_IAR</strong> 寄存器，获取中断 ID (hwirq)。</li>
+<li>这个 GIC 中断 ID（比如对于 GPIO 控制器中断，它可能是 GIC 的 SPI 中断 ID）会通过 GIC 对应的 <strong><code>irq_domain</code></strong> (<code>gic_irq_domain</code>) 进行映射。<code>gic_irq_domain-&gt;map()</code> 操作会将这个 GIC 的 <code>hwirq</code> 映射为一个 Linux 内核的抽象中断号 <strong><code>IRQ_GLOBAL_GIC</code></strong>。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><em>G --&gt; H [&quot;找到 irq_desc[IRQ_GLOBAL_GIC]&quot;]:</em>* 根据映射到<code>IRQ_GLOBAL_GIC</code>的号，内核从全局的 <code>irq_desc</code> 数组中找到对应的 <strong><code>irq_desc[IRQ_GLOBAL_GIC]</code></strong> 实例。</li>
+</ul>
+</li>
+<li><strong>H --&gt; I [&quot;调用 irq_ack() (GIC 中断确认)&quot;]:</strong>
+<ul>
+<li>找到 <code>irq_desc[IRQ_GLOBAL_GIC]</code> 后，会通过其 <code>irq_data-&gt;chip</code> 指向的 GIC 的 <strong><code>irq_chip</code></strong> 实例，调用其 <strong><code>irq_ack()</code></strong> 函数。</li>
+<li>GIC 的 <code>irq_chip-&gt;irq_ack()</code> 实现会再次读取 <strong>ICC_IAR</strong> 寄存器以确认，并可能执行其他 GIC 特定的确认操作。这表示 GIC 已通知 CPU 该中断，并将其状态标记为“正在处理”。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><em>I --&gt; J [&quot;执行 handle_gic_irq (读取 IAR 寄存器，确定具体中断源 ID)&quot;]:</em>*</li>
+<li>接下来，内核执行 <code>irq_desc[IRQ_GLOBAL_GIC]-&gt;handler</code>（可能是 <code>handle_gic_irq</code>）。</li>
+<li>这个 <code>handle_gic_irq</code> 函数会再次读取 GIC 的 <strong>ICC_IAR</strong> 寄存器，以获取具体的中断源 ID（<code>hwirq</code>，例如是 SPI X）。这是因为 GIC 可能同时有多个中断挂起，<code>handle_gic_irq</code> 需要知道当前处理的是哪一个。</li>
+</ul>
+</li>
+<li><strong>J --&gt; K{&quot;GIC 识别 GPIO 控制器中断&quot;}:</strong> <code>handle_gic_irq</code> 根据读取到的中断 ID，识别出这是来自 GPIO 控制器本身的中断。</li>
+</ul>
+<h4 id="3-gpio-驱动与下半部调度-mermaid-gpio-驱动处理-level-2"><a class="markdownIt-Anchor" href="#3-gpio-驱动与下半部调度-mermaid-gpio-驱动处理-level-2"></a> 3. GPIO 驱动与下半部调度 (Mermaid: &quot;GPIO 驱动处理&quot; Level 2)</h4>
+<ul>
+<li><strong>K --&gt; L [&quot;GPIO_irq_domain 映射 GPIO HWIRQ 到 IRQ_GLOBAL_GPIO&quot;]:</strong>
+<ul>
+<li>由于 GPIO 控制器在 GIC 之下，它有自己的中断域。<code>handle_gic_irq</code> 会查找哪个 <strong><code>irq_domain</code></strong> （这里是 GPIO 控制器的 <code>irq_domain</code>）负责处理这个 GIC 报告的 <code>hwirq</code>。</li>
+<li>GPIO 控制器的 <code>irq_domain</code> 会进行第二次映射，将 GPIO 控制器内部的 <code>hwirq</code> (例如 GPIO 引脚号) 映射为另一个 Linux IRQ 号：<strong><code>IRQ_GLOBAL_GPIO</code></strong>。这是 <code>irq_domain-&gt;map()</code> 的另一个应用。</li>
+<li>此处的 <code>GPIO_irq_domain</code> 的 <code>parent</code> 成员将指向 <code>gic_irq_domain</code>。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><em>L --&gt; M [&quot;找到 irq_desc[IRQ_GLOBAL_GPIO]&quot;]:</em>* 根据 <code>IRQ_GLOBAL_GPIO</code>，内核找到对应的 <strong><code>irq_desc[IRQ_GLOBAL_GPIO]</code></strong> 实例。</li>
+</ul>
+</li>
+<li><strong>M --&gt; N [&quot;调用 irq_ack() (GPIO 中断确认)&quot;]:</strong>
+<ul>
+<li>通过 <code>irq_desc[IRQ_GLOBAL_GPIO]-&gt;irq_data-&gt;chip</code> 指向的 GPIO 控制器的 <strong><code>irq_chip</code></strong> 实例，调用其 <strong><code>irq_ack()</code></strong> 函数。</li>
+<li>此函数会执行 GPIO 控制器特定的清除中断状态寄存器操作，以解除 GPIO 控制器内部的中断信号。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><em>N --&gt; O [&quot;执行中断处理函数(Level/Edge)&quot;]:</em>*</li>
+<li>内核现在执行 <code>irq_desc[IRQ_GLOBAL_GPIO]-&gt;handler</code>，这通常是 <code>handle_level_irq</code> 或 <code>handle_edge_irq</code>，它们负责处理特定触发类型的中断流。</li>
+</ul>
+</li>
+<li><strong>O --&gt; P [&quot;遍历 irqaction 链表&quot;]:</strong> <code>handle_level_irq</code> 或 <code>handle_edge_irq</code> 函数会遍历 <code>irq_desc[IRQ_GLOBAL_GPIO]-&gt;action</code> 链表。</li>
+<li>
+<ul>
+<li><em>P --&gt; Q{&quot;调用 irqaction-&gt; handler()&quot;}:</em> <em>对于链表中的每一个</em> <em><code>irqaction</code></em>* 实例，其 <code>handler</code> 函数（即设备驱动程序注册的中断上半部）会被调用。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="四-中断的上半部与下半部概念"><a class="markdownIt-Anchor" href="#四-中断的上半部与下半部概念"></a> 四、中断的上半部与下半部概念</h3>
+<p>为了保证内核对中断的快速响应，Linux 将中断处理函数分成了两个部分：<strong>上半部（Top Half）</strong> 和 <strong>下半部（Bottom Half）</strong>。</p>
+<h4 id="1-中断上半部-top-half"><a class="markdownIt-Anchor" href="#1-中断上半部-top-half"></a> 1. 中断上半部 (Top Half)</h4>
+<ul>
+<li>对应 Mermaid 图中的 <strong>Q{&quot;调用 irqaction-&gt; handler()&quot;} --&gt; R [&quot;中断上半部执行: 清除中断位/读取数据/快速操作&quot;]</strong>。</li>
+<li><strong>执行上下文:</strong> 中断上下文 (Interrupt Context)。这意味着它在收到中断后立即执行，是 CPU 响应硬件中断的直接结果。</li>
+<li><strong>特点与限制:</strong>
+<ul>
+<li><strong>快速响应:</strong> 必须尽可能地短小、快速，以减少中断延迟 (Interrupt Latency)。</li>
+<li><strong>原子性:</strong> 中断上半部执行时，通常会局部或全局禁用中断（具体取决于架构和配置），因此不能睡眠 (sleep)、不能阻塞。</li>
+<li><strong>无阻塞操作:</strong> 不能调用可能导致睡眠（如 <code>kmalloc</code> 带 <code>GFP_KERNEL</code> 标志）或长时间阻塞的函数。</li>
+<li><strong>功能受限:</strong> 仅执行最紧急、最基本的工作，例如：
+<ul>
+<li>清除设备上的中断状态位。</li>
+<li>读取必要的数据（如硬件寄存器中的数据）。</li>
+<li>标记需要进一步处理的工作。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>主要目的:</strong> 快速响应硬件中断，并尽快释放 CPU，以便处理其他更高优先级的中断或恢复正常任务。如果存在复杂或耗时的工作，则需要将其放入下半部处理。</li>
+</ul>
+<h4 id="2-中断下半部-bottom-half"><a class="markdownIt-Anchor" href="#2-中断下半部-bottom-half"></a> 2. 中断下半部 (Bottom Half)</h4>
+<ul>
+<li>对应 Mermaid 图中的 <strong>S{&quot;需要调度下半部?&quot;}</strong> 之后的所有路径。</li>
+<li><strong>执行上下文:</strong> 通常是软中断上下文 (Softirq Context) 或进程上下文 (Process Context)。</li>
+<li><strong>特点与优势:</strong>
+<ul>
+<li><strong>延迟执行:</strong> 不会立即执行，而是在安全的时候（通常是中断返回后）被调度执行。</li>
+<li><strong>可以睡眠/阻塞:</strong> 运行在进程上下文的下半部（如工作队列和线程化中断）可以睡眠和阻塞，允许执行复杂的、耗时的操作，如内存分配、文件 I/O 等。</li>
+<li><strong>可抢占:</strong> 除了特定情况下的软中断，下半部通常可以被其他高优先级任务（包括新的中断）抢占。</li>
+</ul>
+</li>
+<li><strong>主要目的:</strong> 将中断上半部中不紧急、但耗时或需要阻塞的操作转移到更宽松的上下文中执行，从而提高系统的实时响应能力和吞吐量。</li>
+</ul>
+<h3 id="五-中断下半部的三种主要机制及区别"><a class="markdownIt-Anchor" href="#五-中断下半部的三种主要机制及区别"></a> 五、中断下半部的三种主要机制及区别</h3>
+<p>Linux 提供了三种主要的机制来实现中断下半部：<strong>Tasklets</strong>、<strong>Workqueues (工作队列)</strong> 和 <strong>Threaded IRQs (线程化中断)</strong>。它们各有特点，适用于不同的场景。</p>
+<h4 id="1-tasklets-小任务"><a class="markdownIt-Anchor" href="#1-tasklets-小任务"></a> 1. Tasklets (小任务)</h4>
+<ul>
+<li><strong>对应 Mermaid 图流程:</strong> <strong>S -- &quot;Tasklet&quot; --&gt; T [&quot;调用 tasklet_schedule()&quot;] --&gt; T_async [&quot;异步: 软中断执行 tasklet 下半部&quot;]</strong></li>
+<li><strong>概念:</strong> 轻量级、快速、非抢占（特定 CPU 内）的下半部机制。</li>
+<li><strong>执行上下文:</strong> <strong>软中断上下文 (Softirq Context)</strong>。</li>
+<li><strong>能否睡眠/阻塞:</strong> <strong>不能</strong>。因为它们在软中断上下文中运行，仍处于非进程上下文，不能发起可能导致睡眠的调用。</li>
+<li><strong>并发性:</strong>
+<ul>
+<li><strong>相同 Tasklet:</strong> 同一 <code>tasklet_struct</code> 实例在任何时刻只会在一个 CPU 上运行。即使中断在多个 CPU 上触发，该 <code>Tasklet</code> 实例也只在一个 CPU 上被调度。</li>
+<li><strong>不同 Tasklet:</strong> 不同的 <code>tasklet_struct</code> 实例可以在多个 CPU 上并发执行。</li>
+</ul>
+</li>
+<li><strong>调度方式:</strong> 中断上半部调用 <code>tasklet_schedule()</code> 将 <code>tasklet_struct</code> 加入待处理队列。系统会在合适的时机（如中断返回、或者 <code>ksoftirqd</code> 内核线程被唤醒）执行。</li>
+<li><strong>优点:</strong> 开销小，速度快，有软中断上下文提供的安全性（不会被高优先级的用户进程抢占）。</li>
+<li><strong>缺点:</strong> 不能睡眠，不能执行长时间和可能阻塞的操作。</li>
+<li><strong>适用场景:</strong> 对时间敏感、且不会阻塞的短小任务，例如网络数据包的初步处理。</li>
+<li><strong>关键数据结构:</strong> <code>struct tasklet_struct</code></li>
+</ul>
+<h4 id="2-workqueues-工作队列"><a class="markdownIt-Anchor" href="#2-workqueues-工作队列"></a> 2. Workqueues (工作队列)</h4>
+<ul>
+<li><strong>对应 Mermaid 图流程:</strong> <strong>S -- &quot;工作队列&quot; --&gt; U [&quot;调用 schedule_work()&quot;] --&gt; U_async [&quot;异步: 内核线程执行工作队列&quot;]</strong></li>
+<li><strong>概念:</strong> 更通用、更灵活的下半部机制，允许执行任意复杂的任务。</li>
+<li><strong>执行上下文:</strong> <strong>内核线程上下文 (Process Context)</strong>。每个工作队列都由一个（或多个）专用的 <code>kworker</code> 内核线程负责执行。</li>
+<li><strong>能否睡眠/阻塞:</strong> <strong>能</strong>。由于运行在进程上下文，可以睡眠、阻塞，可以调用可能睡眠的函数（如 <code>kmalloc</code> 带 <code>GFP_KERNEL</code>）。</li>
+<li><strong>并发性:</strong> 工作队列中的工作项可以在不同 CPU 上并发执行。</li>
+<li><strong>调度方式:</strong> 中断上半部调用 <code>schedule_work()</code> (或 <code>queue_work()</code>) 将 <code>work_struct</code> 加入工作队列。内核线程会在适当时候将其取出并执行。</li>
+<li><strong>优点:</strong> 功能强大，可以执行任何类型的任务，包括 I/O 和大量计算，方便调试（因为是线程）。</li>
+<li><strong>缺点:</strong> 调度开销相对 Tasklet 大，任务调度会有一定的延迟。</li>
+<li><strong>适用场景:</strong> 耗时较长、需要睡眠、可能阻塞、或者需要进行复杂内存分配的任务，例如文件系统操作、设备固件下载、需要访问用户空间的任务。</li>
+<li><strong>关键数据结构:</strong> <code>struct work_struct</code></li>
+</ul>
+<h4 id="3-threaded-irqs-线程化中断"><a class="markdownIt-Anchor" href="#3-threaded-irqs-线程化中断"></a> 3. Threaded IRQs (线程化中断)</h4>
+<ul>
+<li><strong>对应 Mermaid 图流程:</strong> <strong>S -- &quot;线程化中断&quot; --&gt; V [&quot;专用内核线程执行下半部&quot;] --&gt; V_async [&quot;异步: 进程上下文执行 thread_fn&quot;]</strong></li>
+<li><strong>概念:</strong> 将整个中断处理函数（或者主要部分）放入一个专用的内核线程中执行。</li>
+<li><strong>执行上下文:</strong> <strong>内核线程上下文 (Process Context)</strong>。</li>
+<li><strong>能否睡眠/阻塞:</strong> <strong>能</strong>。与工作队列类似，运行在进程上下文，可以睡眠、阻塞。</li>
+<li><strong>并发性:</strong> 中断发生时，如果指定了 <code>IRQF_IRQPOLL</code> 或 <code>IRQF_UNCOND_WAIT</code> 并且线程还未完成，新的中断可能被推迟。</li>
+<li><strong>调度方式:</strong> 在注册中断时，通过 <code>request_irq()</code> 传入 <code>IRQF_THREADED</code> 标志，并提供一个线程化的处理函数 <code>thread_fn</code>。当硬件中断触发时，如果存在上半部，上半部会快速执行并唤醒该线程来执行 <code>thread_fn</code>。如果不存在上半部（即 <code>handler</code> 为空），则直接唤醒线程执行。</li>
+<li><strong>优点:</strong> 将中断处理完全转移到进程上下文，避免了中断上下文的限制；可以方便地获取调度器的服务（如优先级、nice 值）；便于调试。</li>
+<li><strong>缺点:</strong> 相对 Tasklet 和 Workqueue，调度延迟可能更大。</li>
+<li><strong>适用场景:</strong> 中断处理逻辑复杂且耗时，或经常需要睡眠/阻塞的设备驱动程序，例如一些复杂网络设备、USB 设备等。特别是在需要避免中断风暴造成系统卡顿的场景。</li>
+<li><strong>关键数据结构:</strong> <code>irqaction-&gt;thread</code> (指向内核线程), <code>irqaction-&gt;thread_fn</code> (线程的入口函数)。</li>
+</ul>
+<h4 id="三种机制比较总结"><a class="markdownIt-Anchor" href="#三种机制比较总结"></a> 三种机制比较总结</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">特性</th>
+<th style="text-align:left">Tasklets</th>
+<th style="text-align:left">Workqueues</th>
+<th style="text-align:left">Threaded IRQs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>执行上下文</strong></td>
+<td style="text-align:left">软中断上下文 (Softirq)</td>
+<td style="text-align:left">进程上下文 (Process)</td>
+<td style="text-align:left">进程上下文 (Process)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>能否睡眠</strong></td>
+<td style="text-align:left"><strong>否</strong></td>
+<td style="text-align:left"><strong>是</strong></td>
+<td style="text-align:left"><strong>是</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>处理位置</strong></td>
+<td style="text-align:left">立即在中断返回后，但仍属“中断”路径</td>
+<td style="text-align:left">由 <code>kworker</code> 线程执行</td>
+<td style="text-align:left">由专门的内核线程执行</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>调度开销</strong></td>
+<td style="text-align:left">最小</td>
+<td style="text-align:left">中等</td>
+<td style="text-align:left">中等（但有时更快响应）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>抢占性</strong></td>
+<td style="text-align:left">在同一 CPU 上非抢占</td>
+<td style="text-align:left">可抢占</td>
+<td style="text-align:left">可抢占（普通线程）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>并发性 (相同实例)</strong></td>
+<td style="text-align:left">无并发（同一时间只在一 CPU）</td>
+<td style="text-align:left">有并发（不同 <code>kworker</code>）</td>
+<td style="text-align:left">无并发（同一时间只在一 CPU）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>典型用途</strong></td>
+<td style="text-align:left">短小、快速、非阻塞任务</td>
+<td style="text-align:left">耗时、阻塞、文件 I/O 等任务</td>
+<td style="text-align:left">复杂、耗时、需睡眠的驱动中断</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="4-中断处理完成-mermaid-剩余部分"><a class="markdownIt-Anchor" href="#4-中断处理完成-mermaid-剩余部分"></a> 4. 中断处理完成 (Mermaid: 剩余部分)</h4>
+<ul>
+<li><strong>R --&gt; X [&quot;CPU 恢复现场/重开中断&quot;]:</strong>
+<ul>
+<li>无论是哪种下半部调度方式（或没有），一旦上半部退出，并且 GIC 的 <strong>ICC_EOIR</strong> 寄存器被写入（通常由 GIC 的 <code>irq_chip-&gt;irq_eoi()</code> 调用），表示中断处理完成。</li>
+<li>CPU 会恢复中断前的寄存器上下文，并重新开启中断（因为在处理中断时通常会局部或全局禁用中断）。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><em>X --&gt; Y [&quot;CPU 返回任务&quot;]:</em>* CPU返回到被中断前的代码执行点。</li>
+</ul>
+</li>
+<li><strong>Z ---&gt; Z_final [&quot;中断流程完成&quot;]:</strong> 整个中断处理流程结束。</li>
+</ul>
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<p>Linux 的 ARM 架构中断处理是一个精妙的多层机制：</p>
+<ul>
+<li><strong>硬件层(GIC):</strong> 提供中断源到 CPU 的物理桥梁，进行优先级管理和路由。</li>
+<li><strong>低层内核抽象(<code>irq_domain</code>, <code>irq_chip</code>):</strong> 抽象了不同硬件中断控制器的细节，提供了通用的 API。<code>irq_domain</code> 更是解决了多级中断控制器和复杂硬件拓扑的抽象映射问题。</li>
+<li><strong>中层内核管理(<code>irq_desc</code>):</strong> 作为每个 Linux IRQ 的中央枢纽，管理其状态、处理流程和注册的驱动回调。</li>
+<li><strong>高层驱动接口(<code>irqaction</code>, <code>request_irq</code>):</strong> 为设备驱动提供注册中断处理函数的方式，并分离了中断处理的上下半部。</li>
+<li><strong>中断下半部机制(<code>Tasklet</code>, <code>Workqueue</code>, <code>Threaded IRQ</code>):</strong> 解决了中断上半部限制，允许复杂中断处理在进程上下文安全且灵活地执行，是实现高效、响应式系统的关键。</li>
+</ul>
+<p>理解这些数据结构和它们在流程中的作用，以及中断上下半部的分工和不同下半部机制的选择，对于深入分析和调试 Linux 内核中断问题，以及编写高性能的设备驱动程序至关重要。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#linux-%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E4%BB%8E%E7%A1%AC%E4%BB%B6%E5%88%B0%E8%BD%AF%E4%BB%B6%E7%9A%84%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E7%BB%93%E5%90%88-arm-gic"><span class="toc-number">1.</span> <span class="toc-text"> Linux 中断机制：从硬件到软件的深度解析 (结合 ARM GIC)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E4%B8%AD%E6%96%AD%E7%9A%84%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80arm-gic-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text"> 一、中断的硬件基础：ARM GIC 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-linux-%E4%B8%AD%E6%96%AD%E6%A0%B8%E5%BF%83%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.2.</span> <span class="toc-text"> 二、Linux 中断核心数据结构详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-linux-%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B-%E7%BB%93%E5%90%88-mermaid-%E5%9B%BE%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.</span> <span class="toc-text"> 三、Linux 中断处理流程 (结合 Mermaid 图和数据结构)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%A1%AC%E4%BB%B6%E4%BA%8B%E4%BB%B6%E4%B8%8E-gic-%E4%B8%AD%E6%96%AD%E7%94%9F%E6%88%90-mermaid-%E7%A1%AC%E4%BB%B6%E4%BA%8B%E4%BB%B6-%E5%AD%90%E5%9B%BE"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 1. 硬件事件与 GIC 中断生成 (Mermaid: &quot;硬件事件&quot; 子图)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-gic-%E4%B8%8E-cpu-interrupt-%E5%A4%84%E7%90%86-mermaid-gic-cpu-%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86-level-1"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 2. GIC 与 CPU Interrupt 处理 (Mermaid: &quot;GIC &amp; CPU 中断处理&quot; Level 1)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-gpio-%E9%A9%B1%E5%8A%A8%E4%B8%8E%E4%B8%8B%E5%8D%8A%E9%83%A8%E8%B0%83%E5%BA%A6-mermaid-gpio-%E9%A9%B1%E5%8A%A8%E5%A4%84%E7%90%86-level-2"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 3. GPIO 驱动与下半部调度 (Mermaid: &quot;GPIO 驱动处理&quot; Level 2)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B-%E4%B8%AD%E6%96%AD%E7%9A%84%E4%B8%8A%E5%8D%8A%E9%83%A8%E4%B8%8E%E4%B8%8B%E5%8D%8A%E9%83%A8%E6%A6%82%E5%BF%B5"><span class="toc-number">1.4.</span> <span class="toc-text"> 四、中断的上半部与下半部概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%B8%AD%E6%96%AD%E4%B8%8A%E5%8D%8A%E9%83%A8-top-half"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 1. 中断上半部 (Top Half)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%B8%AD%E6%96%AD%E4%B8%8B%E5%8D%8A%E9%83%A8-bottom-half"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 2. 中断下半部 (Bottom Half)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94-%E4%B8%AD%E6%96%AD%E4%B8%8B%E5%8D%8A%E9%83%A8%E7%9A%84%E4%B8%89%E7%A7%8D%E4%B8%BB%E8%A6%81%E6%9C%BA%E5%88%B6%E5%8F%8A%E5%8C%BA%E5%88%AB"><span class="toc-number">1.5.</span> <span class="toc-text"> 五、中断下半部的三种主要机制及区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-tasklets-%E5%B0%8F%E4%BB%BB%E5%8A%A1"><span class="toc-number">1.5.1.</span> <span class="toc-text"> 1. Tasklets (小任务)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-workqueues-%E5%B7%A5%E4%BD%9C%E9%98%9F%E5%88%97"><span class="toc-number">1.5.2.</span> <span class="toc-text"> 2. Workqueues (工作队列)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-threaded-irqs-%E7%BA%BF%E7%A8%8B%E5%8C%96%E4%B8%AD%E6%96%AD"><span class="toc-number">1.5.3.</span> <span class="toc-text"> 3. Threaded IRQs (线程化中断)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E6%9C%BA%E5%88%B6%E6%AF%94%E8%BE%83%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.4.</span> <span class="toc-text"> 三种机制比较总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E5%AE%8C%E6%88%90-mermaid-%E5%89%A9%E4%BD%99%E9%83%A8%E5%88%86"><span class="toc-number">1.5.5.</span> <span class="toc-text"> 4. 中断处理完成 (Mermaid: 剩余部分)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text"> 总结</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&text=嵌入式学习（十一）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&title=嵌入式学习（十一）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&is_video=false&description=嵌入式学习（十一）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=嵌入式学习（十一）&body=Check out this article: https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&title=嵌入式学习（十一）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&title=嵌入式学习（十一）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&title=嵌入式学习（十一）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&title=嵌入式学习（十一）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&name=嵌入式学习（十一）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/08/03/work/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89/&t=嵌入式学习（十一）"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/utmux">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
