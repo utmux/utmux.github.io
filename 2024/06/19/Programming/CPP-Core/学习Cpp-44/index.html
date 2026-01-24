@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天 心情：差   继续谈谈 seekg()和 seekp() 之前我们谈到过 seekg 和 seekp 和 C 语言的 fseek 的区别，我们来继续讨论，以 seekg() 为例子，其函数原型有两个： 12istream &amp; seekg(streamoff, ios_base::seekdir);istream &amp; seekg(streampos); 首先第一个参数 s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Cpp-44">
+<meta property="og:url" content="https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天 心情：差   继续谈谈 seekg()和 seekp() 之前我们谈到过 seekg 和 seekp 和 C 语言的 fseek 的区别，我们来继续讨论，以 seekg() 为例子，其函数原型有两个： 12istream &amp; seekg(streamoff, ios_base::seekdir);istream &amp; seekg(streampos); 首先第一个参数 s">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-19T11:21:26.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:54.708Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习Cpp-44</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/21/Programming/CPP-Core/%E5%85%B3%E4%BA%8E%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0%E5%92%8C%E6%A8%A1%E6%9D%BF%E7%B1%BB%E4%B8%AD%E7%9A%84static%E5%8F%98%E9%87%8F/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&text=学习Cpp-44"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&title=学习Cpp-44"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&is_video=false&description=学习Cpp-44"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-44&body=Check out this article: https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&title=学习Cpp-44"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&title=学习Cpp-44"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&title=学习Cpp-44"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&title=学习Cpp-44"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&name=学习Cpp-44&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&t=学习Cpp-44"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%A7%E7%BB%AD%E8%B0%88%E8%B0%88-seekg%E5%92%8C-seekp"><span class="toc-number">1.</span> <span class="toc-text"> 继续谈谈 seekg()和 seekp()</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E5%81%8F%E7%A7%BB%E9%87%8F%E5%92%8C%E6%95%B0%E7%BB%84%E5%BA%8F%E5%88%97%E7%B1%BB%E4%BC%BC"><span class="toc-number">1.1.</span> <span class="toc-text"> Tips：偏移量和数组序列类似</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E4%BD%BF%E7%94%A8%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text"> Tips：使用临时文件</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E6%A0%B8%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text"> 内核格式化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A2%E8%AE%A8-c%E7%9A%84%E6%96%B0%E6%A0%87%E5%87%86"><span class="toc-number">3.</span> <span class="toc-text"> 探讨 C++的新标准</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89"><span class="toc-number">4.</span> <span class="toc-text"> 移动语义</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89"><span class="toc-number">4.1.</span> <span class="toc-text"> 为什么需要移动语义</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">4.2.</span> <span class="toc-text"> 如何使用移动构造函数</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%B0%E7%9A%84%E7%B1%BB%E5%8A%9F%E8%83%BD"><span class="toc-number">5.</span> <span class="toc-text"> 新的类功能</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%8E%A7%E5%88%B6%E7%BC%96%E8%AF%91%E5%99%A8%E7%94%9F%E6%88%90%E7%9A%84%E9%BB%98%E8%AE%A4%E6%96%B9%E6%B3%95"><span class="toc-number">5.1.</span> <span class="toc-text"> 如何控制编译器生成的默认方法</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">6.</span> <span class="toc-text"> 委托构造函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">7.</span> <span class="toc-text"> 继承构造函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E8%99%9A%E6%96%B9%E6%B3%95final-%E5%92%8C-override-%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">8.</span> <span class="toc-text"> 管理虚方法：final 和 override 关键字的使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lambda-%E5%87%BD%E6%95%B0"><span class="toc-number">9.</span> <span class="toc-text"> lambda 函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8C%85%E8%A3%85%E5%99%A8-wrapper-%E6%88%96%E8%80%85%E5%8F%AB%E5%81%9A%E9%80%82%E9%85%8D%E5%99%A8-adapter"><span class="toc-number">10.</span> <span class="toc-text"> 包装器 wrapper 或者叫做适配器 adapter</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF"><span class="toc-number">11.</span> <span class="toc-text"> 可变参数模板</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-11-%E6%96%B0%E5%A2%9E%E7%9A%84%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD"><span class="toc-number">12.</span> <span class="toc-text"> C+ + 11 新增的其他功能</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B"><span class="toc-number">12.1.</span> <span class="toc-text"> 并行编程</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A2%9E%E5%8A%A0%E7%9A%84%E5%BA%93"><span class="toc-number">12.2.</span> <span class="toc-text"> 增加的库</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BD%8E%E7%BA%A7%E7%BC%96%E7%A8%8B"><span class="toc-number">12.3.</span> <span class="toc-text"> 低级编程</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%9D%82%E9%A1%B9"><span class="toc-number">12.4.</span> <span class="toc-text"> 杂项</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A4%BE%E5%8C%BA%E5%BA%93"><span class="toc-number">13.</span> <span class="toc-text"> 社区库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">14.</span> <span class="toc-text"> 最后</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        学习Cpp-44
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-19T11:21:26.000Z" class="dt-published" itemprop="datePublished">2024-06-19</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Programming/">Programming</a> › <a class="category-link" href="/categories/Programming/CPP-Core/">CPP-Core</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天 心情：差</p>
+<hr />
+<h5 id="继续谈谈-seekg和-seekp"><a class="markdownIt-Anchor" href="#继续谈谈-seekg和-seekp"></a> 继续谈谈 seekg()和 seekp()</h5>
+<p>之前我们谈到过 <code>seekg</code> 和 <code>seekp</code> 和 C 语言的 fseek 的区别，我们来继续讨论，以 <code>seekg()</code> 为例子，其函数原型有两个：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">istream &amp; <span class="title">seekg</span><span class="params">(streamoff, ios_base::seekdir)</span></span>;</span><br><span class="line"><span class="function">istream &amp; <span class="title">seekg</span><span class="params">(streampos)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>首先第一个参数 streamoff，这个是偏移量，以字节为单位，可以是整型或者类。第二个参数 <code>ios_base::seekdir</code> 在 <code>ios_base</code> 有三个可能的值：<code>ios_base::beg</code> 相当于文件头，<code>ios_base::cur</code> 相对于当前位置，以及 <code>ios_base::end</code> 相对于文件尾的偏移。我们再来看一下 streampos，和前面提到过的一样，表示偏移（此时默认为相对文件头的偏移），可以是整数或者类。如果需要返回当前 stream 的文件指针所在的位置，可以通过 <code>tellg()</code>（输入流）或者 <code>tellp()</code>（输出流）来返回文件偏移。</p>
+<h6 id="tips偏移量和数组序列类似"><a class="markdownIt-Anchor" href="#tips偏移量和数组序列类似"></a> Tips：偏移量和数组序列类似</h6>
+<p>默认偏移量为 0 即为文件第一个字节。</p>
+<p>和 <code>cin</code> 一样，我们可以通过判断标志位来判断读取是否出现不匹配错误或者是 eof 或者是硬件错误。对于读取到文件尾部时，会自动通过 <code>setstate</code> 设置 <code>eofbit</code> 状态位，我们可以通过 <code>fin.clear()</code> 来清除标志位，此时清除后我们可以回读（通过修改文件指针）。</p>
+<h6 id="tips使用临时文件"><a class="markdownIt-Anchor" href="#tips使用临时文件"></a> Tips：使用临时文件</h6>
+<p>如果我们需要使用临时文件，此时需要设置一个独一无二的文件名，如何生成该文件名，我们可以通过 <code>tmpnam()</code> 函数来生成一个文件名，该函数在 <code>cstdio</code> 中，也就是说这其实是 C 语言移植到 <code>C++</code> 的函数。下面我们来看一下函数原型和使用方法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">char</span> * <span class="title">tmpnam</span><span class="params">(<span class="type">char</span> *pszName)</span></span>;</span><br><span class="line"><span class="comment">// 函数创建一个临时文件名，将它放在 pszName 指向的 C-风格字符串中</span></span><br></pre></td></tr></table></figure>
+<p>头文件中有两个常量：常量 <code>L_tmpnam</code> 和 <code>TMP_MAX</code>（二者都是在 <code>cstdio</code> 中定义的）限制了文件名包含的字符数以及在确保当前目录中不生成重复文件名的情况下 <code>tmpnam( )</code> 可被调用的最多次数。更具体地说，使用 <code>tmpnam( )</code> 可以生成 <code>TMP_NAM</code> 个不同的文件名，其中每个文件名包含的字符不超 过 <code>L_tmpnam</code> 个。</p>
+<h5 id="内核格式化"><a class="markdownIt-Anchor" href="#内核格式化"></a> 内核格式化</h5>
+<p>C++中为了适配 string 类型（string 的动态分配），事实上存在 <code>sstream</code> 族，它们使用相同的接口提供程序和 string 对象之间的 I/O。头文件 <code>sstream</code> 定义了一个从 ostream 类派生而来的 <code>ostringstream</code> 类（还有一个基于 <code>wostream</code> 的 <code>wostringstream</code> 类，这个类用于宽字符集）。该类的使用和 <code>cout</code> 类似，值得注意的是 <code>ostringstream</code> 类并不会输出，其通过有一个名为 str( )的成员函数，该函数返回一个被初始化为 <strong>缓冲区内容</strong> 的字符串对象，然后再通过 cout 输出：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ostringstream outstr;</span><br><span class="line">outstr &lt;&lt; <span class="string">&quot;Hi&quot;</span>; <span class="comment">// 并不会再屏幕限制，只是写入缓冲区</span></span><br><span class="line"><span class="comment">// outstr会动态调整缓冲区</span></span><br><span class="line">string mesg = outstr.<span class="built_in">str</span>(); <span class="comment">// 相当于把缓冲区复制到mesg中</span></span><br><span class="line">cout &lt;&lt; mesg; <span class="comment">// 最后还是需要cout来输出</span></span><br></pre></td></tr></table></figure>
+<p>如上面所示，<code>ostringstream</code> 是只输出到缓冲区，而不是输出到某个设备或者文件中，最终还需要 <code>cout</code> 来输出到设备或者 <code>ofstream</code> 来输出到文件。而对于 <code>istringstream</code>，我们可以将 string 变量关联，而不能直接关联文件或者设备。如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">istringstream <span class="title">instr</span><span class="params">(facts)</span></span>; <span class="comment">// facts是一个string变量</span></span><br></pre></td></tr></table></figure>
+<h5 id="探讨-c的新标准"><a class="markdownIt-Anchor" href="#探讨-c的新标准"></a> 探讨 C++的新标准</h5>
+<p>这个是这本书的最后一章，也是第六版新增加的主要内容，其 C++的新标准，我们首先来复习下前面提到的关于 C++11 的新特性。</p>
+<ol>
+<li>
+<p>新类型：<br />
+增加了 long long，unsigned long long，char16_t 和 char32_t。还增加了 <code>R(&quot;xx&quot;)</code> 的原始字符。</p>
+</li>
+<li>
+<p>统一初始化<br />
+通过 initializer-list 初始化，统一了所有内置类型和用户自定义类的初始化。使用列表初始化时，可以添加等号（=），也可以不添加。该初始化也可用于 new 关键字来初始化数组。同样对于类，可以通过列表初始化而不是括号来初始化类，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stump s1&#123;<span class="number">1</span>&#125;; <span class="comment">// 初始化类</span></span><br></pre></td></tr></table></figure>
+<p>tips: 列表初始化的各个方面</p>
+<ol>
+<li>
+<p>防止缩窄，即进制将数值赋值给无法存储它的数值变量。但是如果，比如一个 double 是 1000 给 char 类型不允许，而如果这个 double 是 88，则允许。</p>
+</li>
+<li>
+<p>std:: initializer_list，C++定义了该模板类，我们可以将其作为类的构造函数，此时如果使用列表初始化就会调用该构造函数，否则调用括号的默认构造函数。头文件 initializer_list 提供了对模板类 initializer_list 的支持。这个类包含成员函数 begin( )和 end( )，可用于获悉列表的范围。我们可以将 initializer_list 模板具体化作为函数参数如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">double</span> <span class="title">sum</span><span class="params">(std::initializer_list&lt;<span class="type">double</span>&gt; i1)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li>
+<p>声明</p>
+<ol>
+<li>auto<br />
+通过 auto 编译器自动推断变量的类型。</li>
+<li>decltype<br />
+通过 decltype 可以在模板中定义一个和模板类型一致的参数。具体参考的返回可以参考前面的。</li>
+</ol>
+</li>
+<li>
+<p>返回类型后置<br />
+类似于 Python，通过在参数列表后面加上语法来规定返回类型：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">f2</span><span class="params">(<span class="type">double</span>, <span class="type">int</span>)</span> -&gt; <span class="type">double</span></span>; <span class="comment">// 规定返回类型是double</span></span><br></pre></td></tr></table></figure>
+<p>其常常与 decltype 搭配，指定模板函数的返回类型，解决某个类型还不在作用域内的矛盾。</p>
+</li>
+<li>
+<p>模板别名：using =<br />
+和 typedef 功能类似，不同的是，该语法可以用于模板部分具体化，而 typedef 不能，比如某个模板需要传入两个参数具体化：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> arr12 = std::array&lt;T, <span class="number">12</span>&gt;; <span class="comment">// 部分具体化</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>nullptr<br />
+为了更加区分开空指针和 0 的区别，C++定义了 <code>nullptr</code>。</p>
+</li>
+<li>
+<p>智能指针<br />
+摒弃了 <code>auto_ptr</code>，新增了 <code>unique_ptr</code>，<code>shared_ptr</code> 和 <code>weak_ptr</code>。</p>
+</li>
+<li>
+<p>删除了异常规范（即指出某个函数会发生哪几种异常）<br />
+删除了 throw 关键字用来指出某个函数会发生哪几种异常，但是保留了 <code>noexcept</code>，用于优化。</p>
+</li>
+<li>
+<p>作用域内枚举<br />
+C 和 C++中传统的枚举其枚举名的作用域为枚举定义所属的作用域，这意味着如果两个枚举存在两个同名的成员就会冲突，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">N1</span> &#123;yes, <span class="keyword">or</span>&#125;;	<span class="comment">//传统枚举</span></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">N2</span> &#123;yes, no&#125;;	<span class="comment">//两个枚举在同一个作用域，都存在yes会有冲突</span></span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>C++为了解决这个限制，新增了一种枚举，通过 class 或者 struct 关键字定义如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="keyword">enum struct</span> <span class="title class_">N1</span> &#123;yes, no&#125;;</span><br><span class="line"><span class="keyword">enum struct</span> <span class="title class_">N2</span> &#123;yes, nn&#125;; <span class="comment">// 此时不会冲突</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>除了上面的一些语句和新的语法补充，下面是其他的一些关于类的修改：</p>
+<ol>
+<li>
+<p>C++引入了关键字 explicit，以禁止单参数构造函数导致的自动转换</p>
+</li>
+<li>
+<p>类内成员初始化<br />
+在类中可以通过等号（=）或者大括号初始化类成员。如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">	<span class="type">double</span> men&#123;<span class="number">2</span>&#125;; <span class="comment">// 类内部初始化</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>下面是关于 STL 模板的一些修改</p>
+<ol>
+<li>
+<p>基于范围的 for 循环：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;x: vi)</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>新的 STL 容器：<br />
+增加了 forward_list，unordered_list，unordered_multimap，unordered_set 和 unordered_multiset。除此外，还新增了模板 array，该 array 为固定长度，但是适配了 STL 接口。</p>
+</li>
+<li>
+<p>新的 STL 方法：<br />
+cbegin()和 cend()与此类似，crbegin( )和 crend( )是 rbegin( )和 rend( )的 const 版本。</p>
+</li>
+<li>
+<p>valarray 升级<br />
+C++11 添加了两个函数（begin( )和 end( )），它们都接受 valarray 作为参数，并返回迭代器，这些迭代器分别指向 valarray 对象的第一个元素和最后一个元素后面。这让您能够将基于范围的 STL 算法用于 valarray</p>
+</li>
+<li>
+<p>右值引用<br />
+C++11 新增了右值引用，使用&amp;&amp;表示，右值关联到右值引用导致该右值被存储到特定的位置，且可以获取该位置的地址。引入右值引用的主要目的之一是实现移动语义。</p>
+</li>
+</ol>
+<h5 id="移动语义"><a class="markdownIt-Anchor" href="#移动语义"></a> 移动语义</h5>
+<h6 id="为什么需要移动语义"><a class="markdownIt-Anchor" href="#为什么需要移动语义"></a> 为什么需要移动语义</h6>
+<p>所谓移动语义，类似于硬盘中的移动，将一个磁盘内的文件移动到另一个文件夹，并不会复制再删除。只是更改了拥有权的记录。在 C++中，如果我们需要某个数据（比如一个巨大的数组在某个函数中被处理后，返回），此时我们可以通过移动语义来使得该值的返回不会执行复制销毁这种无用功操作。</p>
+<h6 id="如何使用移动构造函数"><a class="markdownIt-Anchor" href="#如何使用移动构造函数"></a> 如何使用移动构造函数</h6>
+<p>要使得移动构造函数生效，需要两个步骤，第一步是传入的值是右值函数，比如 x+y 这种。第二步是自己编写移动构造函数，自己实现这个移动的逻辑。</p>
+<p>使用移动语义后能够优化运行速度（当然某些情况下，编译器足够聪明是能够识别出这种情况，即使没有使用移动语义也会优化。）</p>
+<p>我们可以为不同的函数在传入右值时定义其操作，比如初始化函数，定义其传入右值时的操作（比如 Useless(A + B)），又比如说赋值操作，当传入右值时直接移动这个临时变量到某个值下面。我们可以通过：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Useless::<span class="built_in">Useless</span>(Useless &amp;&amp;f) <span class="comment">// 移动构造函数定义</span></span><br><span class="line">&#123;...&#125;</span><br><span class="line">Useless &amp; Useless::<span class="keyword">operator</span>=(Useless &amp;&amp;f) <span class="comment">// 和移动构造函数一样，不能是const</span></span><br></pre></td></tr></table></figure>
+<p>如何强制移动，将某个左值进行移动，我们可以通过两种方法，一种是通过 static_cast &lt;&gt; 强制类型转化为右值，第二种方法是通过 utility 头文件中的 <code>std::move()</code> 函数来调用。如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Chunk one;</span><br><span class="line">Chunk two;</span><br><span class="line">two = std::<span class="built_in">move</span>(one);</span><br></pre></td></tr></table></figure>
+<p>使用 <code>std::move</code> 时，需要首先定义了移动赋值运算符，如果没有定义，则会调用复制赋值运算符，如果两个都没定义，此时就会报错。</p>
+<h5 id="新的类功能"><a class="markdownIt-Anchor" href="#新的类功能"></a> 新的类功能</h5>
+<p>C++在原有的四个特殊成员函数（构造函数，复制构造，复制赋值，析构函数）的基础上，添加了移动构造函数和移动赋值函数，正如上面所提到的。</p>
+<p>我们来谈一下默认构造函数，在没有提供任何参数的情况下，将调用默认构造函数。默认的默认构造函数不对其进行初始化；对于属于类对象的成员，则调用其默认构造函数。</p>
+<p>除了默认构造函数，如果您没有提供复制构造函数，而代码又需要使用它，编译器将提供一个默认的复制构造函数。同样，如果您没有提供移动构造函数，而代码又需要使用它，编译器将提供一个默认的移动构造函数。在类似的情况下，编译器将提供默认的复制运算符和默认的移动运算符。</p>
+<h6 id="如何控制编译器生成的默认方法"><a class="markdownIt-Anchor" href="#如何控制编译器生成的默认方法"></a> 如何控制编译器生成的默认方法</h6>
+<p>默认情况下，除非你调用类的构造功能或者赋值功能，编译器时不会生成默认的函数的。我们可以通过 default 关键字，使得编译器生成这些默认函数，即使他们没有被使用，我们也可以通过 delete 关机再来进制编译器生成：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Someclass</span></span><br><span class="line">&#123;</span><br><span class="line">...</span><br><span class="line"><span class="built_in">Someclass</span>() = <span class="keyword">default</span>; <span class="comment">// 使用default显示要求生成</span></span><br><span class="line"><span class="built_in">Someclass</span>(Someclass &amp;&amp;ss) = <span class="keyword">delete</span>; <span class="comment">// 禁止生成，从而禁止使用这些功能，防止出错，另一个不太好的方法时将这些方法定义在private区域</span></span><br><span class="line">...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>关键字 default 只能用于 6 个特殊成员函数，但 delete 可用于任何成员函数。delete 的一种可能用法是 禁止特定的转换。比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="comment">// 禁止int转换</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">redo</span><span class="params">(<span class="type">int</span>)</span> </span>= <span class="keyword">delete</span>;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h5 id="委托构造函数"><a class="markdownIt-Anchor" href="#委托构造函数"></a> 委托构造函数</h5>
+<p>如果一个类中存在多个构造函数，且该多个构造函数存在很多重复，可以通过委托构造函数来简化代码（和派生类调用基类的构造函数类似）。调用方法如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Notes</span>() : <span class="built_in">Notes</span>(<span class="number">0</span>, <span class="number">0.01</span>, <span class="string">&quot;Oh&quot;</span>) &#123;&#125;; <span class="comment">// 就类似于派生调用基类</span></span><br></pre></td></tr></table></figure>
+<h5 id="继承构造函数"><a class="markdownIt-Anchor" href="#继承构造函数"></a> 继承构造函数</h5>
+<p>我们前面提到过关于 using 的使用方法，即将名称空间的某些函数，移动到当前空间中，且是移动所有重载版本：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> Box</span><br><span class="line">&#123;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">fn</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">fn</span><span class="params">(<span class="type">double</span>)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">using</span> Box::fn; <span class="comment">// 此时上面两个重载版本的函数都会被移动</span></span><br></pre></td></tr></table></figure>
+<p>我们在类中也可以使用 using 来将基类的某些方法，移动到派生类中，此时会覆盖派生类中的完全一致的函数，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">C1</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">fn</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line">	<span class="function"><span class="type">double</span> <span class="title">fn</span><span class="params">(<span class="type">double</span>)</span></span>;</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C2</span> : <span class="keyword">public</span> C1</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">using</span> C1::fn; <span class="comment">// 移动C1中所有的函数到C2中</span></span><br><span class="line">	<span class="function"><span class="type">double</span> <span class="title">fn</span><span class="params">(<span class="type">double</span>)</span></span>; <span class="comment">// 此时C1会覆盖C2的函数</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>对于普通函数确实会覆盖，但是 C++为该功能的主要使用场景：移动基类的构造函数，做了调整：</p>
+<ol>
+<li>不会覆盖，只会移动派生类没有而基类有的构造函数到派生类</li>
+<li>移动的构造函数会作为派生类的构造函数，但是要注意的是，继承的基类的构造函数，只会初始化基类成员，如果还需要初始化派生类成员，则不应该使用这种语法。</li>
+<li>这让派生类继承基类的所有构造函数（<strong>默认构造函数、复制构造函 数和移动构造函数除外</strong>），但不会使用与派生类构造函数的特征标匹配的构造函数</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">A</span>(); <span class="comment">// 默认构造函数不会移动</span></span><br><span class="line">	<span class="built_in">A</span>(<span class="type">int</span> x);</span><br><span class="line">	<span class="built_in">A</span>(<span class="type">double</span> y);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">using</span> A::A;</span><br><span class="line">	<span class="built_in">B</span>();</span><br><span class="line">	<span class="built_in">B</span>(<span class="type">int</span>); <span class="comment">// 此时不会覆盖，只会移动B中没有的构造函数A(double y)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="管理虚方法final-和-override-关键字的使用"><a class="markdownIt-Anchor" href="#管理虚方法final-和-override-关键字的使用"></a> 管理虚方法：final 和 override 关键字的使用</h5>
+<p>当我们需要覆盖一个虚函数时，我们可以通过 override 关键字来说明，使用方法和定义普通虚函数一样，但是需要加上 override 关键字：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">char</span> *ch)</span> <span class="type">const</span> <span class="keyword">override</span> </span>&#123;std::cout &lt;&lt; ch &lt;&lt; std::endl&#125;; <span class="comment">//使用override重新定义虚函数</span></span><br></pre></td></tr></table></figure>
+<p>然而使用 override <strong>不能修改参数列表或者类型</strong>，只能修改原有的虚函数逻辑。</p>
+<p>如果我们需要禁止某些虚函数被覆盖，可以在虚函数中加上 final，格式类似 override。此时该虚函数就不能被派生类给覆盖了。</p>
+<h5 id="lambda-函数"><a class="markdownIt-Anchor" href="#lambda-函数"></a> lambda 函数</h5>
+<p>和 Python 中的 lambda 函数类似，C++也提供了 lambda 函数，能够使得原有的表达式变得简洁易懂，我们来仔细看一下 lambda 表达式。我总结了下 lambda 表达式的使用场景就是有时候某个功能有点长，但是有不应该被定义为函数，这个场景使用 lambda 表达式，比如：判断某个函数是否被 7 整除这种，单独写一个 functor 实在划不来，没必要。使用 lambda 也便于修改，不必跳转到某个函数来看。</p>
+<p>如果我们需要使用一个 lambda 表达式多次，可以将这个 lambda 表达式赋值到某个变量：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> mod3 = [](<span class="type">int</span> x) &#123;<span class="keyword">return</span> x % <span class="number">3</span> == <span class="number">0</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>比较一下函数，类 functor，和 lambda 表达式，函数阻止了内联，后两者都是内联。</p>
+<p>lambda 表达式的使用，类似于内联汇编，通过特定格式控制读写权限：即按值访问和按引用访问。<br />
+具体地说，lambad 可访问作用域内的任何动态变量；要捕获要使用 的变量，可将其名称放在中括号内。如果只指定了变量名，如 <code>[z]</code>，将按值访问变量 z；如果在名称前加上&amp;， 如 <code>[&amp;count]</code>，将按引用访问变量 count。<code>[&amp;]</code> 让您能够按引用访问所有动态变量，而 <code>[=]</code> 让您能够按值访问所有动态变量。还可混合使用这两种方式，例如，<code>[ted, &amp;ed]</code> 让您能够按值访问 ted 以及按引用访问 ed，<code>[&amp;, ted]</code> 让您 能够按值访问 ted 以及按引用访问其他所有动态变量，<code>[=, &amp;ed]</code> 让您能够按引用访问 ed 以及按值访问其他 所有动态变量。</p>
+<h5 id="包装器-wrapper-或者叫做适配器-adapter"><a class="markdownIt-Anchor" href="#包装器-wrapper-或者叫做适配器-adapter"></a> 包装器 wrapper 或者叫做适配器 adapter</h5>
+<p>类似于 Python，C++中也有 wrapper（或者叫做 adapter），前面我们提到过 adapter：<code>bind1st</code> 和 <code>bind2st</code> 这两个 adapter，除了这两个之外，还 提供了其他的包装器，包括模板 <code>bind</code>、<code>men_fn</code> 和 <code>reference_wrapper</code> 以及 <code>包装器 function</code>。其中模板 <code>bind</code> 可替代 <code>bind1st</code> 和 <code>bind2nd</code>，但更灵活；模板 <code>mem_fn</code> 让您能够将成员函数作为常规函数进行传递；模板 <code>reference_wrapper</code> 让您能够创建行为像引用但可被复制 的对象；而 <code>包装器 function</code> 让您能够以统一的方式处理多种类似于函数的形式。</p>
+<p>我们来看一下什么情况下需要使用包装器 function，即：当调用模板函数的类型的的调用特征标（call signature）相同，此时模板模板函数会生成多个实例，而我们可以通过包装器 function 使得模板只生成一个实例。</p>
+<p>我们可以将所有调用特征标（即传入和返回类型）相同的 lambda 表达式，类 functor，或者函数使用 adapter，此时传入模板时就会只生成一个针对该 adapter 的实例了，方法如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span> <span class="comment">// 特征标定义在functional中</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">...</span><br><span class="line">function&lt;<span class="type">double</span>(<span class="type">double</span>)&gt; ef1 = dub;</span><br><span class="line">function&lt;<span class="type">double</span>(<span class="type">double</span>)&gt; ef2 = square; <span class="comment">// 两个函数的调用特征标相同</span></span><br><span class="line">function&lt;<span class="type">double</span>(<span class="type">double</span>)&gt;ef3 = [](<span class="type">double</span> u)&#123;<span class="keyword">return</span> u*u;&#125;;</span><br><span class="line">funciton&lt;<span class="built_in">double</span>(<span class="type">double</span>)&gt;ef4 = [](<span class="type">double</span> u)&#123;<span class="keyword">return</span> u + u/<span class="number">2.0</span>;&#125; <span class="comment">// lambda表达式和上面函数的调用特征相同</span></span><br><span class="line">function&lt;<span class="type">double</span>(<span class="type">double</span>)&gt; ef5 = <span class="built_in">Fp</span>(<span class="number">10.0</span>); <span class="comment">// 类functor和上面调用特征相同</span></span><br><span class="line">...</span><br><span class="line"><span class="comment">// 此时传入模板会认为上面是一种类型，只会生成一个实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然为每个相同调用特征的 object 都定义一个变量确实比较麻烦，我们可以只使用一个临时的 <code>fuction&lt;double(double)&gt;</code> 对象，将其用作模板函数 <code>use_if()</code> 的参数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">use_f</span>(y, <span class="built_in">function</span>&lt;<span class="built_in">double</span>(<span class="type">double</span>)&gt; (dub)); <span class="comment">// 创建一个临时匿名变量</span></span><br><span class="line"><span class="comment">// 我们可以通过typedef上面的function&lt;double(double)&gt;</span></span><br></pre></td></tr></table></figure>
+<p>或者我们可以直接修改模板类中的参数为调用特征，此时也不会生成多个实例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">use_f</span><span class="params">(T v,  std::function&lt;T(T)&gt; f)</span></span></span><br><span class="line"><span class="function"></span>&#123;...&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="可变参数模板"><a class="markdownIt-Anchor" href="#可变参数模板"></a> 可变参数模板</h5>
+<p>对于模板类或者模板参数，我们可以使用可变参数。我们首先来理解以下下面这几个要点：</p>
+<ol>
+<li>模板参数包（parameter pack）</li>
+<li>函数参数包</li>
+<li>展开（unpack）参数包</li>
+<li>递归</li>
+</ol>
+<p>类似于函数中的可变参数，我们在模板中加入 <code>Args...args</code> 即可，格式如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span>...Args&gt; <span class="comment">//Args 是一个模板参数包</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_list1</span><span class="params">(Args...args)</span> <span class="comment">//而args是一个函数参数包</span></span></span><br><span class="line"><span class="function"></span>&#123;...&#125;</span><br></pre></td></tr></table></figure>
+<p>如上面所示，Args 是一个模板参数包，而 args 是一个函数参数包。两者本质都是一个类似于 initializer-list 类型的模板或者变量。</p>
+<p>如何取出 args 中的每一个值，通过如下代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// definition for 0 parameters -- terminating call</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_list3</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// definition for 1 or more parameters</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_list3</span><span class="params">( T value, Args... args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::cout &lt;&lt; value &lt;&lt; <span class="string">&quot;, &quot;</span>;</span><br><span class="line">    <span class="built_in">show_list3</span>(args...); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果我们需要对最后一个参数做特殊化处理，比如不打印逗号，可以这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// definition for 0 parameters</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_list</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// definition for 1 parameter</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_list</span><span class="params">(<span class="type">const</span> T&amp; value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::cout &lt;&lt; value &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// definition for 2 or more parameters</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_list</span><span class="params">(<span class="type">const</span> T&amp; value, <span class="type">const</span> Args&amp;... args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::cout &lt;&lt; value &lt;&lt; <span class="string">&quot;, &quot;</span>;</span><br><span class="line">    <span class="built_in">show_list</span>(args...); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="c-11-新增的其他功能"><a class="markdownIt-Anchor" href="#c-11-新增的其他功能"></a> C+ + 11 新增的其他功能</h5>
+<h6 id="并行编程"><a class="markdownIt-Anchor" href="#并行编程"></a> 并行编程</h6>
+<ol>
+<li>添加了关键字 thread_local，提供了相关的库支持。关键字 thread_local 将变量声明为静态存储，其持续性与特定线程相关；即定义这种变量的线程过期时，变量也将过期。</li>
+<li>原子操作库提供了头文件 atomic，而线程支持库提供了头文件 thread、mutex、condition_variable 和 future。</li>
+</ol>
+<h6 id="增加的库"><a class="markdownIt-Anchor" href="#增加的库"></a> 增加的库</h6>
+<ol>
+<li><strong>随机数库（头文件 <code>&lt;random&gt;</code>）</strong>：
+<ul>
+<li>提供了多种随机数生成器，例如线性同余生成器等。</li>
+<li>支持多种分布，包括均匀分布、正态分布、二项式分布等，这些分布可以用于生成具有特定统计特性的随机数。</li>
+</ul>
+</li>
+<li><strong>时间处理库（头文件 <code>&lt;chrono&gt;</code>）</strong>：
+<ul>
+<li>允许对时间间隔进行度量和计算，支持高精度的时间点和持续时间。</li>
+<li>提供了时钟、持续时间以及时间点等概念，可以方便地进行时间的算术运算。</li>
+</ul>
+</li>
+<li><strong>元组库（头文件 <code>&lt;tuple&gt;</code>）</strong>：
+<ul>
+<li>tuple 对象是广义的 pair 对象。pair 对象可存储两个类型不同的值，而 tuple 对象可存储任意多个类型不同的值。</li>
+</ul>
+</li>
+<li><strong>编译时有理数算术库（头文件 <code>&lt;ratio&gt;</code>）</strong>：
+<ul>
+<li>允许在编译时进行有理数的精确表示和算术运算。</li>
+<li>有理数由分子和分母组成，两者都可以使用 C++中最宽的整型来表示。</li>
+</ul>
+</li>
+<li><strong>正则表达式库（头文件 <code>&lt;regex&gt;</code>）</strong>：
+<ul>
+<li>提供了一套完整的正则表达式功能，可以进行复杂的字符串搜索、替换和匹配。</li>
+<li>正则表达式是一种强大的文本处理工具，广泛应用于文本分析和数据验证。</li>
+</ul>
+</li>
+</ol>
+<h6 id="低级编程"><a class="markdownIt-Anchor" href="#低级编程"></a> 低级编程</h6>
+<ol>
+<li>
+<p><strong>POD（Plain Old Data）的重新定义</strong>：</p>
+<ul>
+<li>在 C++98 中，POD 是指那些没有类特定特性（如构造函数、析构函数、虚函数等）的结构体或联合体，它们可以安全地进行逐字节复制。</li>
+<li>C++11 放宽了对 POD 的要求，允许具有构造函数、析构函数和虚继承的类被视为 POD 类型，只要它们满足特定的标准（如所有非静态数据成员都是 POD 类型，没有私有或保护的非静态数据成员等）。</li>
+</ul>
+</li>
+<li>
+<p><strong>共用体（Union）的改进</strong>：</p>
+<ul>
+<li>C++11 允许共用体的成员具有构造函数和析构函数，这增加了共用体的灵活性。</li>
+<li>尽管如此，共用体仍然保留了一些限制，例如成员不能有虚函数，这确保了共用体的内存布局可以是紧凑的，适用于需要最小化内存占用的场景。</li>
+</ul>
+</li>
+<li>
+<p><strong>内存对齐问题的解决</strong>：</p>
+<ul>
+<li>内存对齐是指数据在内存中按照特定的边界对齐存储，这通常是为了提高访问效率。</li>
+<li>C++11 引入了 <code>alignof</code> 运算符，允许开发者查询类型的对齐要求。</li>
+<li>同时，<code>alignas</code> 说明符允许开发者指定类型的对齐方式，提供了更细粒度的控制。</li>
+</ul>
+</li>
+<li>
+<p><strong>constexpr 关键字的引入</strong>：</p>
+<ul>
+<li><code>constexpr</code> 允许编译器在编译时计算表达式的值，如果该表达式的值是常量。</li>
+<li>这使得一些在编译时就能确定的计算可以提前完成，减少了运行时的计算负担。</li>
+<li>对于嵌入式编程等需要优化内存使用的场景，<code>constexpr</code> 允许将变量存储在只读内存中，从而节省了随机访问内存（RAM）的使用。</li>
+</ul>
+</li>
+</ol>
+<h6 id="杂项"><a class="markdownIt-Anchor" href="#杂项"></a> 杂项</h6>
+<ol>
+<li>
+<p><strong>扩展整型的支持</strong>：</p>
+<ul>
+<li>C99 引入了依赖于实现的扩展整型，比如 <code>__int128</code> 等，这些类型在某些系统上可以表示 128 位整数。</li>
+<li>C++11 继承了这一特性，允许在支持这些类型的环境中使用它们。</li>
+<li>在 C 语言中，这些扩展类型由 <code>&lt;stdint.h&gt;</code> 头文件支持；而在 C++ 中，相应的头文件是 <code>&lt;cstdint&gt;</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>字面量运算符</strong>：</p>
+<ul>
+<li>C++11 引入了字面量运算符的概念，允许开发者定义自定义的字面量后缀，例如二进制字面量 <code>1001001b</code>。</li>
+<li>通过定义字面量运算符，可以方便地将这些自定义字面量转换为相应的数值类型。</li>
+</ul>
+</li>
+<li>
+<p><strong>断言机制的增强</strong>：</p>
+<ul>
+<li>C++ 提供了 <code>assert</code> 宏，用于在运行时检查条件是否为真，如果条件为假，则程序将终止执行。</li>
+<li>C++11 新增了 <code>static_assert</code> 关键字，允许在编译时对条件进行检查。如果条件为假，编译器将报错并阻止代码编译。</li>
+<li>这使得在编译阶段就可以发现潜在的错误，特别是对于模板代码，这可以大大简化调试过程。</li>
+</ul>
+</li>
+<li>
+<p><strong>元编程的支持</strong>：</p>
+<ul>
+<li>元编程是一种编写程序的技术，它在编译时生成或修改代码，甚至可以修改自身。</li>
+<li>C++ 通过模板提供了强大的元编程支持，允许开发者编写在编译时执行的代码，从而实现类型安全和性能优化。</li>
+</ul>
+</li>
+</ol>
+<h5 id="社区库"><a class="markdownIt-Anchor" href="#社区库"></a> 社区库</h5>
+<p>社区和官方提供了一系列扩展库，比如 boost 库，Boost 网站（<a target="_blank" rel="noopener" href="http://www.boost.org">www.boost.org</a>）。以及 TR1（Technical Report 1）（boost 占大部分）。</p>
+<h5 id="最后"><a class="markdownIt-Anchor" href="#最后"></a> 最后</h5>
+<p>由于实际问题通常很复杂，因此找到适当的类富有挑战性。创建复杂的系统时，从空白开始通常不可行，最好采用 <strong>逐步迭代</strong> 的方式。为此，该领域的实践者开发了多种技术和策略。具体地说，<strong>重要的是在分析和设计阶段完成尽可能多的迭代工作</strong>，而不是不断地修改实际代码。</p>
+<p>常用的技术有两种：用例分析（use-case analysis）和 CRC 卡（CRC card）。</p>
+<ol>
+<li><strong>用例分析（Use-Case Analysis）</strong>
+<ul>
+<li>开发团队列出系统可能的使用场景。</li>
+<li>通过分析这些场景，识别出关键元素、操作和职责，从而确定潜在的类和类的特性。</li>
+</ul>
+</li>
+<li><strong>CRC 卡（Class/Responsibilities/Collaborators Cards）</strong>
+<ul>
+<li>为每个类创建索引卡片，卡片上记录：
+<ul>
+<li>类名</li>
+<li>类的责任（表示的数据和执行的操作）</li>
+<li>类的协作者（与之交互的其他类）</li>
+</ul>
+</li>
+<li>使用 CRC 卡片模拟场景，以验证类之间的交互和接口设计。</li>
+</ul>
+</li>
+</ol>
+<p>再迭代过程中，有下面益处</p>
+<ul>
+<li><strong>发现新类</strong>：通过模拟和分析，可能会发现之前未考虑到的新类。</li>
+<li><strong>责任转换</strong>：迭代过程可能揭示某些类的责任需要重新分配，以提高系统的灵活性和可维护性。</li>
+</ul>
+<p>在更大规模上对整个项目进行规划、设计和管理的方法。<strong>统一建模语言（Unified Modeling Language，UML）</strong> 是这种方法中的一个重要工具。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%A7%E7%BB%AD%E8%B0%88%E8%B0%88-seekg%E5%92%8C-seekp"><span class="toc-number">1.</span> <span class="toc-text"> 继续谈谈 seekg()和 seekp()</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E5%81%8F%E7%A7%BB%E9%87%8F%E5%92%8C%E6%95%B0%E7%BB%84%E5%BA%8F%E5%88%97%E7%B1%BB%E4%BC%BC"><span class="toc-number">1.1.</span> <span class="toc-text"> Tips：偏移量和数组序列类似</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E4%BD%BF%E7%94%A8%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text"> Tips：使用临时文件</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E6%A0%B8%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text"> 内核格式化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A2%E8%AE%A8-c%E7%9A%84%E6%96%B0%E6%A0%87%E5%87%86"><span class="toc-number">3.</span> <span class="toc-text"> 探讨 C++的新标准</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89"><span class="toc-number">4.</span> <span class="toc-text"> 移动语义</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89"><span class="toc-number">4.1.</span> <span class="toc-text"> 为什么需要移动语义</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">4.2.</span> <span class="toc-text"> 如何使用移动构造函数</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%B0%E7%9A%84%E7%B1%BB%E5%8A%9F%E8%83%BD"><span class="toc-number">5.</span> <span class="toc-text"> 新的类功能</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%8E%A7%E5%88%B6%E7%BC%96%E8%AF%91%E5%99%A8%E7%94%9F%E6%88%90%E7%9A%84%E9%BB%98%E8%AE%A4%E6%96%B9%E6%B3%95"><span class="toc-number">5.1.</span> <span class="toc-text"> 如何控制编译器生成的默认方法</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">6.</span> <span class="toc-text"> 委托构造函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">7.</span> <span class="toc-text"> 继承构造函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E8%99%9A%E6%96%B9%E6%B3%95final-%E5%92%8C-override-%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">8.</span> <span class="toc-text"> 管理虚方法：final 和 override 关键字的使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lambda-%E5%87%BD%E6%95%B0"><span class="toc-number">9.</span> <span class="toc-text"> lambda 函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8C%85%E8%A3%85%E5%99%A8-wrapper-%E6%88%96%E8%80%85%E5%8F%AB%E5%81%9A%E9%80%82%E9%85%8D%E5%99%A8-adapter"><span class="toc-number">10.</span> <span class="toc-text"> 包装器 wrapper 或者叫做适配器 adapter</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF"><span class="toc-number">11.</span> <span class="toc-text"> 可变参数模板</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-11-%E6%96%B0%E5%A2%9E%E7%9A%84%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD"><span class="toc-number">12.</span> <span class="toc-text"> C+ + 11 新增的其他功能</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B"><span class="toc-number">12.1.</span> <span class="toc-text"> 并行编程</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A2%9E%E5%8A%A0%E7%9A%84%E5%BA%93"><span class="toc-number">12.2.</span> <span class="toc-text"> 增加的库</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BD%8E%E7%BA%A7%E7%BC%96%E7%A8%8B"><span class="toc-number">12.3.</span> <span class="toc-text"> 低级编程</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%9D%82%E9%A1%B9"><span class="toc-number">12.4.</span> <span class="toc-text"> 杂项</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A4%BE%E5%8C%BA%E5%BA%93"><span class="toc-number">13.</span> <span class="toc-text"> 社区库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">14.</span> <span class="toc-text"> 最后</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&text=学习Cpp-44"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&title=学习Cpp-44"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&is_video=false&description=学习Cpp-44"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-44&body=Check out this article: https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&title=学习Cpp-44"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&title=学习Cpp-44"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&title=学习Cpp-44"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&title=学习Cpp-44"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&name=学习Cpp-44&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/&t=学习Cpp-44"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

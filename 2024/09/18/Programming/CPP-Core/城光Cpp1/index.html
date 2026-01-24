@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：雨 心情：好  海鲜自助，太油腻了，肉质不新鲜，生吃肉有点恶心。导致最后反胃还拉了肚子。  const 和 static 相关  const 变量可以在构造函数中初始化，但不能在定义时初始化。 const 变量可以用 static 变量代替，或者结合 static 使用，此时视为 static 类型。 static 变量必须在类外初始化。  对于静态成员函数和静态数据成员，可以使用 . 操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="城光Cpp1">
+<meta property="og:url" content="https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：雨 心情：好  海鲜自助，太油腻了，肉质不新鲜，生吃肉有点恶心。导致最后反胃还拉了肚子。  const 和 static 相关  const 变量可以在构造函数中初始化，但不能在定义时初始化。 const 变量可以用 static 变量代替，或者结合 static 使用，此时视为 static 类型。 static 变量必须在类外初始化。  对于静态成员函数和静态数据成员，可以使用 . 操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-18T03:14:26.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:54.348Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>城光Cpp1</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/09/19/Research-AI/Theory/%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%B0%E8%AE%A1%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%861/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/07/29/Research-AI/DeepLearning/%E5%8A%A8%E6%89%8B%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%AC%E4%B8%89%E7%AB%A0/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&text=城光Cpp1"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&title=城光Cpp1"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&is_video=false&description=城光Cpp1"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=城光Cpp1&body=Check out this article: https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&title=城光Cpp1"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&title=城光Cpp1"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&title=城光Cpp1"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&title=城光Cpp1"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&name=城光Cpp1&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&t=城光Cpp1"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#const-%E5%92%8C-static-%E7%9B%B8%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text"> const 和 static 相关</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E5%AE%9C%E4%BD%BF%E7%94%A8%E5%86%85%E8%81%94%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">2.</span> <span class="toc-text"> 不宜使用内联的情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#inline-%E7%9B%B8%E5%85%B3"><span class="toc-number">3.</span> <span class="toc-text"> inline 相关</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%99%9A%E5%87%BD%E6%95%B0virtual%E5%8F%AF%E4%BB%A5%E6%98%AF%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0inline%E5%90%97"><span class="toc-number"></span> <span class="toc-text"> 2. 虚函数（virtual）可以是内联函数（inline）吗？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#sizeof-%E7%9B%B8%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text"> sizeof 相关</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A8%A1%E6%9D%BF%E7%B1%BBtemplate-class"><span class="toc-number"></span> <span class="toc-text"> 1. 模板类（Template Class）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0friend-functions"><span class="toc-number"></span> <span class="toc-text"> 2. 友元函数（Friend Functions）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%9D%9E%E7%BA%A6%E6%9D%9F%E7%BA%A6%E6%9D%9F%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number"></span> <span class="toc-text"> 3. 非约束&#x2F;约束友元函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#31-%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text"> 3.1. 非约束友元函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#32-%E7%BA%A6%E6%9D%9F%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text"> 3.2. 约束友元函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%9D%9E%E7%BA%A6%E6%9D%9F%E7%BA%A6%E6%9D%9F%E6%A8%A1%E6%9D%BF%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number"></span> <span class="toc-text"> 4. 非约束&#x2F;约束模板友元函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#41-%E9%9D%9E%E7%BA%A6%E6%9D%9F%E6%A8%A1%E6%9D%BF%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text"> 4.1. 非约束模板友元函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#42-%E7%BA%A6%E6%9D%9F%E6%A8%A1%E6%9D%BF%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text"> 4.2. 约束模板友元函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%8F%8B%E5%85%83%E7%B1%BBfriend-class"><span class="toc-number"></span> <span class="toc-text"> 5. 友元类（Friend Class）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%89%8D%E5%90%91%E5%A3%B0%E6%98%8E%E5%8F%8B%E5%85%83%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%9F%90%E4%B8%AA%E6%96%B9%E6%B3%95"><span class="toc-number"></span> <span class="toc-text"> 6. 前向声明友元类中的某个方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%86%85%E8%81%94%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number"></span> <span class="toc-text"> 7. 内联友元函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%8B%E5%85%83"><span class="toc-number"></span> <span class="toc-text"> 其他类型的友元</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E4%BA%92%E4%B8%BA%E5%8F%8B%E5%85%83%E7%B1%BB%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text"> 1.互为友元类的两个类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E4%B8%80%E4%B8%AA%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0%E8%AE%BF%E9%97%AE%E4%B8%A4%E4%B8%AA%E5%8F%8B%E5%85%83%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text"> 2.一个友元函数访问两个友元类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E5%B5%8C%E5%A5%97%E7%B1%BB%E5%9C%A8%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E5%AE%9A%E4%B9%89%E5%8F%A6%E4%B8%80%E4%B8%AA%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text"> 3.嵌套类：在一个类中定义另一个类</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        城光Cpp1
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-09-18T03:14:26.000Z" class="dt-published" itemprop="datePublished">2024-09-18</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Programming/">Programming</a> › <a class="category-link" href="/categories/Programming/CPP-Core/">CPP-Core</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：雨 心情：好</p>
+<hr />
+<p>海鲜自助，太油腻了，肉质不新鲜，生吃肉有点恶心。导致最后反胃还拉了肚子。</p>
+<h4 id="const-和-static-相关"><a class="markdownIt-Anchor" href="#const-和-static-相关"></a> <code>const</code> 和 <code>static</code> 相关</h4>
+<ul>
+<li><strong><code>const</code></strong> 变量可以在构造函数中初始化，但不能在定义时初始化。</li>
+<li><strong><code>const</code></strong> 变量可以用 <code>static</code> 变量代替，或者结合 <code>static</code> 使用，此时视为 <code>static</code> 类型。</li>
+<li><strong><code>static</code></strong> 变量必须在类外初始化。</li>
+</ul>
+<p>对于静态成员函数和静态数据成员，可以使用 <code>.</code> 操作符访问，但更推荐使用作用域解析运算符 <code>::</code> 来访问。</p>
+<h4 id="不宜使用内联的情况"><a class="markdownIt-Anchor" href="#不宜使用内联的情况"></a> 不宜使用内联的情况</h4>
+<ol>
+<li>如果函数体内的代码比较长，内联将导致内存消耗代价较高。</li>
+<li>如果函数体内出现循环，执行函数体内代码的时间会比函数调用的开销大。</li>
+</ol>
+<h4 id="inline-相关"><a class="markdownIt-Anchor" href="#inline-相关"></a> <code>inline</code> 相关</h4>
+<h3 id="2-虚函数virtual可以是内联函数inline吗"><a class="markdownIt-Anchor" href="#2-虚函数virtual可以是内联函数inline吗"></a> 2. 虚函数（virtual）可以是内联函数（inline）吗？</h3>
+<ul>
+<li>虚函数可以是内联函数，但当虚函数表现多态性时不能内联。</li>
+<li>内联是在编译期建议编译器进行内联，而虚函数的多态性发生在运行期，编译器无法预知运行期调用哪个代码，因此虚函数表现为多态性时（运行期）不可以内联。</li>
+<li><code>inline virtual</code> 唯一可以内联的情况是：编译器知道所调用的对象是哪个类（如 <code>Base::who()</code>），这只有在编译器具有实际对象而不是对象的指针或引用时才会发生。</li>
+</ul>
+<h4 id="sizeof-相关"><a class="markdownIt-Anchor" href="#sizeof-相关"></a> <code>sizeof</code> 相关</h4>
+<ul>
+<li>在一个类中，虚函数本身、成员函数（包括静态与非静态）和静态数据成员都不占用类对象的存储空间。</li>
+<li>对于包含虚函数的类，不管有多少个虚函数，都只有一个虚指针（vptr），其大小为 4 字节（32 位操作系统）或 8 字节（64 位操作系统）。</li>
+<li>普通继承时，派生类继承了所有基类的函数与成员，需要按照字节对齐来计算大小。</li>
+<li>虚函数继承时，不管是单继承还是多继承，都继承了基类的 vptr。</li>
+<li>虚继承时，继承基类的 vptr。</li>
+</ul>
+<h3 id="1-模板类template-class"><a class="markdownIt-Anchor" href="#1-模板类template-class"></a> 1. <strong>模板类（Template Class）</strong></h3>
+<p>模板类是基于模板机制创建的类，可以接受不同类型的参数，从而提供通用的功能。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line">    T data;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyClass</span>(T d) : <span class="built_in">data</span>(d) &#123;&#125;</span><br><span class="line">    <span class="function">T <span class="title">getData</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> data; &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="2-友元函数friend-functions"><a class="markdownIt-Anchor" href="#2-友元函数friend-functions"></a> 2. <strong>友元函数（Friend Functions）</strong></h3>
+<p>友元函数是能够访问类的私有和保护成员的非成员函数。它们在类的声明中通过 <code>friend</code> 关键字定义。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line">    <span class="type">int</span> data;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="type">void</span> <span class="title">printData</span><span class="params">(MyClass &amp;obj)</span></span>;  <span class="comment">// 友元函数声明</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="3-非约束约束友元函数"><a class="markdownIt-Anchor" href="#3-非约束约束友元函数"></a> 3. <strong>非约束/约束友元函数</strong></h3>
+<h4 id="31-非约束友元函数"><a class="markdownIt-Anchor" href="#31-非约束友元函数"></a> 3.1. <strong>非约束友元函数</strong></h4>
+<p>非约束友元函数不依赖模板参数，它们独立于模板类。即使友元函数声明在模板类中，它也不使用模板参数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="type">void</span> <span class="title">nonTemplateFriend</span><span class="params">()</span></span>; <span class="comment">// 非约束友元函数</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="32-约束友元函数"><a class="markdownIt-Anchor" href="#32-约束友元函数"></a> 3.2. <strong>约束友元函数</strong></h4>
+<p>约束友元函数使用模板参数，需要通过模板定义，才能访问模板类的成员。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line">    T data;</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="type">void</span> <span class="title">printData</span><span class="params">(MyClass&lt;T&gt; &amp;obj)</span></span>; <span class="comment">// 约束友元函数</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="4-非约束约束模板友元函数"><a class="markdownIt-Anchor" href="#4-非约束约束模板友元函数"></a> 4. <strong>非约束/约束模板友元函数</strong></h3>
+<h4 id="41-非约束模板友元函数"><a class="markdownIt-Anchor" href="#41-非约束模板友元函数"></a> 4.1. <strong>非约束模板友元函数</strong></h4>
+<p>模板类的友元函数可以是非约束的，即友元函数本身是模板，而它与模板类没有直接关联。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line">    T data;</span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt;  <span class="comment">// 非约束模板友元函数</span></span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="type">void</span> <span class="title">printData</span><span class="params">(MyClass&lt;T&gt; &amp;obj, U extra)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="42-约束模板友元函数"><a class="markdownIt-Anchor" href="#42-约束模板友元函数"></a> 4.2. <strong>约束模板友元函数</strong></h4>
+<p>约束模板友元函数是指友元函数不仅是模板，而且依赖于模板类的参数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line">    T data;</span><br><span class="line">    <span class="keyword">friend</span> <span class="type">void</span> printData&lt;&gt;(MyClass&lt;T&gt; &amp;obj);  <span class="comment">// 约束模板友元函数</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="5-友元类friend-class"><a class="markdownIt-Anchor" href="#5-友元类friend-class"></a> 5. <strong>友元类（Friend Class）</strong></h3>
+<p>友元类是允许另一个类访问本类的私有和保护成员的类。友元类可以访问所有成员函数和变量。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Tv</span>;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Remote</span> &#123;</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> <span class="title class_">Tv</span>;  <span class="comment">// 友元类声明</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="6-前向声明友元类中的某个方法"><a class="markdownIt-Anchor" href="#6-前向声明友元类中的某个方法"></a> 6. <strong>前向声明友元类中的某个方法</strong></h3>
+<p>可以通过前向声明，只让友元类中的某个方法访问目标类的私有或保护成员，而不是让整个友元类访问。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Tv</span>;  <span class="comment">// 前向声明</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Remote</span> &#123;</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">volup</span><span class="params">(Tv &amp;t)</span></span>;  <span class="comment">// 特定方法</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Tv</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="title">Remote::volup</span><span class="params">(Tv &amp;t)</span></span>;  <span class="comment">// 仅允许 Remote 的 volup 方法访问</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="7-内联友元函数"><a class="markdownIt-Anchor" href="#7-内联友元函数"></a> 7. <strong>内联友元函数</strong></h3>
+<p>友元函数可以内联定义，提高效率。如果函数实现与声明在同一个文件中，可以使用 <code>inline</code> 关键字。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">bool</span> <span class="title">Remote::volup</span><span class="params">(Tv &amp;t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> t.<span class="built_in">volup</span>();  <span class="comment">// 内联友元函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面是一个前向声明的例子：为了只让友元类中的某个方法能够访问该类，通过前向声明可以实现。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Tv</span>; <span class="comment">// 前向定义</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Remote</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">volup</span><span class="params">(Tv &amp;t)</span></span>;</span><br><span class="line">...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Tv</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="title">Remote::volup</span><span class="params">(Tv &amp;t)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="title">Remote::set_chan</span><span class="params">(Tv &amp;t, <span class="type">int</span> c)</span></span>; <span class="comment">// 友元方法</span></span><br><span class="line">... <span class="comment">// Tv的定义</span></span><br><span class="line">&#125;；</span><br><span class="line"></span><br><span class="line"><span class="comment">// 内联函数的写法，放在同一个文件中。其他函数放在另一个文件中</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">bool</span> <span class="title">Remote::volup</span><span class="params">(Tv &amp;t)</span> </span>&#123;<span class="keyword">return</span> t.<span class="built_in">volup</span>();&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="其他类型的友元"><a class="markdownIt-Anchor" href="#其他类型的友元"></a> 其他类型的友元</h3>
+<h4 id="1互为友元类的两个类"><a class="markdownIt-Anchor" href="#1互为友元类的两个类"></a> 1.互为友元类的两个类</h4>
+<p>此时两个类能够互相访问到彼此的所有成员。实例如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 首先要遵循上面哪个原则，如果是定义某个具体方法为友元，则该具体方法的定义必在该友元之前</span></span><br><span class="line"><span class="comment">// 如果只是定义某个类为友元，此时无需关心前后，编译器足够聪明能够处理</span></span><br><span class="line"><span class="comment">// 如下例子所示：</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Tv</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> <span class="title class_">Remote</span>; <span class="comment">// 无需关心顺序</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">buzz</span><span class="params">(Remote &amp;r)</span></span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Remote</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> <span class="title class_">Tv</span>; <span class="comment">// 无需关心顺序</span></span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">Tv::buzz</span><span class="params">(Remote &amp;r)</span></span></span><br><span class="line"><span class="function"></span>&#123;...&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2一个友元函数访问两个友元类"><a class="markdownIt-Anchor" href="#2一个友元函数访问两个友元类"></a> 2.一个友元函数访问两个友元类</h4>
+<p>为了实现一个函数同时访问两个类的私有成员（如果私有成员没有继承关系），此时将该函数同时设置为两个类的友元，就可以做到：</p>
+<h4 id="3嵌套类在一个类中定义另一个类"><a class="markdownIt-Anchor" href="#3嵌套类在一个类中定义另一个类"></a> 3.嵌套类：在一个类中定义另一个类</h4>
+<p>一般是为了帮助实现另一个类并避免名称冲突。（类似于在类中定义 struct 结构体）。如下，结构体也是一个嵌套类，其也能通过列表初始化：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Queue</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">class</span> <span class="title class_">Node</span> <span class="comment">// Node作为嵌套类而不是结构体</span></span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		Item item;</span><br><span class="line">		Node *next;</span><br><span class="line">		<span class="built_in">Node</span>(<span class="type">const</span> Item &amp;i): <span class="built_in">item</span>(i), <span class="built_in">next</span>(<span class="number">0</span>) &#123;&#125; <span class="comment">//Node的初始化函数</span></span><br><span class="line">	&#125;;</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 如上所示，将结构体转化为嵌入内，更加简化了结构体的使用</span></span><br><span class="line"><span class="comment">// 能够给结构体提供默认函数</span></span><br></pre></td></tr></table></figure>
+<p>嵌套类也可以再类之外定义：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Queue::Node::<span class="built_in">Node</span>(<span class="type">const</span> Item &amp;i):<span class="built_in">item</span>(i), <span class="built_in">next</span>(<span class="number">0</span>)&#123;&#125;</span><br><span class="line"><span class="comment">// 此时要使用两次作用域运算符</span></span><br></pre></td></tr></table></figure>
+<p>Tips: 嵌套类的访问域和权限</p>
+<ol>
+<li>访问控制<br />
+嵌套类定义的位置（public，private 和 protected）决定了该嵌套类的作用域。而类中成员的定义决定了程序对成员的访问特性。</li>
+<li>作用域<br />
+如果嵌套类实在类中的私有部分声明的，则只有该类能够访问该嵌套类的成员，派生与其他类都无法访问。而如果实在 protected 中声明的，此时派生类也能看到。如果是 public，此时公共部分就能访问该嵌套类。</li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#const-%E5%92%8C-static-%E7%9B%B8%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text"> const 和 static 相关</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E5%AE%9C%E4%BD%BF%E7%94%A8%E5%86%85%E8%81%94%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">2.</span> <span class="toc-text"> 不宜使用内联的情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#inline-%E7%9B%B8%E5%85%B3"><span class="toc-number">3.</span> <span class="toc-text"> inline 相关</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%99%9A%E5%87%BD%E6%95%B0virtual%E5%8F%AF%E4%BB%A5%E6%98%AF%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0inline%E5%90%97"><span class="toc-number"></span> <span class="toc-text"> 2. 虚函数（virtual）可以是内联函数（inline）吗？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#sizeof-%E7%9B%B8%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text"> sizeof 相关</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A8%A1%E6%9D%BF%E7%B1%BBtemplate-class"><span class="toc-number"></span> <span class="toc-text"> 1. 模板类（Template Class）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0friend-functions"><span class="toc-number"></span> <span class="toc-text"> 2. 友元函数（Friend Functions）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%9D%9E%E7%BA%A6%E6%9D%9F%E7%BA%A6%E6%9D%9F%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number"></span> <span class="toc-text"> 3. 非约束&#x2F;约束友元函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#31-%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text"> 3.1. 非约束友元函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#32-%E7%BA%A6%E6%9D%9F%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text"> 3.2. 约束友元函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%9D%9E%E7%BA%A6%E6%9D%9F%E7%BA%A6%E6%9D%9F%E6%A8%A1%E6%9D%BF%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number"></span> <span class="toc-text"> 4. 非约束&#x2F;约束模板友元函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#41-%E9%9D%9E%E7%BA%A6%E6%9D%9F%E6%A8%A1%E6%9D%BF%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text"> 4.1. 非约束模板友元函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#42-%E7%BA%A6%E6%9D%9F%E6%A8%A1%E6%9D%BF%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text"> 4.2. 约束模板友元函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%8F%8B%E5%85%83%E7%B1%BBfriend-class"><span class="toc-number"></span> <span class="toc-text"> 5. 友元类（Friend Class）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%89%8D%E5%90%91%E5%A3%B0%E6%98%8E%E5%8F%8B%E5%85%83%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%9F%90%E4%B8%AA%E6%96%B9%E6%B3%95"><span class="toc-number"></span> <span class="toc-text"> 6. 前向声明友元类中的某个方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%86%85%E8%81%94%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-number"></span> <span class="toc-text"> 7. 内联友元函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%8B%E5%85%83"><span class="toc-number"></span> <span class="toc-text"> 其他类型的友元</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E4%BA%92%E4%B8%BA%E5%8F%8B%E5%85%83%E7%B1%BB%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text"> 1.互为友元类的两个类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E4%B8%80%E4%B8%AA%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0%E8%AE%BF%E9%97%AE%E4%B8%A4%E4%B8%AA%E5%8F%8B%E5%85%83%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text"> 2.一个友元函数访问两个友元类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E5%B5%8C%E5%A5%97%E7%B1%BB%E5%9C%A8%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E5%AE%9A%E4%B9%89%E5%8F%A6%E4%B8%80%E4%B8%AA%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text"> 3.嵌套类：在一个类中定义另一个类</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&text=城光Cpp1"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&title=城光Cpp1"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&is_video=false&description=城光Cpp1"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=城光Cpp1&body=Check out this article: https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&title=城光Cpp1"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&title=城光Cpp1"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&title=城光Cpp1"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&title=城光Cpp1"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&name=城光Cpp1&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/09/18/Programming/CPP-Core/%E5%9F%8E%E5%85%89Cpp1/&t=城光Cpp1"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

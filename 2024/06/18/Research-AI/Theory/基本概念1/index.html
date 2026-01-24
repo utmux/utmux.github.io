@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天	心情：差   LFM信号的幅频特性与时宽带宽积 在满足大时宽带宽积的条件下，LFM信号具有近似矩形的幅频特性。时宽带宽积（Time-Bandwidth Product, TBP）越大，幅频特性越接近矩形，如图3.18所示。时宽带宽积的定义如下： TBP&#x3D;T⋅B&#x3D;T⋅∣K∣⋅T&#x3D;∣K∣⋅T2\mathrm{TBP} &#x3D; T \cdot B &#x3D; T \cdot |K| \cdot T &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基本概念1">
+<meta property="og:url" content="https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天	心情：差   LFM信号的幅频特性与时宽带宽积 在满足大时宽带宽积的条件下，LFM信号具有近似矩形的幅频特性。时宽带宽积（Time-Bandwidth Product, TBP）越大，幅频特性越接近矩形，如图3.18所示。时宽带宽积的定义如下： TBP&#x3D;T⋅B&#x3D;T⋅∣K∣⋅T&#x3D;∣K∣⋅T2\mathrm{TBP} &#x3D; T \cdot B &#x3D; T \cdot |K| \cdot T &#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/742ade7d32ab37a0f237a17425fb23ea.png">
+<meta property="article:published_time" content="2024-06-18T13:15:26.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:54.780Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/742ade7d32ab37a0f237a17425fb23ea.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>基本概念1</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/19/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-44/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/18/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-43/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&text=基本概念1"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&title=基本概念1"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&is_video=false&description=基本概念1"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=基本概念1&body=Check out this article: https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&title=基本概念1"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&title=基本概念1"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&title=基本概念1"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&title=基本概念1"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&name=基本概念1&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&t=基本概念1"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#lfm%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%B9%85%E9%A2%91%E7%89%B9%E6%80%A7%E4%B8%8E%E6%97%B6%E5%AE%BD%E5%B8%A6%E5%AE%BD%E7%A7%AF"><span class="toc-number">1.</span> <span class="toc-text"> LFM信号的幅频特性与时宽带宽积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%84%89%E5%86%B2%E4%BF%A1%E5%8F%B7%E5%8E%8B%E7%BC%A9%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text"> 脉冲信号压缩的条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E8%84%89%E5%86%B2%E5%8E%8B%E7%BC%A9%E7%9A%84%E6%8C%91%E6%88%98"><span class="toc-number">3.</span> <span class="toc-text"> 实现脉冲压缩的挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BE%90%E5%B0%84%E5%88%86%E8%BE%A8%E7%8E%87"><span class="toc-number">3.0.1.</span> <span class="toc-text"> 辐射分辨率</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%94%E5%BE%84d%E5%A4%A9%E7%BA%BF%E5%A2%9E%E7%9B%8Ag%E5%92%8C%E6%9C%89%E6%95%88%E6%8E%A5%E5%8F%97%E9%9D%A2%E7%A7%AFa%E4%BB%A5%E5%8F%8A%E6%B3%A2%E7%93%A3%E5%AE%BD%E5%BA%A6beta%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">3.0.2.</span> <span class="toc-text"> 孔径D，天线增益G和有效接受面积A以及波瓣宽度β\betaβ的关系</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="toc-number">3.0.3.</span> <span class="toc-text"> 匹配滤波器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%84%89%E5%86%B2%E5%8E%8B%E7%BC%A9%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="toc-number">3.0.4.</span> <span class="toc-text"> 脉冲压缩系统的性能指标</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E7%9A%84%E5%90%8E%E5%90%91%E6%95%A3%E5%B0%84%E7%B3%BB%E6%95%B0"><span class="toc-number">3.0.5.</span> <span class="toc-text"> 目标的后向散射系数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B3%B0%E5%80%BC%E6%97%81%E7%93%A3%E6%AF%94pslr%E5%92%8C%E7%A7%AF%E5%88%86%E6%97%81%E7%93%A3%E6%AF%94islr"><span class="toc-number">3.0.6.</span> <span class="toc-text"> 峰值旁瓣比(PSLR)和积分旁瓣比(ISLR)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BE%90%E5%B0%84%E5%88%86%E8%BE%A8%E7%8E%87-2"><span class="toc-number">3.0.7.</span> <span class="toc-text"> 辐射分辨率</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        基本概念1
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-18T13:15:26.000Z" class="dt-published" itemprop="datePublished">2024-06-18</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Research-AI/">Research-AI</a> › <a class="category-link" href="/categories/Research-AI/Theory/">Theory</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天	心情：差</p>
+<hr />
+<h3 id="lfm信号的幅频特性与时宽带宽积"><a class="markdownIt-Anchor" href="#lfm信号的幅频特性与时宽带宽积"></a> LFM信号的幅频特性与时宽带宽积</h3>
+<p>在满足大时宽带宽积的条件下，LFM信号具有近似矩形的幅频特性。时宽带宽积（Time-Bandwidth Product, TBP）越大，幅频特性越接近矩形，如图3.18所示。时宽带宽积的定义如下：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">B</mi><mi mathvariant="normal">P</mi></mrow><mo>=</mo><mi>T</mi><mo>⋅</mo><mi>B</mi><mo>=</mo><mi>T</mi><mo>⋅</mo><mi mathvariant="normal">∣</mi><mi>K</mi><mi mathvariant="normal">∣</mi><mo>⋅</mo><mi>T</mi><mo>=</mo><mi mathvariant="normal">∣</mi><mi>K</mi><mi mathvariant="normal">∣</mi><mo>⋅</mo><msup><mi>T</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\mathrm{TBP} = T \cdot B = T \cdot |K| \cdot T = |K| \cdot T^2
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">B</span><span class="mord mathrm">P</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8641079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></p>
+<h3 id="脉冲信号压缩的条件"><a class="markdownIt-Anchor" href="#脉冲信号压缩的条件"></a> 脉冲信号压缩的条件</h3>
+<p>要有效实现脉冲信号压缩，需满足以下两个条件：</p>
+<ol>
+<li>
+<p><strong>大时宽带宽积</strong>：发射的脉冲信号必须具有大时宽带宽积（远大于1），即单一载频信号要具有线性相位谱，从而使脉冲宽度与信号带宽是相对独立变化的参数。</p>
+</li>
+<li>
+<p><strong>匹配滤波器</strong>：接收端必须有一个匹配滤波器。在时域上，匹配滤波器将发射的宽脉冲压缩为窄脉冲；在频域上，滤波器的相频特性与发射信号实现相位共轭匹配，使压缩后的信号具有线性相位。</p>
+</li>
+</ol>
+<h3 id="实现脉冲压缩的挑战"><a class="markdownIt-Anchor" href="#实现脉冲压缩的挑战"></a> 实现脉冲压缩的挑战</h3>
+<p>实现脉冲压缩的前提是雷达要发射具有大时宽带宽积的脉冲信号。由于受到雷达硬件和工艺的影响，直接发射大时宽带宽积的脉冲有一定困难，因此通常采用&quot;调制&quot;技术来实现在宽脉冲情况下增大信号带宽。</p>
+<p>根据雷达信号理论，调制包括两种：</p>
+<ul>
+<li><strong>幅度调制</strong></li>
+<li><strong>相位调制</strong>：通常分为线性调频（LFM）、非线性调频（NLFM）和相位编码（PCM或PSK）。</li>
+</ul>
+<h5 id="辐射分辨率"><a class="markdownIt-Anchor" href="#辐射分辨率"></a> 辐射分辨率</h5>
+<p>也称为灰度级分辨率,是衡量雷达图像质量的重要指标之一,它表示雷达系统区分相近的散射系数的能力。</p>
+<h5 id="孔径d天线增益g和有效接受面积a以及波瓣宽度beta的关系"><a class="markdownIt-Anchor" href="#孔径d天线增益g和有效接受面积a以及波瓣宽度beta的关系"></a> 孔径D，天线增益G和有效接受面积A以及波瓣宽度<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>的关系</h5>
+<p>其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>A</mi><mi>r</mi></msub></mrow><annotation encoding="application/x-tex">A_r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>为天线接收的有效面积，有效面积与天线增益之间的关系为：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>G</mi><mo>=</mo><mfrac><mrow><mn>4</mn><mi>π</mi><mi>A</mi></mrow><msup><mi>λ</mi><mn>2</mn></msup></mfrac></mrow><annotation encoding="application/x-tex">G=\frac{4\pi A}{\lambda^2}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">G</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.04633em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36033em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">λ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="mord mathnormal">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>对于波瓣宽度<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>β</mi><mo>≈</mo><mfrac><mi>λ</mi><mi>D</mi></mfrac></mrow><annotation encoding="application/x-tex">\beta≈\frac{\lambda}{D} 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.05744em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.37144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">λ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>对于天线增益：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>G</mi><mo>≈</mo><mfrac><mrow><mi>π</mi><msup><mi>D</mi><mn>2</mn></msup></mrow><msup><mi>λ</mi><mn>2</mn></msup></mfrac></mrow><annotation encoding="application/x-tex">G≈\frac{\pi D^2}{\lambda^2}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">G</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.177108em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.491108em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">λ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<h5 id="匹配滤波器"><a class="markdownIt-Anchor" href="#匹配滤波器"></a> 匹配滤波器</h5>
+<p>发射信号具有非线性相位谱,压缩网络的相频特性应与发射信号的相频特性实现共轭匹配,即相位的绝对值相同,符号相反,这样输出信号就会具有线性相位。</p>
+<p>LFM信号通过匹配滤波器后的输出信号具有以下特点:<br />
+(1) 信号为单一载频信号(载频为0f),具有线性相位,不再是非线性相位。<br />
+(2) 信号的包络近似为s inc函数形式。通常将峰值下降4dB(幅度下降到峰值的0.637<br />
+(3) 如果压缩网络是无源的(通常情况正是如此),根据能量守恒定理,输入输出信号的能量应相等。由于脉冲宽度变为原来的1/D,所以输出脉冲的峰值功率为输入脉冲的D倍, 信号的峰值为原来的D倍(从式(2-49)中也能推出这一结论)。<br />
+(5) 实际应用中,运动目标的回波往往具有无法预知的多普勒频移,而匹配滤波器匹配于已知的信号形式(零多普勒频率),因此,雷达系统中的匹配滤波器通常是失配的。这就使得滤波器的输出信号峰值下降,主瓣展宽,距离分辨率有所降低。但相对相位编码等其它用于脉冲压缩的信号而言,LFM信号的多普勒失配敏感程度要小得多,即多普勒容限要大得多, 这是脉冲压缩体制的一个重要性能参数。因此LFM信号在警戒、搜索等雷达体制中获得广泛应用。</p>
+<h5 id="脉冲压缩系统的性能指标"><a class="markdownIt-Anchor" href="#脉冲压缩系统的性能指标"></a> 脉冲压缩系统的性能指标</h5>
+<ol>
+<li>多普勒容限。这与发射信号的波形有关。由于运动目标的回波中存在无法预知的多普勒频移,因此作为压缩网络的匹配滤波器多少存在失配,使雷达的距离分辨率和信噪比下降。同等多普勒频移的情况下,滤波器失配的程度由发射信号的波形决定。LFM信号的多普勒失配敏感程度相比同为脉冲压缩发射信号的相位编码信号要小得多,也就是说,使用LFM 信号的脉冲压缩体制其多普勒容限大于使用相位编码信号的脉冲压缩体制。</li>
+<li>距离旁瓣抑制能力。压缩网络的输出信号存在较大的旁瓣,影响雷达对目标的检测。 脉冲压缩体制的距离旁瓣抑制能力与选用的加权函数有关,具体参数参见表2-1。由于加权函数会产生主瓣展宽、峰值降低等效果,所以旁瓣抑制须综合考虑信噪比损失以及技术实现难易度等因素。</li>
+<li>脉冲压缩比。脉冲压缩比近似等于发射信号的时宽带宽积D,它有以下影响:
+<ol>
+<li>输出信噪比。由于匹配滤波器输出信号功率为输入信号的D倍,幅度峰值为输入的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mi>D</mi></msqrt></mrow><annotation encoding="application/x-tex">\sqrt{D}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.11333499999999996em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9266650000000001em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span></span></span><span style="top:-2.886665em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.11333499999999996em;"><span></span></span></span></span></span></span></span></span>倍,故输出信噪比相对输入信噪比提高了D倍。</li>
+<li>雷达探测距离。根据雷达距离方程,由于输出信噪比提高了D倍,探测距离相对于同样发射功率和距离分辨率的普通脉冲雷达提高了<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>D</mi><mfrac><mn>1</mn><mn>4</mn></mfrac></msup></mrow><annotation encoding="application/x-tex">D^\frac{1}{4}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9540200000000001em;vertical-align:0em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9540200000000001em;"><span style="top:-3.363em;margin-right:0.05em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen nulldelimiter sizing reset-size3 size6"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8443142857142858em;"><span style="top:-2.656em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">4</span></span></span></span><span style="top:-3.2255000000000003em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line mtight" style="border-bottom-width:0.049em;"></span></span><span style="top:-3.384em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.344em;"><span></span></span></span></span></span><span class="mclose nulldelimiter sizing reset-size3 size6"></span></span></span></span></span></span></span></span></span></span></span></span>倍。</li>
+<li>距离分辨率。与发射同样脉宽信号的普通雷达相比,距离分辨率提高了D倍。</li>
+</ol>
+</li>
+</ol>
+<h5 id="目标的后向散射系数"><a class="markdownIt-Anchor" href="#目标的后向散射系数"></a> 目标的后向散射系数</h5>
+<p>相当于RCS，要说明的是,对于不同的电磁波极化方式及不同的电磁波波段,同一目标的后向散射系数特性是不同的。</p>
+<p>如果要提高分辨率,只需降低天线的实际孔径长度,也就相当于增大天线波束宽度,增加相干积累时间。</p>
+<h5 id="峰值旁瓣比pslr和积分旁瓣比islr"><a class="markdownIt-Anchor" href="#峰值旁瓣比pslr和积分旁瓣比islr"></a> 峰值旁瓣比(PSLR)和积分旁瓣比(ISLR)</h5>
+<p>对于广泛分布的多个强散射点场景,PSLR参数更为重要;此时,过小的PSLR可能导致虚假目标。而对于均匀分布的弱散射场景,ISLR的作用更明显;此时,过小的ISLR会降低图像对比度,图像中将充斥大量阴影区域。</p>
+<h5 id="辐射分辨率-2"><a class="markdownIt-Anchor" href="#辐射分辨率-2"></a> 辐射分辨率</h5>
+<p>雷达辐射分辨率是系统区分雷达散射系数相近值的能力。它等效于黑白照片中能够区分的不同的灰度等级。在照片中分辨率由粒径决定,而在雷达图像中,辐射分辨率由目标相干斑(Speckl e)和信噪比决定。相干斑是分辨单元内多个散射体回波信号矢量相互叠加所出现的现象。通过多视处理技术可以减轻图像中的相干斑,改善辐射分辨率,但是它以牺牲空间分辨率为代价。在采用非相干平均降低相干斑的算法中,辐射分辨率r和多视处理视数N及单视信噪比S的关系为<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/742ade7d32ab37a0f237a17425fb23ea.png" alt="image-20240618200747769" /></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#lfm%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%B9%85%E9%A2%91%E7%89%B9%E6%80%A7%E4%B8%8E%E6%97%B6%E5%AE%BD%E5%B8%A6%E5%AE%BD%E7%A7%AF"><span class="toc-number">1.</span> <span class="toc-text"> LFM信号的幅频特性与时宽带宽积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%84%89%E5%86%B2%E4%BF%A1%E5%8F%B7%E5%8E%8B%E7%BC%A9%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text"> 脉冲信号压缩的条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E8%84%89%E5%86%B2%E5%8E%8B%E7%BC%A9%E7%9A%84%E6%8C%91%E6%88%98"><span class="toc-number">3.</span> <span class="toc-text"> 实现脉冲压缩的挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BE%90%E5%B0%84%E5%88%86%E8%BE%A8%E7%8E%87"><span class="toc-number">3.0.1.</span> <span class="toc-text"> 辐射分辨率</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%94%E5%BE%84d%E5%A4%A9%E7%BA%BF%E5%A2%9E%E7%9B%8Ag%E5%92%8C%E6%9C%89%E6%95%88%E6%8E%A5%E5%8F%97%E9%9D%A2%E7%A7%AFa%E4%BB%A5%E5%8F%8A%E6%B3%A2%E7%93%A3%E5%AE%BD%E5%BA%A6beta%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">3.0.2.</span> <span class="toc-text"> 孔径D，天线增益G和有效接受面积A以及波瓣宽度β\betaβ的关系</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="toc-number">3.0.3.</span> <span class="toc-text"> 匹配滤波器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%84%89%E5%86%B2%E5%8E%8B%E7%BC%A9%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="toc-number">3.0.4.</span> <span class="toc-text"> 脉冲压缩系统的性能指标</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E7%9A%84%E5%90%8E%E5%90%91%E6%95%A3%E5%B0%84%E7%B3%BB%E6%95%B0"><span class="toc-number">3.0.5.</span> <span class="toc-text"> 目标的后向散射系数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B3%B0%E5%80%BC%E6%97%81%E7%93%A3%E6%AF%94pslr%E5%92%8C%E7%A7%AF%E5%88%86%E6%97%81%E7%93%A3%E6%AF%94islr"><span class="toc-number">3.0.6.</span> <span class="toc-text"> 峰值旁瓣比(PSLR)和积分旁瓣比(ISLR)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BE%90%E5%B0%84%E5%88%86%E8%BE%A8%E7%8E%87-2"><span class="toc-number">3.0.7.</span> <span class="toc-text"> 辐射分辨率</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&text=基本概念1"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&title=基本概念1"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&is_video=false&description=基本概念1"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=基本概念1&body=Check out this article: https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&title=基本概念1"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&title=基本概念1"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&title=基本概念1"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&title=基本概念1"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&name=基本概念1&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/06/18/Research-AI/Theory/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B51/&t=基本概念1"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：阴雨 心情：差  操了妈的, 天天下雨, 下午外卖还被偷了, 图书馆隔壁还是个司马的玩意。  在构造函数中使用 new 时的注意事项 根据之前学习到的代码，我们可以发现，使用 new 初始化指针成员必须特别小心，具体如下所示：  如果在构造函数中使用 new 来初始化指针成员，则应在析构函数中使用 delete。 new 和 delete 必须相互兼容。new 对应于 delete，new">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Cpp-21">
+<meta property="og:url" content="https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：阴雨 心情：差  操了妈的, 天天下雨, 下午外卖还被偷了, 图书馆隔壁还是个司马的玩意。  在构造函数中使用 new 时的注意事项 根据之前学习到的代码，我们可以发现，使用 new 初始化指针成员必须特别小心，具体如下所示：  如果在构造函数中使用 new 来初始化指针成员，则应在析构函数中使用 delete。 new 和 delete 必须相互兼容。new 对应于 delete，new">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-04-09T12:40:26.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:54.551Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习Cpp-21</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/04/10/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-22/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/04/07/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-20/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&text=学习Cpp-21"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&title=学习Cpp-21"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&is_video=false&description=学习Cpp-21"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-21&body=Check out this article: https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&title=学习Cpp-21"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&title=学习Cpp-21"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&title=学习Cpp-21"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&title=学习Cpp-21"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&name=学习Cpp-21&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&t=学习Cpp-21"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9C%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%AD%E4%BD%BF%E7%94%A8-new-%E6%97%B6%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.</span> <span class="toc-text"> 在构造函数中使用 new 时的注意事项</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8C%85%E5%90%AB%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text"> 包含类成员的类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%BA-const-%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.</span> <span class="toc-text"> 定义为 const 的返回值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-%E5%92%8C-c%E4%B8%AD%E7%9A%84%E7%A9%BA%E6%8C%87%E9%92%88%E5%8F%98%E9%87%8F-null-%E5%92%8C-nullptr"><span class="toc-number">4.</span> <span class="toc-text"> C 和 C++中的空指针变量 NULL 和 nullptr</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        学习Cpp-21
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-04-09T12:40:26.000Z" class="dt-published" itemprop="datePublished">2024-04-09</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Programming/">Programming</a> › <a class="category-link" href="/categories/Programming/CPP-Core/">CPP-Core</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：阴雨 心情：差</p>
+<hr />
+<p>操了妈的, 天天下雨, 下午外卖还被偷了, 图书馆隔壁还是个司马的玩意。</p>
+<h5 id="在构造函数中使用-new-时的注意事项"><a class="markdownIt-Anchor" href="#在构造函数中使用-new-时的注意事项"></a> 在构造函数中使用 new 时的注意事项</h5>
+<p>根据之前学习到的代码，我们可以发现，使用 new 初始化指针成员必须特别小心，具体如下所示：</p>
+<ul>
+<li>如果在构造函数中使用 new 来初始化指针成员，则应在析构函数中使用 delete。</li>
+<li>new 和 delete 必须相互兼容。new 对应于 delete，new [ ] 对应于 delete [ ]。</li>
+<li>如果有多个构造函数，则必须以相同的方式使用 new，要么都带中括号，要么都不带。因为只有 一个析构函数，所有的构造函数都必须与它兼容。然而，可以在一个构造函数中使用 new 初始化 指针，而在另一个构造函数中将指针初始化为空（0 或 C++11 中的 nullptr），这是因为 delete（无 论是带中括号还是不带中括号）可以用于空指针。</li>
+<li>应定义一个复制构造函数，通过深度复制将一个对象初始化为另一个对象。（对于指针成员，将指向的对象在内存中复制一份）</li>
+<li>应当定义一个赋值运算符，通过深度复制将一个对象复制给另一个对象。</li>
+</ul>
+<h5 id="包含类成员的类"><a class="markdownIt-Anchor" href="#包含类成员的类"></a> 包含类成员的类</h5>
+<p>我们都知道类会有默认的复制构造函数，对于类中的类成员，其使用等号或者复制赋值时，其默认的复制构造函数将会调用类成员自带的复制构造函数来对其进行赋值。</p>
+<h5 id="定义为-const-的返回值"><a class="markdownIt-Anchor" href="#定义为-const-的返回值"></a> 定义为 const 的返回值</h5>
+<p>对于类中的运算符重载，例如 <code>=</code> 与 <code>==</code> 有时候可能会因为手打错导致搞混，例如 <code>class_v1 + class_v2 = class_v3</code>（放在左边更加容易避免出错），此时可以将 <code>operator+</code> 定义为 const 来避免出错。</p>
+<h5 id="c-和-c中的空指针变量-null-和-nullptr"><a class="markdownIt-Anchor" href="#c-和-c中的空指针变量-null-和-nullptr"></a> C 和 C++中的空指针变量 NULL 和 nullptr</h5>
+<p>NULL、0 还是 nullptr：以前，空指针可以用 0 或 NULL（在很多头文件中，NULL 是一个被定义为 0 的符号常量）来表示。C 程序员通常使用 NULL 而不是 0，以指出这是一个指针，就像使用‘\0’而不是 0 来 表示空字符，以指出这是一个字符一样。然而，C++传统上更喜欢用简单的 0，而不是等价的 NULL。但正 如前面指出的，C++11 提供了关键字 nullptr，这是一种更好的选择。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9C%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%AD%E4%BD%BF%E7%94%A8-new-%E6%97%B6%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.</span> <span class="toc-text"> 在构造函数中使用 new 时的注意事项</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8C%85%E5%90%AB%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text"> 包含类成员的类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%BA-const-%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.</span> <span class="toc-text"> 定义为 const 的返回值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-%E5%92%8C-c%E4%B8%AD%E7%9A%84%E7%A9%BA%E6%8C%87%E9%92%88%E5%8F%98%E9%87%8F-null-%E5%92%8C-nullptr"><span class="toc-number">4.</span> <span class="toc-text"> C 和 C++中的空指针变量 NULL 和 nullptr</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&text=学习Cpp-21"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&title=学习Cpp-21"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&is_video=false&description=学习Cpp-21"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-21&body=Check out this article: https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&title=学习Cpp-21"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&title=学习Cpp-21"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&title=学习Cpp-21"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&title=学习Cpp-21"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&name=学习Cpp-21&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/04/09/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-21/&t=学习Cpp-21"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

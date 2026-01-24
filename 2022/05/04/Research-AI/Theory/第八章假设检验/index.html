@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="第八章假设检验       第一类错误相比第二类错误的危害更加大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第八章假设检验">
+<meta property="og:url" content="https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="第八章假设检验       第一类错误相比第二类错误的危害更加大">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/d9d7aaf0ff1c00685e1f695ec85bc12c.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/2e72f06d002e6c32864f0328454afdf9.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/55e790b9275dd7febfd56e186aa3f411.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/0ba4ad62a8448ffad082f26f84c04436.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/770891c4e6a0cbdebddd9028a2824acc.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/11b8e6cd6eed4fc767a5515f865b1ef1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/db6d238853131f2f61e0ce7005d7b99e.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/76c0d9487d0cab96ce55bc08377e9a07.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/2a5affe3635074f2fd5b674fec96abaf.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/6b0918ff190aaa05bbfe86b1b27dcce4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/d5c368839cbc70e77e4dd60767ba4900.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/fc1e7487935d26689e9ac79a46b44eae.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/9e6674f1c608b0772f852fd0a897e776.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/7c8e7de07486913117eddfde975942a2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/0183fb1d5dc94e20b67c88851d2ed045.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/f42be0d92f950c9e04518a3952c6a08b.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/2811174784ccc97fba2d80c21d4485d5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/9d77216039888cfa30a351e9be3d3c94.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/f8fc9e0fd4786c3fb918609961b903d5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/d9ee10a5451e4eacc1921ef85907ca83.png">
+<meta property="article:published_time" content="2022-05-04T07:54:46.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:55.007Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/d9d7aaf0ff1c00685e1f695ec85bc12c.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>第八章假设检验</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/05/04/Journal/Monthly-Log/5%E6%9C%884%E6%97%A5%E5%88%B7%E9%A2%98/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/05/04/Research-AI/Theory/%E7%AC%AC%E4%B8%83%E7%AB%A0%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&text=第八章假设检验"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&title=第八章假设检验"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&is_video=false&description=第八章假设检验"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=第八章假设检验&body=Check out this article: https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&title=第八章假设检验"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&title=第八章假设检验"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&title=第八章假设检验"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&title=第八章假设检验"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&name=第八章假设检验&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&t=第八章假设检验"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C"><span class="toc-number">1.</span> <span class="toc-text"> 第八章假设检验</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%B1%BB%E9%94%99%E8%AF%AF%E7%9B%B8%E6%AF%94%E7%AC%AC%E4%BA%8C%E7%B1%BB%E9%94%99%E8%AF%AF%E7%9A%84%E5%8D%B1%E5%AE%B3%E6%9B%B4%E5%8A%A0%E5%A4%A7"><span class="toc-number">1.1.</span> <span class="toc-text"> 第一类错误相比第二类错误的危害更加大</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        第八章假设检验
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-05-04T07:54:46.000Z" class="dt-published" itemprop="datePublished">2022-05-04</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Research-AI/">Research-AI</a> › <a class="category-link" href="/categories/Research-AI/Theory/">Theory</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h4 id="第八章假设检验"><a class="markdownIt-Anchor" href="#第八章假设检验"></a> 第八章假设检验</h4>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/d9d7aaf0ff1c00685e1f695ec85bc12c.png" alt="image-20220504151247782" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/2e72f06d002e6c32864f0328454afdf9.png" alt="image-20220504151306124" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/55e790b9275dd7febfd56e186aa3f411.png" alt="image-20220504151407268" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/0ba4ad62a8448ffad082f26f84c04436.png" alt="image-20220504151424283" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/770891c4e6a0cbdebddd9028a2824acc.png" alt="image-20220504151822383" /></p>
+<h5 id="第一类错误相比第二类错误的危害更加大"><a class="markdownIt-Anchor" href="#第一类错误相比第二类错误的危害更加大"></a> 第一类错误相比第二类错误的危害更加大</h5>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/11b8e6cd6eed4fc767a5515f865b1ef1.png" alt="image-20220504152225958" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/db6d238853131f2f61e0ce7005d7b99e.png" alt="image-20220504153442844" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/76c0d9487d0cab96ce55bc08377e9a07.png" alt="image-20220504153639734" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/2a5affe3635074f2fd5b674fec96abaf.png" alt="image-20220504153652994" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/6b0918ff190aaa05bbfe86b1b27dcce4.png" alt="image-20220504153755445" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/d5c368839cbc70e77e4dd60767ba4900.png" alt="image-20220504154414284" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/fc1e7487935d26689e9ac79a46b44eae.png" alt="image-20220504154511360" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/9e6674f1c608b0772f852fd0a897e776.png" alt="image-20220504154522662" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/7c8e7de07486913117eddfde975942a2.png" alt="image-20220504154618900" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/0183fb1d5dc94e20b67c88851d2ed045.png" alt="image-20220504154803176" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/f42be0d92f950c9e04518a3952c6a08b.png" alt="image-20220504154839999" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/2811174784ccc97fba2d80c21d4485d5.png" alt="image-20220504154902065" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/9d77216039888cfa30a351e9be3d3c94.png" alt="image-20220504155215958" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/f8fc9e0fd4786c3fb918609961b903d5.png" alt="image-20220504155229690" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/d9ee10a5451e4eacc1921ef85907ca83.png" alt="image-20220504155239139" /></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C"><span class="toc-number">1.</span> <span class="toc-text"> 第八章假设检验</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%B1%BB%E9%94%99%E8%AF%AF%E7%9B%B8%E6%AF%94%E7%AC%AC%E4%BA%8C%E7%B1%BB%E9%94%99%E8%AF%AF%E7%9A%84%E5%8D%B1%E5%AE%B3%E6%9B%B4%E5%8A%A0%E5%A4%A7"><span class="toc-number">1.1.</span> <span class="toc-text"> 第一类错误相比第二类错误的危害更加大</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&text=第八章假设检验"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&title=第八章假设检验"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&is_video=false&description=第八章假设检验"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=第八章假设检验&body=Check out this article: https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&title=第八章假设检验"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&title=第八章假设检验"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&title=第八章假设检验"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&title=第八章假设检验"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&name=第八章假设检验&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2022/05/04/Research-AI/Theory/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/&t=第八章假设检验"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

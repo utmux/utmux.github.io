@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：下雨 心情：一般  今天估计就学习了几个小时，昨天忘记学习 C++了，昨天在折腾平板刷机和折腾 kindle 以及 kindle 的安卓 APP。昨晚还看了蛤蟆先生去看心理医生，感觉自己的身体决定了我自己的精神状态，我现在感觉自己很懒，懒得去思考，去体会自己的情绪。如何拜托这种状态啊，拜托。。。。。。  16.3 标准模板库 STL 是一种泛型编程（generic programming）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Cpp-37">
+<meta property="og:url" content="https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：下雨 心情：一般  今天估计就学习了几个小时，昨天忘记学习 C++了，昨天在折腾平板刷机和折腾 kindle 以及 kindle 的安卓 APP。昨晚还看了蛤蟆先生去看心理医生，感觉自己的身体决定了我自己的精神状态，我现在感觉自己很懒，懒得去思考，去体会自己的情绪。如何拜托这种状态啊，拜托。。。。。。  16.3 标准模板库 STL 是一种泛型编程（generic programming）。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-08T12:22:26.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:54.660Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习Cpp-37</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/10/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-39-%E6%89%80%E6%9C%89%E5%AE%B9%E5%99%A8%E6%80%BB%E7%BB%93/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&text=学习Cpp-37"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&title=学习Cpp-37"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&is_video=false&description=学习Cpp-37"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-37&body=Check out this article: https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&title=学习Cpp-37"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&title=学习Cpp-37"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&title=学习Cpp-37"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&title=学习Cpp-37"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&name=学习Cpp-37&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&t=学习Cpp-37"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#163-%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93"><span class="toc-number">1.</span> <span class="toc-text"> 16.3 标准模板库</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB-vector"><span class="toc-number">1.1.</span> <span class="toc-text"> 模板类 vector</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips-%E5%88%86%E9%85%8D%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text"> Tips: 分配器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text"> Tips：迭代器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips-%E8%B6%85%E8%BF%87%E7%BB%93%E5%B0%BEpast-the-end"><span class="toc-number">1.4.</span> <span class="toc-text"> Tips 超过结尾（past-the-end）</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text"> 其他操作</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E4%BB%8E-for_each-%E5%9B%9E%E6%83%B3%E4%B9%8B%E5%89%8D%E7%9A%84-for-%E5%BE%AA%E7%8E%AF"><span class="toc-number">2.1.</span> <span class="toc-text"> Tips：从 for_each 回想之前的 for 循环</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#164-%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text"> 16.4 泛型编程</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1641-%E4%B8%BA%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text"> 16.4.1 为何使用迭代器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E5%85%B3%E4%BA%8E-p%E5%92%8Cp-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">3.2.</span> <span class="toc-text"> Tips：关于 p++和++p 运算符</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#1642-%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.3.</span> <span class="toc-text"> 16.4.2 迭代器的类型</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%9C"><span class="toc-number">3.4.</span> <span class="toc-text"> 迭代器的层次结果</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#1644-%E6%A6%82%E5%BF%B5concept-%E6%94%B9%E8%BF%9B%E5%92%8C%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.5.</span> <span class="toc-text"> 16.4.4 概念（concept）、改进和模型</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        学习Cpp-37
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-08T12:22:26.000Z" class="dt-published" itemprop="datePublished">2024-06-08</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Programming/">Programming</a> › <a class="category-link" href="/categories/Programming/CPP-Core/">CPP-Core</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：下雨 心情：一般</p>
+<hr />
+<p>今天估计就学习了几个小时，昨天忘记学习 C++了，昨天在折腾平板刷机和折腾 kindle 以及 kindle 的安卓 APP。昨晚还看了蛤蟆先生去看心理医生，感觉自己的身体决定了我自己的精神状态，我现在感觉自己很懒，懒得去思考，去体会自己的情绪。如何拜托这种状态啊，拜托。。。。。。</p>
+<h5 id="163-标准模板库"><a class="markdownIt-Anchor" href="#163-标准模板库"></a> 16.3 标准模板库</h5>
+<p>STL 是一种泛型编程（generic programming）。下面简要介绍以下概念，以便有一个最基本的感性认识：</p>
+<h6 id="模板类-vector"><a class="markdownIt-Anchor" href="#模板类-vector"></a> 模板类 vector</h6>
+<p>vector 在 STL 中被定义为模板类，下面来简要说一下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 和其他类模板一样，需要使用&lt;type&gt;表示来指出要使用的类型</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> vector</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ratings</span><span class="params">(<span class="number">5</span>)</span></span>; <span class="comment">// a vector of 5 ints</span></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line">cin &gt;&gt; n;</span><br><span class="line"><span class="function">vector&lt;<span class="type">double</span>&gt; <span class="title">scores</span><span class="params">(n)</span></span>; <span class="comment">// a vector of n doubles</span></span><br></pre></td></tr></table></figure>
+<h6 id="tips-分配器"><a class="markdownIt-Anchor" href="#tips-分配器"></a> Tips: 分配器</h6>
+<p>和 string 类似，各种 STL 容器模板都接受一个可选的模板参数，该参数指定使用哪个分配器对象来管理内存，如 vector：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>, <span class="keyword">class</span> <span class="title class_">Allocator</span> = allocator&lt;T&gt;&gt;</span><br><span class="line">	<span class="keyword">class</span> vector&#123;...&#125;;</span><br><span class="line">	<span class="comment">// 即vector模板默认使用allocator&lt;T&gt;类来管理内存</span></span><br></pre></td></tr></table></figure>
+<p>所有 STL 容器都提供了一些基本方法，比如：</p>
+<ul>
+<li>size()：返回容器中的元素数目</li>
+<li>swap()：交换两个容器的内容</li>
+<li>begin()：返回一个指向容器中的第一个元素的迭代器</li>
+<li>end()：返回一个表示超过容器尾的迭代器</li>
+</ul>
+<h6 id="tips迭代器"><a class="markdownIt-Anchor" href="#tips迭代器"></a> Tips：迭代器</h6>
+<p>和 Python 类似，C++中也存在迭代器，C++中的迭代器是指一个广义的指针。广义的指针表示，它可以是指针，也可以是一个对其执行类似指针操作的对象（比如定义 <code>operator*()</code> 来表示解除引用，定义 <code>operator++()</code> 来表示递增）。使用迭代器能够让 STL 为不同的容器类提供统一的接口，STL 迭代器的类型为 iterator 的 typedef，作用域为整个类，你可以像下面这样声明一个 vector 的迭代器：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">double</span>&gt;::iterator pd; <span class="comment">// 声明一个double类型的迭代器</span></span><br><span class="line"><span class="comment">// 此时如果存在double类型的vector，我们可以这样：</span></span><br><span class="line">vector&lt;<span class="type">double</span>&gt; scores;</span><br><span class="line">pd = scores.<span class="built_in">begin</span>();</span><br><span class="line"><span class="comment">// 也可以利用C++的智能指针auto pd = scores.begin()</span></span><br><span class="line">*pd = <span class="number">22.3</span>;</span><br><span class="line">++pd;</span><br></pre></td></tr></table></figure>
+<p>可以看到，迭代器非常类似于指针，有解除引用，自增等方法。</p>
+<h6 id="tips-超过结尾past-the-end"><a class="markdownIt-Anchor" href="#tips-超过结尾past-the-end"></a> Tips 超过结尾（past-the-end）</h6>
+<p>所谓超过结尾，和前面提到的一样，是一种迭代器，指向容器最后一个元素后面的那个元素，STL 中的 end()方法就是返回一个指向超过结尾的迭代器，我们可以此时我们就可以这样写：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(pd = scores.<span class="built_in">begin</span>(); pd != scores.<span class="built_in">end</span>(); pd++)</span><br><span class="line">	cout &lt;&lt; *pd &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<p>对于 vector 类，其拥有 push_back()方法：将元素添加到矢量末尾，会自动增加长度管理内存。其还拥有 erase()方法，删除给定区间的元素，注意 STL 中的区间一般是左闭右开的（所以 string 类使用区间初始化也是左闭右开），比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scores.<span class="built_in">erase</span>(scores.<span class="built_in">begin</span>(), scores.<span class="built_in">begin</span>() + <span class="number">2</span>);</span><br><span class="line"><span class="comment">// 是删除第一个元素和第二个元素</span></span><br></pre></td></tr></table></figure>
+<p>vector 还有 insert()方法，接受 3 个迭代器参数，将一个区间插入到某个地方，比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; old_v;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; new_v;</span><br><span class="line">...</span><br><span class="line">old_v.<span class="built_in">insert</span>(old_v.<span class="built_in">begin</span>(), new_v.<span class="built_in">begin</span>() + <span class="number">1</span>, new_v.<span class="built_in">end</span>());</span><br><span class="line"><span class="comment">// 将new_v除了第一个元素外，插入到old_v.begin()的前面</span></span><br><span class="line"><span class="comment">// 此时就能体会到超尾的方便之处</span></span><br></pre></td></tr></table></figure>
+<h5 id="其他操作"><a class="markdownIt-Anchor" href="#其他操作"></a> 其他操作</h5>
+<p>对于数组我们经常需要进行搜索，排序和随机排序等，STL 从更加广泛的角度定义了非成员函数来执行这些操作，但有时候 STL 也会对特定的容器定义相同功能的成员函数，这是因为对于该操作来说，类特定算法的效率比通用算法高，比如 vector 的 swap()方法就比非成员函数 swap()要高。但是非成员函数能够让你交换两个类型不同的容器。下面是三个比较具有代表性的 STL 函数：</p>
+<ul>
+<li>
+<p>for_each()：for_each()函数适用于非常多的容器类，接受三个参数，前两个是表示区间的迭代器，第三个是指向函数的指针。比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for_each(books.<span class="built_in">begin</span>(), books.<span class="built_in">end</span>(), ShowReview);</span><br><span class="line"><span class="comment">// 更加简洁，不必声明一些临时变量</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>random_shuffle()：接受指定区间的迭代器参数，并随机排列该区间的元素：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">random_shuffle</span>(books.<span class="built_in">begin</span>(), books.<span class="built_in">end</span>());</span><br></pre></td></tr></table></figure>
+<p>该函数要求容器支持随机访问</p>
+</li>
+<li>
+<p>sort()：该函数也要求容器支持随机访问，sort 函数有两个版本，第一个版本接受两个迭代器表示的区间作为参数，并使用容器中类型元素定义的 <code>operator&lt;</code> 运算符函数进行比较来排序。如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; coolstuff;</span><br><span class="line"><span class="built_in">sort</span>(coolstuff.<span class="built_in">begin</span>(), coolstuff.<span class="built_in">end</span>());</span><br></pre></td></tr></table></figure>
+<p>如果元素为用户自定义的类，则必须定义 <code>operator&lt;</code> 函数，返回值为 bool 类型（可以是成员或者非成员函数即友元函数），比如下面：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="keyword">operator</span>&lt;(<span class="type">const</span> Review &amp; r1, <span class="type">const</span> Review &amp; r2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (r<span class="number">1.</span>title &lt; r<span class="number">2.</span>title)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (r<span class="number">1.</span>title == r<span class="number">2.</span>title &amp;&amp; r<span class="number">1.</span>rating &lt; r<span class="number">2.</span>rating)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="tips从-for_each-回想之前的-for-循环"><a class="markdownIt-Anchor" href="#tips从-for_each-回想之前的-for-循环"></a> Tips：从 for_each 回想之前的 for 循环</h6>
+<p>前面我们提到过一种 for 循环，该 for 循环本事就是为 STL 设计的，所以是可以直接对 STL 对象使用的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> prices[<span class="number">5</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">double</span> x: prices)</span><br><span class="line">	cout &lt;&lt; x &lt;&lt; std::endl;</span><br><span class="line"><span class="comment">// 我们可以结合auto来简化代码</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> x: prices)&#123;...&#125;</span><br><span class="line"><span class="comment">// 如果我们需要修改内容，此时只需要加上一个引用即可：</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;x: prices)&#123;...&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="164-泛型编程"><a class="markdownIt-Anchor" href="#164-泛型编程"></a> 16.4 泛型编程</h5>
+<p>前面提到 STL 是一种泛型编程，和面向对象编程不同，面向对象关注的是编程的数据方面，而泛型编程关注的是算法。共同点是两者都是抽象出的可重用的结构和代码。下面来介绍以下如何利用模板来编写泛型编程：</p>
+<h6 id="1641-为何使用迭代器"><a class="markdownIt-Anchor" href="#1641-为何使用迭代器"></a> 16.4.1 为何使用迭代器</h6>
+<p>比如对于 find()方法，对与数组和对于某种数据结构其具体的查找方法可能不一样，但是算法逻辑是一样的，此时我们可以抽象出 find()方法所需要的一个必需品就是迭代器，且该迭代器能够：</p>
+<ul>
+<li>能够进行解除引用，即对 <code>operator*</code> 定义</li>
+<li>能够将一个迭代器赋值到另一个，比如函数中需要初始化循环迭代器为传入参数的起始区间，p = q</li>
+<li>能够进行比较，比如 p == q 和 p!= q，这样就能判断是否到了区间末尾</li>
+<li>定义 <code>operataor++</code> 等能遍历的函数，此时可以利用 p++或者++p 来遍历所有单元</li>
+</ul>
+<p>上面知识最基本的迭代器要求，STL 根据功能的强弱定义了多种级别的迭代器。此时，只要容器类定义了迭代器和超尾，我们就可以使用同一个算法对不同的数据结构进行操作，所以迭代器是泛型编程（genetic programing）的基础。</p>
+<h6 id="tips关于-p和p-运算符"><a class="markdownIt-Anchor" href="#tips关于-p和p-运算符"></a> Tips：关于 p++和++p 运算符</h6>
+<p>在 C++中为了区分 p++和++p，其定义分别是 <code>operator++</code> 和 <code>operator++ (int)</code></p>
+<h6 id="1642-迭代器的类型"><a class="markdownIt-Anchor" href="#1642-迭代器的类型"></a> 16.4.2 迭代器的类型</h6>
+<p>就如之前所说，根据功能的强弱，C++中有不同的迭代器，STL 定义了 5 中迭代器，分别是输入迭代器，输出迭代器，正向迭代器，双向迭代器和随机访问迭代器。这五种迭代器，都可以解除引用（定义了 <code>operator*</code>），比较相等与不相等（定义了 <code>operator!=</code> 和 <code>operator==</code>）</p>
+<ol>
+<li>
+<p>输入迭代器<br />
+对于输入迭代器，其仅能读取容器中元素的值，不能修改（即 <code>operator*</code> 返回 const），且输入迭代器支持++运算符（包括前缀和后缀）。该迭代器不保证输入迭代器第二次遍历容器时，顺序不变。输入迭代器被递增后，也不能保证其先前的值仍然可以被解除引用。即该迭代器是单通行（single-pass），基于该迭代器的算法应该不依赖于前一次遍历时的迭代器值，也不依赖于本次遍历中前面的迭代器值。</p>
+</li>
+<li>
+<p>输出迭代器，和输入恰好相反，即将信息从程序传输给容器的迭代器，再传入给容器。其只能写入不能读取。也是单通行。<br />
+简而言之，<strong>对于单通行，只读算法，可以使用输入迭代器。而对于单通行，只写算法，可以使用输出迭代器。</strong></p>
+</li>
+<li>
+<p>正向迭代器<br />
+和输入/输出迭代器类似，通过 <code>++</code> 运算符来遍历容器，与前两者不同的是，每次遍历的顺序是相同的，且仍然可以对前面的迭代器的值解除引用（如果保存了它），并得到相同的值，因此可以使用多次通行算法。正向迭代器既能读取也能写入数据，课可以使得只能读取数据：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *pirw; <span class="comment">// 可读可写</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> * pir; <span class="comment">// 只读迭代器</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>双向迭代器<br />
+双向迭代器支持双向遍历容器，同时支持 <code>++</code> 和 <code>--</code>（前缀和后缀）</p>
+</li>
+<li>
+<p>随机访问迭代器<br />
+随机访问迭代器再双向迭代器的基础上增添下面这些操作支持：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">表达式</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">a+n</td>
+<td style="text-align:center">指向 a 元素后的第 n 个元素</td>
+</tr>
+<tr>
+<td style="text-align:center">n+a</td>
+<td style="text-align:center">同上</td>
+</tr>
+<tr>
+<td style="text-align:center">a-n</td>
+<td style="text-align:center">类似上</td>
+</tr>
+<tr>
+<td style="text-align:center">r+= n</td>
+<td style="text-align:center">等价 r = r+n</td>
+</tr>
+<tr>
+<td style="text-align:center">r-= n</td>
+<td style="text-align:center">等价 r = r-n</td>
+</tr>
+<tr>
+<td style="text-align:center">a [n]</td>
+<td style="text-align:center">等价*(a + n)</td>
+</tr>
+<tr>
+<td style="text-align:center">b-a</td>
+<td style="text-align:center">结果为 n</td>
+</tr>
+<tr>
+<td style="text-align:center">a &lt; b</td>
+<td style="text-align:center">如果b-a&gt; 0 则为真</td>
+</tr>
+<tr>
+<td style="text-align:center">a &gt;= b</td>
+<td style="text-align:center">如果!(a &lt; b)，则为真</td>
+</tr>
+<tr>
+<td style="text-align:center">a &lt;=b</td>
+<td style="text-align:center">如果!(a&gt; b)，则为真</td>
+</tr>
+</tbody>
+</table>
+<h6 id="迭代器的层次结果"><a class="markdownIt-Anchor" href="#迭代器的层次结果"></a> 迭代器的层次结果</h6>
+<p>从上面可以看出，从上往下，迭代器的功能是依次在上一个的基础上增加的，下面是一个表格：</p>
+<table>
+ <tbody>
+  <tr>
+   <th> 迭代器功能 </th>
+   <th> 输 入 </th>
+   <th> 输 出 </th>
+   <th> 正 向 </th>
+   <th> 双 向 </th>
+   <th> 随 机 访 问 </th>
+  </tr>
+  <tr>
+   <td> 解除引用读取 </td>
+   <td> 有 </td>
+   <td> 无 </td>
+   <td> 有 </td>
+   <td> 有 </td>
+   <td> 有 </td>
+  </tr>
+  <tr>
+   <td> 解除引用写入 </td>
+   <td> 无 </td>
+   <td> 有 </td>
+   <td> 有 </td>
+   <td> 有 </td>
+   <td> 有 </td>
+  </tr>
+  <tr>
+   <td> 固定和可重复排序 </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 有 </td>
+   <td> 有 </td>
+   <td> 有 </td>
+  </tr>
+  <tr>
+   <td>++i 和 i++</td>
+   <td> 有 </td>
+   <td> 有 </td>
+   <td> 有 </td>
+   <td> 有 </td>
+   <td> 有 </td>
+  </tr>
+  <tr>
+   <td>--i 和 i-- </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 有 </td>
+   <td> 有 </td>
+  </tr>
+  <tr>
+   <td> i [n] </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 有 </td>
+  </tr>
+  <tr>
+   <td> i+n </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 有 </td>
+  </tr>
+  <tr>
+   <td> i-n </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 有 </td>
+  </tr>
+  <tr>
+   <td> i+= n </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 有 </td>
+  </tr>
+  <tr>
+   <td> i-= n </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 无 </td>
+   <td> 有 </td>
+  </tr>
+ </tbody>
+</table>
+</li>
+</ol>
+<h6 id="1644-概念concept-改进和模型"><a class="markdownIt-Anchor" href="#1644-概念concept-改进和模型"></a> 16.4.4 概念（concept）、改进和模型</h6>
+<p>STL 有若干个用 C++语言无法表达的特性，如迭代器种类。因此，虽然可以设计具有正向迭代器特征的类，但不能让编译器将算法限制为只使用这个类。原因在于，正向迭代器是 <strong>一系列要求</strong>，而不是类型。所设计的迭代器类可以满足这种要求，常规指针也能满足这种要求。STL 算法可以使用任何满足其要求的迭代器实现。STL 文献使用 <strong>术语概念（concept）</strong> 来描述一系列的要求。因此，存在输入迭代器概念、正向迭代器概念，等等。顺便说一句，如果所设计的容器类需要迭代器，可考虑 STL，它包含用于标准种类的迭代器模板。</p>
+<p>概念可以具有类似继承的关系（本质上就是要求的继承）。然而，不能将 C++继承机制用于迭代器。例如，可以将正向迭代器实现为一个 <strong>类</strong>，而将双向迭代器实现为一个 <strong>常规指针</strong>。对 C++而言，这种双向迭代器是一种内置类型，不能从类派生而来。然而，从概念上看，它确实能够继承。有些 STL 文献使用术语 <strong>改进（refinement）</strong> 来表示这种概念上的继承，因此，双向迭代器是对正向迭代器概念的一种改进。</p>
+<ol>
+<li>
+<p>将指针用作迭代器<br />
+指针满足所有对迭代器的所有要求，因此 <strong>STL 算法可以使用指针来对基于指针的非 STL 容器进行操作。</strong> 比如我们可以将数组传入 STL 方法，将指针作为数组的迭代器，此时仍然能够正常使用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> SIZE = <span class="number">100</span>;</span><br><span class="line"><span class="type">double</span> REceipts[SIZE];</span><br><span class="line"><span class="built_in">sort</span>(Receipts, Receipts + SIZE); <span class="comment">// 传入超尾，正常使用STL函数</span></span><br></pre></td></tr></table></figure>
+<p>STL 中默认提供很多中方法，比如 copy()，该方法能够将一个容器复制到另一个容器中，比如下面：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> cast[<span class="number">10</span>] = &#123;<span class="number">6</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">4</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">10</span>, <span class="number">5</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; dice[<span class="number">10</span>];</span><br><span class="line"><span class="built_in">copy</span>(casts, casts + <span class="number">10</span>, dice.<span class="built_in">begin</span>()); <span class="comment">// copy array to vector</span></span><br></pre></td></tr></table></figure>
+<p>如果我们需要输出到某个 stream 上，就需要 ostream_iterator 的迭代器，为此，STL 就提供了 ostream_iterator 模板。或者换句话说，该模板是 <strong>输出迭代器</strong> 的一个模型（model），它也是一个适配器（adapter）--即一个类或者函数，能够将一些其他的接口转化为 STL 使用的接口。（这里是将 ostream 这个类，能够被 STL 使用），我们要使用 ostream_iterator 这个模板可以如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 包括头文件iterator</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iterator&gt;</span></span></span><br><span class="line">...</span><br><span class="line"><span class="comment">// 2. 创建具体的ostream_iterator的类</span></span><br><span class="line"><span class="function">ostream_iterator&lt;<span class="type">int</span>, <span class="type">char</span>&gt; <span class="title">out_iter</span><span class="params">(cout, <span class="string">&quot;&quot;</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>上面定义了一个接口（adapter），该接口能够让你使用 cout 来显示信息。第一个模板参数为被发送到输出流的数据类型，第二个参数是指出输出牛使用的字符类型（这里可以是 wchar_t）。构造参数的第一个 cout 之处要使用的数据流，第二个是发送给输出流每隔数据项显示的分割符。</p>
+</li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#163-%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93"><span class="toc-number">1.</span> <span class="toc-text"> 16.3 标准模板库</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB-vector"><span class="toc-number">1.1.</span> <span class="toc-text"> 模板类 vector</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips-%E5%88%86%E9%85%8D%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text"> Tips: 分配器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text"> Tips：迭代器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips-%E8%B6%85%E8%BF%87%E7%BB%93%E5%B0%BEpast-the-end"><span class="toc-number">1.4.</span> <span class="toc-text"> Tips 超过结尾（past-the-end）</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text"> 其他操作</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E4%BB%8E-for_each-%E5%9B%9E%E6%83%B3%E4%B9%8B%E5%89%8D%E7%9A%84-for-%E5%BE%AA%E7%8E%AF"><span class="toc-number">2.1.</span> <span class="toc-text"> Tips：从 for_each 回想之前的 for 循环</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#164-%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text"> 16.4 泛型编程</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1641-%E4%B8%BA%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text"> 16.4.1 为何使用迭代器</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#tips%E5%85%B3%E4%BA%8E-p%E5%92%8Cp-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">3.2.</span> <span class="toc-text"> Tips：关于 p++和++p 运算符</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#1642-%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.3.</span> <span class="toc-text"> 16.4.2 迭代器的类型</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%9C"><span class="toc-number">3.4.</span> <span class="toc-text"> 迭代器的层次结果</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#1644-%E6%A6%82%E5%BF%B5concept-%E6%94%B9%E8%BF%9B%E5%92%8C%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.5.</span> <span class="toc-text"> 16.4.4 概念（concept）、改进和模型</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&text=学习Cpp-37"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&title=学习Cpp-37"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&is_video=false&description=学习Cpp-37"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-37&body=Check out this article: https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&title=学习Cpp-37"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&title=学习Cpp-37"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&title=学习Cpp-37"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&title=学习Cpp-37"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&name=学习Cpp-37&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/&t=学习Cpp-37"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

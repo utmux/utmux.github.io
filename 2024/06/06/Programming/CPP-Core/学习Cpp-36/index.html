@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：下雨 心情：差  今天早上耳朵突然出血，然后上午就去医院看了下，最近几天一直睡不好，吃也没啥胃口，我感觉我应该吃饭的。不知道是心情的原因还是什么，感觉最近一直很累。跑步也没作用。  智能指针  uniqe_ptr 与 auto_ptr 前面提到过，auto_ptr 和 unique_ptr 的一个不同就是 auto_ptr 是在运行的时候如果发现变量没有拥有权（ownership）就会直接退">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Cpp-36">
+<meta property="og:url" content="https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：下雨 心情：差  今天早上耳朵突然出血，然后上午就去医院看了下，最近几天一直睡不好，吃也没啥胃口，我感觉我应该吃饭的。不知道是心情的原因还是什么，感觉最近一直很累。跑步也没作用。  智能指针  uniqe_ptr 与 auto_ptr 前面提到过，auto_ptr 和 unique_ptr 的一个不同就是 auto_ptr 是在运行的时候如果发现变量没有拥有权（ownership）就会直接退">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-06T14:22:26.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:54.651Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习Cpp-36</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/08/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-37/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/03/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-35/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&text=学习Cpp-36"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&title=学习Cpp-36"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&is_video=false&description=学习Cpp-36"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-36&body=Check out this article: https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&title=学习Cpp-36"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&title=学习Cpp-36"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&title=学习Cpp-36"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&title=学习Cpp-36"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&name=学习Cpp-36&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&t=学习Cpp-36"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="toc-number">1.</span> <span class="toc-text"> 智能指针</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#uniqe_ptr-%E4%B8%8E-auto_ptr"><span class="toc-number">1.1.</span> <span class="toc-text"> uniqe_ptr 与 auto_ptr</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">1.2.</span> <span class="toc-text"> 智能指针的选择</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        学习Cpp-36
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-06T14:22:26.000Z" class="dt-published" itemprop="datePublished">2024-06-06</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Programming/">Programming</a> › <a class="category-link" href="/categories/Programming/CPP-Core/">CPP-Core</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：下雨 心情：差</p>
+<hr />
+<p>今天早上耳朵突然出血，然后上午就去医院看了下，最近几天一直睡不好，吃也没啥胃口，我感觉我应该吃饭的。不知道是心情的原因还是什么，感觉最近一直很累。跑步也没作用。</p>
+<h5 id="智能指针"><a class="markdownIt-Anchor" href="#智能指针"></a> 智能指针</h5>
+<h6 id="uniqe_ptr-与-auto_ptr"><a class="markdownIt-Anchor" href="#uniqe_ptr-与-auto_ptr"></a> uniqe_ptr 与 auto_ptr</h6>
+<p>前面提到过，<code>auto_ptr</code> 和 <code>unique_ptr</code> 的一个不同就是 auto_ptr 是在运行的时候如果发现变量没有拥有权（ownership）就会直接退出，而对于 <code>unique_ptr</code> 是会在编译阶段检查对 <code>unique_ptr</code> 指针的赋值行为，即不能将一个指针赋值到另一个，防止多个对象指向同一个指针，正如它的名字所示：unique。</p>
+<p>但是为了应对下面这种情况，<code>unique_ptr</code> 指针是允许临时右值这种赋值的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">unique_ptr&lt;string&gt; <span class="title">demo</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">unique_ptr&lt;string&gt; <span class="title">temp</span><span class="params">(<span class="keyword">new</span> string(s))</span></span>;</span><br><span class="line">	<span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面这种情况是符合 unique 的定义的，因为在赋值到另一个 <code>unique_ptr</code> 变量前，前面的那个 unique 变量会被销毁，即保证只有一个 <code>unique_ptr</code> 指向该数据。总之，编译器是允许上面这种如果源 <code>unique_ptr</code> 是一个临时右值（即赋值完就会被销毁），此时编译器是允许这样做的，但是如果源 <code>unique_ptr</code> 不是立刻销毁，此时编译器就会报错：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function">unique_ptr&lt;string&gt; <span class="title">pu1</span><span class="params">(<span class="keyword">new</span> string(<span class="string">&quot;Hi&quot;</span>))</span></span>;</span><br><span class="line">unique_ptr&lt;string&gt; pu2;</span><br><span class="line">pu2 = pu1; <span class="comment">// 这是不允许的因为pu1仍然会存在</span></span><br><span class="line">unique_ptr&lt;string&gt; pu3;</span><br><span class="line">pu3 = <span class="built_in">unique_ptr</span>&lt;string&gt;(<span class="keyword">new</span> string <span class="string">&quot;Yo&quot;</span>); <span class="comment">// 允许的，右边是一个临时变量，赋值完该指针变量就会被销毁</span></span><br></pre></td></tr></table></figure>
+<p>当然如果你确实需要将某个 unique_ptr 的所有权转移到另一个 unique_ptr 的上面，你可以使用 <code>std::move()</code> 这个函数，如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unique_ptr&lt;string&gt; ps1, ps2;</span><br><span class="line">ps1 = <span class="built_in">demo</span>(<span class="string">&quot;ts1&quot;</span>);</span><br><span class="line">ps2 = std::<span class="built_in">move</span>(ps1); <span class="comment">// 使用move函数</span></span><br><span class="line">ps1 = <span class="built_in">demo</span>(<span class="string">&quot; and more&quot;</span>); <span class="comment">// 此时ps解除了指向</span></span><br></pre></td></tr></table></figure>
+<p>unique_ptr 的另一个优点是可以用于数组，相比之下 auto_ptr 只能使用 <code>new</code>，原因是 auto_ptr 写死了内部释放内存是使用 <code>delete</code> 而不是能切换到 <code>delete []</code>，如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">unique_ptr&lt;<span class="type">double</span> []&gt; <span class="title">pda</span><span class="params">(<span class="keyword">new</span> <span class="type">double</span>(<span class="number">5</span>))</span></span>; <span class="comment">// unique_ptr支持数组</span></span><br><span class="line"><span class="comment">// auto_ptr 不支持数组，只能使用auto_ptr&lt;double&gt; pad(new double)</span></span><br></pre></td></tr></table></figure>
+<h6 id="智能指针的选择"><a class="markdownIt-Anchor" href="#智能指针的选择"></a> 智能指针的选择</h6>
+<p>应该选取哪个智能指针，如果需要多个指向同一个对象，则选择 share_ptr，即下面这种情况，比如某个数组需要被多处引用，比如很多算法用来查找数组最大最小，或者双轨法。否则使用 unique_ptr。如果函数使用 new 分配内存，则使 unique_ptr 来接受这个返回指针是一个不错的选择，此时确保该对象不需要调用算法（比如 sort()）或者赋值给另一个的方法。unique_ptr 可以像下面这样使用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">unique_ptr&lt;<span class="type">int</span>&gt; <span class="title">make_int</span><span class="params">(<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">unique_ptr</span>&lt;<span class="type">int</span>&gt;(<span class="keyword">new</span> <span class="built_in">int</span>(n));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">(unique_ptr&lt;<span class="type">int</span>&gt; &amp;pi)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; *pi &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vector&lt;unique_ptr&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">vp</span>(size);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; vp.<span class="built_in">size</span>(); i++)</span><br><span class="line">        vp[i] = <span class="built_in">make_int</span>(<span class="built_in">rand</span>() % <span class="number">100</span>); <span class="comment">//  赋值临时unique_ptr</span></span><br><span class="line">   vp.<span class="built_in">push_back</span>(<span class="built_in">make_int</span>(<span class="built_in">rand</span>() % <span class="number">100</span>)); <span class="comment">// 因为参数是一个临时变量，所以可以</span></span><br><span class="line">    for_each(vp.<span class="built_in">begin</span>(), vp.<span class="built_in">end</span>(), show); <span class="comment">// 使用for_each遍历</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>除此之外智能指针之间，unique_ptr 是可以转化为 shared_ptr 的。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="toc-number">1.</span> <span class="toc-text"> 智能指针</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#uniqe_ptr-%E4%B8%8E-auto_ptr"><span class="toc-number">1.1.</span> <span class="toc-text"> uniqe_ptr 与 auto_ptr</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">1.2.</span> <span class="toc-text"> 智能指针的选择</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&text=学习Cpp-36"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&title=学习Cpp-36"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&is_video=false&description=学习Cpp-36"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-36&body=Check out this article: https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&title=学习Cpp-36"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&title=学习Cpp-36"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&title=学习Cpp-36"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&title=学习Cpp-36"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&name=学习Cpp-36&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/06/06/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-36/&t=学习Cpp-36"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

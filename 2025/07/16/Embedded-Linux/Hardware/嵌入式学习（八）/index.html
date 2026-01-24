@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天 心情：一般   嵌入式学习（八）  1. INPUT DEVICE 和 HANDLER 的注册与硬件输入数据流向  1. input_register_device 和 input_register_handler 后的匹配与 input_handle 你的理解完全正确！   注册与匹配：  当一个 物理输入硬件的驱动程序 调用 input_register_device() 注册一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式学习（八）">
+<meta property="og:url" content="https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天 心情：一般   嵌入式学习（八）  1. INPUT DEVICE 和 HANDLER 的注册与硬件输入数据流向  1. input_register_device 和 input_register_handler 后的匹配与 input_handle 你的理解完全正确！   注册与匹配：  当一个 物理输入硬件的驱动程序 调用 input_register_device() 注册一个">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/70647e6483c23726312dfd4d8b6510f3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/5d4492f15010a5500ba17cdb71a72946.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/ed1bc3b17cc520f875c302179bd51c59.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/b505d7062c0f801ae18b717dce1c14c3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/938ca60289c3990b48f1b82588e7d4c5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/70647e6483c23726312dfd4d8b6510f3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/c058372acc999eaaf6e1ad336810b52b.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/fa2196d851b9166a1baccf351ec26530.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/c058372acc999eaaf6e1ad336810b52b.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/b3e118aebdc2d5f4ef81b3d54d9d269a.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/090d68385213be9a9a574a651cf4470f.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/26ffbc19f86345ed91d7e99c54bf77e3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/a2ab49e6bf145c59cbccb4089efc4ea2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/2c73fb3882b3d390fb9aba901efdc394.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/122d957bd89a4d640136e4a4f4b8a04c.png">
+<meta property="article:published_time" content="2025-07-16T12:52:04.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:54.233Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/70647e6483c23726312dfd4d8b6510f3.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>嵌入式学习（八）</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2025/07/21/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B9%9D%EF%BC%89/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2025/07/14/Embedded-Linux/Kernel/INPUT%E8%BE%93%E5%85%A5%E7%B3%BB%E7%BB%9F%E9%9F%A6%E4%B8%9C%E5%B1%B1%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&text=嵌入式学习（八）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&title=嵌入式学习（八）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&is_video=false&description=嵌入式学习（八）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=嵌入式学习（八）&body=Check out this article: https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&title=嵌入式学习（八）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&title=嵌入式学习（八）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&title=嵌入式学习（八）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&title=嵌入式学习（八）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&name=嵌入式学习（八）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&t=嵌入式学习（八）"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E5%85%AB"><span class="toc-number">1.</span> <span class="toc-text"> 嵌入式学习（八）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-input-device-%E5%92%8C-handler-%E7%9A%84%E6%B3%A8%E5%86%8C%E4%B8%8E%E7%A1%AC%E4%BB%B6%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE%E6%B5%81%E5%90%91"><span class="toc-number">1.1.</span> <span class="toc-text"> 1. INPUT DEVICE 和 HANDLER 的注册与硬件输入数据流向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-input_register_device-%E5%92%8C-input_register_handler-%E5%90%8E%E7%9A%84%E5%8C%B9%E9%85%8D%E4%B8%8E-input_handle"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 1. input_register_device 和 input_register_handler 后的匹配与 input_handle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E8%AF%BB%E5%8F%96%E6%B5%81%E7%A8%8B%E5%92%8C-evdev_client"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 2. 应用程序读取流程和 evdev_client</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-input_handler-%E4%B8%AD%E7%9A%84%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0filter-events-event"><span class="toc-number">1.2.</span> <span class="toc-text"> 2. input_handler 中的回调函数：filter, events, event</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-filter-%E5%A4%84%E7%90%86%E5%99%A8%E4%BC%98%E5%85%88%E7%BA%A7%E7%9A%84%E7%A1%AE%E5%88%87%E5%90%AB%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 1. filter 处理器优先级的确切含义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%90%86%E8%A7%A3-linux-%E8%BE%93%E5%85%A5%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.</span> <span class="toc-text"> 3. 理解 Linux 输入子系统内部实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9E%84%E4%BD%93%E6%A6%82%E8%BF%B0"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 1. 核心结构体概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B3%A8%E5%86%8C%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 2. 注册流程详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#21-%E6%B3%A8%E5%86%8C-input_devinput_register_device"><span class="toc-number">1.3.2.1.</span> <span class="toc-text"> 2.1 注册 input_dev：input_register_device()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#22-%E6%B3%A8%E5%86%8C-input_handlerinput_register_handler"><span class="toc-number">1.3.2.2.</span> <span class="toc-text"> 2.2 注册 input_handler：input_register_handler()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#23-%E5%8C%B9%E9%85%8D%E5%90%8E-connect-%E5%87%BD%E6%95%B0%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.2.3.</span> <span class="toc-text"> 2.3 匹配后 connect 函数的操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%8F%96%E6%B5%81%E7%A8%8B%E6%BC%94%E7%A4%BA"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 3. 数据读取流程演示</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-linux-%E5%86%85%E6%A0%B8%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-delayed_work-%E5%BB%B6%E6%97%B6%E5%B7%A5%E4%BD%9C-%E5%8E%BB%E6%8C%89%E9%94%AE%E6%8A%96%E5%8A%A8"><span class="toc-number">1.4.</span> <span class="toc-text"> 4. Linux 内核如何使用 delayed_work (延时工作) 去按键抖动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%8A%96%E5%8A%A8-bouncing"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 1. 什么是“抖动” (Bouncing)？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8E%BB%E6%8A%96%E5%8A%A8-debouncing"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 2. 什么是“去抖动” (Debouncing)？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-linux-%E5%86%85%E6%A0%B8%E4%B8%AD%E7%9A%84%E5%BB%B6%E6%97%B6%E5%B7%A5%E4%BD%9C-delayed_work-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.4.3.</span> <span class="toc-text"> 3. Linux 内核中的“延时工作” (delayed_work) 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-delayed_work-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0-gpio-%E5%8E%BB%E6%8A%96%E5%8A%A8%E5%85%B3%E9%94%AE%E7%82%B9%E5%8F%8A%E5%8F%AA%E5%8F%91%E9%80%81%E4%B8%80%E6%AC%A1%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A7%A3%E9%87%8A"><span class="toc-number">1.4.4.</span> <span class="toc-text"> 4. delayed_work 如何实现 GPIO 去抖动？（关键点及“只发送一次数据”的解释）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%AE%BE%E5%A4%87%E6%A0%91%E9%87%8C%E9%9D%A2-gpio-%E4%B8%AD%E6%96%AD%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95%E4%B8%8E%E5%8C%BA%E5%88%AB%E4%BB%A5%E5%8F%8A%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.5.</span> <span class="toc-text"> 5. 设备树里面 GPIO 中断的两种写法与区别以及底层实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-gpio-isr-%E4%B8%8E-request_irq-%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB"><span class="toc-number">1.5.1.</span> <span class="toc-text"> 1. GPIO ISR 与 request_irq 的区别与联系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-device-tree-%E4%B8%AD-gpio-%E4%B8%AD%E6%96%AD%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%B8%B8%E8%A7%81%E5%86%99%E6%B3%95"><span class="toc-number">1.5.2.</span> <span class="toc-text"> 2. Device Tree 中 GPIO 中断的两种常见写法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#21-%E7%AC%AC%E4%B8%80%E7%A7%8D%E5%86%99%E6%B3%95gpio-%E5%86%99%E6%B3%95-%E9%80%9A%E8%BF%87-gpio-%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89%E5%BC%95%E8%84%9A%E5%86%8D%E5%9C%A8%E9%A9%B1%E5%8A%A8%E4%B8%AD%E8%BD%AC%E6%8D%A2%E4%B8%BA-irq"><span class="toc-number">1.5.2.1.</span> <span class="toc-text"> 2.1 第一种写法：&quot;GPIO 写法&quot; (通过 GPIO 属性定义引脚，再在驱动中转换为 IRQ)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#22-%E7%AC%AC%E4%BA%8C%E7%A7%8D%E5%86%99%E6%B3%95interrupt-%E5%86%99%E6%B3%95-%E7%9B%B4%E6%8E%A5%E5%AE%9A%E4%B9%89%E4%B8%AD%E6%96%AD%E6%BA%90"><span class="toc-number">1.5.2.2.</span> <span class="toc-text"> 2.2 第二种写法：&quot;Interrupt 写法&quot; (直接定义中断源)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9"><span class="toc-number">1.5.3.</span> <span class="toc-text"> 3. 如何选择？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-gpio_request-%E4%B8%8E-gpio_to_irq-%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-number">1.5.4.</span> <span class="toc-text"> 4. gpio_request() 与 gpio_to_irq() 的底层实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-gpio_request-%E7%B3%BB%E5%88%97%E5%87%BD%E6%95%B0"><span class="toc-number">1.5.4.1.</span> <span class="toc-text"> 1. gpio_request() 系列函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-gpio_to_irq-%E5%87%BD%E6%95%B0"><span class="toc-number">1.5.4.2.</span> <span class="toc-text"> 2. gpio_to_irq() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.4.3.</span> <span class="toc-text"> 3. 总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%9F%A6%E4%B8%9C%E5%B1%B1%E6%96%87%E6%A1%A3%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text"> 6. 韦东山文档总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-linux-input-%E5%AD%90%E7%B3%BB%E7%BB%9F%E4%B8%8E%E9%A9%B1%E5%8A%A8%E6%A1%86%E6%9E%B6"><span class="toc-number">1.6.1.</span> <span class="toc-text"> 1. Linux Input 子系统与驱动框架</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%9B%9E%E9%A1%BE%E6%A1%86%E6%9E%B6"><span class="toc-number">1.6.1.1.</span> <span class="toc-text"> 1. 回顾框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%80%8E%E4%B9%88%E7%BC%96%E5%86%99-input_dev-%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.6.1.2.</span> <span class="toc-text"> 2. 怎么编写 input_dev 驱动</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#21-%E5%88%86%E9%85%8D%E8%AE%BE%E7%BD%AE%E6%B3%A8%E5%86%8C-input_dev"><span class="toc-number">1.6.1.2.1.</span> <span class="toc-text"> 2.1 分配&#x2F;设置&#x2F;注册 input_dev</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#22-%E7%A1%AC%E4%BB%B6%E7%9B%B8%E5%85%B3%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">1.6.1.2.2.</span> <span class="toc-text"> 2.2 硬件相关的操作</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%BC%96%E5%86%99-input_dev-%E9%A9%B1%E5%8A%A8%E6%A1%86%E6%9E%B6"><span class="toc-number">1.6.1.3.</span> <span class="toc-text"> 3. 编写 input_dev 驱动框架</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%BC%96%E5%86%99%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E8%A7%A6%E6%91%B8%E5%B1%8F%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F_%E5%9F%BA%E4%BA%8E-qemu"><span class="toc-number">1.6.2.</span> <span class="toc-text"> 2. 编写最简单的触摸屏驱动程序_基于 QEMU</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2%E7%9A%84%E8%AF%9D"><span class="toc-number">1.6.2.1.</span> <span class="toc-text"> 1. 写在前面的话</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.6.2.2.</span> <span class="toc-text"> 2. 准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#21-%E4%B8%8B%E8%BD%BD"><span class="toc-number">1.6.2.2.1.</span> <span class="toc-text"> 2.1 下载</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#22-%E5%AE%89%E8%A3%85%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">1.6.2.2.2.</span> <span class="toc-text"> 2.2 安装运行环境</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#23-%E8%BF%90%E8%A1%8C-qemu"><span class="toc-number">1.6.2.2.3.</span> <span class="toc-text"> 2.3 运行 QEMU</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-qemu-%E8%A7%A6%E6%91%B8%E5%B1%8F%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="toc-number">1.6.2.3.</span> <span class="toc-text"> 3. QEMU 触摸屏操作方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E7%BC%96%E5%86%99%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.6.2.4.</span> <span class="toc-text"> 4. 编写驱动程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E4%B8%8A%E6%9C%BA%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.6.2.5.</span> <span class="toc-text"> 5. 上机实验</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#51-%E8%AE%BE%E7%BD%AE%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="toc-number">1.6.2.5.1.</span> <span class="toc-text"> 5.1 设置工具链</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#52-%E7%BC%96%E8%AF%91%E5%86%85%E6%A0%B8%E8%AE%BE%E5%A4%87%E6%A0%91"><span class="toc-number">1.6.2.5.2.</span> <span class="toc-text"> 5.2 编译内核&#x2F;设备树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#53-%E5%90%AF%E5%8A%A8-qemu"><span class="toc-number">1.6.2.5.3.</span> <span class="toc-text"> 5.3 启动 QEMU</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#54-%E6%8C%82%E8%BD%BD-nfs"><span class="toc-number">1.6.2.5.4.</span> <span class="toc-text"> 5.4 挂载 NFS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#55-%E7%BC%96%E8%AF%91-%E4%BD%BF%E7%94%A8-tslib"><span class="toc-number">1.6.2.5.5.</span> <span class="toc-text"> 5.5 编译、使用 tslib</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#55-%E9%80%80%E5%87%BA-qemu"><span class="toc-number">1.6.2.5.6.</span> <span class="toc-text"> 5.5 退出 QEMU</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#56-%E6%94%B9%E8%BF%9B%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.6.2.5.7.</span> <span class="toc-text"> 5.6 改进驱动</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-gpio-%E6%8C%89%E9%94%AE%E9%A9%B1%E5%8A%A8%E5%88%86%E6%9E%90%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="toc-number">1.6.3.</span> <span class="toc-text"> 3. GPIO 按键驱动分析与使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6"><span class="toc-number">1.6.3.1.</span> <span class="toc-text"> 1. 驱动程序框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%AE%BE%E5%A4%87%E6%A0%91%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.6.3.2.</span> <span class="toc-text"> 2. 设备树示例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#21-%E8%AE%BE%E5%A4%87%E6%A0%91%E8%AE%B2%E8%A7%A3"><span class="toc-number">1.6.3.2.1.</span> <span class="toc-text"> 2.1 设备树讲解</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#22-100ask_imx6ull"><span class="toc-number">1.6.3.2.2.</span> <span class="toc-text"> 2.2 100ASK_IMX6ULL</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#23-100ask_stm32mp157"><span class="toc-number">1.6.3.2.3.</span> <span class="toc-text"> 2.3 100ASK_STM32MP157</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#24-qemu"><span class="toc-number">1.6.3.2.4.</span> <span class="toc-text"> 2.4 QEMU</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-gpio_keysc-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90"><span class="toc-number">1.6.3.3.</span> <span class="toc-text"> 3. gpio_keys.c 驱动程序分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#31-%E5%A5%97%E8%B7%AF"><span class="toc-number">1.6.3.3.1.</span> <span class="toc-text"> 3.1 套路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#32-gpio_keys_gpio_isr-%E5%92%8C-%E5%8E%BB%E6%8A%96-debouncing-%E5%88%86%E6%9E%90"><span class="toc-number">1.6.3.3.2.</span> <span class="toc-text"> 3.2 gpio_keys_gpio_isr 和 去抖 (Debouncing) 分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#33-gpio_keys_irq_isr-%E5%88%86%E6%9E%90-%E8%A1%A5%E5%85%85"><span class="toc-number">1.6.3.3.3.</span> <span class="toc-text"> 3.3 gpio_keys_irq_isr 分析 (补充)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-qemu-%E4%B8%8A%E6%9C%BA%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.6.3.4.</span> <span class="toc-text"> 4. QEMU 上机实验</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#41-%E8%AE%BE%E7%BD%AE%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="toc-number">1.6.3.4.1.</span> <span class="toc-text"> 4.1 设置工具链</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#42-%E9%85%8D%E7%BD%AE%E5%86%85%E6%A0%B8"><span class="toc-number">1.6.3.4.2.</span> <span class="toc-text"> 4.2 配置内核</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#43-%E7%BC%96%E8%AF%91%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.6.3.4.3.</span> <span class="toc-text"> 4.3 编译驱动</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#44-%E5%90%AF%E5%8A%A8-qemu"><span class="toc-number">1.6.3.4.4.</span> <span class="toc-text"> 4.4 启动 QEMU</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#45-%E6%8C%82%E8%BD%BD-nfs-%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.6.3.4.5.</span> <span class="toc-text"> 4.5 挂载 NFS、实验</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-i2c-%E6%8E%A5%E5%8F%A3%E8%A7%A6%E6%91%B8%E5%B1%8F%E9%A9%B1%E5%8A%A8%E5%88%86%E6%9E%90"><span class="toc-number">1.6.4.</span> <span class="toc-text"> 4. I2C 接口触摸屏驱动分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6-2"><span class="toc-number">1.6.4.1.</span> <span class="toc-text"> 1. 驱动程序框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%AE%BE%E5%A4%87%E6%A0%91%E7%A4%BA%E4%BE%8B-2"><span class="toc-number">1.6.4.2.</span> <span class="toc-text"> 2. 设备树示例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#21-%E8%AE%BE%E5%A4%87%E6%A0%91%E8%AE%B2%E8%A7%A3-2"><span class="toc-number">1.6.4.2.1.</span> <span class="toc-text"> 2.1 设备树讲解</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#22-100ask_imx6ull-2"><span class="toc-number">1.6.4.2.2.</span> <span class="toc-text"> 2.2 100ASK_IMX6ULL</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#23-100ask_stm32mp157-2"><span class="toc-number">1.6.4.2.3.</span> <span class="toc-text"> 2.3 100ASK_STM32MP157</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90"><span class="toc-number">1.6.4.3.</span> <span class="toc-text"> 3. 驱动程序分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#31-%E5%88%86%E9%85%8D%E8%AE%BE%E7%BD%AE%E6%B3%A8%E5%86%8C-input_dev"><span class="toc-number">1.6.4.3.1.</span> <span class="toc-text"> 3.1 分配&#x2F;设置&#x2F;注册 input_dev</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#32-%E6%B3%A8%E5%86%8C%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0"><span class="toc-number">1.6.4.3.2.</span> <span class="toc-text"> 3.2 注册中断处理函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#33-%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="toc-number">1.6.4.3.3.</span> <span class="toc-text"> 3.3 中断处理函数分析</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-uinput-%E5%88%86%E6%9E%90_%E7%94%A8%E6%88%B7%E6%80%81%E5%88%9B%E5%BB%BA-input_dev"><span class="toc-number">1.6.5.</span> <span class="toc-text"> 5. UInput 分析_用户态创建 input_dev</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%A6%82%E5%BF%B5"><span class="toc-number">1.6.5.1.</span> <span class="toc-text"> 1. 概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%BC%96%E5%86%99%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.6.5.2.</span> <span class="toc-text"> 2. 编写应用程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%B8%8A%E6%9C%BA%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.6.5.3.</span> <span class="toc-text"> 3. 上机实验</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#31-%E8%AE%BE%E7%BD%AE%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="toc-number">1.6.5.3.1.</span> <span class="toc-text"> 3.1 设置工具链</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#32-%E9%85%8D%E7%BD%AE%E5%86%85%E6%A0%B8"><span class="toc-number">1.6.5.3.2.</span> <span class="toc-text"> 3.2 配置内核</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#33-%E7%BC%96%E8%AF%91%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.6.5.3.3.</span> <span class="toc-text"> 3.3 编译驱动</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#34-%E7%BC%96%E8%AF%91%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.6.5.3.4.</span> <span class="toc-text"> 3.4 编译测试程序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#35-%E5%90%AF%E5%8A%A8-qemu"><span class="toc-number">1.6.5.3.5.</span> <span class="toc-text"> 3.5 启动 QEMU</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#36-%E6%8C%82%E8%BD%BD-nfs-%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.6.5.3.6.</span> <span class="toc-text"> 3.6 挂载 NFS、实验</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E7%BB%93%E5%90%88%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90-uinput"><span class="toc-number">1.6.5.4.</span> <span class="toc-text"> 4. 结合应用程序分析 Uinput</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        嵌入式学习（八）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-07-16T12:52:04.000Z" class="dt-published" itemprop="datePublished">2025-07-16</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Embedded-Linux/">Embedded-Linux</a> › <a class="category-link" href="/categories/Embedded-Linux/Hardware/">Hardware</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天 心情：一般</p>
+<hr />
+<h1 id="嵌入式学习八"><a class="markdownIt-Anchor" href="#嵌入式学习八"></a> 嵌入式学习（八）</h1>
+<h2 id="1-input-device-和-handler-的注册与硬件输入数据流向"><a class="markdownIt-Anchor" href="#1-input-device-和-handler-的注册与硬件输入数据流向"></a> 1. INPUT DEVICE 和 HANDLER 的注册与硬件输入数据流向</h2>
+<h3 id="1-input_register_device-和-input_register_handler-后的匹配与-input_handle"><a class="markdownIt-Anchor" href="#1-input_register_device-和-input_register_handler-后的匹配与-input_handle"></a> 1. <code>input_register_device</code> 和 <code>input_register_handler</code> 后的匹配与 <code>input_handle</code></h3>
+<p>你的理解完全正确！</p>
+<ol>
+<li>
+<p><strong>注册与匹配：</strong></p>
+<ul>
+<li>当一个 <strong>物理输入硬件的驱动程序</strong> 调用 <code>input_register_device()</code> 注册一个 <code>struct input_dev</code> 时，Input Core 会遍历所有已经注册的 <code>input_handler</code> 列表，尝试与这个新的 <code>input_dev</code> 进行匹配。</li>
+<li>同理，当一个 <strong><code>input_handler</code></strong>（比如 <code>evdev.ko</code>）调用 <code>input_register_handler()</code> 注册时，Input Core 会遍历所有已注册的 <code>input_dev</code> 列表，尝试与这个新的 <code>input_handler</code> 进行匹配。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>input_handle</code> 的生成与存储：</strong></p>
+<ul>
+<li>如果匹配成功，Input Core 会分配创建一个 <code>struct input_handle</code> 实例。这个 <code>input_handle</code> 结构体就是 <code>input_dev</code> 和 <code>input_handler</code> 之间 <strong>“连接”的抽象表示</strong>。</li>
+<li>这个 <code>input_handle</code> 会被同时添加到：
+<ul>
+<li><code>input_dev</code> 结构体中的一个链表 (<code>dev-&gt;h_list</code>)。这意味着一个 <code>input_dev</code> 可以被多个 <code>input_handler</code> 关注。</li>
+<li><code>input_handler</code> 结构体中的一个链表 (<code>handler-&gt;h_list</code>)。这意味着一个 <code>input_handler</code> 可以管理多个 <code>input_dev</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>input_handler-&gt;connect</code> 函数的调用：</strong></p>
+<ul>
+<li>匹配成功后，Input Core 会紧接着调用这个 <code>input_handler</code> 所注册的 <code>connect</code> 回调函数。这个函数的参数就是刚刚创建的 <code>input_handle</code>。</li>
+<li>对于 <strong><code>evdev</code> handler</strong> 来说，其 <code>connect</code> 函数（<code>evdev_connect</code>）会完成以下重要操作：
+<ul>
+<li><strong>分配并初始化一个 <code>struct evdev</code> 结构体</strong>。这个 <code>evdev</code> 结构体可以看作是 <code>evdev</code> handler 针对这个特定 <code>input_handle</code>（从而特定 <code>input_dev</code>）的“私有数据”和管理上下文。</li>
+<li><strong>最关键的：注册字符设备！</strong> <code>evdev_connect</code> 会调用 <code>input_register_device</code> 函数（注意，和 <code>input_register_device</code> 命名虽然像，但它是 <code>evdev</code> 内部的函数，不是 Input Core 的全局注册，这里容易混淆），它最终会通过 <code>cdev_add()</code> 和 <code>device_create()</code> 等 API，在 <code>/dev/input/</code> 目录下创建一个新的字符设备节点，通常是 <code>/dev/input/eventX</code>（比如 <code>/dev/input/event0</code>, <code>/dev/input/event1</code> 等）。这个 <code>X</code> 是动态分配的。</li>
+<li><strong>是的，你理解完全正确，这就是 <code>/dev/input/eventX</code> 这个文件是怎么来的！</strong> 每个匹配到 <code>evdev</code> handler 的 <code>input_dev</code> 都会获得一个对应的 <code>/dev/input/eventX</code> 文件。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-应用程序读取流程和-evdev_client"><a class="markdownIt-Anchor" href="#2-应用程序读取流程和-evdev_client"></a> 2. 应用程序读取流程和 <code>evdev_client</code></h3>
+<p>现在我们来解决你最大的疑问：应用程序如何读取事件，以及 <code>evdev_client</code> 的作用和位置。</p>
+<p>我们以 <code>evdev</code> 作为 <code>input_handler</code> 的例子。</p>
+<p><strong>事件从硬件到用户空间的完整流程图：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">+------------------+          +-----------------------+          +------------------+</span><br><span class="line">| Physical Input   |          | Input Device Driver   |          |    Input Core    |</span><br><span class="line">| Hardware (e.g.,  |          | (e.g., Touchscreen TS)|          |                  |</span><br><span class="line">| FT5406 Chip)     | &lt;-------&gt;|  (via I2C/SPI, etc.)  | &lt;-------&gt;| (input_register, |</span><br><span class="line">+------------------+          +-----------------------+          | input_event APIs)|</span><br><span class="line">       ^ Interrupt                      |</span><br><span class="line">       |                              | input_report_*()</span><br><span class="line">       | 事件产生                     | (生成 input_event)</span><br><span class="line">       |                              V</span><br><span class="line">+------------------+         +----------------------------+      +------------------+</span><br><span class="line">|   User Space App | &lt;-------|   /dev/input/eventX      |      |   evdev_handler  |</span><br><span class="line">|    (open, read,  |         |   (Character Device)       | &lt;----| (evdev_event,    |</span><br><span class="line">|    poll, etc.)   |         |   (file_operations)        |      |    evdev_open,   |</span><br><span class="line">+------------------+         +----------------------------+      |    evdev_read)   |</span><br><span class="line">       ^ read()                             ^                       ^ evdev-&gt;events()</span><br><span class="line">       |                                    |                       | 接收 input_event</span><br><span class="line">       |                                    |                       | (via input_handle)</span><br><span class="line">       |                                    |                       |</span><br><span class="line">       +------------------------------------+-----------------------+</span><br><span class="line">                                  ^ (evdev_client-&gt;buffer)</span><br><span class="line">                                    每次 write/poll 唤醒</span><br></pre></td></tr></table></figure>
+<p><strong>详细步骤解析：</strong></p>
+<ol>
+<li>
+<p><strong>应用程序 <code>open()</code> <code>/dev/input/eventX</code>：</strong></p>
+<ul>
+<li>用户空间的应用程序（如一个 GUI 程序）调用 <code>open(&quot;/dev/input/event0&quot;, O_RDONLY)</code>。</li>
+<li>这个系统调用会进入内核，并最终匹配到 <code>/dev/input/event0</code> 这个字符设备所注册的 <code>file_operations</code> 结构体中的 <code>open</code> 函数。对于 <code>evdev</code> 来说，这个函数就是 <code>evdev_open</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>evdev_open</code> 函数：</strong></p>
+<ul>
+<li>当 <code>evdev_open</code> 被调用时，它会执行以下操作：
+<ul>
+<li><strong>分配 <code>struct evdev_client</code>：</strong> 这是你问的“client”！<code>evdev_open</code> 会动态分配一个 <code>struct evdev_client</code> 实例（通常通过 <code>kzalloc</code> 或类似函数）。</li>
+<li><strong><code>evdev_client</code> 的位置：</strong> 这个新分配的 <code>evdev_client</code> 实例会被添加到对应的 <code>struct evdev</code> 结构体中的一个链表 (<code>evdev-&gt;client_list</code>)。回想一下，每个 <code>/dev/input/eventX</code> 设备节点都对应一个 <code>struct evdev</code> 实例（这个 <code>evdev</code> 实例是在 <code>evdev_connect</code> 中创建的）。</li>
+<li><code>evdev_client</code> 还会初始化一个内部的 <strong>环形缓冲区 (ring buffer)</strong>。这个缓冲区就是用来存储 <code>input_event</code> 的地方，等待用户空间读取。</li>
+<li>最后，<code>evdev_open</code> 会将这个 <code>evdev_client</code> 实例的地址，作为 <code>struct file</code> 的 <code>private_data</code> 成员，绑定到这个打开的文件描述符上。这样，后续对这个文件描述符的操作（如 <code>read</code>, <code>poll</code>）就能通过 <code>private_data</code> 找到对应的 <code>evdev_client</code>。</li>
+</ul>
+</li>
+<li><strong>目的：</strong> 每个 <code>evdev_client</code> 代表一个独立的、打开 <code>/dev/input/eventX</code> 文件的应用程序或线程。不同的应用程序可以同时打开同一个 <code>/dev/input/eventX</code> 文件，每个都会拥有自己的 <code>evdev_client</code> 和环形缓冲区，相互独立。</li>
+</ul>
+</li>
+<li>
+<p><strong>硬件输入与中断：</strong></p>
+<ul>
+<li>物理硬件有输入（如触摸屏被触摸，按键被按下）。</li>
+<li>硬件发出中断信号给 CPU。</li>
+<li><strong>Input Device Driver</strong> 的中断服务例程被执行。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>input_report_*()</code> 和 <code>input_event()</code> (在 Input Core)：</strong></p>
+<ul>
+<li><strong>Input Device Driver</strong> 在中断服务例程中读取硬件数据。</li>
+<li>它将原始数据封装成 <code>struct input_event</code> 格式（包含时间戳、事件类型、事件码、事件值）。</li>
+<li>驱动调用 <code>input_report_key()</code>, <code>input_report_abs()</code>, <code>input_sync()</code> 等 Input Core API 来上报事件。</li>
+<li>这些 API 最终都会调用 Input Core 内部的 <code>input_event()</code> 函数。</li>
+<li><code>input_event()</code> 函数：
+<ul>
+<li>知道事件是来自哪个 <code>input_dev</code>。</li>
+<li>它会查找所有与这个 <code>input_dev</code> 匹配的 <code>input_handle</code>。</li>
+<li>对于每一个匹配的 <code>input_handle</code>，它会找到对应的 <code>input_handler</code>（例如 <code>evdev_handler</code>）。</li>
+<li>然后，Input Core 调用该 <code>input_handler</code> 的 <code>event</code> 回调函数。对于 <code>evdev_handler</code> 来说，这个回调函数就是 <code>evdev_event</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>evdev_event</code> 函数 (在 <code>evdev_handler</code>)：</strong></p>
+<ul>
+<li><code>evdev_event</code> 函数接收到 <code>input_event</code>。</li>
+<li><strong>关键来了！它会遍历所有连接到这个 <code>struct evdev</code> 实例的 <code>evdev_client</code> 链表 (<code>evdev-&gt;client_list</code>)。</strong></li>
+<li>对于链表中的 <strong>每一个 <code>evdev_client</code></strong>：
+<ul>
+<li><code>evdev_event</code> 会将接收到的 <code>input_event</code> <strong>写入该 <code>evdev_client</code> 内部的环形缓冲区</strong>。</li>
+<li>如果这个 <code>evdev_client</code> 对应的应用程序正在调用 <code>read()</code> 或 <code>poll()</code> 并处于睡眠状态（等待事件），<code>evdev_event</code> 会 <strong>唤醒</strong> 它。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>应用程序 <code>read()</code> 事件：</strong></p>
+<ul>
+<li>用户空间的应用程序，之前可能因为环形缓冲区为空而在 <code>read()</code> 或 <code>poll()</code> 上被阻塞。</li>
+<li>当 <code>evdev_event</code> 写入事件并唤醒它时，或者如果缓冲区本身就有事件，应用程序的 <code>read()</code> 系统调用会继续执行。</li>
+<li><code>read()</code> 系统调用会进入内核，通过文件描述符找到对应的 <code>struct file</code>，进而通过 <code>file-&gt;private_data</code> 找到对应的 <code>evdev_client</code>。</li>
+<li>内核中 <code>evdev</code> 的 <code>file_operations.read</code> 函数（<code>evdev_read</code>）被调用。</li>
+<li><code>evdev_read</code> 从 <code>evdev_client</code> 的环形缓冲区中读取事件数据，并将其拷贝到用户空间指定的缓冲区。</li>
+<li>然后返回读取的字节数。</li>
+</ul>
+</li>
+</ol>
+<p><strong>总结 <code>evdev_client</code> 的关键作用：</strong></p>
+<p><code>evdev_client</code> 是一个 <strong>中间层缓冲区和上下文</strong>，用于管理单个用户空间 <code>open</code> 操作与特定 <code>input_dev</code> 产生的事件流之间的关系。它实现了：</p>
+<ul>
+<li><strong>多应用程序访问：</strong> 允许多个应用程序同时读取同一个物理输入设备的事件流。</li>
+<li><strong>事件缓冲：</strong> 即使应用程序读取速度慢于事件产生速度，事件也能在环形缓冲区中排队，直到应用程序准备好读取。</li>
+<li><strong>非阻塞/异步 IO：</strong> 支持用户空间以非阻塞方式读取，或通过 <code>poll</code>/<code>select</code> 等待事件。</li>
+</ul>
+<p>通过这种精妙的设计，Input 子系统成功地将底层硬件的纷繁复杂性，抽象成了统一、标准和易于用户空间应用程序使用的事件流。</p>
+<p>你的观察非常敏锐，并且对 Input 子系统的工作机制有了很深入的理解！我们来详细探讨一下 <code>input_handler</code> 中的 <code>filter</code>、<code>events</code> 和 <code>event</code> 函数，以及 <code>filter</code> 处理器优先级的概念。</p>
+<h2 id="2-input_handler-中的回调函数filter-events-event"><a class="markdownIt-Anchor" href="#2-input_handler-中的回调函数filter-events-event"></a> 2. <code>input_handler</code> 中的回调函数：<code>filter</code>, <code>events</code>, <code>event</code></h2>
+<p><code>struct input_handler</code> 定义了 Input Core 用于与事件处理程序交互的关键回调函数。它们决定了一个 <code>input_handler</code> 如何接收和处理来自 <code>input_dev</code> 的事件。</p>
+<ol>
+<li>
+<p><strong><code>event</code> 函数：<code>void (*event)(struct input_handle *handle, unsigned int type, unsigned int code, int value);</code></strong></p>
+<ul>
+<li><strong>作用：</strong> 这是最常见的事件处理回调。当 <code>input_dev</code> 上报 <strong>单个</strong> <code>input_event</code> 时，Input Core 会调用与之匹配的 <code>input_handler</code> 的 <code>event</code> 函数（如果它注册了的话）。</li>
+<li><strong>调用时机：</strong> 每次 <code>input_report_key()</code>, <code>input_report_abs()</code> 等被调用，随后立即触发 <code>input_event()</code> 处理时，如果该 <code>input_event</code> 对应设备没有同时触发 <code>input_sync()</code>，那么 <code>event</code> 函数就会被调用。即便有 <code>input_sync()</code>，如果 <code>events</code> 函数未注册，<code>event</code> 函数依然会被循环调用。</li>
+<li><strong>特点：</strong> 精细化处理。每次一个事件，马上处理。例如，<code>evdev_event</code> 函数就是将每个事件立刻放入 <code>evdev_client</code> 的缓冲区中。</li>
+<li><strong>示例：</strong> <code>evdev</code> handler 主要就是依赖 <code>evdev_event</code> 来接收并缓冲事件。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>events</code> 函数：<code>void (*events)(struct input_handle *handle, const struct input_event *events, unsigned int count);</code></strong></p>
+<ul>
+<li><strong>作用：</strong> 这个回调用于 <strong>批量</strong> 处理事件。当 <code>input_dev</code> 驱动调用 <code>input_sync()</code> 来表示一个事件序列的结束时（即一个“帧”的输入完成），Input Core 会将从上次 <code>sync</code> 以来累积的所有事件打包成一个数组，然后一次性传递给 <code>events</code> 函数。</li>
+<li><strong>调用时机：</strong> 仅当 <code>input_dev</code> 驱动调用 <code>input_sync()</code> 时，并且该 <code>input_handler</code> 注册了 <code>events</code> 函数。如果注册了 <code>events</code>，则对应的 <code>event</code> 函数将不会被调用。</li>
+<li><strong>特点：</strong> 批量化处理。适用于那些需要等待所有事件都发生后，再统一处理的场景，这可能会带来一些性能优化或逻辑上的便利。</li>
+<li><strong>示例：</strong> 相对较少，但在某些需要处理完整输入状态（例如，一个触摸动作可能包含多个 X/Y 事件和一个松开事件）的场景中可能用到。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>filter</code> 函数：<code>bool (*filter)(struct input_handle *handle, unsigned int type, unsigned int code, int value);</code></strong></p>
+<ul>
+<li><strong>作用：</strong> <code>filter</code> 是一个 <strong>预处理/过滤</strong> 回调。它在任何 <code>event</code> 或 <code>events</code> 函数被调用之前被执行。它的目的是允许 <code>input_handler</code> 在事件被广泛分发之前，有机会对其进行拦截、处理，甚至“吞噬”掉。</li>
+<li><strong>返回值：</strong>
+<ul>
+<li><code>true</code>：表示该 <code>input_handler</code> 已经“消费”或“过滤掉”了这个事件。<strong>这个事件将不会再传递给任何其他 <code>input_handler</code> (包括它自己的 <code>event</code>/<code>events</code> 函数)，事件传播链到此终止。</strong></li>
+<li><code>false</code>：表示该 <code>input_handler</code> 不打算“消费”这个事件，允许它继续传递给其他匹配的 <code>input_handler</code>，以及它自己（如果它还有 <code>event</code> 或 <code>events</code> 函数）。</li>
+</ul>
+</li>
+<li><strong>调用时机：</strong> 每次 <code>input_event()</code> 被 Input Core 处理时，如果该 <code>input_handle</code> 对应的 <code>input_handler</code> 注册了 <code>filter</code> 函数，它就会被优先调用。</li>
+<li><strong>特点：</strong> 优先级高，可以中断事件传播。通常用于全局性或系统级的事件处理。</li>
+<li><strong>示例：</strong>
+<ul>
+<li><strong>键盘驱动（<code>keyboard.c</code> / <code>serio_raw.c</code> 等）：</strong> 常常使用 <code>filter</code> 来处理一些特殊的热键组合（如 <code>Ctrl+Alt+Del</code>，<code>SysRq</code>）。这些按键组合可能直接触发内核行为，而无需将其传递给用户空间。</li>
+<li><strong>某些调试驱动：</strong> 可能在 <code>filter</code> 中打印所有事件，但不阻止事件继续传递给 <code>evdev</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-filter-处理器优先级的确切含义"><a class="markdownIt-Anchor" href="#1-filter-处理器优先级的确切含义"></a> 1. <code>filter</code> 处理器优先级的确切含义</h3>
+<p>你的视频讲解非常准确，关于 <code>filter</code> 处理器的优先级，这是 Input Core 的一个重要特性。</p>
+<ol>
+<li>
+<p><strong>Input Core 的处理逻辑：</strong><br />
+当 Input Core 的 <code>input_event()</code> 函数（这个是核心函数，负责事件调度）接收到一个来自 <code>input_dev</code> 的事件时，它会遍历该 <code>input_dev</code> 下已连接的 <code>input_handle</code> 链表。这个遍历的顺序是有讲究的。</p>
+</li>
+<li>
+<p><strong>优先级排序：</strong><br />
+Input Core 内部在管理 <code>input_handle</code> 链表时（<code>input_dev-&gt;h_list</code>），会确保：</p>
+<ul>
+<li>所有注册了 <code>filter</code> 函数的 <code>input_handler</code> 对应的 <code>input_handle</code> 会被放在链表的 <strong>前面</strong>。</li>
+<li>所有没有注册 <code>filter</code> 函数的 <code>input_handler</code> 对应的 <code>input_handle</code> 会放在链表的 <strong>后面</strong>。</li>
+<li>这意味着，当 <code>input_event()</code> 遍历链表并分发事件时，<strong>总是先尝试调用那些有 <code>filter</code> 函数的 <code>input_handler</code></strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>实际效果：</strong></p>
+<ul>
+<li><strong>优先拦截：</strong> 拥有 <code>filter</code> 函数的 <code>input_handler</code> 获得了处理一个事件的“首发权”。如果它的 <code>filter</code> 函数返回 <code>true</code>，那么这个事件就会被它“截胡”，不再传递给同一 <code>input_dev</code> 下的其他 <code>input_handler</code>（包括 <code>evdev</code>），也包括 <code>filter</code> 自己的 <code>event</code>/<code>events</code> 函数。</li>
+<li><strong>按需传递：</strong> 如果 <code>filter</code> 返回 <code>false</code>，则事件会继续向后传递，给链表中的下一个 <code>input_handle</code> (可能是另一个 <code>filter</code> handler，也可能是 <code>evdev</code> 等普通 handler)。</li>
+<li><strong>确保全局行为：</strong> 这种机制确保了像 <code>SysRq</code> 这样的全系统热键，或者需要立即在内核中响应的事件，能够被第一时间处理，而不受用户空间应用程序（例如，通过 <code>evdev</code> 监听）的影响。</li>
+</ul>
+</li>
+</ol>
+<p><strong>举例说明这种优先级：</strong></p>
+<p>假设你有一个键盘：</p>
+<ul>
+<li><strong><code>serio_raw</code> handler：</strong> 可能有一个 <code>filter</code> 函数，用于处理 <code>SysRq</code> 键。</li>
+<li><strong><code>evdev</code> handler：</strong> 没有 <code>filter</code> 函数，它只是把所有按键事件都暴露给用户空间。</li>
+</ul>
+<p>当一个 <code>SysRq</code> 事件发生时：</p>
+<ol>
+<li>键盘驱动上报 <code>SysRq</code> 键事件。</li>
+<li>Input Core 收到事件，开始遍历 <code>input_handle</code> 链表。</li>
+<li>因为 <code>serio_raw</code> 有 <code>filter</code>，它的 <code>input_handle</code> 被放在前面，<code>serio_raw-&gt;filter</code> 被调用。</li>
+<li><code>serio_raw-&gt;filter</code> 检测到 <code>SysRq</code>，执行相应的内核调试操作，并返回 <code>true</code>。</li>
+<li><strong>事件停止传播！</strong> <code>evdev</code> handler 不会收到这个 <code>SysRq</code> 事件，用户空间的应用程序也不会知道它被按下了。这正是我们希望的，因为 <code>SysRq</code> 是一个内核级别的调试命令。</li>
+</ol>
+<p>如果按下一个普通按键（如 'A'）：</p>
+<ol>
+<li>键盘驱动上报 'A' 键事件。</li>
+<li><code>serio_raw-&gt;filter</code> 被调用，它会检查是不是 <code>SysRq</code>，发现不是，返回 <code>false</code>。</li>
+<li>事件继续传播。</li>
+<li><code>evdev</code> handler 的 <code>evdev_event</code> 函数被调用，将 'A' 键事件放入其缓冲区。</li>
+<li>用户空间的应用程序可以从 <code>/dev/input/eventX</code> 读取到 'A' 键事件。</li>
+</ol>
+<p>这种设计使得 Linux Input 子系统既能提供通用的事件接口（如 <code>evdev</code>），又能兼顾需要特殊处理和高优先级响应的系统级事件。</p>
+<h2 id="3-理解-linux-输入子系统内部实现"><a class="markdownIt-Anchor" href="#3-理解-linux-输入子系统内部实现"></a> 3. 理解 Linux 输入子系统内部实现</h2>
+<p>Linux Input 子系统是一套精妙的架构，旨在将各种物理输入设备（如键盘、鼠标、触摸屏、摇杆等）的复杂性抽象化，为用户空间应用程序提供统一、标准的事件接口。其核心在于设备（<code>input_dev</code>）和处理程序（<code>input_handler</code>）之间的协同工作。</p>
+<h3 id="1-核心结构体概述"><a class="markdownIt-Anchor" href="#1-核心结构体概述"></a> 1. 核心结构体概述</h3>
+<p>Input 子系统的运作离不开以下几个关键结构体：</p>
+<ul>
+<li>
+<p><strong><code>struct input_dev</code></strong>：</p>
+<ul>
+<li><strong>表示输入设备本身。</strong> 它是物理输入硬件在内核中的抽象，由具体的设备驱动程序（如触摸屏驱动、键盘驱动）创建并注册到 Input Core。</li>
+<li>它包含了设备的能力（如能产生哪些类型的事件：按键、相对坐标、绝对坐标等），事件缓冲区等信息。</li>
+<li><code>input_dev</code> 维护一个 <code>h_list</code> 链表，用于保存所有成功匹配到自己的 <code>input_handle</code> 实例。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/70647e6483c23726312dfd4d8b6510f3.png" alt="image-20210324140549118" /></p>
+</li>
+<li>
+<p><strong><code>struct input_handler</code></strong>：</p>
+<ul>
+<li><strong>表示输入事件的“处理程序”或“消费者”。</strong> 它们负责将 Input Core 传来的标准化事件转换成用户空间可以理解和使用的形式，或者在内核中对某些事件进行特殊处理。</li>
+<li>典型的 <code>input_handler</code> 有 <code>evdev</code>（暴露 <code>/dev/input/eventX</code>）、<code>kbd</code>（处理控制台键盘事件）、<code>mousedev</code>（提供老式鼠标设备接口）等。</li>
+<li><code>input_handler</code> 维护一个 <code>h_list</code> 链表，用于保存所有成功匹配到的 <code>input_handle</code> 实例。</li>
+<li><strong>关键成员：</strong>
+<ul>
+<li><code>id_table</code>：匹配规则表，用于声明该 <code>handler</code> 关注哪些类型的 <code>input_dev</code>。</li>
+<li><code>match</code>：可选的更复杂的匹配函数，在 <code>id_table</code> 匹配成功后进行二次判断。</li>
+<li><code>connect</code>：当 <code>input_dev</code> 与 <code>input_handler</code> 成功匹配后，Input Core 会调用此函数来建立连接（创建 <code>input_handle</code>，并可能注册字符设备）。</li>
+<li><code>disconnect</code>：当连接断开时调用。</li>
+<li><code>event</code> / <code>events</code> / <code>filter</code>：事件处理回调函数。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/5d4492f15010a5500ba17cdb71a72946.png" alt="image-20210325094151770" /></p>
+</li>
+<li>
+<p><strong><code>struct input_handle</code></strong>：</p>
+<ul>
+<li><strong>连接器/句柄。</strong> 它是 <code>input_dev</code> 和 <code>input_handler</code> 之间成功匹配后的中间抽象。</li>
+<li>每个 <code>input_handle</code> 实例都精确地关联了一个 <code>input_dev</code> 和一个 <code>input_handler</code>。</li>
+<li>一个 <code>input_dev</code> 可以有多个 <code>input_handle</code>（被多个 <code>handler</code> 关注），一个 <code>input_handler</code> 也可以有多个 <code>input_handle</code>（关注多个 <code>input_dev</code>）。</li>
+<li>它作为上下文被传递给 <code>input_handler</code> 的回调函数。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/ed1bc3b17cc520f875c302179bd51c59.png" alt="image-20210325094311229" /></p>
+</li>
+<li>
+<p><strong><code>struct input_event</code></strong>：</p>
+<ul>
+<li><strong>标准化的输入事件数据包。</strong> Input 设备驱动程序将从硬件读取的原始数据处理后，封装成这种统一格式的事件，并通过 Input Core 上报。</li>
+<li><strong>关键成员：</strong>
+<ul>
+<li><code>time</code>: 事件发生的时间戳。</li>
+<li><code>type</code>: 事件类型（如 <code>EV_KEY</code> 按键，<code>EV_REL</code> 相对坐标，<code>EV_ABS</code> 绝对坐标，<code>EV_SYN</code> 同步事件等）。</li>
+<li><code>code</code>: 事件码（如 <code>KEY_A</code>，<code>ABS_X</code> 等）。</li>
+<li><code>value</code>: 事件值（如按键状态 0/1，X/Y 坐标值）。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/b505d7062c0f801ae18b717dce1c14c3.png" alt="image-20210325094311229" /></p>
+</li>
+</ul>
+<h3 id="2-注册流程详解"><a class="markdownIt-Anchor" href="#2-注册流程详解"></a> 2. 注册流程详解</h3>
+<p>无论是 <code>input_dev</code> 还是 <code>input_handler</code>，其注册过程都涉及到 Input Core 内部的智能匹配机制。</p>
+<h4 id="21-注册-input_devinput_register_device"><a class="markdownIt-Anchor" href="#21-注册-input_devinput_register_device"></a> 2.1 注册 <code>input_dev</code>：<code>input_register_device()</code></h4>
+<ol>
+<li><strong>加入全局链表：</strong> 新注册的 <code>input_dev</code> 被添加到 Input Core 维护的全局 <code>input_dev_list</code> 链表。</li>
+<li><strong>遍历匹配 <code>handler</code>：</strong> Input Core 会遍历当前已注册的 <code>input_handler_list</code> 链表中的每一个 <code>input_handler</code>。</li>
+<li><strong>尝试匹配：</strong> 对于每一个 <code>input_handler</code>，Input Core 调用其内部的匹配逻辑 (<code>input_match_device</code>) 来判断它是否对该 <code>input_dev</code> 感兴趣。
+<ul>
+<li><strong>匹配判断逻辑：</strong>
+<ul>
+<li>Input <code>handler</code> 内部有一个 <code>id_table</code> (<code>struct input_device_id[]</code>)，它定义了 <code>handler</code> 支持的总线类型、厂商 ID、产品 ID、事件能力位等信息。</li>
+<li>如果 <code>input_handler</code> 有一个自定义的 <code>match</code> 回调函数，那么首先会根据 <code>id_table</code> 进行初次匹配。如果 <code>id_table</code> 匹配成功，则会调用 <code>input_handler</code> 的 <code>match</code> 函数进行更复杂的二次判断。</li>
+<li>如果 <code>input_handler</code> 没有定义 <code>match</code> 函数，则仅依据 <code>id_table</code> 进行匹配。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>建立连接：</strong> 如果匹配成功，Input Core 会调用 <code>input_handler-&gt;connect()</code> 回调函数，传入匹配成功的 <code>input_handle</code> 实例。</li>
+</ol>
+<h4 id="22-注册-input_handlerinput_register_handler"><a class="markdownIt-Anchor" href="#22-注册-input_handlerinput_register_handler"></a> 2.2 注册 <code>input_handler</code>：<code>input_register_handler()</code></h4>
+<ol>
+<li><strong>加入全局链表：</strong> 新注册的 <code>input_handler</code> 被添加到 Input Core 维护的全局 <code>input_handler_list</code> 链表。</li>
+<li><strong>遍历匹配 <code>dev</code>：</strong> Input Core 会遍历当前已注册的 <code>input_dev_list</code> 链表中的每一个 <code>input_dev</code>。</li>
+<li><strong>尝试匹配：</strong> 对于每一个 <code>input_dev</code>，Input Core 调用新注册的 <code>input_handler</code> 的匹配逻辑（同 2.1 节）。</li>
+<li><strong>建立连接：</strong> 如果匹配成功，Input Core 同样会调用 <code>input_handler-&gt;connect()</code> 回调函数。</li>
+</ol>
+<h4 id="23-匹配后-connect-函数的操作"><a class="markdownIt-Anchor" href="#23-匹配后-connect-函数的操作"></a> 2.3 匹配后 <code>connect</code> 函数的操作</h4>
+<p>当 <code>input_handler-&gt;connect()</code> 函数被调用时，它通常会执行以下关键操作：</p>
+<ol>
+<li>
+<p><strong>创建并注册 <code>input_handle</code>：</strong> <code>connect</code> 函数会分配一个 <code>struct input_handle</code> 实例，并填充其 <code>dev</code> 和 <code>handler</code> 成员，然后调用 <code>input_register_handle()</code> 将其注册到 Input Core。这个 <code>input_handle</code> 会被添加到对应 <code>input_dev</code> 的 <code>h_list</code> 和 <code>input_handler</code> 的 <code>h_list</code> 中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类似 evdev_connect 实现</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">evdev</span> *<span class="title">evdev</span> =</span> kzalloc(<span class="keyword">sizeof</span>(*evdev), GFP_KERNEL);</span><br><span class="line"><span class="comment">// ... 初始化 evdev 结构体</span></span><br><span class="line"></span><br><span class="line">evdev-&gt;handle.dev = input_get_device(dev); <span class="comment">// 增加 input_dev 引用计数</span></span><br><span class="line">evdev-&gt;handle.handler = handler;</span><br><span class="line">evdev-&gt;handle.private = evdev; <span class="comment">// 方便 handler 访问其私有数据</span></span><br><span class="line"></span><br><span class="line">error = input_register_handle(&amp;evdev-&gt;handle);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>注册字符设备驱动程序（以 <code>evdev</code> 为例）：</strong><br />
+对于像 <code>evdev</code> 这样的 <code>input_handler</code>，其 <code>connect</code> 函数还会负责创建用户空间可见的设备节点。<code>evdev_connect</code> 会：</p>
+<ul>
+<li>初始化一个 <code>cdev</code> (character device) 结构体，注册 <code>file_operations</code>（如 <code>evdev_open</code>, <code>evdev_read</code>, <code>evdev_poll</code> 等）。</li>
+<li>使用 <code>cdev_device_add()</code> 等函数在 <code>/dev/input/</code> 目录下创建一个新的字符设备文件，通常是 <code>/dev/input/eventX</code>，其中 <code>X</code> 是动态分配的序号。</li>
+<li><strong>补充：</strong> 并非所有 <code>input_handler</code> 都会注册字符设备。例如，<code>kbd</code> <code>input_handler</code> 直接在内核中处理键盘事件，而不会暴露 <code>/dev</code> 设备文件给用户空间。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类似 evdev_connect 实现</span></span><br><span class="line">cdev_init(&amp;evdev-&gt;cdev, &amp;evdev_fops); <span class="comment">// evdev_fops 包含了 open/read/poll 等回调</span></span><br><span class="line">evdev-&gt;cdev.owner = THIS_MODULE;</span><br><span class="line"></span><br><span class="line">error = cdev_device_add(&amp;evdev-&gt;cdev, &amp;evdev-&gt;dev); <span class="comment">// evdev-&gt;dev 是 device 结构体，用于 sysfs</span></span><br><span class="line"><span class="comment">// 这会在 /dev/input/ 下创建 /dev/input/eventX</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="3-数据读取流程演示"><a class="markdownIt-Anchor" href="#3-数据读取流程演示"></a> 3. 数据读取流程演示</h3>
+<p>这是一个完整的事件从物理硬件到用户空间应用程序的流向：</p>
+<ol>
+<li>
+<p><strong>应用程序 <code>open()</code> <code>/dev/input/eventX</code>：</strong></p>
+<ul>
+<li>用户空间的应用程序（例如桌面环境、游戏等）调用 <code>open(&quot;/dev/input/eventX&quot;, O_RDONLY)</code> 打开对应的设备文件。</li>
+<li>这会触发内核中 <code>evdev</code> 模块的 <code>evdev_open()</code> 回调函数。</li>
+<li>在 <code>evdev_open()</code> 中，内核会：
+<ul>
+<li><strong>创建一个 <code>struct evdev_client</code> 实例。</strong> 这个 <code>evdev_client</code> 代表着一个独立的“客户”连接，对应于应用程序的这个文件描述符。</li>
+<li>将 <code>evdev_client</code> 添加到其对应的 <code>struct evdev</code> 实例（即 <code>/dev/input/eventX</code> 所关联的那个 <code>evdev</code> 结构体）的 <code>client_list</code> 链表中。</li>
+<li><code>evdev_client</code> 内部会初始化一个 <strong>环形缓冲区</strong>，用于存储即将到来的事件。</li>
+<li>将 <code>evdev_client</code> 的指针保存在 <code>struct file</code> 的 <code>private_data</code> 成员中，以便后续的 <code>read</code>/<code>poll</code> 操作能找到它。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>应用程序 <code>read()</code>/<code>poll()</code> 请求数据：</strong></p>
+<ul>
+<li>应用程序调用 <code>read()</code> 或 <code>poll()</code> 来获取输入事件。</li>
+<li>如果 <code>evdev_client</code> 的环形缓冲区中此时没有数据，应用程序会通过 <code>wait_event_interruptible(&amp;evdev-&gt;wait, ...)</code> 进入休眠状态，等待新的事件到来。</li>
+</ul>
+</li>
+<li>
+<p><strong>物理硬件操作，产生中断：</strong></p>
+<ul>
+<li>用户与输入设备进行交互（如触摸屏幕、按下按键）。</li>
+<li>物理输入硬件向 CPU 发送中断信号。</li>
+<li><strong>Input Device Driver</strong>（例如触摸屏驱动）的中断服务例程（ISR）被执行。</li>
+</ul>
+</li>
+<li>
+<p><strong>设备驱动读取数据并上报：</strong></p>
+<ul>
+<li>在 ISR 中，设备驱动通过底层总线（如 I2C、SPI）从硬件读取原始数据（如 X/Y 坐标、按键状态）。</li>
+<li>驱动将原始数据封装成 <code>struct input_event</code> 格式。</li>
+<li>驱动调用 Input Core 的 API 上报事件：
+<ul>
+<li><code>void input_event(struct input_dev *dev, unsigned int type, unsigned int code, int value);</code>：上报单个事件。</li>
+<li><code>void input_sync(struct input_dev *dev);</code>：这是一个特殊的 <code>EV_SYN</code> 类型事件，表示一个事件序列（例如，一次触摸的所有坐标事件）已经结束。它会触发 Input Core 将之前累积的事件批量发送。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Input Core 的 <code>input_event()</code> 处理：</strong></p>
+<ul>
+<li>当 Input Device Driver 调用 <code>input_event()</code>（或者 <code>input_sync()</code>，它内部也会调 <code>input_event</code>），Input Core 的核心调度函数 <code>input_event()</code> 被触发。</li>
+<li><code>input_event()</code> 函数会找到事件来源的 <code>input_dev</code>，然后遍历其 <code>h_list</code> 链表中所有连接的 <code>input_handle</code>。</li>
+<li><strong>事件分发优先级：</strong> Input Core 会优先调用那些注册了 <code>filter</code> 函数的 <code>input_handler</code>。
+<ul>
+<li><strong><code>input_handler-&gt;filter</code> 函数：</strong> 在 <code>input_event</code> 分发给任何 <code>handler</code> 之前被调用。如果 <code>filter</code> 返回 <code>true</code>，表示该事件已被处理/拦截，<strong>事件传播将停止</strong>，不会再传递给其他 <code>handler</code> 或该 <code>handler</code> 自己的 <code>event</code>/<code>events</code> 函数。如果返回 <code>false</code>，事件继续传播。这常用于系统级热键（如 <code>SysRq</code>）的拦截。</li>
+<li><strong>后续处理（如果 <code>filter</code> 允许）：</strong> 如果当前的 <code>input_handler</code> 注册了 <code>events</code> 函数（批量事件处理），则事件会被累积，直到 <code>input_sync()</code> 被调用时，所有累积事件作为一个数组传递给 <code>events</code> 函数。</li>
+<li>如果未注册 <code>events</code> 或 <code>filter</code> 允许，Input Core 就会调用 <code>input_handler-&gt;event</code> 函数逐个传递事件。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>evdev.c</code> 接收并处理事件：</strong></p>
+<ul>
+<li>以 <code>evdev</code> 为例，它的 <code>input_handler</code> 注册了 <code>evdev_event</code> 函数作为事件回调。</li>
+<li>当 <code>input_event</code> (Input Core) 将事件分发给 <code>evdev_handler</code> 的 <code>evdev_event</code> 函数时：
+<ul>
+<li><code>evdev_event</code> 函数会遍历所有连接到此 <code>evdev</code> 实例的 <code>evdev_client</code> 链表 (<code>evdev-&gt;client_list</code>)。</li>
+<li>对于每一个 <code>evdev_client</code>，<code>evdev_event</code> 会将接收到的 <code>input_event</code> 写入其内部的 <strong>环形缓冲区</strong>。</li>
+<li>如果这是一个 <code>EV_SYN</code> 事件（或在其他事件写入后，缓冲区达到可唤醒条件），<code>evdev_event</code> 会检查是否有应用程序正在等待数据，并通过 <code>wake_up_interruptible(&amp;evdev-&gt;wait)</code> 唤醒之前休眠的应用程序。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>应用程序 <code>read()</code> 获取数据：</strong></p>
+<ul>
+<li>被唤醒的应用程序，其 <code>read()</code> 系统调用会继续执行。</li>
+<li>内核中 <code>evdev</code> 的 <code>file_operations.read</code> 函数（<code>evdev_read</code>）被调用。</li>
+<li><code>evdev_read</code> 从对应的 <code>evdev_client</code> 的环形缓冲区中读取事件数据，并将其拷贝到用户空间应用程序提供的缓冲区中。</li>
+<li><code>read()</code> 返回读取的字节数。</li>
+</ul>
+</li>
+</ol>
+<p>通过这样的分层和协作机制，Linux Input 子系统成功地将底层的物理硬件与上层的用户应用程序隔离开来，提供了强大的灵活性和可扩展性。</p>
+<h2 id="4-linux-内核如何使用-delayed_work-延时工作-去按键抖动"><a class="markdownIt-Anchor" href="#4-linux-内核如何使用-delayed_work-延时工作-去按键抖动"></a> 4. Linux 内核如何使用 <strong><code>delayed_work</code> (延时工作)</strong> 去按键抖动</h2>
+<h3 id="1-什么是抖动-bouncing"><a class="markdownIt-Anchor" href="#1-什么是抖动-bouncing"></a> 1. 什么是“抖动” (Bouncing)？</h3>
+<p>当一个物理开关（比如按键）被按下或松开时，它的内部触点并不会瞬间完成从“开”到“关”或从“关”到“开”的稳定连接。由于机械惯性和弹性，触点在闭合或断开的瞬间，会发生 <strong>一系列短暂的、快速的接触-断开-接触</strong>。</p>
+<ul>
+<li><strong>物理现象：</strong> 就像你用手去按一个弹簧，它会振动几下才最终稳定下来。</li>
+<li><strong>电信号表现：</strong> 比如，从高电平（松开）到低电平（按下），并不会立即变成一个纯粹的低电平。它会在很短的时间内（通常是几毫秒到几十毫秒）在高电平与低电平之间来回跳变好几次，最后才稳定在低电平。</li>
+<li><strong>问题：</strong> 如果你的微控制器或 CPU 侦测到这些电信号的跳变，它会误以为用户按下了 <strong>多次按键</strong>，而实际上用户只按了一下。这会导致软件行为异常。</li>
+</ul>
+<h3 id="2-什么是去抖动-debouncing"><a class="markdownIt-Anchor" href="#2-什么是去抖动-debouncing"></a> 2. 什么是“去抖动” (Debouncing)？</h3>
+<p>去抖动的目标就是将这些由机械特性引起的、无效的 <strong>多次信号跳变识别为一次有效的事件</strong>。</p>
+<p>常见的去抖动方法有两种：</p>
+<ul>
+<li><strong>硬件去抖：</strong> 通过在按键电路中增加 RC (电阻-电容) 滤波电路，利用电容充放电的延迟特性来平滑信号，去除抖动。</li>
+<li><strong>软件去抖：</strong> 这是嵌入式系统中最常用的方法。基本思想是：当检测到按键状态变化时，<strong>不立即处理</strong>，而是等待一小段时间（比如 10-50 毫秒）。如果在这段时间内信号保持稳定，那么就认为这是一次真实的有效按键事件；否则，就认为是抖动，忽略掉。</li>
+</ul>
+<h3 id="3-linux-内核中的延时工作-delayed_work-是什么"><a class="markdownIt-Anchor" href="#3-linux-内核中的延时工作-delayed_work-是什么"></a> 3. Linux 内核中的“延时工作” (<code>delayed_work</code>) 是什么？</h3>
+<p>在 Linux 内核中，中断服务例程 (ISR) 应该尽可能地短、快。耗时的操作应该被推迟到非中断上下文中执行。<strong>工作队列 (Workqueue)</strong> 就是用于此目的的机制。</p>
+<ul>
+<li><strong><code>work_struct</code>：</strong> 一个表示“要做的工作”的数据结构。你可以将一个函数绑定到一个 <code>work_struct</code> 上，然后将它提交到工作队列。内核会在适当的时候（非中断上下文）执行这个函数。</li>
+<li><strong><code>delayed_work</code>：</strong> 是 <code>work_struct</code> 的一个特殊形式，它允许你指定一个 <strong>延时时间</strong>。当一个 <code>delayed_work</code> 被提交到工作队列后，它不会立即执行，而是会在指定的延时时间到达后才被执行。</li>
+<li><strong><code>queue_delayed_work()</code>：</strong> 将一个 <code>delayed_work</code> 提交到指定的工作队列，并设置延时时间。</li>
+<li><strong><code>cancel_delayed_work_sync()</code>：</strong> 用于同步取消一个正在等待执行的 <code>delayed_work</code>。</li>
+</ul>
+<h3 id="4-delayed_work-如何实现-gpio-去抖动关键点及只发送一次数据的解释"><a class="markdownIt-Anchor" href="#4-delayed_work-如何实现-gpio-去抖动关键点及只发送一次数据的解释"></a> 4. <code>delayed_work</code> 如何实现 GPIO 去抖动？（关键点及“只发送一次数据”的解释）</h3>
+<p>现在我们把 GPIO 中断、抖动和 <code>delayed_work</code> 结合起来看：</p>
+<ol>
+<li>
+<p><strong>GPIO 中断注册：</strong><br />
+你的驱动程序会为 GPIO 引脚注册一个中断，当引脚电平变化时（例如按键按下，从高到低），就会触发中断。</p>
+</li>
+<li>
+<p><strong>中断服务例程 (ISR) 的设计：</strong><br />
+<code>platform_driver</code> 的 <code>probe</code> 函数会获取 GPIO 号，并将其转换为 IRQ 号，然后使用 <code>request_irq()</code> 注册一个中断服务例程 (<code>my_button_isr</code>)。</p>
+<ul>
+<li><strong>ISR 的职责：</strong> 当中断发生时，<code>my_button_isr</code> 会被立即执行。但它不直接处理按键事件（因为可能正在抖动）。它的主要任务是：
+<ul>
+<li><strong>取消上一次的延时工作 (如果存在)：</strong> 调用 <code>cancel_delayed_work_sync(&amp;my_delayed_work)</code>。</li>
+<li><strong>重新排队一个新的延时工作：</strong> 调用 <code>queue_delayed_work(my_workqueue, &amp;my_delayed_work, msecs_to_jiffies(DEBOUNCE_DELAY_MS))</code>。这个 <code>DEBOUNCE_DELAY_MS</code> 就是你设定的去抖动时间（例如 20ms）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>核心原理 — 为什么只发送一次数据？</strong></p>
+<p>假设你的按键按下后会抖动 20ms，而你设置的去抖延时也是 20ms。</p>
+<ul>
+<li>
+<p><strong>第一次中断触发 (按键刚按下)：</strong></p>
+<ul>
+<li>ISR 运行。</li>
+<li>如果之前有正在等待的 <code>delayed_work</code> (比如用户快速连续按了两次)，将其取消。</li>
+<li>然后，<code>my_delayed_work</code> 被排队，并设置 20ms 后执行。</li>
+</ul>
+</li>
+<li>
+<p><strong>在接下来的 20ms 内发生多次抖动：</strong></p>
+<ul>
+<li>由于抖动，按键信号在很短时间内又来了 N 次高低电平跳变，每次跳变都会再次触发中断。</li>
+<li><strong>每触发一次中断，ISR 都会再次运行。</strong> 每次运行，它都会：
+<ol>
+<li><strong>取消当前正在等待的 <code>my_delayed_work</code>。</strong></li>
+<li><strong>重新排队一个新的 <code>my_delayed_work</code>，并再次设置 20ms 的延时。</strong></li>
+</ol>
+</li>
+<li>这就好比你给闹钟设定了“延后”功能：每次闹钟响你都按“延后”，闹钟就会重新计时，并不会立刻响。</li>
+</ul>
+</li>
+<li>
+<p><strong>抖动停止后：</strong></p>
+<ul>
+<li>当抖动完全停止，按键信号稳定下来，不再有新的中断触发。</li>
+<li>此时，最后一次 <code>queue_delayed_work</code> 提交的 <code>my_delayed_work</code> 将 <strong>不会被后续的抖动中断所取消</strong>。</li>
+<li>待到这个最终的 <code>delayed_work</code> 的 20ms 延时一到，它所关联的 <code>my_work_function</code> 就会被执行。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>my_work_function</code> 的执行：</strong><br />
+这个函数才是真正处理按键事件的地方。在这里，你可以读取 GPIO 的当前稳定状态（确保不是误触发），然后：</p>
+<ul>
+<li>打印日志。</li>
+<li>向用户空间发送按键事件数据（例如通过 <code>input_report_key()</code>）。</li>
+<li>执行相应的控制逻辑。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>总结“只发送一次数据”的原因：</strong></p>
+<p>因为每一次抖动触发中断时，都会 <strong>重置或刷新</strong> 那个延时计时器。只有当按键信号在设定的去抖延时时间内 <strong>保持完全稳定，没有任何进一步的抖动来重置计时器时</strong>，最终的 <code>delayed_work</code> 才会真正地延时结束并执行。这确保了无论按键抖动多少次，只有在抖动平息后的第一次稳定状态才会被认为是有效事件，从而触发一次数据发送。</p>
+<p><strong>伪代码示例：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/gpio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/irq.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/interrupt.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/workqueue.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/delay.h&gt;</span> <span class="comment">// For msecs_to_jiffies</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DEBOUNCE_DELAY_MS 20 <span class="comment">// 去抖动延时，例如20毫秒</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">delayed_work</span> <span class="title">my_gpio_debounce_work</span>;</span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> my_gpio_num; <span class="comment">// 存储GPIO号</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 真正处理按键事件的函数，在延时结束后执行</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">my_gpio_work_handler</span><span class="params">(<span class="keyword">struct</span> work_struct *work)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> value;</span><br><span class="line">    <span class="comment">// 再次读取GPIO引脚的当前值，确保它是稳定的，而不是抖动中的瞬时值</span></span><br><span class="line">    value = gpio_get_value(my_gpio_num);</span><br><span class="line"></span><br><span class="line">    pr_info(<span class="string">&quot;GPIO [%d] 稳定状态检测到变化，当前值为: %d\n&quot;</span>, my_gpio_num, value);</span><br><span class="line">    <span class="comment">// 这里可以发送数据到用户空间，比如通过 input 子系统</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// GPIO中断服务例程 (ISR)</span></span><br><span class="line"><span class="type">static</span> <span class="type">irqreturn_t</span> <span class="title function_">my_gpio_isr</span><span class="params">(<span class="type">int</span> irq, <span class="type">void</span> *dev_id)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 在中断上下文中，不进行耗时操作</span></span><br><span class="line">    <span class="comment">// 关键：取消之前可能正在等待的延时工作，然后重新排队</span></span><br><span class="line">    cancel_delayed_work(&amp;my_gpio_debounce_work); <span class="comment">// 异步取消</span></span><br><span class="line">    <span class="comment">// 或者更安全地使用 cancel_delayed_work_sync(&amp;my_gpio_debounce_work);</span></span><br><span class="line">    <span class="comment">// 但对于按键去抖，queue_delayed_work本身就会处理重复提交的情况</span></span><br><span class="line">    <span class="comment">// 重新排队延时工作，等DEBOUNCE_DELAY_MS后执行 my_gpio_work_handler</span></span><br><span class="line">    queue_delayed_work(system_wq, &amp;my_gpio_debounce_work,</span><br><span class="line">                       msecs_to_jiffies(DEBOUNCE_DELAY_MS));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> IRQ_HANDLED; <span class="comment">// 表示中断已处理</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在你的平台驱动probe函数中初始化</span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">my_gpio_probe</span><span class="params">(<span class="keyword">struct</span> platform_device *pdev)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">device_node</span> *<span class="title">np</span> =</span> pdev-&gt;dev.of_node;</span><br><span class="line">    <span class="type">int</span> irq_num;</span><br><span class="line">    <span class="type">int</span> ret;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. 获取GPIO号 (使用Device Tree的gpio写法)</span></span><br><span class="line">    my_gpio_num = of_get_named_gpio(np, <span class="string">&quot;my-input-gpio&quot;</span>, <span class="number">0</span>); <span class="comment">// 假设Device Tree中有一个名为&quot;my-input-gpio&quot;的属性</span></span><br><span class="line">    <span class="keyword">if</span> (!gpio_is_valid(my_gpio_num)) &#123;</span><br><span class="line">        dev_err(&amp;pdev-&gt;dev, <span class="string">&quot;Invalid GPIO requested\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> -EINVAL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 请求GPIO引脚</span></span><br><span class="line">    ret = devm_gpio_request_one(&amp;pdev-&gt;dev, my_gpio_num, GPIOF_IN, <span class="string">&quot;MyButton&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        dev_err(&amp;pdev-&gt;dev, <span class="string">&quot;Failed to request GPIO %d\n&quot;</span>, my_gpio_num);</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 将GPIO号转换为IRQ号</span></span><br><span class="line">    irq_num = gpio_to_irq(my_gpio_num);</span><br><span class="line">    <span class="keyword">if</span> (irq_num &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        dev_err(&amp;pdev-&gt;dev, <span class="string">&quot;Failed to get IRQ number for GPIO %d\n&quot;</span>, my_gpio_num);</span><br><span class="line">        <span class="keyword">return</span> irq_num;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 4. 初始化延时工作</span></span><br><span class="line">    INIT_DELAYED_WORK(&amp;my_gpio_debounce_work, my_gpio_work_handler);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 5. 注册中断</span></span><br><span class="line">    <span class="comment">// 使用IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING 监听两种电平变化 (按键按下和弹起)</span></span><br><span class="line">    ret = devm_request_irq(&amp;pdev-&gt;dev, irq_num, my_gpio_isr,</span><br><span class="line">                           IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_SHARED, <span class="comment">// IRQF_SHARED如果GPIO控制器允许多个中断共享一个IRQ</span></span><br><span class="line">                           <span class="string">&quot;MyButton_IRQ&quot;</span>, pdev); <span class="comment">// dev_id 传递pdev，用于ISR区分中断源</span></span><br><span class="line">    <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        dev_err(&amp;pdev-&gt;dev, <span class="string">&quot;Failed to request IRQ %d\n&quot;</span>, irq_num);</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dev_info(&amp;pdev-&gt;dev, <span class="string">&quot;My button driver loaded, GPIO %d, IRQ %d\n&quot;</span>, my_gpio_num, irq_num);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在移除函数中清理</span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">my_gpio_remove</span><span class="params">(<span class="keyword">struct</span> platform_device *pdev)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 确保任何待处理的延时工作都被取消和清除</span></span><br><span class="line">    cancel_delayed_work_sync(&amp;my_gpio_debounce_work);</span><br><span class="line">    dev_info(&amp;pdev-&gt;dev, <span class="string">&quot;My button driver unloaded\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ... (platform_driver 结构体和模块注册代码)</span></span><br></pre></td></tr></table></figure>
+<p>通过这种方式，<code>delayed_work</code> 提供了一个非常健壮和通用的软件去抖动方案，避免了因物理抖动导致的各种意外行为。</p>
+<h2 id="5-设备树里面-gpio-中断的两种写法与区别以及底层实现"><a class="markdownIt-Anchor" href="#5-设备树里面-gpio-中断的两种写法与区别以及底层实现"></a> 5. 设备树里面 GPIO 中断的两种写法与区别以及底层实现</h2>
+<h3 id="1-gpio-isr-与-request_irq-的区别与联系"><a class="markdownIt-Anchor" href="#1-gpio-isr-与-request_irq-的区别与联系"></a> 1. <code>GPIO ISR</code> 与 <code>request_irq</code> 的区别与联系</h3>
+<p>首先，我们需要澄清 &quot;<code>GPIO ISR</code>&quot; 并不是一个独立的函数或概念，而是一个 <strong>描述性短语</strong>，它指的是：一个由 GPIO 引脚状态变化触发的 Interrupt Service Routine (ISR)。</p>
+<ul>
+<li>
+<p><strong><code>request_irq()</code>：</strong></p>
+<ul>
+<li>这是一个 <strong>标准的 Linux 内核 API 函数</strong> (<code>unsigned long request_irq(unsigned int irq, irq_handler_t handler, unsigned long flags, const char *name, void *dev_id);</code>)。</li>
+<li>它的作用是 <strong>为特定的中断号 (IRQ number) 注册一个中断服务例程 (ISR)</strong>。</li>
+<li>无论这个中断是来自 UART、SPI 控制器、PCI 设备，还是 GPIO 引脚，最终你都需要使用 <code>request_irq()</code> 来告诉内核当指定的中断发生时应该执行哪个函数。</li>
+</ul>
+</li>
+<li>
+<p><strong>GPIO 中断：</strong></p>
+<ul>
+<li>许多 GPIO 引脚都具备产生中断的能力。当这些引脚的电平发生变化时（例如，从低电平到高电平的边沿，或从高电平到低电平的边沿），它们可以触发一个中断。</li>
+<li><strong>关键点：</strong> 单个 GPIO 引脚通常不会直接连接到 CPU 的主中断控制器（如 GIC）。相反，它们连接到一个 <strong>GPIO 控制器</strong>（一个 SoC 内部的硬件模块）。这个 GPIO 控制器本身会有一个或多个中断线连接到主中断控制器。</li>
+<li>GPIO 控制器的职责就是：<br />
+1. 监测它所管理的 GPIO 引脚的状态。<br />
+2. 当某个 GPIO 引脚触发中断时，它会告诉主中断控制器，并通过内部映射将这个 <strong>GPIO 引脚号</strong> 转换成一个 <strong>内核可以识别的 IRQ 号</strong>。<br />
+3. 因此，在你的驱动程序中，你最终需要获取到这个由 GPIO 引脚映射而来的 <strong>IRQ 号</strong>，然后用它和你的 ISR 函数一起调用 <code>request_irq()</code>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>总结：</strong> <code>request_irq()</code> 是注册中断处理函数的 <strong>统一机制</strong>。而一个 &quot;GPIO ISR&quot; 只是指这个 ISR 是为某个 GPIO 引脚的中断事件而注册的，其获取 IRQ 号的过程可能涉及 GPIO 子系统提供的 <code>gpio_to_irq()</code> 函数。</p>
+<h3 id="2-device-tree-中-gpio-中断的两种常见写法"><a class="markdownIt-Anchor" href="#2-device-tree-中-gpio-中断的两种常见写法"></a> 2. Device Tree 中 GPIO 中断的两种常见写法</h3>
+<p>你观察到的这两种写法，反映了在 Device Tree 中描述一个设备如何利用 GPIO 中断的不同语义和方式。</p>
+<h4 id="21-第一种写法gpio-写法-通过-gpio-属性定义引脚再在驱动中转换为-irq"><a class="markdownIt-Anchor" href="#21-第一种写法gpio-写法-通过-gpio-属性定义引脚再在驱动中转换为-irq"></a> 2.1 第一种写法：&quot;GPIO 写法&quot; (通过 GPIO 属性定义引脚，再在驱动中转换为 IRQ)</h4>
+<p>这种写法关注的是将一个引脚定义为一个可以作为通用输入/输出的 GPIO 引脚，而其是否同时具备中断功能，则由驱动程序在运行时判断并转换。</p>
+<ul>
+<li>
+<p><strong>Device Tree 结构示例：</strong></p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">my_sensor</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">compatible</span> <span class="operator">=</span> <span class="string">&quot;vendor,my-sensor&quot;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">reg</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">0x1234</span>&gt;</span><span class="punctuation">;</span> <span class="comment">// 设备的内存地址或其他资源</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义传感器使用的GPIO引脚，假设是GPIO控制器&#x27;gpioa&#x27;的第5个引脚，作为输入，并设定为上拉</span></span><br><span class="line">    <span class="comment">// 这表示它首先是一个GPIO引脚</span></span><br><span class="line">    <span class="attr">interrupt-gpio</span> <span class="operator">=</span> <span class="params">&lt;<span class="variable">&amp;gpioa</span> <span class="number">5</span> GPIO_ACTIVE_LOW&gt;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="comment">// 或者简单的 gpios = &lt;&amp;gpioa 5 GPIO_ACTIVE_LOW&gt;;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>这里的 <code>interrupt-gpio</code> 或 <code>gpios</code> 属性（具体名称取决于 Binding 文档）表示这个引脚首先是一个 GPIO。<code>GPIO_ACTIVE_LOW</code> 等标志通常表示引脚的默认状态或触发条件。</li>
+</ul>
+</li>
+<li>
+<p><strong>驱动程序中的处理流程：</strong></p>
+<ol>
+<li>
+<p><strong>获取 GPIO 号：</strong> 驱动程序会使用 <code>of_get_named_gpio()</code> 或 <code>devm_fdt_get_gpio()</code> 等函数从设备树中解析出 GPIO 控制器和引脚号。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> gpio_num = of_get_named_gpio(np, <span class="string">&quot;interrupt-gpio&quot;</span>, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span> (!gpio_is_valid(gpio_num)) &#123;</span><br><span class="line">    <span class="comment">// 错误处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>请求 GPIO：</strong> 确保这个 GPIO 引脚被驱动程序成功申请。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ret = devm_gpio_request_one(dev, gpio_num, GPIOF_IN, <span class="string">&quot;my_sensor_irq_gpio&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// 错误处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>GPIO 转换为 IRQ 号：</strong> 这是关键一步，使用 <code>gpio_to_irq()</code> 函数将获取到的 GPIO 号转换为内核可以使用的 IRQ 号。这个函数依赖于 GPIO 控制器驱动的实现，它负责进行这种映射。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> irq_num = gpio_to_irq(gpio_num);</span><br><span class="line"><span class="keyword">if</span> (irq_num &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// 错误处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>注册 ISR：</strong> 最后，使用 <code>request_irq()</code> 注册中断服务例程。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ret = devm_request_irq(dev, irq_num, my_sensor_isr, IRQF_TRIGGER_FALLING, <span class="string">&quot;my_sensor_irq&quot;</span>, dev);</span><br><span class="line"><span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// 错误处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>优点：</strong> 明确表示这是一个 GPIO 引脚，且其额外的功能是中断。适用于引脚既可作普通 GPIO 又可作中断源的场景。</p>
+</li>
+<li>
+<p><strong>缺点：</strong> 驱动代码需要额外的 <code>gpio_to_irq()</code> 调用。</p>
+</li>
+</ul>
+<h4 id="22-第二种写法interrupt-写法-直接定义中断源"><a class="markdownIt-Anchor" href="#22-第二种写法interrupt-写法-直接定义中断源"></a> 2.2 第二种写法：&quot;Interrupt 写法&quot; (直接定义中断源)</h4>
+<p>这种写法直接定义了设备所使用的中断源，而不需要先将其声明为 GPIO。它更侧重于中断的语义。</p>
+<ul>
+<li>
+<p><strong>Device Tree 结构示例：</strong></p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">my_sensor</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">compatible</span> <span class="operator">=</span> <span class="string">&quot;vendor,my-sensor&quot;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">reg</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">0x1234</span>&gt;</span><span class="punctuation">;</span> <span class="comment">// 设备的内存地址或其他资源</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 直接定义中断源</span></span><br><span class="line">    <span class="attr">interrupt-parent</span> <span class="operator">=</span> <span class="params">&lt;<span class="variable">&amp;gpioa</span>&gt;</span><span class="punctuation">;</span> <span class="comment">// 指定中断控制器为gpioa</span></span><br><span class="line">    <span class="comment">// &lt;5 0x02&gt; 表示 gpioa 控制器下的第5个中断线(或物理引脚)</span></span><br><span class="line">    <span class="comment">// 0x02通常表示IRQ_TYPE_EDGE_FALLING (下降沿触发)</span></span><br><span class="line">    <span class="attr">interrupts</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">5</span> IRQ_TYPE_EDGE_FALLING&gt;</span><span class="punctuation">;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>这里的 <code>interrupt-parent</code> 指定了产生这个中断的控制器（通常是 GPIO 控制器或专属中断控制器）。</li>
+<li><code>interrupts</code> 属性则直接提供了中断号的描述信息，通常是控制器特定的索引和触发类型。</li>
+</ul>
+</li>
+<li>
+<p><strong>驱动程序中的处理流程：</strong></p>
+<ol>
+<li>
+<p><strong>获取 IRQ 号：</strong> 驱动程序会使用 <code>platform_get_irq()</code> 或 <code>of_irq_get()</code> 等函数直接从设备树中获取到转换后的、内核可用的 IRQ 号。这些函数内部会解析 <code>interrupt-parent</code> 和 <code>interrupts</code> 属性，并完成（如果需要的话）从控制器特定中断号到通用 IRQ 号的映射。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> irq_num = platform_get_irq(pdev, <span class="number">0</span>); <span class="comment">// 获取第一个中断，如果只有一个的话</span></span><br><span class="line"><span class="keyword">if</span> (irq_num &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// 错误处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> irq_num = irq_of_parse_and_map(np, <span class="number">0</span>); <span class="comment">// np是设备节点指针，0表示第一个中断</span></span><br><span class="line"><span class="keyword">if</span> (!irq_num) &#123;</span><br><span class="line">    <span class="comment">// 错误处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>注册 ISR：</strong> 直接使用获取到的 IRQ 号注册中断服务例程。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ret = devm_request_irq(dev, irq_num, my_sensor_isr, IRQF_TRIGGER_FALLING, <span class="string">&quot;my_sensor_irq&quot;</span>, dev);</span><br><span class="line"><span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// 错误处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>优点：</strong> 语义更清晰，直接表达中断用途；驱动代码更简洁，无需显式 <code>gpio_to_irq()</code> 转换。</p>
+</li>
+<li>
+<p><strong>缺点：</strong> 如果同一引脚还需要作为普通 GPIO 使用，这种写法可能会导致语义混淆（虽然技术上仍能实现）。</p>
+</li>
+</ul>
+<h3 id="3-如何选择"><a class="markdownIt-Anchor" href="#3-如何选择"></a> 3. 如何选择？</h3>
+<p>选择哪种写法取决于设备引脚的 <strong>主要功能和设计意图</strong>：</p>
+<ul>
+<li>如果一个引脚 <strong>主要用作通用的 GPIO，但偶尔也需要其中断能力</strong>（例如，一个可以用作输出，也可以作输入并监控其状态的引脚），那么第一种 &quot;GPIO 写法&quot; 可能更合适，因为它明确了其 GPIO 的本质。</li>
+<li>如果一个引脚 <strong>只用作中断输入</strong>（例如，一个传感器的数据就绪信号，或者一个按钮），那么第二种 &quot;Interrupt 写法&quot; 更简洁直观，它直接表达了该引脚的中断特性。</li>
+</ul>
+<p>在实际项目中，你还会参考具体的芯片厂商提供的 Linux 内核 BSP (板级支持包) 的 Device Tree 绑定规范（通常在 <code>Documentation/devicetree/bindings/</code> 目录下），这些规范会告诉你推荐或必须使用的 Device Tree 属性。</p>
+<h3 id="4-gpio_request-与-gpio_to_irq-的底层实现方式"><a class="markdownIt-Anchor" href="#4-gpio_request-与-gpio_to_irq-的底层实现方式"></a> 4. <code>gpio_request()</code> 与 <code>gpio_to_irq()</code> 的底层实现方式</h3>
+<p>你问到了一个非常关键且容易混淆的概念！</p>
+<p><strong>答案非常明确：</strong></p>
+<ul>
+<li><code>gpio_request()</code> (或其推荐的托管版本 <code>devm_gpio_request_one()</code>)</li>
+<li><code>gpio_to_irq()</code></li>
+</ul>
+<p>这两个函数都是 <strong>Linux 内核已经实现的标准 API 函数</strong>。作为设备驱动开发者（也就是你所说的“用户”），你 <strong>不需要自己去实现它们</strong>。</p>
+<p>但是，这并不意味着这些功能的底层逻辑是凭空存在的。它们依赖于另一个层级的驱动实现：<strong>GPIO 控制器驱动</strong>。</p>
+<p>我们来详细分解一下：</p>
+<h4 id="1-gpio_request-系列函数"><a class="markdownIt-Anchor" href="#1-gpio_request-系列函数"></a> 1. <code>gpio_request()</code> 系列函数</h4>
+<ul>
+<li><strong>功能：</strong> 用于向内核申请使用一个特定的 GPIO 引脚。</li>
+<li><strong>为什么要申请？</strong> 这是为了资源管理。一个 GPIO 引脚可能有多种用途（输入、输出、中断、特殊功能），也可能被不同的驱动或子系统使用。通过 <code>gpio_request()</code>，内核可以追踪哪个驱动正在使用哪个 GPIO，防止资源冲突。</li>
+<li><strong>谁实现它？</strong> <code>gpio_request_one()</code> (<code>gpio_request()</code>, <code>devm_gpio_request_one()</code>) 函数，以及其对应的释放函数，是 <strong>Linux 内核 GPIO Core 层</strong>（位于 <code>drivers/gpio/gpiolib.c</code> 或相关文件）的标准 API。它们是对外提供的统一接口。</li>
+<li><strong>谁调用它？</strong> 你的设备驱动程序会调用它来申请 GPIO。</li>
+<li><strong>底层机制：</strong> 当你调用 <code>gpio_request_one()</code> 时，GPIO Core 会查询哪个 <strong>GPIO 控制器驱动</strong> 负责这个 GPIO 号。如果该 GPIO 控制器驱动已经注册了对应的操作函数集（<code>struct gpio_chip</code>），那么 GPIO Core 就会调用控制器驱动提供的底层函数来配置实际的硬件寄存器，从而控制 GPIO 引脚（例如，将其设置为输入或输出，也就是说分配和防止分配冲突由 GPIO  CORE 实现，但是具体设置 GPIO 由底层实现）。</li>
+</ul>
+<h4 id="2-gpio_to_irq-函数"><a class="markdownIt-Anchor" href="#2-gpio_to_irq-函数"></a> 2. <code>gpio_to_irq()</code> 函数</h4>
+<ul>
+<li><strong>功能：</strong> 将一个逻辑 GPIO 号映射或转换成一个内核可以识别的全局中断号 (IRQ)。</li>
+<li><strong>为什么要转换？</strong> 因为 CPU 的中断控制器（例如 ARM GIC）直接接收的是有限数量的全局 IRQ 信号，而不是每个 GPIO 引脚的原始状态。GPIO 控制器是中间层，它接收各个 GPIO 引脚的中断请求，然后将它们仲裁、打包，并通过自身的 IRQ 线报告给主中断控制器。<code>gpio_to_irq()</code> 就是实现了这个映射过程。</li>
+<li><strong>谁实现它？</strong> <code>gpio_to_irq()</code> 函数本身是一个 <strong>GPIO Core 提供的标准 API</strong>。</li>
+<li><strong>底层机制：</strong> <strong>真正的映射逻辑和硬件寄存器操作，是由你板子或 SoC 上特定的</strong> GPIO 控制器驱动 <strong>（例如：<code>drivers/gpio/gpio-omap.c</code>, <code>drivers/gpio/gpio-rockchip.c</code> 等）来完成的。</strong>
+<ul>
+<li>当一个 GPIO 控制器驱动被加载时，它会向 GPIO Core 注册自己，并提供一个 <code>struct gpio_chip</code> 结构体，这个结构体包含了许多回调函数指针，其中包括了如何将它所管理的 GPIO 号转换为 IRQ 号的机制（通常是通过注册一个 <code>irq_domain</code> 或 <code>irq_chip</code> 来实现）。</li>
+<li>当你调用 <code>gpio_to_irq(gpio_num)</code> 时，GPIO Core 会根据 <code>gpio_num</code> 找到对应的 GPIO 控制器，然后调用该控制器驱动内部实现的中断域映射函数，最终返回一个全局 IRQ 号。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-总结"><a class="markdownIt-Anchor" href="#3-总结"></a> 3. 总结</h4>
+<ul>
+<li><strong>你的设备驱动（“用户”层面）：</strong> 只需要 <strong>调用</strong> <code>gpio_request()</code> 和 <code>gpio_to_irq()</code> 等内核 API，来使用 GPIO 功能。你不需要关心它们内部是如何具体操作硬件的，因为这些复杂性被抽象化了。</li>
+<li><strong>GPIO 系统 / GPIO 控制器驱动层面：</strong> 这是由芯片厂商或内核维护者实现的 <strong>底层硬件驱动</strong>。它们负责：
+<ul>
+<li><strong>实现 <code>struct gpio_chip</code> 结构体中的回调函数</strong>，这些函数会直接读写 GPIO 控制器的硬件寄存器，以配置 GPIO 的方向、上下拉、值等。</li>
+<li><strong>实现中断域 (IRQ Domain) 或中断芯片 (IRQ Chip) 的注册和映射逻辑</strong>，从而确保 <code>gpio_to_irq()</code> 能够正确地将 GPIO 号转换为全局 IRQ 号。</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-韦东山文档总结"><a class="markdownIt-Anchor" href="#6-韦东山文档总结"></a> 6. 韦东山文档总结</h2>
+<hr />
+<h3 id="1-linux-input-子系统与驱动框架"><a class="markdownIt-Anchor" href="#1-linux-input-子系统与驱动框架"></a> 1. Linux Input 子系统与驱动框架</h3>
+<p>Linux Input 子系统是内核中用于抽象各类输入设备（如键盘、鼠标、触摸屏、按键、操纵杆等）并向用户空间报告事件的核心框架。它采用 <strong>生产者-消费者</strong> 模型：</p>
+<ul>
+<li><strong>生产者 (Producers):</strong> 具体硬件的设备驱动程序，负责从硬件读取原始输入数据。</li>
+<li><strong>中间件 (Middle-ware):</strong> Input Core (输入核心层)，是内核的一部分，负责提供统一的 API 供驱动程序注册设备和上报事件，并管理设备节点。</li>
+<li><strong>消费者 (Consumers):</strong> 用户空间的应用程序，通过读取 <code>/dev/input/eventX</code> 等设备节点来获取标准化输入事件。</li>
+</ul>
+<h4 id="1-回顾框架"><a class="markdownIt-Anchor" href="#1-回顾框架"></a> 1. 回顾框架</h4>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/938ca60289c3990b48f1b82588e7d4c5.png" alt="image-20210326102626660" /></p>
+<p>上图清晰地展示了 Input 子系统的工作流程：</p>
+<ol>
+<li><strong>物理输入设备：</strong> 真实的硬件，如按键、触摸屏。</li>
+<li><strong>设备驱动 (e.g., <code>gpio_keys.c</code>, <code>goodix.c</code>)：</strong> 这些是 Input 设备驱动，它们不直接操作 Input Core 的硬件，而是通过 GPIO、I2C、SPI 等子系统来与物理硬件交互。它们获取原始输入，并将其转换为 Input Core 可理解的标准事件。</li>
+<li><strong>Input Core (Input 子系统)：</strong> 内核的核心层，提供了统一的 <code>input_dev</code> 结构体和一套 API (<code>input_allocate_device</code>, <code>input_register_device</code>, <code>input_event</code>, <code>input_sync</code> 等)。它接收驱动程序上报的事件，并管理 <code>/dev/input/eventX</code> 设备节点。</li>
+<li><strong>用户空间应用程序：</strong> 通过读取 <code>/dev/input/eventX</code> 设备节点获取标准化事件（<code>struct input_event</code>），并进行相应的处理，例如图形界面中的按键响应、鼠标点击等。</li>
+</ol>
+<h4 id="2-怎么编写-input_dev-驱动"><a class="markdownIt-Anchor" href="#2-怎么编写-input_dev-驱动"></a> 2. 怎么编写 <code>input_dev</code> 驱动</h4>
+<p>编写一个 Input 设备驱动通常遵循以下步骤：</p>
+<h5 id="21-分配设置注册-input_dev"><a class="markdownIt-Anchor" href="#21-分配设置注册-input_dev"></a> 2.1 分配/设置/注册 <code>input_dev</code></h5>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/70647e6483c23726312dfd4d8b6510f3.png" alt="image-20210324140549118" /></p>
+<p><code>struct input_dev</code> 是 Input 子系统中核心的数据结构，代表了一个输入设备。</p>
+<ol>
+<li>
+<p><strong>分配 <code>input_dev</code>：</strong><br />
+通常在设备驱动的 <code>probe</code> 函数中进行。推荐使用辅助函数来分配和初始化：</p>
+<ul>
+<li><code>struct input_dev *input_allocate_device(void);</code>：手动分配，需要 <code>input_free_device()</code> 释放。</li>
+<li><code>struct input_dev *devm_input_allocate_device(struct device *dev);</code>：这是更推荐的方法，它是一个托管 (managed) 资源分配，当设备被移除时，内核会自动释放。</li>
+</ul>
+</li>
+<li>
+<p><strong>设置 <code>input_dev</code> 的属性：</strong><br />
+这是关键一步，用于告诉 Input Core 设备支持哪些类型的事件和具体的键码/轴：</p>
+<ul>
+<li><code>dev-&gt;name = &quot;My Device Name&quot;;</code>：设置设备的名称，在 <code>/proc/bus/input/devices</code> 中可见。</li>
+<li><code>dev-&gt;id.bustype = ...;</code>：总线类型，如 <code>BUS_USB</code>, <code>BUS_I2C</code>, <code>BUS_VIRTUAL</code> 等。</li>
+<li><code>dev-&gt;id.vendor = ...;</code></li>
+<li><code>dev-&gt;id.product = ...;</code></li>
+<li><code>dev-&gt;id.version = ...;</code>：厂商、产品、版本 ID，用于唯一标识设备。</li>
+<li><strong>设置支持的事件类型 (Event Type Bitmask)：</strong> 使用 <code>__set_bit(EV_XXX, dev-&gt;evbit);</code>
+<ul>
+<li><code>EV_KEY</code>：按键事件（键盘、物理按键）。</li>
+<li><code>EV_REL</code>：相对坐标事件（鼠标移动）。</li>
+<li><code>EV_ABS</code>：绝对坐标事件（触摸屏、游戏摇杆）。</li>
+<li><code>EV_SYN</code>：同步事件（必须设置，用于标记事件报告的结束）。</li>
+<li><code>EV_MSC</code>：杂项事件（如滚动滚轮）。</li>
+</ul>
+</li>
+<li><strong>设置支持的具体事件码 (Event Code Bitmask) 根据事件类型：</strong>
+<ul>
+<li>如果支持 <code>EV_KEY</code>：使用 <code>__set_bit(KEY_XXX, dev-&gt;keybit);</code>，例如 <code>KEY_A</code>, <code>KEY_ENTER</code>, <code>KEY_POWER</code> 等。</li>
+<li>如果支持 <code>EV_REL</code>：使用 <code>__set_bit(REL_XXX, dev-&gt;relbit);</code>，例如 <code>REL_X</code>, <code>REL_Y</code>, <code>REL_WHEEL</code> 等。</li>
+<li>如果支持 <code>EV_ABS</code>：使用 <code>__set_bit(ABS_XXX, dev-&gt;absbit);</code>，例如 <code>ABS_X</code>, <code>ABS_Y</code>, <code>ABS_PRESSURE</code>, <code>ABS_MT_SLOT</code> (多点触摸槽位), <code>ABS_MT_TRACKING_ID</code> (多点触摸追踪 ID)。同时需要设置对应的轴范围：<code>input_set_abs_params(dev, ABS_X, min_val, max_val, fuzz, flat);</code>。</li>
+</ul>
+</li>
+<li><strong>设置设备属性 (Input Property Bitmask)：</strong> 使用 <code>__set_bit(INPUT_PROP_XXX, dev-&gt;propbit);</code>
+<ul>
+<li><code>INPUT_PROP_DIRECT</code>：表示这是一个直接输入设备，光标位置直接映射到屏幕位置（常见于触摸屏）。设置此位有助于上层工具（如 <code>tslib</code>）自动识别和处理。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>注册 <code>input_dev</code>：</strong></p>
+<ul>
+<li><code>int input_register_device(struct input_dev *dev);</code>：将配置好的 <code>input_dev</code> 注册到 Input Core。成功后，<code>/dev/input/eventX</code> 节点就会被创建。</li>
+</ul>
+</li>
+</ol>
+<h5 id="22-硬件相关的操作"><a class="markdownIt-Anchor" href="#22-硬件相关的操作"></a> 2.2 硬件相关的操作</h5>
+<p>这部分是驱动的核心，负责与实际硬件交互并上报数据。</p>
+<ul>
+<li>
+<p><strong>申请中断：</strong></p>
+<ul>
+<li>对于大多数输入设备，使用中断是获取硬件状态变化最高效的方式。驱动会调用中断子系统的 API 来申请中断，例如：
+<ul>
+<li><code>int request_irq(unsigned int irq, irq_handler_t handler, unsigned long flags, const char *name, void *dev_id);</code></li>
+<li><code>int devm_request_irq(...)</code>：推荐使用的托管版本。</li>
+</ul>
+</li>
+<li>中断标志 <code>flags</code> 非常重要，例如 <code>IRQF_TRIGGER_RISING</code> (上升沿触发), <code>IRQF_TRIGGER_FALLING</code> (下降沿触发), <code>IRQF_ONESHOT</code> (一次性中断，配合线程化中断)。</li>
+<li>对于需要进行耗时操作（如 I2C 读取）的中断，应使用 <strong>线程化中断</strong> (<code>request_threaded_irq</code> 或 <code>devm_request_threaded_irq</code>) 或在中断下半部（工作队列、tasklet）处理，以避免阻塞中断上下文。</li>
+</ul>
+</li>
+<li>
+<p><strong>在中断服务程序（或其下半部）里：</strong></p>
+<ul>
+<li>
+<p><strong>读取硬件获得数据：</strong> 根据设备类型，使用相应的子系统 API：</p>
+<ul>
+<li><strong>GPIO 按键：</strong> 使用 <code>gpio_get_value()</code> 读取 GPIO 当前状态。</li>
+<li><strong>I2C 触摸屏：</strong> 使用 <code>i2c_transfer()</code> 或相关的 I2C API 读取触摸坐标、压力等数据。</li>
+<li><strong>SPI 设备：</strong> 使用 SPI API 读取数据。</li>
+</ul>
+</li>
+<li>
+<p><strong>处理和上报数据：</strong> 将读取到的原始硬件数据转换为 Input Core 期望的标准化事件格式 <code>struct input_event</code>，并上报。</p>
+<pre><code><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">input_event</span><span class="params">(<span class="keyword">struct</span> input_dev *dev,</span></span><br><span class="line"><span class="params">                 <span class="type">unsigned</span> <span class="type">int</span> type, <span class="type">unsigned</span> <span class="type">int</span> code, <span class="type">int</span> value)</span>;</span><br></pre></td></tr></table></figure>
+</code></pre>
+<ul>
+<li>
+<p><code>type</code>：事件类型（如 <code>EV_KEY</code>, <code>EV_ABS</code>, <code>EV_REL</code>）。</p>
+</li>
+<li>
+<p><code>code</code>：具体事件码（如 <code>KEY_A</code>, <code>ABS_X</code>）。</p>
+</li>
+<li>
+<p><code>value</code>：事件值（如 1/0 表示按键按下/弹起，坐标值，移动量）。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">input_sync</span><span class="params">(<span class="keyword">struct</span> input_dev *dev)</span>; <span class="comment">// 实质也是 input_event</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>至关重要！</strong> 在一系列相关事件（如多点触摸的多个点坐标、按键按下和弹起）上报完毕后，<strong>必须发送一个 <code>EV_SYN</code> 类型的 <code>SYN_REPORT</code> 同步事件</strong>。这个事件告诉 Input Core，前面发送的所有事件构成了一个完整的“输入报告”或“一次输入扫描完成”，可以一并处理并通知给用户空间。如果缺少 <code>input_sync</code>，事件可能不会被正确传递或不会被用户空间识别。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-编写-input_dev-驱动框架"><a class="markdownIt-Anchor" href="#3-编写-input_dev-驱动框架"></a> 3. 编写 <code>input_dev</code> 驱动框架</h4>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/c058372acc999eaaf6e1ad336810b52b.png" alt="image-20210326095621949" /></p>
+<p>按照上述步骤，一个典型的 Input Driver 的 <code>probe</code> 函数会：</p>
+<ul>
+<li><strong>在设备树里创建一个节点：</strong> 定义设备的基本信息、连接的硬件资源 (GPIOs, I2C 地址, 中断等)。</li>
+<li><strong>编译一个 <code>platform_driver</code> 驱动：</strong> 因为很多输入设备是平台设备。</li>
+<li><strong>在 <code>probe</code> 函数里：</strong>
+<ul>
+<li><strong>从设备树获得资源：</strong> 解析设备树节点，获取 GPIO 号、I2C 地址、中断号等硬件信息 (<code>of_get_named_gpio</code>, <code>platform_get_irq</code> 等)。</li>
+<li><strong>分配/设置/注册 <code>input_dev</code>：</strong> 按照 2.1 节所述步骤执行。</li>
+<li><strong>执行硬件相关的操作：</strong>
+<ul>
+<li>请求和配置 GPIO 引脚。</li>
+<li><code>request_irq</code> 注册中断服务例程。</li>
+<li>根据需要初始化硬件（例如，对于触摸屏，可能需要发送配置命令）。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="2-编写最简单的触摸屏驱动程序_基于-qemu"><a class="markdownIt-Anchor" href="#2-编写最简单的触摸屏驱动程序_基于-qemu"></a> 2. 编写最简单的触摸屏驱动程序_基于 QEMU</h3>
+<h4 id="1-写在前面的话"><a class="markdownIt-Anchor" href="#1-写在前面的话"></a> 1. 写在前面的话</h4>
+<p>目前百问网主推的开发板是 IMX6ULL、STM32MP157。<br />
+但是也推出了一块虚拟的开发板：IMX6ULL_QEMU，对 QEMU 进行了大量的修改，比如增加了更多外设的模拟。<br />
+使用 QEMU 的原因有 3：</p>
+<ul>
+<li>降低学习成本
+<ul>
+<li>初学阶段，可以不买开发板，使用 QEMU 即可入门。</li>
+</ul>
+</li>
+<li>深入学习内核及驱动
+<ul>
+<li>使用 QEMU 可以非常方便地调试内核、查看驱动程序执行过程</li>
+<li>有助于深入研究内核及驱动</li>
+</ul>
+</li>
+<li>学习某些驱动时可以用 QEMU 模拟硬件，简化硬件的操作，把精力放在驱动程序框架本身</li>
+</ul>
+<p>后面的视频里，会使用 QEMU 来讲解某些驱动程序。<br />
+<strong>注意</strong>：</p>
+<ul>
+<li>使用 QEMU 不是必须的</li>
+<li>QEMU 只是提供另一个角度的学习方法，比如：
+<ul>
+<li>LCD 驱动：使用 QEMU 可以时，可以简化硬件的操作</li>
+<li>中断子系统：可以跟踪调用过程</li>
+</ul>
+</li>
+<li>你可以只看 QEMU 相关的视频，不使用 QEMU 来操作</li>
+<li>在真实的开发板上讲解的内容，会覆盖 QEMU 视频的知识</li>
+</ul>
+<h4 id="2-准备工作"><a class="markdownIt-Anchor" href="#2-准备工作"></a> 2. 准备工作</h4>
+<p>在 2021.03.27，我们给 QEMU 增加了新的功能：模拟触摸屏。<br />
+如果你是在这个时间之前下载了百问网的 QEMU 映像，那么需要重新下载。<br />
+下载、使用方法请参考：<a target="_blank" rel="noopener" href="http://wiki.100ask.org/Qemu">http://wiki.100ask.org/Qemu</a></p>
+<p>下面以 Ubuntu 18.04 简单介绍一下。</p>
+<h5 id="21-下载"><a class="markdownIt-Anchor" href="#21-下载"></a> 2.1 下载</h5>
+<p>执行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git  clone  https://e.coding.net/weidongshan/ubuntu-18.04_imx6ul_qemu_system.git</span><br></pre></td></tr></table></figure>
+<h5 id="22-安装运行环境"><a class="markdownIt-Anchor" href="#22-安装运行环境"></a> 2.2 安装运行环境</h5>
+<p>执行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> buntu-18.04_imx6ul_qemu_system</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">./install_sdl.sh // 提示输入用户密码，等待安装完成</span></span><br></pre></td></tr></table></figure>
+<h5 id="23-运行-qemu"><a class="markdownIt-Anchor" href="#23-运行-qemu"></a> 2.3 运行 QEMU</h5>
+<p>执行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$</span><span class="language-bash">./qemu-imx6ull-gui.sh // 启动后，登录名是root，无需密码</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-qemu-触摸屏操作方法"><a class="markdownIt-Anchor" href="#3-qemu-触摸屏操作方法"></a> 3. QEMU 触摸屏操作方法</h4>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/fa2196d851b9166a1baccf351ec26530.png" alt="image-20210327154310507" /></p>
+<p>寄存器说明如下：</p>
+<table>
+<thead>
+<tr>
+<th>地址</th>
+<th>寄存器</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x021B4000</td>
+<td>touch_pressure_register</td>
+<td>记录触摸屏压力值，只有 0、1 两个取值，<br />1 表示被按下，0 表示松开</td>
+</tr>
+<tr>
+<td>0x021B4004</td>
+<td>touch_x_register</td>
+<td>记录触摸屏 X 坐标</td>
+</tr>
+<tr>
+<td>0x021B4008</td>
+<td>touch_y_register</td>
+<td>记录触摸屏 Y 坐标</td>
+</tr>
+<tr>
+<td>0x021B400C</td>
+<td>touch_clean_register</td>
+<td>写入任意值，就会清零上述 3 个寄存器(仅用于测试，不用也可)</td>
+</tr>
+</tbody>
+</table>
+<p>操作原理：</p>
+<ul>
+<li>鼠标在屏幕上按下、松开
+<ul>
+<li>QEMU 改变 GPIO 电平、产生中断</li>
+<li>在 touch_pressure_register 中记录压力值</li>
+</ul>
+</li>
+<li>鼠标在屏幕上滑动
+<ul>
+<li>在 touch_x_register、touch_y_register 中记录坐标</li>
+</ul>
+</li>
+<li>仅能模拟单点触摸，不能模拟多点触摸</li>
+</ul>
+<h4 id="4-编写驱动程序"><a class="markdownIt-Anchor" href="#4-编写驱动程序"></a> 4. 编写驱动程序</h4>
+<p>对于 QEMU 模拟的触摸屏驱动，其核心逻辑与真实触摸屏类似：</p>
+<ul>
+<li><strong><code>request_irq</code>：</strong> 注册触摸屏中断，通常是基于压力变化的 GPIO 中断。</li>
+<li><strong>在中断处理函数里：</strong>
+<ul>
+<li>上报按下、松开的事件（即压力变化事件）。</li>
+<li>如果触摸屏被按下，启动定时器（或调度工作队列），以周期性读取并上报坐标。</li>
+<li>如果触摸屏被松开，取消定时器。</li>
+</ul>
+</li>
+<li><strong>在定时器函数里：</strong>
+<ul>
+<li>如果触摸屏还是被按下的状态，读取 QEMU 的 X 和 Y 坐标寄存器。</li>
+<li>上报坐标值 (<code>input_report_abs(..., ABS_X, ...)</code> 和 <code>input_report_abs(..., ABS_Y, ...)</code> )，并使用 <code>input_sync()</code> 同步。</li>
+<li>设置下一个超时时间，继续周期性报告。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-上机实验"><a class="markdownIt-Anchor" href="#5-上机实验"></a> 5. 上机实验</h4>
+<h5 id="51-设置工具链"><a class="markdownIt-Anchor" href="#51-设置工具链"></a> 5.1 设置工具链</h5>
+<p>在 Ubuntu 中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export ARCH=arm</span><br><span class="line">export CROSS_COMPILE=arm-linux-gnueabihf-</span><br><span class="line">export PATH=$PATH:/home/book/100ask_imx6ull-qemu/ToolChain/gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf/bin</span><br></pre></td></tr></table></figure>
+<h5 id="52-编译内核设备树"><a class="markdownIt-Anchor" href="#52-编译内核设备树"></a> 5.2 编译内核/设备树</h5>
+<p>在 Ubuntu 中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">book@100ask:~/100ask_imx6ull-qemu$ cd linux-4.9.88</span><br><span class="line">book@100ask:~/100ask_imx6ull-qemu/linux-4.9.88$ make mrproper</span><br><span class="line">book@100ask:~/100ask_imx6ull-qemu/linux-4.9.88$ make 100ask_imx6ull_qemu_defconfig</span><br><span class="line">book@100ask:~/100ask_imx6ull-qemu/linux-4.9.88$ make zImage -jN //编译zImage内核镜像，其中N参数可以根据CPU个数，来加速编译系统。</span><br><span class="line">book@100ask:~/100ask_imx6ull-qemu/linux-4.9.88$ make dtbs //编译设备树文件</span><br></pre></td></tr></table></figure>
+<p>成功的话，可以得到：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arch/arm/boot/zImage // 内核</span><br><span class="line">arch/arm/boot/dts/100ask_imx6ull_qemu.dtb // 设备树</span><br></pre></td></tr></table></figure>
+<p>复制到如下目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> ubuntu-18.04_imx6ul_qemu_system/imx6ull-system-image</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">ls</span></span></span><br><span class="line">100ask_imx6ull_qemu.dtb  rootfs.img  rootfs.tar.gz  zImage</span><br></pre></td></tr></table></figure>
+<h5 id="53-启动-qemu"><a class="markdownIt-Anchor" href="#53-启动-qemu"></a> 5.3 启动 QEMU</h5>
+<p>在 Ubuntu 中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ubuntu-18.04_imx6ul_qemu_system</span><br><span class="line">./qemu-imx6ull-gui.sh</span><br></pre></td></tr></table></figure>
+<h5 id="54-挂载-nfs"><a class="markdownIt-Anchor" href="#54-挂载-nfs"></a> 5.4 挂载 NFS</h5>
+<p>在 QEMU 中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -t nfs -o nolock,vers=3 10.0.2.2:/home/book/nfs_rootfs /mnt</span><br></pre></td></tr></table></figure>
+<p>开启 printk：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;7 4 1 7&quot; &gt; /proc/sys/kernel/printk</span><br></pre></td></tr></table></figure>
+<h5 id="55-编译-使用-tslib"><a class="markdownIt-Anchor" href="#55-编译-使用-tslib"></a> 5.5 编译、使用 tslib</h5>
+<p>在 Ubuntu 上执行下列命令。</p>
+<ul>
+<li>编译</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar xJf tslib-1.21.tar.xz</span><br><span class="line">cd tslib-1.21</span><br><span class="line">./configure --host=arm-linux-gnueabihf  --prefix=/</span><br><span class="line">make</span><br><span class="line">make install DESTDIR=$PWD/tmp</span><br></pre></td></tr></table></figure>
+<ul>
+<li>复制头文件/库到工具链(非必须, 编译其他 APP 时需要)</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd tslib-1.21/tmp/</span><br><span class="line"></span><br><span class="line">cp include/* /home/book/100ask_imx6ull-qemu/ToolChain/gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/6.2.1/../../../../arm-linux-gnueabihf/include</span><br><span class="line"></span><br><span class="line">cp -d lib/*so*  /home/book/100ask_imx6ull-qemu/ToolChain/gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf/bin/../arm-linux-gnueabihf/libc/usr/lib/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>复制库、APP 到开发板</p>
+<p>假设在 Ubuntu 的/home/book/nfs_rootfs 目录下有 tslib-1.21。<br />
+在开发板上执行：</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mount -t nfs -o nolock,vers=3 10.0.2.2:/home/book/nfs_rootfs /mnt</span><br><span class="line">cp  /mnt/tslib-1.21/tmp/lib/*  -drf     /lib</span><br><span class="line">cp  /mnt/tslib-1.21/tmp/bin/*            /bin</span><br><span class="line">cp  /mnt/tslib-1.21/tmp/etc/ts.conf  -d  /etc</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用 tslib</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">export TSLIB_TSDEVICE=/dev/input/event3</span><br><span class="line">export TSLIB_CALIBFILE=/etc/pointercal</span><br><span class="line">export TSLIB_CONFFILE=/etc/ts.conf</span><br><span class="line">export TSLIB_PLUGINDIR=/lib/ts</span><br><span class="line">export TSLIB_CONSOLEDEVICE=none</span><br><span class="line">export TSLIB_FBDEVICE=/dev/fb0</span><br><span class="line"></span><br><span class="line">ts_calibrate</span><br><span class="line"></span><br><span class="line">ts_test</span><br></pre></td></tr></table></figure>
+<h5 id="55-退出-qemu"><a class="markdownIt-Anchor" href="#55-退出-qemu"></a> 5.5 退出 QEMU</h5>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">要退出QEMU，可以同时按住ctrl+a，松开后再输入&#x27;x&#x27;</span><br></pre></td></tr></table></figure>
+<h5 id="56-改进驱动"><a class="markdownIt-Anchor" href="#56-改进驱动"></a> 5.6 改进驱动</h5>
+<p>如果在驱动程序里设置属性位：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__set_bit(INPUT_PROP_DIRECT, g_input_dev-&gt;propbit);</span><br></pre></td></tr></table></figure>
+<p>那么 tslib 可以自动扫描到触摸屏设备，<br />
+使用 tslib 时就不需要设置这些环境变量：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export TSLIB_TSDEVICE=/dev/input/event3</span><br><span class="line">export TSLIB_CALIBFILE=/etc/pointercal</span><br><span class="line">export TSLIB_CONFFILE=/etc/ts.conf</span><br><span class="line">export TSLIB_PLUGINDIR=/lib/ts</span><br><span class="line">export TSLIB_CONSOLEDEVICE=none</span><br><span class="line">export TSLIB_FBDEVICE=/dev/fb0</span><br></pre></td></tr></table></figure>
+<hr />
+<h3 id="3-gpio-按键驱动分析与使用"><a class="markdownIt-Anchor" href="#3-gpio-按键驱动分析与使用"></a> 3. GPIO 按键驱动分析与使用</h3>
+<h4 id="1-驱动程序框架"><a class="markdownIt-Anchor" href="#1-驱动程序框架"></a> 1. 驱动程序框架</h4>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/c058372acc999eaaf6e1ad336810b52b.png" alt="image-20210326095621949" /></p>
+<p>GPIO 按键驱动是 Input <code>input_dev</code> 驱动框架的一个具体应用。它的核心是利用 GPIO 子系统提供的功能来检测按键状态，并通过 Input 子系统上报按键事件。</p>
+<h4 id="2-设备树示例"><a class="markdownIt-Anchor" href="#2-设备树示例"></a> 2. 设备树示例</h4>
+<p>设备树是配置 <code>gpio-keys</code> 驱动的关键。<code>gpio-keys</code> 是一个通用的内核驱动 (<code>drivers/input/keyboard/gpio_keys.c</code>)，它通过解析设备树节点来了解按键的连接方式和行为。</p>
+<h5 id="21-设备树讲解"><a class="markdownIt-Anchor" href="#21-设备树讲解"></a> 2.1 设备树讲解</h5>
+<p>一个典型的 <code>gpio-keys</code> 节点定义：</p>
+<ul>
+<li>必备：<code>compatible = &quot;gpio-keys&quot;;</code> (标识这是一个 GPIO 按键设备节点)</li>
+<li>可选：
+<ul>
+<li><code>autorepeat</code>：表示自动重复，按下按键不松开，驱动会自动重复上报按键值。</li>
+</ul>
+</li>
+<li>对于每一个 GPIO 按键，都是一个子节点，有这些属性：
+<ul>
+<li><code>gpios</code>：使用哪个 GPIO (e.g., <code>&lt;&amp;gpio5 1 GPIO_ACTIVE_LOW&gt;;</code>)
+<ul>
+<li>这会指定连接的 GPIO 引脚、引脚号和电平有效性（如 <code>GPIO_ACTIVE_LOW</code>）。</li>
+</ul>
+</li>
+<li><code>interrupts</code>：对应的中断 (e.g., <code>&lt;&amp;gpio5 1 IRQ_TYPE_EDGE_BOTH&gt;;</code>)
+<ul>
+<li><strong>注意</strong>：<code>gpios</code> 和 <code>interrupts</code> 至少要保留一个，不能都省略。现代设备树中，通常会提供 <code>gpios</code>，驱动会通过 <code>gpio_to_irq()</code> 自动解析其对应的中断号。</li>
+</ul>
+</li>
+<li><code>linux,code</code>：对应的按键值 (e.g., <code>&lt;KEY_1&gt;;</code>)，这些值定义在 <code>&lt;linux/input.h&gt;</code> 中。</li>
+<li><code>debounce-interval</code>: 消除抖动的间隔，单位：ms，默认是 5ms。非常关键，用于处理机械按键的物理抖动。</li>
+</ul>
+</li>
+</ul>
+<h5 id="22-100ask_imx6ull"><a class="markdownIt-Anchor" href="#22-100ask_imx6ull"></a> 2.2 100ASK_IMX6ULL</h5>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">gpio-keys &#123;</span><br><span class="line">	compatible = &quot;gpio-keys&quot;;</span><br><span class="line">	pinctrl-names = &quot;default&quot;;</span><br><span class="line"></span><br><span class="line">	user1 &#123;</span><br><span class="line">		label = &quot;User1 Button&quot;;</span><br><span class="line">		gpios = &lt;&amp;gpio5 1 GPIO_ACTIVE_LOW&gt;;</span><br><span class="line">		gpio-key,wakeup;</span><br><span class="line">		linux,code = &lt;KEY_1&gt;;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	user2 &#123;</span><br><span class="line">		label = &quot;User2 Button&quot;;</span><br><span class="line">		gpios = &lt;&amp;gpio4 14 GPIO_ACTIVE_LOW&gt;;</span><br><span class="line">		gpio-key,wakeup;</span><br><span class="line">		linux,code = &lt;KEY_2&gt;;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="23-100ask_stm32mp157"><a class="markdownIt-Anchor" href="#23-100ask_stm32mp157"></a> 2.3 100ASK_STM32MP157</h5>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">joystick &#123;</span><br><span class="line">		compatible = &quot;gpio-keys&quot;;</span><br><span class="line"><span class="meta prompt_">		#</span><span class="language-bash">size-cells = &lt;0&gt;;</span></span><br><span class="line">		button-0 &#123;</span><br><span class="line">				 label = &quot;usr_button0&quot;;</span><br><span class="line">				 linux,code = &lt;KEY_A&gt;;</span><br><span class="line">				interrupt-parent = &lt;&amp;gpiog&gt;;</span><br><span class="line">				interrupts = &lt;3 IRQ_TYPE_EDGE_RISING&gt;;</span><br><span class="line">		&#125;;</span><br><span class="line">	   button-1 &#123;</span><br><span class="line">				 label = &quot;usr_button1&quot;;</span><br><span class="line">				 linux,code = &lt;KEY_ENTER&gt;;</span><br><span class="line">				interrupt-parent = &lt;&amp;gpiog&gt;;</span><br><span class="line">				interrupts = &lt;2 IRQ_TYPE_EDGE_RISING&gt;;</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="24-qemu"><a class="markdownIt-Anchor" href="#24-qemu"></a> 2.4 QEMU</h5>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">gpio-keys@0 &#123;</span><br><span class="line">				compatible = &quot;gpio-keys&quot;;</span><br><span class="line">				pinctrl-names = &quot;default&quot;;</span><br><span class="line">				pinctrl-0 = &lt;&amp;pinctrl_gpio_keys&gt;;</span><br><span class="line">				status = &quot;okay&quot;;</span><br><span class="line"></span><br><span class="line">				Key0&#123;</span><br><span class="line">						label = &quot;Key 0&quot;;</span><br><span class="line">						gpios = &lt;&amp;gpio5 1 GPIO_ACTIVE_HIGH&gt;;</span><br><span class="line">						linux,code = &lt;KEY_1&gt;;</span><br><span class="line">				&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">gpio-keys@1 &#123;</span><br><span class="line">				compatible = &quot;gpio-keys&quot;;</span><br><span class="line">				pinctrl-names = &quot;default&quot;;</span><br><span class="line">				pinctrl-0 = &lt;&amp;pinctrl_gpio_key1&gt;;</span><br><span class="line">				status = &quot;okay&quot;;</span><br><span class="line"></span><br><span class="line">				Key0&#123;</span><br><span class="line">						label = &quot;Key 1&quot;;</span><br><span class="line">						gpios = &lt;&amp;gpio1 18 GPIO_ACTIVE_HIGH&gt;;</span><br><span class="line">						linux,code = &lt;KEY_2&gt;;</span><br><span class="line">				&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="3-gpio_keysc-驱动程序分析"><a class="markdownIt-Anchor" href="#3-gpio_keysc-驱动程序分析"></a> 3. <code>gpio_keys.c</code> 驱动程序分析</h4>
+<p><code>gpio_keys</code> 驱动的实现机制非常经典，它作为 GPIO 子系统和 Input 子系统之间的 <strong>适配器 (Adapter)</strong>，将 GPIO 状态变化转化为标准的 Input 事件。</p>
+<h5 id="31-套路"><a class="markdownIt-Anchor" href="#31-套路"></a> 3.1 套路</h5>
+<ul>
+<li>根据设备树获得硬件信息：哪个 GPIO、对于什么按键。</li>
+<li>分配/设置/注册 <code>input_dev</code> 结构体。</li>
+<li><code>request_irq</code>: 在中断处理函数中确定按键值、上报按键值。
+<ul>
+<li><code>gpio_keys</code> 驱动内部会根据设备树的配置，处理中断的注册和触发。最终会通过 <code>gpio_to_irq()</code> 得到中断号并注册中断。</li>
+</ul>
+</li>
+</ul>
+<h5 id="32-gpio_keys_gpio_isr-和-去抖-debouncing-分析"><a class="markdownIt-Anchor" href="#32-gpio_keys_gpio_isr-和-去抖-debouncing-分析"></a> 3.2 <code>gpio_keys_gpio_isr</code> 和 去抖 (Debouncing) 分析</h5>
+<p><strong>核心思想：使用定时器或工作队列进行延时去抖动。</strong></p>
+<ul>
+<li><strong>理想状况：</strong> 按下、松开按键，各产生一次中断，也只产生一次中断。</li>
+<li><strong>实际情况：</strong> 对于机械开关，它的金属弹片会反复震动。GPIO 电平会反复变化，最后才稳定。一般是几十毫秒才会稳定。</li>
+<li><strong>问题：</strong> 如果不处理抖动的话，用户只操作一次按键，会发生多次中断，驱动程序可能会上报多个数据。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/b3e118aebdc2d5f4ef81b3d54d9d269a.png" alt="" /></p>
+<p><strong>怎么处理按键抖动？</strong></p>
+<ul>
+<li>在按键中断程序中，可以循环判断几十亳秒，发现电平稳定之后再上报 (不推荐，耗时)。</li>
+<li><strong>使用定时器 (推荐)：</strong> 这是 <code>gpio_keys</code> 驱动采用的方法。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/090d68385213be9a9a574a651cf4470f.png" alt="" /></p>
+<p><strong>原理：</strong> 核心在于：在 GPIO 中断中并不立刻记录按键值，而是 <strong>调度一个延时工作 (delayed_work) 或重置一个定时器</strong>，等待 <code>debounce-interval</code> (例如 10ms) 后再处理。<br />
+如果在这 <code>debounce-interval</code> 时间内又发生了 GPIO 中断，那就认为是抖动，这时会再次重置定时器/延时工作，重新开始计时。<br />
+只有当 <code>debounce-interval</code> 时间之内再无 GPIO 中断发生，那么定时器的函数 (或延时工作函数) 才会被调用。<br />
+在定时器/延时工作函数中，会再次读取 GPIO 的稳定电平，并上报按键值 (<code>input_report_key</code>)，然后通过 <code>input_sync()</code> 同步。</p>
+<h5 id="33-gpio_keys_irq_isr-分析-补充"><a class="markdownIt-Anchor" href="#33-gpio_keys_irq_isr-分析-补充"></a> 3.3 <code>gpio_keys_irq_isr</code> 分析 (补充)</h5>
+<p>无论设备树中是使用 <code>gpios</code> 属性（驱动内部转换为 IRQ）还是直接使用 <code>interrupts</code> 属性来配置按键，<code>gpio_keys</code> 驱动都会采用上述类似的去抖动机制。其目的是确保只有在按键电平稳定后，才上报事件。因此，一个物理按键的按下通常会对应一次 <code>KEY_CODE</code> 的 <code>value=1</code> 事件，松开对应一次 <code>value=0</code> 事件，中间经历去抖动处理。不存在一次中断就上报按下和松开两个事件的普遍情况，除非是特殊的硬件或逻辑。</p>
+<h4 id="4-qemu-上机实验"><a class="markdownIt-Anchor" href="#4-qemu-上机实验"></a> 4. QEMU 上机实验</h4>
+<p>IMX6ULL、STM32MP157 的出厂系统都已经配置的 GPIO 按键。<br />
+可以执行以下命令确认设备节点：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/bus/input/devices</span><br></pre></td></tr></table></figure>
+<p>然后执行 <code>hexdump /dev/input/event?</code>(?表示某个数值)，并且操作按键来观察输出信息。</p>
+<p>也可以在 QEMU 上做实验：原理图如下：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/26ffbc19f86345ed91d7e99c54bf77e3.png" alt="" /></p>
+<h5 id="41-设置工具链"><a class="markdownIt-Anchor" href="#41-设置工具链"></a> 4.1 设置工具链</h5>
+<p>在 Ubuntu 中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export ARCH=arm</span><br><span class="line">export CROSS_COMPILE=arm-linux-gnueabihf-</span><br><span class="line">export PATH=$PATH:/home/book/100ask_imx6ull-qemu/ToolChain/gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf/bin</span><br></pre></td></tr></table></figure>
+<h5 id="42-配置内核"><a class="markdownIt-Anchor" href="#42-配置内核"></a> 4.2 配置内核</h5>
+<p>QEMU 的内核里已经配置了 GPIO 按键的设备树，只需要编译出 gpio_keys 驱动程序即可。<br />
+配置内核：执行 <code>make menuconfig</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash">Device Drivers</span></span><br><span class="line"><span class="meta prompt_">  -&gt; </span><span class="language-bash">Input device support</span></span><br><span class="line">    -&gt; Generic input layer </span><br><span class="line">      -&gt; Keyboards</span><br><span class="line">         &lt;M&gt;   GPIO Buttons    </span><br></pre></td></tr></table></figure>
+<h5 id="43-编译驱动"><a class="markdownIt-Anchor" href="#43-编译驱动"></a> 4.3 编译驱动</h5>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">book@100ask:~/100ask_imx6ull-qemu$ cd linux-4.9.88</span><br><span class="line">book@100ask:~/100ask_imx6ull-qemu/linux-4.9.88$ make modules</span><br></pre></td></tr></table></figure>
+<p>成功的话，可以得到：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drivers/input/keyboard/gpio_keys.ko</span><br></pre></td></tr></table></figure>
+<p>复制到如下目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp drivers/input/keyboard/gpio_keys.ko ~/nfs_rootfs/</span><br></pre></td></tr></table></figure>
+<h5 id="44-启动-qemu"><a class="markdownIt-Anchor" href="#44-启动-qemu"></a> 4.4 启动 QEMU</h5>
+<p>在 Ubuntu 中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ubuntu-18.04_imx6ul_qemu_system</span><br><span class="line">./qemu-imx6ull-gui.sh</span><br></pre></td></tr></table></figure>
+<h5 id="45-挂载-nfs-实验"><a class="markdownIt-Anchor" href="#45-挂载-nfs-实验"></a> 4.5 挂载 NFS、实验</h5>
+<p>在 QEMU 中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mount -t nfs -o nolock,vers=3 10.0.2.2:/home/book/nfs_rootfs /mnt</span><br><span class="line">insmod /mnt/gpio_keys.ko</span><br><span class="line">cat /proc/bus/input/devices   // 确认设备节点</span><br><span class="line">hexdump /dev/input/event3</span><br></pre></td></tr></table></figure>
+<p>在 QEMU 的 GUI 界面操作：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/a2ab49e6bf145c59cbccb4089efc4ea2.png" alt="image-20210330164832069" /></p>
+<hr />
+<h3 id="4-i2c-接口触摸屏驱动分析"><a class="markdownIt-Anchor" href="#4-i2c-接口触摸屏驱动分析"></a> 4. I2C 接口触摸屏驱动分析</h3>
+<h4 id="1-驱动程序框架-2"><a class="markdownIt-Anchor" href="#1-驱动程序框架-2"></a> 1. 驱动程序框架</h4>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/2c73fb3882b3d390fb9aba901efdc394.png" alt="image-20210331151038656" /></p>
+<p>上图展示了 I2C 触摸屏驱动的层次：</p>
+<ol>
+<li><strong>I2C 触摸屏：</strong> 物理触摸屏传感器，通过 I2C 协议与 SoC 通信。</li>
+<li><strong>I2C 控制器驱动：</strong> 内核中负责驱动 SoC 上的 I2C 控制器硬件的驱动，它提供 I2C 总线 API (例如 <code>i2c_transfer</code>)。I2C 触摸屏驱动会使用这些 API。</li>
+<li><strong>I2C 触摸屏驱动 (e.g., <code>goodix.c</code>)：</strong> 这是一个 <code>i2c_driver</code>，它通过 I2C 总线与触摸屏芯片进行通信，读取触摸数据，并将数据加工成 Input 事件。</li>
+<li><strong>Input Core：</strong> 接收来自触摸屏驱动的事件。</li>
+<li><strong>用户空间应用程序：</strong> 通过 Input 设备节点获取触摸事件。</li>
+</ol>
+<h4 id="2-设备树示例-2"><a class="markdownIt-Anchor" href="#2-设备树示例-2"></a> 2. 设备树示例</h4>
+<p>I2C 接口触摸屏驱动是从硬件接收触摸信号，并通过 Input 子系统将其传递给应用程序。这个过程涉及 I2C 总线通信、中断处理、数据解析和 Input 事件报告。</p>
+<h5 id="21-设备树讲解-2"><a class="markdownIt-Anchor" href="#21-设备树讲解-2"></a> 2.1 设备树讲解</h5>
+<p>作为一个 I2C 设备，在某个 I2C 控制器节点下创建一个子节点。<br />
+属性：</p>
+<ul>
+<li>必备，根据这个属性找到驱动程序：<code>compatible = &quot;xxxx&quot;;</code></li>
+<li>必备，I2C 设备地址：<code>reg = &lt;0xXX&gt;;</code></li>
+<li>可选：
+<ul>
+<li><code>interrupt-parent</code> / <code>interrupts</code>: 中断引脚所在 GPIO 控制器和中断号/触发类型。</li>
+<li><code>irq-gpios</code>: 中断 GPIO 引脚，通常与 <code>interrupts</code> 指向同一物理引脚。</li>
+<li><code>reset-gpios</code>: 复位引脚 GPIO。</li>
+<li><code>touchscreen-max-id</code>: 最大支持的触摸点数。</li>
+<li><code>touchscreen-size-x</code> / <code>touchscreen-size-y</code>: 触摸屏分辨率 (X/Y 轴)。</li>
+<li>其他厂商特定的配置参数。</li>
+</ul>
+</li>
+</ul>
+<h5 id="22-100ask_imx6ull-2"><a class="markdownIt-Anchor" href="#22-100ask_imx6ull-2"></a> 2.2 100ASK_IMX6ULL</h5>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&amp;i2c2 &#123;</span><br><span class="line">	gt9xx@5d &#123;</span><br><span class="line">			compatible = &quot;goodix,gt9xx&quot;;</span><br><span class="line">			reg = &lt;0x5d&gt;;</span><br><span class="line">			status = &quot;okay&quot;;</span><br><span class="line">			interrupt-parent = &lt;&amp;gpio1&gt;;</span><br><span class="line">			interrupts = &lt;5 IRQ_TYPE_EDGE_FALLING&gt;;</span><br><span class="line">			pinctrl-names = &quot;default&quot;;</span><br><span class="line">			pinctrl-0 = &lt;&amp;pinctrl_tsc_reset &amp;pinctrl_touchscreen_int&gt;;</span><br><span class="line">			/*pinctrl-1 = &lt;&amp;pinctrl_tsc_irq&gt;;*/</span><br><span class="line">			/*</span><br><span class="line">			 pinctrl-names = &quot;default&quot;, &quot;int-output-low&quot;, &quot;int-output-high&quot;, &quot;int-input&quot;;</span><br><span class="line">			 pinctrl-0 = &lt;&amp;ts_int_default&gt;;</span><br><span class="line">			 pinctrl-1 = &lt;&amp;ts_int_output_low&gt;;</span><br><span class="line">			 pinctrl-2 = &lt;&amp;ts_int_output_high&gt;;</span><br><span class="line">			 pinctrl-3 = &lt;&amp;ts_int_input&gt;;</span><br><span class="line">			*/</span><br><span class="line">			reset-gpios = &lt;&amp;gpio5 2 GPIO_ACTIVE_LOW&gt;;</span><br><span class="line">			irq-gpios = &lt;&amp;gpio1 5 IRQ_TYPE_EDGE_FALLING&gt;;</span><br><span class="line">			irq-flags = &lt;2&gt;;                /*1:rising 2: falling*/</span><br><span class="line"></span><br><span class="line">			touchscreen-max-id = &lt;5&gt;;</span><br><span class="line">			touchscreen-size-x = &lt;800&gt;;</span><br><span class="line">			touchscreen-size-y = &lt;480&gt;;</span><br><span class="line">			touchscreen-max-w = &lt;1024&gt;;</span><br><span class="line">			touchscreen-max-p = &lt;1024&gt;;</span><br><span class="line">			/*touchscreen-key-map = &lt;172&gt;, &lt;158&gt;;*/ /*KEY_HOMEPAGE, KEY_BACK*/</span><br><span class="line"></span><br><span class="line">			goodix,type-a-report = &lt;0&gt;;</span><br><span class="line">			goodix,driver-send-cfg = &lt;0&gt;;</span><br><span class="line">			goodix,create-wr-node = &lt;1&gt;;</span><br><span class="line">			goodix,wakeup-with-reset = &lt;0&gt;;</span><br><span class="line">			goodix,resume-in-workqueue = &lt;0&gt;;</span><br><span class="line">			goodix,int-sync = &lt;0&gt;;</span><br><span class="line">			goodix,swap-x2y = &lt;0&gt;;</span><br><span class="line">			goodix,esd-protect = &lt;0&gt;;</span><br><span class="line">			goodix,pen-suppress-finger = &lt;0&gt;;</span><br><span class="line">			goodix,auto-update = &lt;0&gt;;</span><br><span class="line">			goodix,auto-update-cfg = &lt;0&gt;;</span><br><span class="line">			goodix,power-off-sleep = &lt;0&gt;;</span><br><span class="line">			/* ...... */</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;	</span><br></pre></td></tr></table></figure>
+<h5 id="23-100ask_stm32mp157-2"><a class="markdownIt-Anchor" href="#23-100ask_stm32mp157-2"></a> 2.3 100ASK_STM32MP157</h5>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&amp;i2c4 &#123;</span><br><span class="line">    gt911@5d &#123;</span><br><span class="line">		compatible = &quot;goodix,gt928&quot;;</span><br><span class="line">		reg = &lt;0x5d&gt;;</span><br><span class="line">		interrupt-parent = &lt;&amp;gpioe&gt;;</span><br><span class="line">		interrupts = &lt;4 IRQ_TYPE_EDGE_FALLING&gt;;</span><br><span class="line">		reset-gpios = &lt;&amp;gpioe 12 GPIO_ACTIVE_LOW&gt;;</span><br><span class="line">		irq-gpios = &lt;&amp;gpioe 4 IRQ_TYPE_EDGE_FALLING&gt;;</span><br><span class="line">		irq-flags = &lt;2&gt;;                /*1:rising 2: falling*/</span><br><span class="line">		touchscreen-max-id = &lt;5&gt;;</span><br><span class="line">		touchscreen-size-x = &lt;1024&gt;;</span><br><span class="line">		touchscreen-size-y = &lt;600&gt;;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="3-驱动程序分析"><a class="markdownIt-Anchor" href="#3-驱动程序分析"></a> 3. 驱动程序分析</h4>
+<p>I2C 触摸屏驱动（例如 <code>drivers/input/touchscreen/goodix.c</code>）是一个 <code>i2c_driver</code>，其核心逻辑在 <code>probe</code> 函数和中断处理函数中。</p>
+<h5 id="31-分配设置注册-input_dev"><a class="markdownIt-Anchor" href="#31-分配设置注册-input_dev"></a> 3.1 分配/设置/注册 <code>input_dev</code></h5>
+<ul>
+<li><strong>在 <code>i2c_driver</code> 的 <code>probe</code> 函数中：</strong>
+<ol>
+<li><strong>资源解析：</strong> 从设备树中获取 I2C 设备配置、GPIO 引脚、中断号等。</li>
+<li><strong>GPIO 初始化：</strong> 配置复位、中断引脚。</li>
+<li><strong>设备初始化：</strong> 通过 I2C 命令对触摸屏芯片进行初始化（如发送配置数据）。</li>
+<li><strong>分配 <code>input_dev</code>：</strong>
+<ul>
+<li><code>gtp_probe</code> (IMX6ULL Linux 4.x): <code>ts-&gt;input_dev = input_allocate_device();</code></li>
+<li><code>goodix_ts_probe</code> (STM32MP157 Linux 5.x): <code>ts-&gt;input_dev = devm_input_allocate_device(&amp;ts-&gt;client-&gt;dev);</code> (推荐方式)</li>
+</ul>
+</li>
+<li><strong>设置 <code>input_dev</code> 能力：</strong>
+<ul>
+<li>设置 <code>EV_ABS</code> (绝对坐标事件)、<code>EV_KEY</code> (按键事件, 如果有虚拟按键) 等事件类型位。</li>
+<li>设置 <code>INPUT_PROP_DIRECT</code> 属性位，表明它是直接映射的触摸屏。</li>
+<li>设置多点触摸相关的 <code>ABS_MT_SLOT</code>, <code>ABS_MT_TRACKING_ID</code>, <code>ABS_MT_POSITION_X/Y</code> 等绝对轴位。</li>
+<li>设置各个轴的范围，例如 <code>input_set_abs_params(ts-&gt;input_dev, ABS_X, 0, touchscreen_size_x, 0, 0);</code></li>
+</ul>
+</li>
+<li><strong>注册 <code>input_dev</code>：</strong>
+<ul>
+<li><code>gtp_request_input_dev</code> (IMX6ULL Linux 4.x): <code>ret = input_register_device(ts-&gt;input_dev);</code></li>
+<li><code>goodix_configure_dev</code> (STM32MP157 Linux 5.x): <code>error = input_register_device(ts-&gt;input_dev);</code></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h5 id="32-注册中断处理函数"><a class="markdownIt-Anchor" href="#32-注册中断处理函数"></a> 3.2 注册中断处理函数</h5>
+<p>I2C 操作通常耗时，因此触摸屏驱动通常使用 <strong>线程化中断 (Threaded IRQ)</strong>。</p>
+<ul>
+<li>IMX6ULL Linux 4.x: <code>request_threaded_irq(ts-&gt;client-&gt;irq, NULL, gtp_irq_handler, ts-&gt;pdata-&gt;irq_flags | IRQF_ONESHOT, ts-&gt;client-&gt;name, ts);</code></li>
+<li>STM32MP157 Linux 5.x: <code>devm_request_threaded_irq(&amp;ts-&gt;client-&gt;dev, ts-&gt;client-&gt;irq, NULL, goodix_ts_irq_handler, ts-&gt;irq_flags, ts-&gt;client-&gt;name, ts);</code><br />
+线程化中断将实际的 I2C 读取和事件报告放在一个独立的内核线程中执行，避免阻塞中断上下文，提高了系统响应性。</li>
+</ul>
+<h5 id="33-中断处理函数分析"><a class="markdownIt-Anchor" href="#33-中断处理函数分析"></a> 3.3 中断处理函数分析</h5>
+<p>中断处理函数（例如 <code>gtp_irq_handler</code> 或 <code>goodix_ts_irq_handler</code>）是驱动的核心：</p>
+<ol>
+<li><strong>I2C 读取数据：</strong>
+<ul>
+<li>通过 I2C API (例如 <code>gtp_i2c_read</code> 调用 <code>i2c_transfer</code> 或 <code>goodix_i2c_read</code> 调用 <code>i2c_transfer</code>) 与触摸屏芯片通信，读取触摸数据寄存器中的点数、每个点的 ID、X/Y 坐标、压力等信息。</li>
+</ul>
+</li>
+<li><strong>数据解析和多点触摸 (Multi-Touch) 处理：</strong>
+<ul>
+<li>解析读取到的原始数据，判断是否有触摸点变化，以及每个点的具体坐标和状态。</li>
+<li>Linux Input 子系统支持多点触摸协议（Protocol A 和 Protocol B）。现代触摸屏通常使用 <strong>Protocol B</strong>，通过 <code>ABS_MT_SLOT</code> 和 <code>ABS_MT_TRACKING_ID</code> 来追踪多个独立的触摸点。</li>
+<li><strong>上报多点触摸事件：</strong>
+<ul>
+<li><code>input_mt_slot(input, slot_id);</code>：选择当前报告的触摸点槽位 ID。</li>
+<li><code>input_mt_report_slot_state(input, MT_TOOL_FINGER, true);</code> (如果手指有效)。</li>
+<li><code>input_report_abs(input, ABS_MT_TRACKING_ID, tracking_id);</code>：设置该槽位的跟踪 ID，<code>0xFFFFFFFF</code> (<code>-1</code>) 表示手指离开。</li>
+<li><code>input_report_abs(input, ABS_MT_POSITION_X, x_coord);</code>：报告 X 坐标。</li>
+<li><code>input_report_abs(input, ABS_MT_POSITION_Y, y_coord);</code>：报告 Y 坐标。</li>
+<li><code>input_report_abs(input, ABS_MT_PRESSURE, pressure_value);</code>：报告压力值。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>上报同步事件：</strong> 在所有触摸点的事件都上报完毕后，<strong>必须调用 <code>input_sync(input_dev);</code></strong>。这标志着一次完整的触摸报告周期结束。</li>
+</ol>
+<hr />
+<h3 id="5-uinput-分析_用户态创建-input_dev"><a class="markdownIt-Anchor" href="#5-uinput-分析_用户态创建-input_dev"></a> 5. UInput 分析_用户态创建 input_dev</h3>
+<h4 id="1-概念"><a class="markdownIt-Anchor" href="#1-概念"></a> 1. 概念</h4>
+<p>uinput 是一个内核模块(驱动)，它允许应用程序模拟输入设备(input_dev)。<br />
+应用程序通过访问 <code>/dev/uinput</code> 或 <code>/dev/input/uinput</code>：</p>
+<ul>
+<li>创建一个虚拟的输入设备</li>
+<li>设置它的属性</li>
+<li>APP 发送数据给它，让它产生输入事件</li>
+<li>uinput 就会把这些输入事件分发给其他使用者(APP 或内核里其他模块)</li>
+</ul>
+<p>框图如下：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/122d957bd89a4d640136e4a4f4b8a04c.png" alt="image-20210402113429433" /></p>
+<p><code>Uinput</code> (User Input) 是 Linux 内核 Input 子系统提供的一个特殊模块 (<code>drivers/input/misc/uinput.c</code>)，它允许 <strong>用户空间的应用程序</strong> 创建和模拟虚拟的输入设备。</p>
+<ul>
+<li><strong>核心功能：</strong> 允许用户空间程序通过操作特殊的设备文件 <code>/dev/uinput</code> 来：
+<ul>
+<li><strong>创建虚拟设备：</strong> 在内核的 Input Core 中注册一个新的、不存在物理硬件的 <code>input_dev</code> 实例。</li>
+<li><strong>配置虚拟设备：</strong> 设置这个虚拟设备支持哪些事件类型（键盘、鼠标、触摸屏等）和具体的事件码。</li>
+<li><strong>注入事件：</strong> 向内核模拟发送 <code>input_event</code> 结构体，让这个虚拟设备产生输入事件，这些事件会被 Input Core 正常处理并分发给其他消费者（如 X Window System、Wayland compositor 或其他用户空间应用）。</li>
+</ul>
+</li>
+<li><strong>用途：</strong> 广泛用于自动化测试、自定义输入控制器、远程控制、辅助功能、游戏模拟器等场景。</li>
+</ul>
+<h4 id="2-编写应用程序"><a class="markdownIt-Anchor" href="#2-编写应用程序"></a> 2. 编写应用程序</h4>
+<p>使用 <code>Uinput</code> 的应用程序通常遵循以下步骤：</p>
+<ol>
+<li><strong>包含头文件：</strong> <code>#include &lt;linux/uinput.h&gt;</code> 和 <code>#include &lt;linux/input.h&gt;</code>。</li>
+<li><strong>打开 <code>uinput</code> 设备文件：</strong> <code>int fd = open(&quot;/dev/uinput&quot;, O_WRONLY | O_NONBLOCK);</code></li>
+<li><strong>设置设备能力：</strong> 使用 <code>ioctl()</code> 系统调用向 <code>uinput</code> 模块注册虚拟设备支持的事件类型和事件码。
+<ul>
+<li><code>ioctl(fd, UI_SET_EVBIT, EV_KEY);</code> (支持按键事件)</li>
+<li><code>ioctl(fd, UI_SET_KEYBIT, KEY_A);</code> (支持 KEY_A 键)</li>
+<li><code>ioctl(fd, UI_SET_ABSBIT, ABS_X);</code> (支持绝对 X 轴)</li>
+<li>对于绝对轴，还需要设置其范围，例如 <code>ioctl(fd, UI_SET_ABS_PARAMS, ABS_X, min, max, fuzz, flat);</code></li>
+</ul>
+</li>
+<li><strong>定义设备信息：</strong> 填充 <code>struct uinput_user_dev</code> 结构体，包括设备的名称、ID (厂商、产品、版本 ID) 等。</li>
+<li><strong>写入设备信息：</strong> 将填充好的 <code>uinput_user_dev</code> 结构体通过 <code>write()</code> 系统调用写入到 <code>uinput</code> 文件描述符。</li>
+<li><strong>创建虚拟设备：</strong> 调用 <code>ioctl(fd, UI_DEV_CREATE);</code>。成功后，一个新的 <code>/dev/input/eventX</code> 节点将被创建，代表这个虚拟设备。</li>
+<li><strong>注入事件：</strong> 通过 <code>write()</code> 系统调用，向 <code>uinput</code> 文件描述符写入 <code>struct input_event</code> 结构体的序列。
+<ul>
+<li>每个 <code>input_event</code> 包含 <code>type</code> (事件类型)、<code>code</code> (事件码) 和 <code>value</code> (事件值)。</li>
+<li><strong>关键：</strong> 在一系列事件报告结束后，必须注入一个 <code>EV_SYN</code> 类型，<code>SYN_REPORT</code> 码，<code>0</code> 值的同步事件 (<code>struct input_event &#123; EV_SYN, SYN_REPORT, 0 &#125;</code>)，以通知 Input Core 完成了一次事件报告。否则，事件可能不会被处理或传递。</li>
+</ul>
+</li>
+<li><strong>销毁虚拟设备：</strong> 当不再需要虚拟设备时，调用 <code>ioctl(fd, UI_DEV_DESTROY);</code>。</li>
+<li><strong>关闭文件描述符：</strong> <code>close(fd);</code>。</li>
+</ol>
+<h4 id="3-上机实验"><a class="markdownIt-Anchor" href="#3-上机实验"></a> 3. 上机实验</h4>
+<h5 id="31-设置工具链"><a class="markdownIt-Anchor" href="#31-设置工具链"></a> 3.1 设置工具链</h5>
+<p>在 Ubuntu 中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export ARCH=arm</span><br><span class="line">export CROSS_COMPILE=arm-linux-gnueabihf-</span><br><span class="line">export PATH=$PATH:/home/book/100ask_imx6ull-qemu/ToolChain/gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf/bin</span><br></pre></td></tr></table></figure>
+<h5 id="32-配置内核"><a class="markdownIt-Anchor" href="#32-配置内核"></a> 3.2 配置内核</h5>
+<p>配置内核：执行 <code>make menuconfig</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash">Device Drivers</span></span><br><span class="line"><span class="meta prompt_">  -&gt; </span><span class="language-bash">Input device support</span></span><br><span class="line">    -&gt; Generic input layer </span><br><span class="line">      -&gt; Miscellaneous devices</span><br><span class="line">         &lt;M&gt;   User level driver support</span><br></pre></td></tr></table></figure>
+<h5 id="33-编译驱动"><a class="markdownIt-Anchor" href="#33-编译驱动"></a> 3.3 编译驱动</h5>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">book@100ask:~/100ask_imx6ull-qemu$ cd linux-4.9.88</span><br><span class="line">book@100ask:~/100ask_imx6ull-qemu/linux-4.9.88$ make modules</span><br></pre></td></tr></table></figure>
+<p>成功的话，可以得到：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drivers/input/misc/uinput.ko</span><br></pre></td></tr></table></figure>
+<p>复制到如下目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp drivers/input/misc/uinput.ko ~/nfs_rootfs/</span><br></pre></td></tr></table></figure>
+<h5 id="34-编译测试程序"><a class="markdownIt-Anchor" href="#34-编译测试程序"></a> 3.4 编译测试程序</h5>
+<p>把代码 <code>04_uinput</code> 上传到 Ubuntu，设置好交叉编译工具链后，在 <code>04_uinput</code> 目录下执行 make 命令即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">cp uinput_test ~/nfs_rootfs/</span><br></pre></td></tr></table></figure>
+<h5 id="35-启动-qemu"><a class="markdownIt-Anchor" href="#35-启动-qemu"></a> 3.5 启动 QEMU</h5>
+<p>在 Ubuntu 中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ubuntu-18.04_imx6ul_qemu_system</span><br><span class="line">./qemu-imx6ull-gui.sh</span><br></pre></td></tr></table></figure>
+<h5 id="36-挂载-nfs-实验"><a class="markdownIt-Anchor" href="#36-挂载-nfs-实验"></a> 3.6 挂载 NFS、实验</h5>
+<p>在 QEMU 中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">mount -t nfs -o nolock,vers=3 10.0.2.2:/home/book/nfs_rootfs /mnt</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">insmod /mnt/uinput.ko</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">ls</span> -l /dev/uinput   // 确认设备节点</span></span><br><span class="line"></span><br><span class="line">// 后台运行uinput_test</span><br><span class="line">/mnt/uinput_test &amp;</span><br><span class="line"></span><br><span class="line">// 看到提示这个提示时: Will sleep 60s, in this time you should run ts_calibreate</span><br><span class="line">// 运行校准程序</span><br><span class="line">// 注意：如果有真实的触摸屏驱动，需要指定使用虚拟的设备节点</span><br><span class="line">//      方法示例: export TSLIB_TSDEVICE=/dev/input/event3</span><br><span class="line">ts_calibrate</span><br><span class="line"></span><br><span class="line">// 看到提示这个提示时: Will sleep 60s, in this time you should run ts_test</span><br><span class="line">// 运行测试程序</span><br><span class="line">ts_test</span><br></pre></td></tr></table></figure>
+<h4 id="4-结合应用程序分析-uinput"><a class="markdownIt-Anchor" href="#4-结合应用程序分析-uinput"></a> 4. 结合应用程序分析 Uinput</h4>
+<p><code>Uinput</code> 的强大之处在于它将底层的 Input 子系统能力暴露给了用户空间，极大地增强了 Linux 系统在输入设备模拟和自动化方面的灵活性。开发者无需深入内核驱动开发，就可以通过一套标准的 API 来实现复杂的输入控制逻辑。这对于快速原型开发、测试框架构建、以及创建各种创新型人机交互应用都非常有价值。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E5%85%AB"><span class="toc-number">1.</span> <span class="toc-text"> 嵌入式学习（八）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-input-device-%E5%92%8C-handler-%E7%9A%84%E6%B3%A8%E5%86%8C%E4%B8%8E%E7%A1%AC%E4%BB%B6%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE%E6%B5%81%E5%90%91"><span class="toc-number">1.1.</span> <span class="toc-text"> 1. INPUT DEVICE 和 HANDLER 的注册与硬件输入数据流向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-input_register_device-%E5%92%8C-input_register_handler-%E5%90%8E%E7%9A%84%E5%8C%B9%E9%85%8D%E4%B8%8E-input_handle"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 1. input_register_device 和 input_register_handler 后的匹配与 input_handle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E8%AF%BB%E5%8F%96%E6%B5%81%E7%A8%8B%E5%92%8C-evdev_client"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 2. 应用程序读取流程和 evdev_client</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-input_handler-%E4%B8%AD%E7%9A%84%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0filter-events-event"><span class="toc-number">1.2.</span> <span class="toc-text"> 2. input_handler 中的回调函数：filter, events, event</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-filter-%E5%A4%84%E7%90%86%E5%99%A8%E4%BC%98%E5%85%88%E7%BA%A7%E7%9A%84%E7%A1%AE%E5%88%87%E5%90%AB%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 1. filter 处理器优先级的确切含义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%90%86%E8%A7%A3-linux-%E8%BE%93%E5%85%A5%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.</span> <span class="toc-text"> 3. 理解 Linux 输入子系统内部实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9E%84%E4%BD%93%E6%A6%82%E8%BF%B0"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 1. 核心结构体概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B3%A8%E5%86%8C%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 2. 注册流程详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#21-%E6%B3%A8%E5%86%8C-input_devinput_register_device"><span class="toc-number">1.3.2.1.</span> <span class="toc-text"> 2.1 注册 input_dev：input_register_device()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#22-%E6%B3%A8%E5%86%8C-input_handlerinput_register_handler"><span class="toc-number">1.3.2.2.</span> <span class="toc-text"> 2.2 注册 input_handler：input_register_handler()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#23-%E5%8C%B9%E9%85%8D%E5%90%8E-connect-%E5%87%BD%E6%95%B0%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.2.3.</span> <span class="toc-text"> 2.3 匹配后 connect 函数的操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%8F%96%E6%B5%81%E7%A8%8B%E6%BC%94%E7%A4%BA"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 3. 数据读取流程演示</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-linux-%E5%86%85%E6%A0%B8%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-delayed_work-%E5%BB%B6%E6%97%B6%E5%B7%A5%E4%BD%9C-%E5%8E%BB%E6%8C%89%E9%94%AE%E6%8A%96%E5%8A%A8"><span class="toc-number">1.4.</span> <span class="toc-text"> 4. Linux 内核如何使用 delayed_work (延时工作) 去按键抖动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%8A%96%E5%8A%A8-bouncing"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 1. 什么是“抖动” (Bouncing)？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8E%BB%E6%8A%96%E5%8A%A8-debouncing"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 2. 什么是“去抖动” (Debouncing)？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-linux-%E5%86%85%E6%A0%B8%E4%B8%AD%E7%9A%84%E5%BB%B6%E6%97%B6%E5%B7%A5%E4%BD%9C-delayed_work-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.4.3.</span> <span class="toc-text"> 3. Linux 内核中的“延时工作” (delayed_work) 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-delayed_work-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0-gpio-%E5%8E%BB%E6%8A%96%E5%8A%A8%E5%85%B3%E9%94%AE%E7%82%B9%E5%8F%8A%E5%8F%AA%E5%8F%91%E9%80%81%E4%B8%80%E6%AC%A1%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A7%A3%E9%87%8A"><span class="toc-number">1.4.4.</span> <span class="toc-text"> 4. delayed_work 如何实现 GPIO 去抖动？（关键点及“只发送一次数据”的解释）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%AE%BE%E5%A4%87%E6%A0%91%E9%87%8C%E9%9D%A2-gpio-%E4%B8%AD%E6%96%AD%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95%E4%B8%8E%E5%8C%BA%E5%88%AB%E4%BB%A5%E5%8F%8A%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.5.</span> <span class="toc-text"> 5. 设备树里面 GPIO 中断的两种写法与区别以及底层实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-gpio-isr-%E4%B8%8E-request_irq-%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB"><span class="toc-number">1.5.1.</span> <span class="toc-text"> 1. GPIO ISR 与 request_irq 的区别与联系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-device-tree-%E4%B8%AD-gpio-%E4%B8%AD%E6%96%AD%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%B8%B8%E8%A7%81%E5%86%99%E6%B3%95"><span class="toc-number">1.5.2.</span> <span class="toc-text"> 2. Device Tree 中 GPIO 中断的两种常见写法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#21-%E7%AC%AC%E4%B8%80%E7%A7%8D%E5%86%99%E6%B3%95gpio-%E5%86%99%E6%B3%95-%E9%80%9A%E8%BF%87-gpio-%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89%E5%BC%95%E8%84%9A%E5%86%8D%E5%9C%A8%E9%A9%B1%E5%8A%A8%E4%B8%AD%E8%BD%AC%E6%8D%A2%E4%B8%BA-irq"><span class="toc-number">1.5.2.1.</span> <span class="toc-text"> 2.1 第一种写法：&quot;GPIO 写法&quot; (通过 GPIO 属性定义引脚，再在驱动中转换为 IRQ)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#22-%E7%AC%AC%E4%BA%8C%E7%A7%8D%E5%86%99%E6%B3%95interrupt-%E5%86%99%E6%B3%95-%E7%9B%B4%E6%8E%A5%E5%AE%9A%E4%B9%89%E4%B8%AD%E6%96%AD%E6%BA%90"><span class="toc-number">1.5.2.2.</span> <span class="toc-text"> 2.2 第二种写法：&quot;Interrupt 写法&quot; (直接定义中断源)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9"><span class="toc-number">1.5.3.</span> <span class="toc-text"> 3. 如何选择？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-gpio_request-%E4%B8%8E-gpio_to_irq-%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-number">1.5.4.</span> <span class="toc-text"> 4. gpio_request() 与 gpio_to_irq() 的底层实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-gpio_request-%E7%B3%BB%E5%88%97%E5%87%BD%E6%95%B0"><span class="toc-number">1.5.4.1.</span> <span class="toc-text"> 1. gpio_request() 系列函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-gpio_to_irq-%E5%87%BD%E6%95%B0"><span class="toc-number">1.5.4.2.</span> <span class="toc-text"> 2. gpio_to_irq() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.4.3.</span> <span class="toc-text"> 3. 总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%9F%A6%E4%B8%9C%E5%B1%B1%E6%96%87%E6%A1%A3%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text"> 6. 韦东山文档总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-linux-input-%E5%AD%90%E7%B3%BB%E7%BB%9F%E4%B8%8E%E9%A9%B1%E5%8A%A8%E6%A1%86%E6%9E%B6"><span class="toc-number">1.6.1.</span> <span class="toc-text"> 1. Linux Input 子系统与驱动框架</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%9B%9E%E9%A1%BE%E6%A1%86%E6%9E%B6"><span class="toc-number">1.6.1.1.</span> <span class="toc-text"> 1. 回顾框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%80%8E%E4%B9%88%E7%BC%96%E5%86%99-input_dev-%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.6.1.2.</span> <span class="toc-text"> 2. 怎么编写 input_dev 驱动</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#21-%E5%88%86%E9%85%8D%E8%AE%BE%E7%BD%AE%E6%B3%A8%E5%86%8C-input_dev"><span class="toc-number">1.6.1.2.1.</span> <span class="toc-text"> 2.1 分配&#x2F;设置&#x2F;注册 input_dev</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#22-%E7%A1%AC%E4%BB%B6%E7%9B%B8%E5%85%B3%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">1.6.1.2.2.</span> <span class="toc-text"> 2.2 硬件相关的操作</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%BC%96%E5%86%99-input_dev-%E9%A9%B1%E5%8A%A8%E6%A1%86%E6%9E%B6"><span class="toc-number">1.6.1.3.</span> <span class="toc-text"> 3. 编写 input_dev 驱动框架</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%BC%96%E5%86%99%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E8%A7%A6%E6%91%B8%E5%B1%8F%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F_%E5%9F%BA%E4%BA%8E-qemu"><span class="toc-number">1.6.2.</span> <span class="toc-text"> 2. 编写最简单的触摸屏驱动程序_基于 QEMU</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2%E7%9A%84%E8%AF%9D"><span class="toc-number">1.6.2.1.</span> <span class="toc-text"> 1. 写在前面的话</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.6.2.2.</span> <span class="toc-text"> 2. 准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#21-%E4%B8%8B%E8%BD%BD"><span class="toc-number">1.6.2.2.1.</span> <span class="toc-text"> 2.1 下载</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#22-%E5%AE%89%E8%A3%85%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">1.6.2.2.2.</span> <span class="toc-text"> 2.2 安装运行环境</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#23-%E8%BF%90%E8%A1%8C-qemu"><span class="toc-number">1.6.2.2.3.</span> <span class="toc-text"> 2.3 运行 QEMU</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-qemu-%E8%A7%A6%E6%91%B8%E5%B1%8F%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="toc-number">1.6.2.3.</span> <span class="toc-text"> 3. QEMU 触摸屏操作方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E7%BC%96%E5%86%99%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.6.2.4.</span> <span class="toc-text"> 4. 编写驱动程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E4%B8%8A%E6%9C%BA%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.6.2.5.</span> <span class="toc-text"> 5. 上机实验</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#51-%E8%AE%BE%E7%BD%AE%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="toc-number">1.6.2.5.1.</span> <span class="toc-text"> 5.1 设置工具链</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#52-%E7%BC%96%E8%AF%91%E5%86%85%E6%A0%B8%E8%AE%BE%E5%A4%87%E6%A0%91"><span class="toc-number">1.6.2.5.2.</span> <span class="toc-text"> 5.2 编译内核&#x2F;设备树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#53-%E5%90%AF%E5%8A%A8-qemu"><span class="toc-number">1.6.2.5.3.</span> <span class="toc-text"> 5.3 启动 QEMU</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#54-%E6%8C%82%E8%BD%BD-nfs"><span class="toc-number">1.6.2.5.4.</span> <span class="toc-text"> 5.4 挂载 NFS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#55-%E7%BC%96%E8%AF%91-%E4%BD%BF%E7%94%A8-tslib"><span class="toc-number">1.6.2.5.5.</span> <span class="toc-text"> 5.5 编译、使用 tslib</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#55-%E9%80%80%E5%87%BA-qemu"><span class="toc-number">1.6.2.5.6.</span> <span class="toc-text"> 5.5 退出 QEMU</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#56-%E6%94%B9%E8%BF%9B%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.6.2.5.7.</span> <span class="toc-text"> 5.6 改进驱动</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-gpio-%E6%8C%89%E9%94%AE%E9%A9%B1%E5%8A%A8%E5%88%86%E6%9E%90%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="toc-number">1.6.3.</span> <span class="toc-text"> 3. GPIO 按键驱动分析与使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6"><span class="toc-number">1.6.3.1.</span> <span class="toc-text"> 1. 驱动程序框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%AE%BE%E5%A4%87%E6%A0%91%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.6.3.2.</span> <span class="toc-text"> 2. 设备树示例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#21-%E8%AE%BE%E5%A4%87%E6%A0%91%E8%AE%B2%E8%A7%A3"><span class="toc-number">1.6.3.2.1.</span> <span class="toc-text"> 2.1 设备树讲解</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#22-100ask_imx6ull"><span class="toc-number">1.6.3.2.2.</span> <span class="toc-text"> 2.2 100ASK_IMX6ULL</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#23-100ask_stm32mp157"><span class="toc-number">1.6.3.2.3.</span> <span class="toc-text"> 2.3 100ASK_STM32MP157</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#24-qemu"><span class="toc-number">1.6.3.2.4.</span> <span class="toc-text"> 2.4 QEMU</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-gpio_keysc-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90"><span class="toc-number">1.6.3.3.</span> <span class="toc-text"> 3. gpio_keys.c 驱动程序分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#31-%E5%A5%97%E8%B7%AF"><span class="toc-number">1.6.3.3.1.</span> <span class="toc-text"> 3.1 套路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#32-gpio_keys_gpio_isr-%E5%92%8C-%E5%8E%BB%E6%8A%96-debouncing-%E5%88%86%E6%9E%90"><span class="toc-number">1.6.3.3.2.</span> <span class="toc-text"> 3.2 gpio_keys_gpio_isr 和 去抖 (Debouncing) 分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#33-gpio_keys_irq_isr-%E5%88%86%E6%9E%90-%E8%A1%A5%E5%85%85"><span class="toc-number">1.6.3.3.3.</span> <span class="toc-text"> 3.3 gpio_keys_irq_isr 分析 (补充)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-qemu-%E4%B8%8A%E6%9C%BA%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.6.3.4.</span> <span class="toc-text"> 4. QEMU 上机实验</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#41-%E8%AE%BE%E7%BD%AE%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="toc-number">1.6.3.4.1.</span> <span class="toc-text"> 4.1 设置工具链</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#42-%E9%85%8D%E7%BD%AE%E5%86%85%E6%A0%B8"><span class="toc-number">1.6.3.4.2.</span> <span class="toc-text"> 4.2 配置内核</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#43-%E7%BC%96%E8%AF%91%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.6.3.4.3.</span> <span class="toc-text"> 4.3 编译驱动</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#44-%E5%90%AF%E5%8A%A8-qemu"><span class="toc-number">1.6.3.4.4.</span> <span class="toc-text"> 4.4 启动 QEMU</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#45-%E6%8C%82%E8%BD%BD-nfs-%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.6.3.4.5.</span> <span class="toc-text"> 4.5 挂载 NFS、实验</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-i2c-%E6%8E%A5%E5%8F%A3%E8%A7%A6%E6%91%B8%E5%B1%8F%E9%A9%B1%E5%8A%A8%E5%88%86%E6%9E%90"><span class="toc-number">1.6.4.</span> <span class="toc-text"> 4. I2C 接口触摸屏驱动分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6-2"><span class="toc-number">1.6.4.1.</span> <span class="toc-text"> 1. 驱动程序框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%AE%BE%E5%A4%87%E6%A0%91%E7%A4%BA%E4%BE%8B-2"><span class="toc-number">1.6.4.2.</span> <span class="toc-text"> 2. 设备树示例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#21-%E8%AE%BE%E5%A4%87%E6%A0%91%E8%AE%B2%E8%A7%A3-2"><span class="toc-number">1.6.4.2.1.</span> <span class="toc-text"> 2.1 设备树讲解</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#22-100ask_imx6ull-2"><span class="toc-number">1.6.4.2.2.</span> <span class="toc-text"> 2.2 100ASK_IMX6ULL</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#23-100ask_stm32mp157-2"><span class="toc-number">1.6.4.2.3.</span> <span class="toc-text"> 2.3 100ASK_STM32MP157</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90"><span class="toc-number">1.6.4.3.</span> <span class="toc-text"> 3. 驱动程序分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#31-%E5%88%86%E9%85%8D%E8%AE%BE%E7%BD%AE%E6%B3%A8%E5%86%8C-input_dev"><span class="toc-number">1.6.4.3.1.</span> <span class="toc-text"> 3.1 分配&#x2F;设置&#x2F;注册 input_dev</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#32-%E6%B3%A8%E5%86%8C%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0"><span class="toc-number">1.6.4.3.2.</span> <span class="toc-text"> 3.2 注册中断处理函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#33-%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="toc-number">1.6.4.3.3.</span> <span class="toc-text"> 3.3 中断处理函数分析</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-uinput-%E5%88%86%E6%9E%90_%E7%94%A8%E6%88%B7%E6%80%81%E5%88%9B%E5%BB%BA-input_dev"><span class="toc-number">1.6.5.</span> <span class="toc-text"> 5. UInput 分析_用户态创建 input_dev</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%A6%82%E5%BF%B5"><span class="toc-number">1.6.5.1.</span> <span class="toc-text"> 1. 概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%BC%96%E5%86%99%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.6.5.2.</span> <span class="toc-text"> 2. 编写应用程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%B8%8A%E6%9C%BA%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.6.5.3.</span> <span class="toc-text"> 3. 上机实验</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#31-%E8%AE%BE%E7%BD%AE%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="toc-number">1.6.5.3.1.</span> <span class="toc-text"> 3.1 设置工具链</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#32-%E9%85%8D%E7%BD%AE%E5%86%85%E6%A0%B8"><span class="toc-number">1.6.5.3.2.</span> <span class="toc-text"> 3.2 配置内核</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#33-%E7%BC%96%E8%AF%91%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.6.5.3.3.</span> <span class="toc-text"> 3.3 编译驱动</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#34-%E7%BC%96%E8%AF%91%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.6.5.3.4.</span> <span class="toc-text"> 3.4 编译测试程序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#35-%E5%90%AF%E5%8A%A8-qemu"><span class="toc-number">1.6.5.3.5.</span> <span class="toc-text"> 3.5 启动 QEMU</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#36-%E6%8C%82%E8%BD%BD-nfs-%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.6.5.3.6.</span> <span class="toc-text"> 3.6 挂载 NFS、实验</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E7%BB%93%E5%90%88%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90-uinput"><span class="toc-number">1.6.5.4.</span> <span class="toc-text"> 4. 结合应用程序分析 Uinput</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&text=嵌入式学习（八）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&title=嵌入式学习（八）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&is_video=false&description=嵌入式学习（八）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=嵌入式学习（八）&body=Check out this article: https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&title=嵌入式学习（八）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&title=嵌入式学习（八）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&title=嵌入式学习（八）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&title=嵌入式学习（八）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&name=嵌入式学习（八）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/07/16/Embedded-Linux/Hardware/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/&t=嵌入式学习（八）"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

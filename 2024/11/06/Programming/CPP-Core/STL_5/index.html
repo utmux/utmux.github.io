@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天 心情：好   关联容器 标准的 STL 关联式容器分为 set（集合）和 map（映射表）两大类，以及这两大类的衍生体 multiset（多键集合）和 multimap（多键映射表）。这些容器的底层机制均以 RB-tree（红黑树）完成。RB-tree 也是一个独立容器，但并不对外开放使用。 此外，SGI STL 还提供了一个不在标准规格之列的关联式容器：hashtable（散列表），">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STL_5">
+<meta property="og:url" content="https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天 心情：好   关联容器 标准的 STL 关联式容器分为 set（集合）和 map（映射表）两大类，以及这两大类的衍生体 multiset（多键集合）和 multimap（多键映射表）。这些容器的底层机制均以 RB-tree（红黑树）完成。RB-tree 也是一个独立容器，但并不对外开放使用。 此外，SGI STL 还提供了一个不在标准规格之列的关联式容器：hashtable（散列表），">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/fbd88e99fc4c8d293d984d99b1b9b358.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/1baa0d7377f8c010f8cd5705660b42f6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/25acd86b6048324eadcfcbc97f34b168.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/528d04360591dc5169c89208a3435298.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/4518eee2033e21838601f579e25fa906.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/4ce14a77f381c1c30a2dfc6f131f44db.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/e0759b0418ccfc286fd3b8a81fc60516.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/e74639f196ba604740b162549137e73d.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/70675e8d56704556c5f6e81cdcb0a5d7.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/b704c34be9b73ae0004b881e04243aec.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/4ad1ce091ca3d689d24859c7774b49e7.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/6a5fad67215309ada33528d57b18c4b6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/bead79820fb7ee7f975129a9101a078e.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/5f2d5bbeb1c89c3e685572aea278b640.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/0ebc7074d030585e3f58dd7fd17791d3.png">
+<meta property="article:published_time" content="2024-11-06T02:26:26.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:54.321Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/fbd88e99fc4c8d293d984d99b1b9b358.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>STL_5</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/11/06/Programming/Algorithms/acwing%E7%AE%97%E6%B3%95_%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/11/05/Programming/Algorithms/acwing%E7%AE%97%E6%B3%95_%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&text=STL_5"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&title=STL_5"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&is_video=false&description=STL_5"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=STL_5&body=Check out this article: https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&title=STL_5"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&title=STL_5"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&title=STL_5"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&title=STL_5"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&name=STL_5&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&t=STL_5"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text"> 关联容器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">1.1.</span> <span class="toc-text"> 平衡二叉树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rb-tree"><span class="toc-number">1.2.</span> <span class="toc-text"> RB Tree</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rb-tree-%E7%9A%84%E8%8A%82%E7%82%B9"><span class="toc-number">1.2.1.</span> <span class="toc-text"> RB Tree 的节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rb-tree-%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">1.2.2.</span> <span class="toc-text"> RB Tree 迭代器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rb-tree-%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.3.</span> <span class="toc-text"> RB Tree 的结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rb-tree-%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.4.</span> <span class="toc-text"> RB Tree 的构造和内存管理</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        STL_5
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-11-06T02:26:26.000Z" class="dt-published" itemprop="datePublished">2024-11-06</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Programming/">Programming</a> › <a class="category-link" href="/categories/Programming/CPP-Core/">CPP-Core</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天 心情：好</p>
+<hr />
+<h2 id="关联容器"><a class="markdownIt-Anchor" href="#关联容器"></a> 关联容器</h2>
+<p>标准的 STL 关联式容器分为 <code>set</code>（集合）和 <code>map</code>（映射表）两大类，以及这两大类的衍生体 <code>multiset</code>（多键集合）和 <code>multimap</code>（多键映射表）。这些容器的底层机制均以 <strong>RB-tree</strong>（红黑树）完成。<strong>RB-tree</strong> 也是一个独立容器，但并不对外开放使用。</p>
+<p>此外，SGI STL 还提供了一个不在标准规格之列的关联式容器：<code>hashtable</code>（散列表），以及以此 <code>hashtable</code> 为底层机制而完成的 <code>hash_set</code>（散列集合）、<code>hash_map</code>（散列映射表）、<code>hash_multiset</code>（散列多键集合）、<code>hash_multimap</code>（散列多键映射表）。</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/fbd88e99fc4c8d293d984d99b1b9b358.png" alt="image-20241106094538474" /></p>
+<p>如上图，显示了各种数据结构的底层容器是什么，例如 <code>priority_queue</code> 使用 <code>heap</code> 作为底层。</p>
+<p>所谓关联式容器，观念上类似关联式数据库（实际上则简单许多）：每个数据（每个元素）都有一个键值（key）和一个实值（value）。当元素被插入到关联式容器中时，容器内部结构（可能是 RB-tree，也可能是 hash table）便依照其键值大小，以某种特定规则将这个元素放置于适当位置。<strong>关联式容器没有所谓头尾（只有最大元素和最小元素）</strong>，所以不会有所谓 <code>push_back()</code>、<code>push_front()</code>、<code>pop_back()</code>、<code>pop_front()</code>、<code>begin()</code>、<code>end()</code> 这样的操作行为。</p>
+<h3 id="平衡二叉树"><a class="markdownIt-Anchor" href="#平衡二叉树"></a> 平衡二叉树</h3>
+<p>一般而言，关联式容器的内部结构是一个 <em>balanced binary tree</em>（平衡二叉树），以便获得良好的搜寻效率。<em>balanced binary tree</em> 有许多种类型，包括 AVL tree、RB tree、AA tree，其中最被广泛运用于 STL 的是 RB tree（红黑树）。为了探讨 STL 的关联式容器，我必须先探讨 RB tree。</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/1baa0d7377f8c010f8cd5705660b42f6.png" alt="image-20241106095151817" /></p>
+<p>树中节点的深度，高度和大小以及长度定义如上图所示。</p>
+<p>树中一般采取先序，中序或者后序排列，如果要插入或者删除一个节点，此时采用对应的遍历即可，如下图所示，为一个：右子树大于根大于左子树。我们如果要对其进行插入和删除操作：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/25acd86b6048324eadcfcbc97f34b168.png" alt="image-20241106100327422" /><br />
+如上图，插入操作，由于该树是后序排列的，所以左边是较小值，首先找到一个子树全部小于该节点，最后将该节点插入到该子树最右边即可。</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/528d04360591dc5169c89208a3435298.png" alt="image-20241106100714578" /><br />
+如上图是删除的操作，删除该节点后，要从子树中选取一个填充。</p>
+<p>为了使树保持平衡（这里指左右深度相差不超过 1），AVL Tree 就要求是一个平衡树（能提高百分之 25 的搜索效率）。需要在每次插入后进行调整，如果此时不平衡，<strong>只需要调整根节点到最深节点路径上的一个节点即可（该节点是指的该路径上最不平衡的那个，如下图的 18 节点，左右节点差值过大）</strong>。</p>
+<p>考虑到插入时导致失衡的四种情况，如下图所示，可以采用单旋转或者双旋来调整平衡：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/4518eee2033e21838601f579e25fa906.png" alt="image-20241106101559953" /></p>
+<p>对于上图的外侧情况，采用单旋转，如下图所示，找到失去平衡的那个子树，将其根节点单旋转：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/4ce14a77f381c1c30a2dfc6f131f44db.png" alt="image-20241106102519346" /></p>
+<p>而内测情况，其可采用两次单旋转，即双旋转来调整<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/e0759b0418ccfc286fd3b8a81fc60516.png" alt="image-20241106103419939" /></p>
+<h3 id="rb-tree"><a class="markdownIt-Anchor" href="#rb-tree"></a> RB Tree</h3>
+<ol>
+<li>每个节点要么是红色，要么是黑色。</li>
+<li>根节点是黑色。</li>
+<li>所有叶子节点（NIL 节点，空节点）都是黑色。</li>
+<li>每个红色节点的两个子节点都是黑色（从每个叶子到根的所有路径上不能有两个连续的红色节点）。</li>
+<li>从任一节点到其每个叶子的所有简单路径都包含相同数目的黑色节点。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/e74639f196ba604740b162549137e73d.png" alt="image-20241106110002514" /><br />
+上面的红黑树都会有一个空节点（为了补全二叉树变为完整二叉树，便于编程)。红黑树插入节点时，默认认为该节点是红色的。</p>
+<p>当插入节点，即该红色节点时，类似于 AVL 树的失衡，插入红色节点也会遇到四种情况使得红黑树不满足红黑树规则的，如下所示：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/70675e8d56704556c5f6e81cdcb0a5d7.png" alt="image-20241106115653467" /></p>
+<p>如下图，情况 1，叔叔（也就是父节点的父节点的另一个子节点）是黑色且外侧插入时：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/b704c34be9b73ae0004b881e04243aec.png" alt="image-20241106132020336" /><br />
+此时，旋转一次，交换根节点和旋转节点的颜色。</p>
+<p>第二种情况，叔叔是黑色，且内测插入时：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/4ad1ce091ca3d689d24859c7774b49e7.png" alt="image-20241106132133152" /></p>
+<p>第三种情况，叔叔是红色外侧插入，情况 1（曾祖父母时黑色时）：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/6a5fad67215309ada33528d57b18c4b6.png" alt="image-20241106132314869" /></p>
+<p>第四种情况，叔叔是红色外侧插入，但是是情况 2（曾祖父是红色时）：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/bead79820fb7ee7f975129a9101a078e.png" alt="image-20241106132902619" /></p>
+<p>其他情况，叔叔为红色内侧插入时，若 GG（曾祖父）是黑色，此时不变，如果是红色和上面将上面的祖父节点都进行颜色变更。</p>
+<h4 id="rb-tree-的节点"><a class="markdownIt-Anchor" href="#rb-tree-的节点"></a> RB Tree 的节点</h4>
+<p>每个节点的属性有：<strong>颜色</strong>，<strong>指向左节点</strong>，<strong>指向右节点</strong>，<strong>指向父节点</strong>，以及两种方法，分别是找到该节点作为子树的最小值（即一直往左走），和最大值（即一直往右走）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">bool</span> _rb_tree_color_type;</span><br><span class="line"><span class="type">const</span> _rb_tree_color_type _rb_tree_red = <span class="literal">false</span>; <span class="comment">// 红色为 0</span></span><br><span class="line"><span class="type">const</span> _rb_tree_color_type _rb_tree_black = <span class="literal">true</span>; <span class="comment">// 黑色为 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">_rb_tree_node_base</span> &#123;</span><br><span class="line">    <span class="keyword">typedef</span> _rb_tree_color_type color_type;</span><br><span class="line">    <span class="keyword">typedef</span> _rb_tree_node_base* base_ptr;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 节点颜色，非红即黑</span></span><br><span class="line">    color_type color;</span><br><span class="line">    base_ptr parent;</span><br><span class="line">    <span class="comment">// RB树的许多操作，必须知道父节点</span></span><br><span class="line">    <span class="comment">// 指向左节点</span></span><br><span class="line">    base_ptr left;</span><br><span class="line">    <span class="comment">// 指向右节点</span></span><br><span class="line">    base_ptr right;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> base_ptr <span class="title">minimum</span><span class="params">(base_ptr x)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 一直向左走，就会找到最小值，</span></span><br><span class="line">        <span class="keyword">while</span> (x-&gt;left != <span class="literal">nullptr</span>) x = x-&gt;left;</span><br><span class="line">        <span class="comment">// 这是二叉搜索树的特性</span></span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> base_ptr <span class="title">maximum</span><span class="params">(base_ptr x)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 一直向右走，就会找到最大值，</span></span><br><span class="line">        <span class="keyword">while</span> (x-&gt;right != <span class="literal">nullptr</span>) x = x-&gt;right;</span><br><span class="line">        <span class="comment">// 这是二叉搜索树的特性</span></span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">Value</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">_rb_tree_node</span> : <span class="keyword">public</span> _rb_tree_node_base &#123;</span><br><span class="line">    <span class="keyword">typedef</span> _rb_tree_node&lt;Value&gt;* link_type;</span><br><span class="line">    <span class="comment">// 节点值</span></span><br><span class="line">    Value value_field;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="rb-tree-迭代器"><a class="markdownIt-Anchor" href="#rb-tree-迭代器"></a> RB Tree 迭代器</h4>
+<p>为了实现 RB Tree 迭代器，使之能够符合迭代器性质。RB Tree 被设计为两层，如下图：<br />
+第一层用于实现基本迭代器，实现迭代到上一个或者下一个节点。第二层实现迭代器的各种运算（和双向链表类似，分为 node 结构，指向 node 的指针，然后基本迭代器。list 中实现指针迭代器，node 中包括该指针迭代器）：</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/5f2d5bbeb1c89c3e685572aea278b640.png" alt="image-20241106134607557" /></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">_Rb_tree_base_iterator</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">typedef</span> _Rb_tree_node_base::_Base_ptr _Base_ptr;</span><br><span class="line">  <span class="keyword">typedef</span> bidirectional_iterator_tag iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="type">ptrdiff_t</span> difference_type;</span><br><span class="line">  _Base_ptr _M_node;<span class="comment">// 与容器产生连接关系</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 只有operator++调用</span></span><br><span class="line">  <span class="type">void</span> _M_increment()</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// 有右子树，找右子树的最左节点</span></span><br><span class="line">    <span class="keyword">if</span> (_M_node-&gt;_M_right != <span class="number">0</span>) &#123; </span><br><span class="line">      _M_node = _M_node-&gt;_M_right;</span><br><span class="line">      <span class="keyword">while</span> (_M_node-&gt;_M_left != <span class="number">0</span>)</span><br><span class="line">        _M_node = _M_node-&gt;_M_left;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 没有右子树，找不是右节点的父节点</span></span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      _Base_ptr __y = _M_node-&gt;_M_parent;</span><br><span class="line">      <span class="keyword">while</span> (_M_node == __y-&gt;_M_right) &#123;</span><br><span class="line">        _M_node = __y;</span><br><span class="line">        __y = __y-&gt;_M_parent;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 根节点无右子树的情况，这是一种特殊情况见下图</span></span><br><span class="line">      <span class="comment">// 即_M_node-&gt;_M_right != _M_node-&gt;_M_parent</span></span><br><span class="line">      <span class="keyword">if</span> (_M_node-&gt;_M_right != __y)</span><br><span class="line">        _M_node = __y;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 只有opeartor--调用</span></span><br><span class="line">  <span class="type">void</span> _M_decrement()</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// 这是一种特殊情况，如下图所示</span></span><br><span class="line">    <span class="comment">// 为红色节点且父节点的父节点等于自己</span></span><br><span class="line">    <span class="comment">// 这种情况发生在node为header时（亦即node为end()时）</span></span><br><span class="line">    <span class="comment">// header的左子节点即leftright，指向整个树的min节点</span></span><br><span class="line">    <span class="comment">// header的右子节点即mostright，指向整个树的max节点</span></span><br><span class="line">    <span class="keyword">if</span> (_M_node-&gt;_M_color == _S_rb_tree_red &amp;&amp;</span><br><span class="line">        _M_node-&gt;_M_parent-&gt;_M_parent == _M_node)</span><br><span class="line">      _M_node = _M_node-&gt;_M_right;</span><br><span class="line">    <span class="comment">// 有左子节点，找左子节点的最右子节点</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (_M_node-&gt;_M_left != <span class="number">0</span>) &#123;</span><br><span class="line">      _Base_ptr __y = _M_node-&gt;_M_left;</span><br><span class="line">      <span class="keyword">while</span> (__y-&gt;_M_right != <span class="number">0</span>)</span><br><span class="line">        __y = __y-&gt;_M_right;</span><br><span class="line">      _M_node = __y;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 不是根节点也没有左子节点，找不是左节点的父节点</span></span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      _Base_ptr __y = _M_node-&gt;_M_parent;</span><br><span class="line">      <span class="keyword">while</span> (_M_node == __y-&gt;_M_left) &#123;</span><br><span class="line">        _M_node = __y;</span><br><span class="line">        __y = __y-&gt;_M_parent;</span><br><span class="line">      &#125;</span><br><span class="line">      _M_node = __y;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// RB-tree 的正规迭代器</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_Value</span>, <span class="keyword">class</span> <span class="title class_">_Ref</span>, <span class="keyword">class</span> <span class="title class_">_Ptr</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">_Rb_tree_iterator</span> : <span class="keyword">public</span> _Rb_tree_base_iterator</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">typedef</span> _Value value_type;</span><br><span class="line">  <span class="keyword">typedef</span> _Ref reference;</span><br><span class="line">  <span class="keyword">typedef</span> _Ptr pointer;</span><br><span class="line">  <span class="keyword">typedef</span> _Rb_tree_iterator&lt;_Value, _Value&amp;, _Value*&gt;             </span><br><span class="line">    iterator;</span><br><span class="line">  <span class="keyword">typedef</span> _Rb_tree_iterator&lt;_Value, <span class="type">const</span> _Value&amp;, <span class="type">const</span> _Value*&gt; </span><br><span class="line">    const_iterator;</span><br><span class="line">  <span class="keyword">typedef</span> _Rb_tree_iterator&lt;_Value, _Ref, _Ptr&gt;                   </span><br><span class="line">    _Self;</span><br><span class="line">  <span class="keyword">typedef</span> _Rb_tree_node&lt;_Value&gt;* _Link_type;</span><br><span class="line"></span><br><span class="line">  _Rb_tree_iterator() &#123;&#125;</span><br><span class="line">  _Rb_tree_iterator(_Link_type __x) &#123; _M_node = __x; &#125;</span><br><span class="line">  _Rb_tree_iterator(<span class="type">const</span> iterator&amp; __it) &#123; _M_node = __it._M_node; &#125;</span><br><span class="line"></span><br><span class="line">  reference <span class="keyword">operator</span>*() <span class="type">const</span> &#123; <span class="keyword">return</span> _Link_type(_M_node)-&gt;_M_value_field; &#125;</span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __SGI_STL_NO_ARROW_OPERATOR</span></span><br><span class="line">  pointer <span class="keyword">operator</span>-&gt;() <span class="type">const</span> &#123; <span class="keyword">return</span> &amp;(<span class="keyword">operator</span>*()); &#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">/* __SGI_STL_NO_ARROW_OPERATOR */</span></span></span><br><span class="line"></span><br><span class="line">  _Self&amp; <span class="keyword">operator</span>++() &#123; _M_increment(); <span class="keyword">return</span> *<span class="keyword">this</span>; &#125;</span><br><span class="line">  _Self <span class="keyword">operator</span>++(<span class="type">int</span>) &#123;</span><br><span class="line">    _Self __tmp = *<span class="keyword">this</span>;</span><br><span class="line">    _M_increment();</span><br><span class="line">    <span class="keyword">return</span> __tmp;</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  _Self&amp; <span class="keyword">operator</span>--() &#123; _M_decrement(); <span class="keyword">return</span> *<span class="keyword">this</span>; &#125;</span><br><span class="line">  _Self <span class="keyword">operator</span>--(<span class="type">int</span>) &#123;</span><br><span class="line">    _Self __tmp = *<span class="keyword">this</span>;</span><br><span class="line">    _M_decrement();</span><br><span class="line">    <span class="keyword">return</span> __tmp;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>上面的 <code>_M_decrement()</code> 和 <code>_M_increment()</code> 都有特殊情况，如下图：对于 <code>increasement</code> 从节点一直到根节点，都找不到一个父节点存在一个右节点时，此时要处理这种情况。对于 <code>decreasement</code> 从处理的特殊情况和上面一样，节点处于左节点，且一直往上溯回找不到存在右节点的子树。两种情况一种是已经是根节点最大值了，找不到更大的值的节点了。另一种是已经是最小值找不到更加小的值。</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/0ebc7074d030585e3f58dd7fd17791d3.png" alt="image-20241106145122175" /></p>
+<h4 id="rb-tree-的结构"><a class="markdownIt-Anchor" href="#rb-tree-的结构"></a> RB Tree 的结构</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">Key</span>, <span class="keyword">class</span> <span class="title class_">Value</span>, <span class="keyword">class</span> <span class="title class_">KeyOfValue</span>, <span class="keyword">class</span> <span class="title class_">Compare</span>, <span class="keyword">class</span> <span class="title class_">Alloc</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">rb_tree</span> &#123;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="keyword">typedef</span> <span class="type">void</span>* void_pointer;</span><br><span class="line">    <span class="keyword">typedef</span> _rb_tree_node_base* base_ptr;</span><br><span class="line">    <span class="keyword">typedef</span> _rb_tree_node&lt;Value&gt; rb_tree_node;</span><br><span class="line">    <span class="keyword">typedef</span> simple_alloc&lt;rb_tree_node, Alloc&gt; rb_tree_node_allocator;</span><br><span class="line">    <span class="keyword">typedef</span> _rb_tree_color_type color_type;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 注意，没有定义iterator（不，定义在后面！）</span></span><br><span class="line">    <span class="keyword">typedef</span> Key key_type;</span><br><span class="line">    <span class="keyword">typedef</span> Value value_type;</span><br><span class="line">    <span class="keyword">typedef</span> value_type* pointer;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="type">const</span> value_type* const_pointer;</span><br><span class="line">    <span class="keyword">typedef</span> value_type&amp; reference;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="type">const</span> value_type&amp; const_reference;</span><br><span class="line">    <span class="keyword">typedef</span> rb_tree_node* link_type;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="type">size_t</span> size_type;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="type">ptrdiff_t</span> difference_type;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function">link_type <span class="title">get_node</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> rb_tree_node_allocator::<span class="built_in">allocate</span>(); &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">put_node</span><span class="params">(link_type p)</span> </span>&#123; rb_tree_node_allocator::<span class="built_in">deallocate</span>(p); &#125;</span><br><span class="line">    <span class="function">link_type <span class="title">create_node</span><span class="params">(<span class="type">const</span> value_type&amp; x)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 配置空间</span></span><br><span class="line">        link_type tmp = <span class="built_in">get_node</span>();</span><br><span class="line">        STL_TRY &#123;</span><br><span class="line">            <span class="comment">// 构造内容</span></span><br><span class="line">            <span class="built_in">construct</span>(&amp;tmp-&gt;value_field, x);</span><br><span class="line">        &#125; <span class="built_in">STL_UNWIND</span> (<span class="built_in">put_node</span>(tmp));</span><br><span class="line">        <span class="keyword">return</span> tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 复制一个节点（的值和色）</span></span><br><span class="line">    <span class="function">link_type <span class="title">clone_node</span><span class="params">(link_type x)</span> </span>&#123;</span><br><span class="line">        link_type tmp = <span class="built_in">create_node</span>(x-&gt;value_field);</span><br><span class="line">        tmp-&gt;color = x-&gt;color;</span><br><span class="line">        tmp-&gt;left = <span class="literal">nullptr</span>;</span><br><span class="line">        tmp-&gt;right = <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="keyword">return</span> tmp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">destroy_node</span><span class="params">(link_type p)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 析构内容</span></span><br><span class="line">        <span class="built_in">destroy</span>(&amp;p-&gt;value_field);</span><br><span class="line">        <span class="comment">// 释放内存</span></span><br><span class="line">        <span class="built_in">put_node</span>(p);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="comment">// RB-tree只以三笔数据表现</span></span><br><span class="line">    size_type node_count; <span class="comment">// 追踪记录树的大小（节点数量）</span></span><br><span class="line">    <span class="comment">// 这是实现上的一个技巧</span></span><br><span class="line">    link_type header;</span><br><span class="line">    Compare key_compare; <span class="comment">// 节点间的键值大小比较准则。应该会是个function object</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 以下三个函数用来方便取得header的成员</span></span><br><span class="line">    <span class="function">link_type&amp; <span class="title">root</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> (link_type&amp;)header-&gt;parent; &#125;</span><br><span class="line">    <span class="function">link_type&amp; <span class="title">leftmost</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> (link_type&amp;)header-&gt;left; &#125;</span><br><span class="line">    <span class="function">link_type&amp; <span class="title">rightmost</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> (link_type&amp;)header-&gt;right; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 以下六个函数用来方便取得节点x的成员</span></span><br><span class="line">    <span class="function"><span class="type">static</span> link_type&amp; <span class="title">left</span><span class="params">(link_type x)</span> </span>&#123; <span class="keyword">return</span> (link_type&amp;)(x-&gt;left); &#125;</span><br><span class="line">    <span class="function"><span class="type">static</span> link_type&amp; <span class="title">right</span><span class="params">(link_type x)</span> </span>&#123; <span class="keyword">return</span> (link_type&amp;)(x-&gt;right); &#125;</span><br><span class="line">    <span class="function"><span class="type">static</span> link_type&amp; <span class="title">parent</span><span class="params">(link_type x)</span> </span>&#123; <span class="keyword">return</span> (link_type&amp;)(x-&gt;parent); &#125;</span><br><span class="line">    <span class="function"><span class="type">static</span> reference <span class="title">value</span><span class="params">(link_type x)</span> </span>&#123; <span class="keyword">return</span> x-&gt;value_field; &#125;</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">const</span> Key&amp; <span class="title">key</span><span class="params">(link_type x)</span> </span>&#123; <span class="keyword">return</span> <span class="built_in">KeyOfValue</span>()(<span class="built_in">value</span>(x)); &#125;</span><br><span class="line">    <span class="function"><span class="type">static</span> color_type&amp; <span class="title">color</span><span class="params">(link_type x)</span> </span>&#123; <span class="keyword">return</span> (color_type&amp;)(x-&gt;color); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 以下六个函数用来方便取得节点x的成员</span></span><br><span class="line">    <span class="function"><span class="type">static</span> link_type&amp; <span class="title">left</span><span class="params">(base_ptr x)</span> </span>&#123; <span class="keyword">return</span> (link_type&amp;)(x-&gt;left); &#125;</span><br><span class="line">    <span class="function"><span class="type">static</span> link_type&amp; <span class="title">right</span><span class="params">(base_ptr x)</span> </span>&#123; <span class="keyword">return</span> (link_type&amp;)(x-&gt;right); &#125;</span><br><span class="line">    <span class="function"><span class="type">static</span> link_type&amp; <span class="title">parent</span><span class="params">(base_ptr x)</span> </span>&#123; <span class="keyword">return</span> (link_type&amp;)(x-&gt;parent); &#125;</span><br><span class="line">    <span class="function"><span class="type">static</span> reference <span class="title">value</span><span class="params">(base_ptr x)</span> </span>&#123; <span class="keyword">return</span> ((link_type)x)-&gt;value_field; &#125;</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">const</span> Key&amp; <span class="title">key</span><span class="params">(base_ptr x)</span> </span>&#123; <span class="keyword">return</span> <span class="built_in">KeyOfValue</span>()(<span class="built_in">value</span>(<span class="built_in">link_type</span>(x))); &#125;</span><br><span class="line">    <span class="function"><span class="type">static</span> color_type&amp; <span class="title">color</span><span class="params">(base_ptr x)</span> </span>&#123; <span class="keyword">return</span> (color_type&amp;)(<span class="built_in">link_type</span>(x)-&gt;color); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 求取极大值和极小值：node_class已有实现此功能，交给它们完成即可</span></span><br><span class="line">    <span class="function"><span class="type">static</span> link_type <span class="title">minimum</span><span class="params">(link_type x)</span> </span>&#123; <span class="keyword">return</span> (link_type)_rb_tree_node_base::<span class="built_in">minimum</span>(x); &#125;</span><br><span class="line">    <span class="function"><span class="type">static</span> link_type <span class="title">maximum</span><span class="params">(link_type x)</span> </span>&#123; <span class="keyword">return</span> (link_type)_rb_tree_node_base::<span class="built_in">maximum</span>(x); &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> _rb_tree_iterator&lt;value_type, reference, pointer&gt; iterator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    iterator _insert(base_ptr x, base_ptr y, <span class="type">const</span> value_type&amp; v);</span><br><span class="line">    link_type _copy(link_type x, link_type p);</span><br><span class="line">    <span class="type">void</span> _erase(link_type x);</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        header = <span class="built_in">create_node</span>(<span class="built_in">value_type</span>()); <span class="comment">// 产生一个节点空间，令header指向它</span></span><br><span class="line">        <span class="built_in">color</span>(header) = _rb_tree_red; <span class="comment">// 令header为红色，用来区分header和root</span></span><br><span class="line">        <span class="built_in">root</span>() = <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="built_in">leftmost</span>() = header;</span><br><span class="line">        <span class="built_in">rightmost</span>() = header;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// allocation/deallocation</span></span><br><span class="line">    <span class="built_in">rb_tree</span>(<span class="type">const</span> Compare&amp; comp = <span class="built_in">Compare</span>()) : <span class="built_in">node_count</span>(<span class="number">0</span>), <span class="built_in">key_compare</span>(comp) &#123; <span class="built_in">init</span>(); &#125;</span><br><span class="line">    ~<span class="built_in">rb_tree</span>() &#123;</span><br><span class="line">        <span class="built_in">clear</span>();</span><br><span class="line">        <span class="built_in">put_node</span>(header);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    rb_tree&lt;Key, Value, KeyOfValue, Compare, Alloc&gt;&amp; <span class="keyword">operator</span>=(<span class="type">const</span> rb_tree&lt;Key, Value, KeyOfValue, Compare, Alloc&gt;&amp; x);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// accessors:</span></span><br><span class="line">    <span class="function">Compare <span class="title">key_comp</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> key_compare; &#125;</span><br><span class="line">    <span class="function">iterator <span class="title">begin</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="built_in">leftmost</span>(); &#125; <span class="comment">// RB树的起头为最左（最小）节点处</span></span><br><span class="line">    <span class="function">iterator <span class="title">end</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> header; &#125; <span class="comment">// RB树的终点为header所指处</span></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> node_count == <span class="number">0</span>; &#125;</span><br><span class="line">    <span class="function">size_type <span class="title">size</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> node_count; &#125;</span><br><span class="line">    <span class="function">size_type <span class="title">max_size</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> <span class="built_in">size_type</span>(<span class="number">-1</span>); &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// insert/erase</span></span><br><span class="line">    <span class="comment">// 将x插入到RB-tree中（保持节点值独一无二）</span></span><br><span class="line">    <span class="function">pair&lt;iterator, <span class="type">bool</span>&gt; <span class="title">insert_unique</span><span class="params">(<span class="type">const</span> value_type&amp; x)</span></span>;</span><br><span class="line">    <span class="comment">// 将x插入到RB-tree中（允许节点值重复）</span></span><br><span class="line">    <span class="function">iterator <span class="title">insert_equal</span><span class="params">(<span class="type">const</span> value_type&amp; x)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>实际的代码实现中，红黑树有一个 header 节点，该节点为红色，左节点指向该树的最小值，右节点指向根节点。上面的插入函数有两个，一个是保持节点值独一无二插入的 <code>insert_unique</code> 还有一个是允许重复的 <code>insert_equal</code>。</p>
+<h4 id="rb-tree-的构造和内存管理"><a class="markdownIt-Anchor" href="#rb-tree-的构造和内存管理"></a> RB Tree 的构造和内存管理</h4>
+<p>RB-tree 的构造方式有两种，一种是从现有的 RB-tree 复制出一个新的 RB-tree，另一种是创建一棵空树，如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rb_tree&lt;<span class="type">int</span>, <span class="type">int</span>, identity&lt;<span class="type">int</span>&gt;, less&lt;<span class="type">int</span>&gt;&gt; itree;</span><br></pre></td></tr></table></figure>
+<p>这行代码分别指定了节点的键值、实值、大小比较标准，然后调用了 RB-tree 的默认构造函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rb_tree&lt;<span class="type">int</span>, <span class="type">int</span>, identity&lt;<span class="type">int</span>&gt;, less&lt;<span class="type">int</span>&gt;&gt; itree;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rb_tree</span>(<span class="type">const</span> Compare&amp; comp = <span class="built_in">Compare</span>())</span><br><span class="line">    : <span class="built_in">node_count</span>(<span class="number">0</span>), <span class="built_in">key_compare</span>(comp) &#123; <span class="built_in">init</span>(); &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其中的 `init()` 是实现技巧上的一个关键点：</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 产生一个节点空间，令 header 指向它</span></span><br><span class="line">    header = <span class="built_in">get_node</span>();</span><br><span class="line">    <span class="built_in">color</span>(header) = _rb_tree_red; <span class="comment">// 令 header 为红色，用来区分 header 和 root (在 iterator.operator++ 中)</span></span><br><span class="line">    <span class="built_in">root</span>() = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 令 header 的左子节点为自己</span></span><br><span class="line">    <span class="built_in">leftmost</span>() = header;</span><br><span class="line">    <span class="comment">// 令 header 的右子节点为自己</span></span><br><span class="line">    <span class="built_in">rightmost</span>() = header;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text"> 关联容器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">1.1.</span> <span class="toc-text"> 平衡二叉树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rb-tree"><span class="toc-number">1.2.</span> <span class="toc-text"> RB Tree</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rb-tree-%E7%9A%84%E8%8A%82%E7%82%B9"><span class="toc-number">1.2.1.</span> <span class="toc-text"> RB Tree 的节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rb-tree-%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">1.2.2.</span> <span class="toc-text"> RB Tree 迭代器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rb-tree-%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.3.</span> <span class="toc-text"> RB Tree 的结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rb-tree-%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.4.</span> <span class="toc-text"> RB Tree 的构造和内存管理</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&text=STL_5"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&title=STL_5"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&is_video=false&description=STL_5"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=STL_5&body=Check out this article: https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&title=STL_5"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&title=STL_5"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&title=STL_5"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&title=STL_5"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&name=STL_5&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/11/06/Programming/CPP-Core/STL_5/&t=STL_5"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

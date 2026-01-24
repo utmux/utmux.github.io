@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天 心情：好  今天周二，晚上去跑了步，今天记录一下今天的任务：  [x] 每天一万步 [x] 晚上给眼睛热敷 10 分钟 [x] 第四天了，等到 100 天就打卡完成可以买一个平板了 [x] 跑步第二天  在 C++中的类中，数据成员通常是 private（故数据成员默认是 private 的），而一些需要提供接口的成员函数通常为 public。例如： 12345678class Wor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Cpp-15">
+<meta property="og:url" content="https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天 心情：好  今天周二，晚上去跑了步，今天记录一下今天的任务：  [x] 每天一万步 [x] 晚上给眼睛热敷 10 分钟 [x] 第四天了，等到 100 天就打卡完成可以买一个平板了 [x] 跑步第二天  在 C++中的类中，数据成员通常是 private（故数据成员默认是 private 的），而一些需要提供接口的成员函数通常为 public。例如： 12345678class Wor">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-26T14:34:26.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:54.511Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习Cpp-15</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/03/25/Journal/Monthly-Log/%E4%BB%8A%E5%A4%A9%E7%9A%84%E8%AE%B0%E5%BD%95/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&text=学习Cpp-15"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&title=学习Cpp-15"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&is_video=false&description=学习Cpp-15"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-15&body=Check out this article: https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&title=学习Cpp-15"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&title=学习Cpp-15"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&title=学习Cpp-15"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&title=学习Cpp-15"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&name=学习Cpp-15&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&t=学习Cpp-15"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E4%B8%AD%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text"> 类中函数的定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%87%BD%E6%95%B0%E7%B1%BB%E4%BC%BC%E4%BA%8E-python-%E7%9A%84-__init__"><span class="toc-number">2.</span> <span class="toc-text"> 类的初始化函数（类似于 Python 的 __init__）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips"><span class="toc-number">3.</span> <span class="toc-text"> Tips</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E7%B1%BB%E4%BC%BC%E4%BA%8E-python-%E7%9A%84-__del__"><span class="toc-number">4.</span> <span class="toc-text"> 类的析构函数（类似于 Python 的 __del__）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#this-%E6%8C%87%E9%92%88"><span class="toc-number">5.</span> <span class="toc-text"> this 指针</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        学习Cpp-15
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-03-26T14:34:26.000Z" class="dt-published" itemprop="datePublished">2024-03-26</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Programming/">Programming</a> › <a class="category-link" href="/categories/Programming/CPP-Core/">CPP-Core</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天 心情：好</p>
+<hr />
+<p>今天周二，晚上去跑了步，今天记录一下今天的任务：</p>
+<ul>
+<li>[x] 每天一万步</li>
+<li>[x] 晚上给眼睛热敷 10 分钟</li>
+<li>[x] 第四天了，等到 100 天就打卡完成可以买一个平板了</li>
+<li>[x] 跑步第二天</li>
+</ul>
+<p>在 C++中的类中，数据成员通常是 private（故数据成员默认是 private 的），而一些需要提供接口的成员函数通常为 public。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">World</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">float</span> mass; <span class="comment">// 默认是private</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">char</span> name[<span class="number">20</span>];</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">tellall</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="类中函数的定义"><a class="markdownIt-Anchor" href="#类中函数的定义"></a> 类中函数的定义</h5>
+<p>类函数和普通函数的定义类似，区别如下</p>
+<ol>
+<li>定义成员函数时，使用作用域解析运算符（::）来标识函数所属的类；</li>
+<li>类方法可以访问类的 private 组件，比如私有函数等</li>
+</ol>
+<p>故类函数无需传递或者定义即可访问类中的数据成员和函数成员。类函数和普通函数一样可以使用内联 inline，代表在每一个类中都复制一份代码，而不是调用该代码，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">Stock::show</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根据 C++中的规则，inline 更像一种高级的复制，类似于 define 一样，不过更加智能。</p>
+<p>批注：直接在类定义完整函数的类成员函数都是默认作为 inline 的。</p>
+<p>为了节省空间，同一个类定义的不同变量，其数据成员的空间是分开的，而方法是共用同一个空间的，也就是调用同一个函数。</p>
+<h5 id="类的初始化函数类似于-python-的-__init__"><a class="markdownIt-Anchor" href="#类的初始化函数类似于-python-的-__init__"></a> 类的初始化函数（类似于 Python 的 <code>__init__</code>）</h5>
+<p>对于类其可以通过类似于结构体初始化一样使用等于号初始化（也可以通过列表初始化），但必须存在构造函数</p>
+<p>类通过构造函数初始化，如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Stock::<span class="built_in">Stock</span>(<span class="type">const</span> string &amp;co, <span class="type">long</span> n)</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">// ...值得注意的是,该函数的参数名不能与类的成员变量的函数名冲突</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了避免构造函数和类中的函数冲突，有两种方法，一种是类中的数据成员以 <code>m_</code> 开头，代表是成员变量。第二种是数据成员以 <code>_</code> 下划线结尾。</p>
+<p>类的初始化方法有两种如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Stock food = <span class="built_in">Stock</span>(<span class="string">&quot;World Cabbage&quot;</span>, <span class="number">250</span>, <span class="number">1.25</span>);</span><br><span class="line"><span class="function">Stock <span class="title">food</span><span class="params">(<span class="string">&quot;World Cabbage&quot;</span>, <span class="number">250</span>, <span class="number">1.25</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>对于类数组进行初始化如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> STKS = <span class="number">4</span>;</span><br><span class="line">Stock stocks[STKS] = &#123;</span><br><span class="line">    <span class="built_in">Stock</span>(<span class="string">&quot;NanoSmart&quot;</span>, <span class="number">12</span>, <span class="number">20.0</span>),</span><br><span class="line">    <span class="built_in">Stock</span>(<span class="string">&quot;Boffo Objects&quot;</span>, <span class="number">200</span>, <span class="number">2.0</span>),</span><br><span class="line">    <span class="built_in">Stock</span>(<span class="string">&quot;Monolithic Obelisks&quot;</span>, <span class="number">130</span>, <span class="number">3.25</span>),</span><br><span class="line">    <span class="built_in">Stock</span>(<span class="string">&quot;Fleep Enterprises&quot;</span>, <span class="number">60</span>, <span class="number">6.5</span>)</span><br><span class="line">&#125;; <span class="comment">// 如果赋值个数小于4,剩下的使用默认初始化函数,因此类数组需要定义默认默认初始化数组</span></span><br><span class="line"><span class="comment">// 可以利用默认初始化跳过某些初始化</span></span><br><span class="line">Stock stocks2[STKS] = &#123;</span><br><span class="line">    <span class="built_in">Stock</span>(<span class="string">&quot;NanoSmart&quot;</span>, <span class="number">12</span>, <span class="number">20.0</span>),</span><br><span class="line">    <span class="built_in">Stock</span>(),</span><br><span class="line">    <span class="built_in">Stock</span>(<span class="string">&quot;Monolithic Obelisks&quot;</span>, <span class="number">130</span>, <span class="number">3.25</span>),</span><br><span class="line">&#125;;  <span class="comment">// 第二个和第四个元素将采用默认初始化</span></span><br></pre></td></tr></table></figure>
+<p>使用 new 给类分配内存的时候也类似初始化：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stock *pstock = <span class="keyword">new</span> <span class="built_in">Stock</span>(<span class="string">&quot;World Cabbage&quot;</span>, <span class="number">250</span>, <span class="number">1.25</span>);</span><br></pre></td></tr></table></figure>
+<p>如果不想给类赋值，可以通过函数默认值或者函数重载的方法给类初始化值，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Stock::<span class="built_in">Stock</span>(<span class="type">const</span> string &amp;co = <span class="string">&quot;default&quot;</span>, <span class="type">long</span> n = <span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">	company = co;</span><br><span class="line"><span class="comment">//....</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 或者通过函数重载</span></span><br><span class="line">Stock::<span class="built_in">Stock</span>()</span><br><span class="line">&#123;</span><br><span class="line">	company = <span class="string">&quot;default&quot;</span>;</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="tips"><a class="markdownIt-Anchor" href="#tips"></a> Tips</h5>
+<p>在定义类时，一定要定义类中的默认参数声明。</p>
+<h5 id="类的析构函数类似于-python-的-__del__"><a class="markdownIt-Anchor" href="#类的析构函数类似于-python-的-__del__"></a> 类的析构函数（类似于 Python 的 <code>__del__</code>）</h5>
+<p>其定义可以为释放构造类时使用到的内存等（如果构造函数使用了 new 的话），定义方法如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Stock::~<span class="built_in">Stock</span>()</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">// ....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于类，如果定义类的成员函数不修改值，如果成员函数有参数可以类似于普通函数一样添加 const 解决，但是如果类的成员函数无参数如何保证其不修改类中的数据成员呢（毕竟普通函数需要传入地址等才能修改，而类函数可以随时访问数据成员）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">const</span> Stock <span class="title">food</span><span class="params">(<span class="string">&quot;xx&quot;</span>, xx)</span></span>;</span><br><span class="line">food.<span class="built_in">show</span>(); <span class="comment">// 此时只有show()函数定义为如下类型才能通过编译</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Stock::show</span><span class="params">()</span> <span class="type">const</span></span>&#123;<span class="comment">//...&#125; //,没错后面加一个const</span></span><br></pre></td></tr></table></figure>
+<h5 id="this-指针"><a class="markdownIt-Anchor" href="#this-指针"></a> this 指针</h5>
+<p>C++中的每一个成员函数都有一个 this 指针，指向调用该成员函数的类，我们可以通过 <code>*this</code> 来返回或者访问这个类，也可以通过加入 const 来防止通过 this 指针修改或者调用类中的成员。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E4%B8%AD%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text"> 类中函数的定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%87%BD%E6%95%B0%E7%B1%BB%E4%BC%BC%E4%BA%8E-python-%E7%9A%84-__init__"><span class="toc-number">2.</span> <span class="toc-text"> 类的初始化函数（类似于 Python 的 __init__）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips"><span class="toc-number">3.</span> <span class="toc-text"> Tips</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E7%B1%BB%E4%BC%BC%E4%BA%8E-python-%E7%9A%84-__del__"><span class="toc-number">4.</span> <span class="toc-text"> 类的析构函数（类似于 Python 的 __del__）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#this-%E6%8C%87%E9%92%88"><span class="toc-number">5.</span> <span class="toc-text"> this 指针</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&text=学习Cpp-15"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&title=学习Cpp-15"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&is_video=false&description=学习Cpp-15"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-15&body=Check out this article: https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&title=学习Cpp-15"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&title=学习Cpp-15"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&title=学习Cpp-15"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&title=学习Cpp-15"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&name=学习Cpp-15&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/&t=学习Cpp-15"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

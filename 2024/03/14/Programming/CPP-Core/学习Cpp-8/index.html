@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天 心情：差  每天都不知道自己浪费了时间在哪里，今天又没有出去锻炼，我是真的服了我自己了，说好今天锻炼的，上午在睡懒觉，下午在这摆了一下午，结果啥也没做完。然后晚上看了下 yolo 的论文和 C++。就这样。 明天一定要出去锻炼不然我是狗。 今天问 chatgpt 才知道，不是所有结构都支持迭代器，貌似 C++中的 array 和 vector 支持，这才是 array 最大的意义吧，所">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Cpp-8">
+<meta property="og:url" content="https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天 心情：差  每天都不知道自己浪费了时间在哪里，今天又没有出去锻炼，我是真的服了我自己了，说好今天锻炼的，上午在睡懒觉，下午在这摆了一下午，结果啥也没做完。然后晚上看了下 yolo 的论文和 C++。就这样。 明天一定要出去锻炼不然我是狗。 今天问 chatgpt 才知道，不是所有结构都支持迭代器，貌似 C++中的 array 和 vector 支持，这才是 array 最大的意义吧，所">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-14T14:13:26.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:54.466Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习Cpp-8</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/03/15/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-9/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/03/13/Journal/Monthly-Log/%E5%BC%80%E6%91%86%E7%9A%84%E4%B8%80%E5%A4%A9/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&text=学习Cpp-8"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&title=学习Cpp-8"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&is_video=false&description=学习Cpp-8"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-8&body=Check out this article: https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&title=学习Cpp-8"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&title=学习Cpp-8"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&title=学习Cpp-8"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&title=学习Cpp-8"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&name=学习Cpp-8&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&t=学习Cpp-8"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E8%BE%93%E5%87%BA"><span class="toc-number">1.</span> <span class="toc-text"> 文件的输出</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E8%BE%93%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text"> 文件的输入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8D%E5%AD%98%E5%9C%A8%E6%88%96%E9%87%8D%E5%A4%8D%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">3.</span> <span class="toc-text"> 文件不存在或重复的情况</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        学习Cpp-8
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-03-14T14:13:26.000Z" class="dt-published" itemprop="datePublished">2024-03-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Programming/">Programming</a> › <a class="category-link" href="/categories/Programming/CPP-Core/">CPP-Core</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天 心情：差</p>
+<hr />
+<p>每天都不知道自己浪费了时间在哪里，今天又没有出去锻炼，我是真的服了我自己了，说好今天锻炼的，上午在睡懒觉，下午在这摆了一下午，结果啥也没做完。然后晚上看了下 yolo 的论文和 C++。就这样。</p>
+<p>明天一定要出去锻炼不然我是狗。</p>
+<p>今天问 chatgpt 才知道，不是所有结构都支持迭代器，貌似 C++中的 array 和 vector 支持，这才是 array 最大的意义吧，所谓的 at 保证内存安全也是一大意义。</p>
+<p>对了还有，和家里人通个电话。</p>
+<h5 id="文件的输出"><a class="markdownIt-Anchor" href="#文件的输出"></a> 文件的输出</h5>
+<p>类似于 cout，也能够设置输出的小数和整数的格式，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">outFile &lt;&lt; fixed;</span><br><span class="line">outFile.<span class="built_in">precision</span>(<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p>使用流程如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span> <span class="comment">// 包含头文件</span></span></span><br><span class="line">ofstream outFile; <span class="comment">// 定义一个类</span></span><br><span class="line">outFile.<span class="built_in">open</span>(<span class="string">&quot;xx&quot;</span>); <span class="comment">// 打开一个文件</span></span><br><span class="line">outFIle &lt;&lt; <span class="string">&quot;xx&quot;</span>; <span class="comment">// 写入文件</span></span><br><span class="line">outFile.<span class="built_in">close</span>(); <span class="comment">// 关闭文件，如果忘记关闭会自动在程序结束时关闭</span></span><br></pre></td></tr></table></figure>
+<h5 id="文件的输入"><a class="markdownIt-Anchor" href="#文件的输入"></a> 文件的输入</h5>
+<p>类似于文件的输出，只不过将 ofstream 换成了 instream。</p>
+<h5 id="文件不存在或重复的情况"><a class="markdownIt-Anchor" href="#文件不存在或重复的情况"></a> 文件不存在或重复的情况</h5>
+<p>对于输出，默认是 w 模式，故会直接创建一个新的文件，可以通过 is_open()方法来检查，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">outFile.<span class="built_in">open</span>(<span class="string">&quot;xx&quot;</span>);</span><br><span class="line"><span class="keyword">if</span>(!outFile.<span class="built_in">is_open</span>())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">exit</span>(EXIT_FAILuRE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于输入，其使用的代码是一样的。如何确认读入的数据是否正常，如果最后一次读取操作中发生了类型不匹 配的情况，方法 <code>fail( )</code> 将返回 true（如果遇到了 EOF，该方法也将返回 true）。最后，可能出现意外的问题， 如文件受损或硬件故障。如果最后一次读取文件时发生了这样的问题，方法 <code>bad( )</code> 将返回 true。不要分别检 查这些情况，一种更简单的方法是使用 <code>good( )</code> 方法，该方法在没有发生任何错误时返回 true（即类型不匹配也会返回 false），通常代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (inFile.<span class="built_in">good</span>()) <span class="comment">// 依次读入</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 正确读入的情况</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (inFile.<span class="built_in">eof</span>()) <span class="comment">// 确认上面正常读取完了文件</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 正常处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>事实上，类似于 cin，对 ifstream 类进行 bool 判断，其默认返回的结果是 <code>good()</code> 方法的值。故其实可以这样写更加常用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(inFile &gt;&gt; value) <span class="comment">// 不断读取数值</span></span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E8%BE%93%E5%87%BA"><span class="toc-number">1.</span> <span class="toc-text"> 文件的输出</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E8%BE%93%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text"> 文件的输入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8D%E5%AD%98%E5%9C%A8%E6%88%96%E9%87%8D%E5%A4%8D%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">3.</span> <span class="toc-text"> 文件不存在或重复的情况</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&text=学习Cpp-8"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&title=学习Cpp-8"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&is_video=false&description=学习Cpp-8"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-8&body=Check out this article: https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&title=学习Cpp-8"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&title=学习Cpp-8"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&title=学习Cpp-8"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&title=学习Cpp-8"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&name=学习Cpp-8&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/03/14/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-8/&t=学习Cpp-8"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

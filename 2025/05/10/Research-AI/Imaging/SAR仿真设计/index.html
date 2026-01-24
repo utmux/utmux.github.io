@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天	心情：差  在合成孔径雷达（SAR）研究的框架内，在进行任何处理（ 外差式下变频器）之前，对机载接收到的信号进行模拟是很方便的。从现在起，这种信号被称为原始信号。模拟典型场景可以简化处理算法的实验，以及模式识别和特征提取技术的开发。模拟可在噪声和杂波抑制研究中发挥重要作用，并有助于优化合成孔径雷达系统参数。模拟代码必须满足一系列严格的要求。要模拟的情况应该比较普遍，可能会随时间变化，可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SAR仿真设计">
+<meta property="og:url" content="https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天	心情：差  在合成孔径雷达（SAR）研究的框架内，在进行任何处理（ 外差式下变频器）之前，对机载接收到的信号进行模拟是很方便的。从现在起，这种信号被称为原始信号。模拟典型场景可以简化处理算法的实验，以及模式识别和特征提取技术的开发。模拟可在噪声和杂波抑制研究中发挥重要作用，并有助于优化合成孔径雷达系统参数。模拟代码必须满足一系列严格的要求。要模拟的情况应该比较普遍，可能会随时间变化，可">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-10T08:07:01.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:55.079Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>SAR仿真设计</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2025/06/13/Journal/Essays/%E8%BF%BD%E6%B1%82%E5%8D%93%E8%B6%8A/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2025/01/05/Programming/CPP-Core/%E7%89%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B3/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&text=SAR仿真设计"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&is_video=false&description=SAR仿真设计"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SAR仿真设计&body=Check out this article: https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&name=SAR仿真设计&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&t=SAR仿真设计"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        SAR仿真设计
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-05-10T08:07:01.000Z" class="dt-published" itemprop="datePublished">2025-05-10</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Research-AI/">Research-AI</a> › <a class="category-link" href="/categories/Research-AI/Imaging/">Imaging</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天	心情：差</p>
+<hr />
+<p>在合成孔径雷达（SAR）研究的框架内，在进行任何处理（ 外差式下变频器）之前，对机载接收到的信号进行模拟是很方便的。从现在起，这种信号被称为原始信号。模拟典型场景可以简化处理算法的实验，以及模式识别和特征提取技术的开发。模拟可在噪声和杂波抑制研究中发挥重要作用，并有助于优化合成孔径雷达系统参数。模拟代码必须满足一系列严格的要求。要模拟的情况应该比较普遍，可能会随时间变化，可以是确定性的，也可以是随机性的。它应依赖于必须符合适当统计规则的声散射模型。延伸场景的合成孔径雷达模拟器的一个重要特征是高度剖面，因为浮雕的影响对最终图像的形成起着重要作用。最后，但并非最不重要的一点是，数字代码应高效、快速并节省（计算机）内存。这些特点通常是相互冲突的，最终的解决方案通常是工程上的折衷方案。</p>
+<p>​	文献[1]-[4]中提供了许多仿真研究，产生了符合某些（但通常不是全部）先决条件的仿真代码。在所有代码中，场景表面都被离散到一个（通常是）矩形网格中，并对来自网格点的基本回波进行叠加。根据对单个回波的评估、其与其他回波的统计关系以及考虑到合成孔径雷达系统参数的叠加精度，可以使用不同的程序。这些问题值得讨论</p>
+<p>​      首先要解决的问题是单次回波评估。一种可能性是使用简单的点散射体，其强度由局部雷达截面的平方根给出。要进行逼真的模拟，需要访问后者的数据库 [1]、[3]、[5]、[6]。作为另一种方法，可以以网格点为中心，用平面面局部近似表面；只要规定了材料的电磁参数，就可以通过简单地应用电磁理论计算回波。这第二种程序似乎比较灵活，所需的信息量有限，而且是一个健全的物理模型的遗迹：这就是我们提出的模拟器所采用的程序。</p>
+<p>​	需要考虑的第二个要点是每个分辨率单元的散射体或面的数量。显然，较大的面数可以改善对高度剖面的描述，但需要高效的工具来处理内存要求和计算时间。合成孔径雷达高级模拟器（SARAS）依靠创新的两阶段快速傅立叶变换（FFT）算法解决了这两个问题，该算法还可用于并行处理。SAR 模拟器的一个核心问题是实现信号的正确统计特征。可以预见有两种极端程序：我们可以在场景的物理模型上操作，也可以直接在图像上操作。在此，我们不妨作一简要讨论。</p>
+<p>​	如果要在物理模型上实现统计特征，首先必须考虑表面粗糙度。对于高斯场景[7]来说，相关长度与刻面尺寸和系统分辨率相比可以忽略不计。因此，像素间的统计量受系统带宽的控制：模拟器会正确生成适当的统计量，而统计量则受输入系统数据的控制。另一种极端情况是高度相关的场景（粗糙度可忽略不计）：像素间统计数据取决于场景相关性和系统带宽，模拟器也能正确处理。</p>
+<p>​	相反，斑点可以直接应用于图像（通过乘法）。这在原理上很简单，但需要正确追踪场景统计形态对图像的影响；简单地应用每个像素的斑点并不合适，因为它没有考虑到合成孔径雷达系统的滤波特性[8]。在我们介绍的模拟器中，统计描述是在物理模型中引入的，而不是在最终图像上。</p>
+<p>​	作为结论，我们介绍了一种合成孔径雷达原始信号模拟器 SARAS，该模拟器根据扩展三维场景的电磁极坐标模型计算反射率图。它通过在（二维）傅立叶变换域中分析得出的适当系统函数，包括合成孔径雷达系统的像差，对原始信号进行精确评估。</p>
+<p>​	现在，我们将介绍模拟器的总体结构，并在随后的章节中加以阐述。场景的高度剖面由一个适当的函数来描述，该函数可以通过分析或数值方法来规定。然后用正方形平面切面（见图 1）来近似描述该高度剖面，这些切面与入射波长相比较大，但与分辨率长度相比较小。每个面的特征是三个顶点的坐标（或其中心坐标和相关法线）以及底层材料的电磁参数（介电常数和电导率 a）。</p>
+<p>​	合成孔径雷达原始信号是每个面的返回信号的适当叠加。因此，第一个问题是计算单个面的反向散射，同时考虑到局部入射角、入射波的偏振、面的粗糙度以及可能存在的阴影效应。这将在第二节中考虑和讨论。一旦计算出每个刻面的基本后向散射场，就需要对它们进行叠加；这将在第三节中讨论。宏观）地形剖面的不规则性意味着面顶点的统计位移，可以通过将每个面的四个顶点中的三个顶点随机位移来模拟。作为另一种可能性，我们注意到这种顶点位移等同于移动面中心和改变其法线方向。因此，我们可以为每个面的位置添加一个具有适当概率分布函数（pdf）的随机位移，以及一个随机法线方向。</p>
+<p>​	通过二维 FFT 代码[9]和系统传递函数的渐近评估[9]，可以实现对所有返回的有效求和。传递函数中包含了距离迁移和曲率效应。焦距深度随距离的变化也通过变换空间中的网格变形纳入其中。</p>
+<p>​	模拟器的完整结构将在第五部分讨论，并在图 8 的流程图中描述；输入数据包括几何、电影、电子和统计参数。第六节收集了一些模拟数据实例，以评估代码的性能。结论和建议见第七节。</p>
+<p>​	合成孔径雷达模拟器要解决的基本问题是勘测场景的电磁特性，即入射场和后向散射场之间的关系；场景上两个场之间的比值就是后向散射系数 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>r</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\gamma(x, r)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mclose">)</span></span></span></span>，x和r 是方位坐标和距离坐标。在最一般的情况下，入射场通过表面和体积反向散射与场景相互作用。在下面的章节中，我们只关注表面散射，而完全忽略多重散射。我们仅限于地形场景，不包括海洋，海洋的散射机制（布拉格现象）与我们这里采用的不同。</p>
+<p>​	这样，我们也可以考虑场景在积分时间内的不变性。在所有可能的地形模型中，切面模型是一个非常有用的模型（见图 1），它相当于场景的片状平面近似。我们假设面的尺寸在分辨率方面很小，但在入射波长方面很大。还要注意的是，每个面都必须足够小，以便正确近似表面高度轮廓。让入射场为:</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>E</mi><mi>i</mi></msub><mo>=</mo><mover accent="true"><mi mathvariant="bold-italic">e</mi><mo>^</mo></mover><msub><mi>E</mi><mi>o</mi></msub><mi>exp</mi><mo>⁡</mo><mo stretchy="false">(</mo><mo>−</mo><mi>j</mi><mi mathvariant="bold-italic">k</mi><mo>⋅</mo><mover accent="true"><mi mathvariant="bold-italic">R</mi><mo>^</mo></mover><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">E_i=\hat{\boldsymbol{e}}E_o\exp(-j\boldsymbol{k}\cdot\hat{\boldsymbol{R}})
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.70788em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol">e</span></span></span></span></span><span style="top:-3.01344em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">o</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">exp</span><span class="mopen">(</span><span class="mord">−</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.01852em;">k</span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.19955em;vertical-align:-0.25em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9495499999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.00421em;">R</span></span></span></span></span><span style="top:-3.25511em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
+<p>其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">k</mi></mrow><annotation encoding="application/x-tex">\boldsymbol{k}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.01852em;">k</span></span></span></span></span></span>=<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mi mathvariant="bold-italic">k</mi></mrow><annotation encoding="application/x-tex">k\boldsymbol{k}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.01852em;">k</span></span></span></span></span></span>是l入射波传播适量，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover accent="true"><mi mathvariant="bold-italic">e</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{\boldsymbol{e}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.70788em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.70788em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol">e</span></span></span></span></span><span style="top:-3.01344em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span></span></span></span>是单位极化矢量，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>E</mi><mi>o</mi></msub></mrow><annotation encoding="application/x-tex">E_o</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">o</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>是入射场振幅，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover accent="true"><mi mathvariant="bold-italic">R</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{\boldsymbol{R}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9495499999999999em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9495499999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.00421em;">R</span></span></span></span></span><span style="top:-3.25511em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span></span></span></span>（见图 2）是从发射天线相位中心到切面的矢量距离。我们假设<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover accent="true"><mi mathvariant="bold-italic">e</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{\boldsymbol{e}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.70788em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.70788em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol">e</span></span></span></span></span><span style="top:-3.01344em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span></span></span></span>其为实数。在下面，我们考虑两种极化，H极化（<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover accent="true"><mi mathvariant="bold-italic">e</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{\boldsymbol{e}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.70788em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.70788em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol">e</span></span></span></span></span><span style="top:-3.01344em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span></span></span></span>沿x轴方向）和V极化（<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover accent="true"><mi mathvariant="bold-italic">e</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{\boldsymbol{e}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.70788em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.70788em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol">e</span></span></span></span></span><span style="top:-3.01344em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span></span></span></span>xk沿x轴）将这两种具有不同（复）振幅的极化组合在一起，可以合成任何需要的极化。物理光学近似[101]中的后向散射远场的基尔霍夫解法是：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.24999999999999992em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><msub><mi mathvariant="bold-italic">E</mi><mi>s</mi></msub><mo stretchy="false">(</mo><mi mathvariant="bold-italic">R</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mfrac><mrow><mi>j</mi><mi>k</mi><mi>exp</mi><mo>⁡</mo><mo stretchy="false">(</mo><mo>−</mo><mi>j</mi><mi>k</mi><mi>R</mi><mo stretchy="false">)</mo></mrow><mrow><mn>4</mn><mi>π</mi><mi>R</mi></mrow></mfrac><msub><mi>E</mi><mi>o</mi></msub><mrow><mo fence="true">(</mo><munder accentunder="true"><munder accentunder="true"><mi>I</mi><mo stretchy="true">‾</mo></munder><mo stretchy="true">‾</mo></munder><mo>−</mo><mover accent="true"><mi mathvariant="bold-italic">k</mi><mo>^</mo></mover><mover accent="true"><mi mathvariant="bold-italic">k</mi><mo>^</mo></mover><mo fence="true">)</mo></mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>⋅</mo><munder><mo>∫</mo><mi>A</mi></munder><mi mathvariant="bold-italic">F</mi><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo separator="true">,</mo><mi>c</mi><mo stretchy="false">)</mo><mi>exp</mi><mo>⁡</mo><mo stretchy="false">[</mo><mn>2</mn><mi>j</mi><mi mathvariant="bold-italic">k</mi><mo>⋅</mo><mi mathvariant="bold-italic">ρ</mi><mo stretchy="false">]</mo><mi>d</mi><mi>A</mi></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{aligned}
+\boldsymbol{E}_{s}(\boldsymbol{R}) &amp; =\frac{jk\exp(-jkR)}{4\pi R}E_o\left(\underline{\underline{I}}-\hat{\boldsymbol{k}}\hat{\boldsymbol{k}}\right) \\
+ &amp; \cdot\intop_A\boldsymbol{F}(a,b,c)\exp[2j\boldsymbol{k}\cdot\boldsymbol{\rho}]dA
+\end{aligned}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:5.679581000000001em;vertical-align:-2.5897905000000003em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.0897905000000003em;"><span style="top:-5.0897905em;"><span class="pstrut" style="height:3.427em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.05451em;">E</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.00421em;">R</span></span></span><span class="mclose">)</span></span></span><span style="top:-2.7426654999999998em;"><span class="pstrut" style="height:3.427em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.5897905000000003em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.0897905000000003em;"><span style="top:-5.0897905em;"><span class="pstrut" style="height:3.427em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">exp</span><span class="mopen">(</span><span class="mord">−</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">o</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6833299999999999em;"><span style="top:-2.6399999999999997em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span style="top:-2.84em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">I</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.20000000000000007em;"><span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.40000000000000013em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9578799999999998em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.01852em;">k</span></span></span></span></span><span style="top:-3.26344em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9578799999999998em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.01852em;">k</span></span></span></span></span><span style="top:-3.26344em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span></span></span><span style="top:-2.7426654999999998em;"><span class="pstrut" style="height:3.427em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.361125em;"><span style="top:-1.8545440000000004em;margin-left:-0.44445em;"><span class="pstrut" style="height:3.3600000000000003em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">A</span></span></span><span style="top:-3.3611250000000004em;"><span class="pstrut" style="height:3.3600000000000003em;"></span><span><span class="mop op-symbol large-op" style="margin-right:0.44445em;">∫</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.605456em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">F</span></span></span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">c</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">exp</span><span class="mopen">[</span><span class="mord">2</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.01852em;">k</span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol">ρ</span></span></span><span class="mclose">]</span><span class="mord mathnormal">d</span><span class="mord mathnormal">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.5897905000000003em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&text=SAR仿真设计"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&is_video=false&description=SAR仿真设计"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SAR仿真设计&body=Check out this article: https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&title=SAR仿真设计"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&name=SAR仿真设计&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/05/10/Research-AI/Imaging/SAR%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1/&t=SAR仿真设计"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

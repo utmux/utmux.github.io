@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天 心情：一般   韦东山 Pinctrl 系统参考文献  1. Pinctrl 子系统简介与核心作用 Pinctrl（Pin Controller）子系统是 Linux 内核中用于管理芯片引脚（Pin）功能的框架。现代 SoC (System on Chip) 通常集成大量的多功能引脚，同一个引脚可能被复用作通用输入输出（GPIO）、I2C&#x2F;SPI&#x2F;UART 等串行通信、或者其他专用功能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="韦东山Pinctrl系统参考文献">
+<meta property="og:url" content="https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天 心情：一般   韦东山 Pinctrl 系统参考文献  1. Pinctrl 子系统简介与核心作用 Pinctrl（Pin Controller）子系统是 Linux 内核中用于管理芯片引脚（Pin）功能的框架。现代 SoC (System on Chip) 通常集成大量的多功能引脚，同一个引脚可能被复用作通用输入输出（GPIO）、I2C&#x2F;SPI&#x2F;UART 等串行通信、或者其他专用功能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/b9666bf28d363477a140c38c599aa230.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/480a66c0ecd4d90b01f512400c738d8f.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/9c66fa534748153c2c0187ab75c77d5f.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/eaf283b25c9138b98a6af5b95bd3ca87.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/13df38fa6058d35ff79c9dd1a0d7c35f.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/8932d7776b6785202bf377b408e2011f.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/c628f7206ce037e9b9b5fac68dd6a431.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/bc9df6c877601e78cfc360c898d71474.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/490f2833fd7f4f4a5e019dedba15dcaf.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/c3d6084b03fcf9983534a9d2fbf0145e.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/fcf2ee8416fa5d0914de4e0928f8bc1f.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/a6c72aa791f7178397836b613898fefe.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/a90d3ff6a52e0c7b57d7e634cd79fe57.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/169144e99aa06d8a41ff6a3e2ecd9673.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/6068bb39ae94248821286ba6ddaf397d.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/9314b4e7c344c6c509c1a0abad9c6c2b.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/23c82b3217663e05905d6bebead2e0c5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/926125fe12c67e22564d92a5480fe505.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/4ca2ea95dbd77c4c142336877c2627e1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/480a66c0ecd4d90b01f512400c738d8f.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/63651b3bbf0a20dab08f27b526d4d3a0.png">
+<meta property="article:published_time" content="2025-07-25T13:42:37.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:54.020Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/b9666bf28d363477a140c38c599aa230.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>韦东山Pinctrl系统参考文献</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2025/08/03/Programming/CPP-Core/C++%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99%E9%80%9F%E6%9F%A5%E6%8C%87%E5%8D%97/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2025/07/24/Embedded-Linux/Kernel/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90%20Linux%20pinctrl%20%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9A%E5%8E%9F%E7%90%86%E3%80%81%E6%B5%81%E7%A8%8B%E4%B8%8E%E5%AE%9E%E8%B7%B5/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&text=韦东山Pinctrl系统参考文献"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=韦东山Pinctrl系统参考文献"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&is_video=false&description=韦东山Pinctrl系统参考文献"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=韦东山Pinctrl系统参考文献&body=Check out this article: https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=韦东山Pinctrl系统参考文献"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=韦东山Pinctrl系统参考文献"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=韦东山Pinctrl系统参考文献"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=韦东山Pinctrl系统参考文献"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&name=韦东山Pinctrl系统参考文献&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&t=韦东山Pinctrl系统参考文献"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9F%A6%E4%B8%9C%E5%B1%B1-pinctrl-%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">1.</span> <span class="toc-text"> 韦东山 Pinctrl 系统参考文献</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-pinctrl-%E5%AD%90%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B%E4%B8%8E%E6%A0%B8%E5%BF%83%E4%BD%9C%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text"> 1. Pinctrl 子系统简介与核心作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%AE%BE%E5%A4%87%E6%A0%91device-tree%E4%B8%AD%E7%9A%84-pinctrl-%E8%A1%A8%E7%A4%BA"><span class="toc-number">1.2.</span> <span class="toc-text"> 2. 设备树（Device Tree）中的 Pinctrl 表示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#21-pincontroller-%E8%8A%82%E7%82%B9%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 2.1 Pincontroller 节点的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#22-client-%E8%AE%BE%E5%A4%87%E5%BC%95%E7%94%A8-pinctrl-%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 2.2 Client 设备引用 Pinctrl 配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%A0%B8%E5%BF%83%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.3.</span> <span class="toc-text"> 3. 核心数据结构详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#31-pinctrl_desc-%E5%92%8C-pinctrl_dev-pincontroller-%E7%9A%84%E6%8F%8F%E8%BF%B0%E4%B8%8E%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 3.1 pinctrl_desc 和 pinctrl_dev – Pincontroller 的描述与实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#32-pinctrl_pin_desc-%E6%8F%8F%E8%BF%B0%E5%8D%95%E4%B8%AA%E5%BC%95%E8%84%9A"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 3.2 pinctrl_pin_desc – 描述单个引脚</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#33-pinctrl_ops-%E5%BC%95%E8%84%9A%E6%9E%9A%E4%B8%BE%E4%B8%8E%E7%BB%84%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 3.3 pinctrl_ops – 引脚枚举与组操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#34-pinmux_ops-%E5%BC%95%E8%84%9A%E5%A4%8D%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.4.</span> <span class="toc-text"> 3.4 pinmux_ops – 引脚复用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#35-pinconf_ops-%E5%BC%95%E8%84%9A%E9%85%8D%E7%BD%AE%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.5.</span> <span class="toc-text"> 3.5 pinconf_ops – 引脚配置操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#36-device-%E4%B8%8E-dev_pin_info-client-%E8%AE%BE%E5%A4%87%E7%9A%84-pinctrl-%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">1.3.6.</span> <span class="toc-text"> 3.6 device 与 dev_pin_info – Client 设备的 Pinctrl 上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#37-pinctrl-client-side-context"><span class="toc-number">1.3.7.</span> <span class="toc-text"> 3.7 pinctrl (Client-side Context)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#38-pinctrl_state-pinctrl_map-%E5%92%8C-pinctrl_setting"><span class="toc-number">1.3.8.</span> <span class="toc-text"> 3.8 pinctrl_state, pinctrl_map 和 pinctrl_setting</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-pinctrl-%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E4%B8%8E%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%81%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text"> 4. Pinctrl 子系统工作原理与初始化流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#41-pincontroller-%E9%A9%B1%E5%8A%A8%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 4.1 Pincontroller 驱动构造过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#42-client-%E7%AB%AF%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 4.2 Client 端使用与初始化过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-pinctrl-%E5%AD%90%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.5.</span> <span class="toc-text"> 5. Pinctrl 子系统使用示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#51-%E7%94%9F%E6%88%90-pincontroller-%E8%AE%BE%E5%A4%87%E6%A0%91%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.1.</span> <span class="toc-text"> 5.1 生成 PinController 设备树信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#52-%E5%9C%A8-client-%E8%AE%BE%E5%A4%87%E8%8A%82%E7%82%B9%E4%B8%AD%E4%BD%BF%E7%94%A8-pinctrl"><span class="toc-number">1.5.2.</span> <span class="toc-text"> 5.2 在 Client 设备节点中使用 Pinctrl</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E7%BC%96%E5%86%99%E8%99%9A%E6%8B%9F%E7%9A%84-pinctrl-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.6.</span> <span class="toc-text"> 6. 编写虚拟的 Pinctrl 驱动程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#61-pinctrl-%E9%A9%B1%E5%8A%A8%E6%89%80%E9%9C%80%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-number">1.6.1.</span> <span class="toc-text"> 6.1 Pinctrl 驱动所需实现的功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#62-%E8%99%9A%E6%8B%9F%E7%A1%AC%E4%BB%B6%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.6.2.</span> <span class="toc-text"> 6.2 虚拟硬件功能设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#63-%E7%BC%96%E5%86%99%E8%AE%BE%E5%A4%87%E6%A0%91%E6%96%87%E4%BB%B6"><span class="toc-number">1.6.3.</span> <span class="toc-text"> 6.3 编写设备树文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#64-%E7%BC%96%E5%86%99-pinctrl-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E9%AA%A8%E6%9E%B6"><span class="toc-number">1.6.4.</span> <span class="toc-text"> 6.4 编写 Pinctrl 驱动程序骨架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#65-%E7%BC%96%E5%86%99%E6%B5%8B%E8%AF%95%E7%94%A8%E7%9A%84-client-%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.6.5.</span> <span class="toc-text"> 6.5 编写测试用的 Client 驱动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E8%B0%83%E8%AF%95%E8%99%9A%E6%8B%9F%E7%9A%84-pinctrl-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.7.</span> <span class="toc-text"> 7. 调试虚拟的 Pinctrl 驱动程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#71-debugfs-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.7.1.</span> <span class="toc-text"> 7.1 DebugFS 文件系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#72-%E8%A7%82%E5%AF%9F%E8%BE%93%E5%87%BA%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.7.2.</span> <span class="toc-text"> 7.2 观察输出示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#73-%E5%8A%A8%E6%80%81%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE"><span class="toc-number">1.7.3.</span> <span class="toc-text"> 7.3 动态修改配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%80%BB%E7%BB%93"><span class="toc-number">1.8.</span> <span class="toc-text"> 8. 总结</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        韦东山Pinctrl系统参考文献
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-07-25T13:42:37.000Z" class="dt-published" itemprop="datePublished">2025-07-25</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Embedded-Linux/">Embedded-Linux</a> › <a class="category-link" href="/categories/Embedded-Linux/Kernel/">Kernel</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天 心情：一般</p>
+<hr />
+<h1 id="韦东山-pinctrl-系统参考文献"><a class="markdownIt-Anchor" href="#韦东山-pinctrl-系统参考文献"></a> 韦东山 Pinctrl 系统参考文献</h1>
+<h2 id="1-pinctrl-子系统简介与核心作用"><a class="markdownIt-Anchor" href="#1-pinctrl-子系统简介与核心作用"></a> 1. Pinctrl 子系统简介与核心作用</h2>
+<p>Pinctrl（Pin Controller）子系统是 Linux 内核中用于管理芯片引脚（Pin）功能的框架。现代 SoC (System on Chip) 通常集成大量的多功能引脚，同一个引脚可能被复用作通用输入输出（GPIO）、I2C/SPI/UART 等串行通信、或者其他专用功能。此外，引脚的电气特性（如上拉/下拉、驱动强度、开漏/推挽等）也需要灵活配置。Pinctrl 子系统的目标就是抽象和管理这些复杂的引脚配置任务。</p>
+<p>Pinctrl 子系统主要具备以下三大作用：</p>
+<ol>
+<li>
+<p><strong>引脚枚举与命名（Enumerating and naming）</strong></p>
+<ul>
+<li>识别并管理 SoC 上所有可用的物理引脚。</li>
+<li>为每个物理引脚分配一个唯一的标识（Pin ID 或名称）。</li>
+<li>将一组相关的引脚组合成一个“引脚组”（Pin Group），便于统一管理。</li>
+</ul>
+</li>
+<li>
+<p><strong>引脚复用（Multiplexing）</strong></p>
+<ul>
+<li>决定一个物理引脚当前被分配给哪个功能（例如，是作为普通 GPIO、I2C 的 SDA 引脚，还是 UART 的 TX 引脚）。</li>
+<li>这是 SoC 引脚多功能复用能力的核心体现。</li>
+</ul>
+</li>
+<li>
+<p><strong>引脚配置（Configuration）</strong></p>
+<ul>
+<li>设置引脚的电气特性和行为参数，例如：
+<ul>
+<li><strong>上拉（Pull-up）/下拉（Pull-down）</strong>：控制引脚在空闲时的电平状态。</li>
+<li><strong>开漏（Open-drain）/推挽（Push-pull）</strong>：输出模式。</li>
+<li><strong>驱动强度（Drive Strength）</strong>：控制输出电流大小，影响信号的上升/下降时间。</li>
+<li><strong>施密特触发（Schmitt Trigger）</strong>：增强输入信号的抗噪声能力。</li>
+<li><strong>输入/输出使能</strong>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>Pinctrl 作用图示:</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/b9666bf28d363477a140c38c599aa230.png" alt="Pinctrl Hardware Block" /></p>
+<p><strong>谁使用 Pinctrl？</strong></p>
+<ul>
+<li><strong>芯片厂家 BSP 工程师</strong>：负责编写底层的 Pinctrl 驱动程序，描述芯片所有引脚的特性和可配置项，并实现对应的硬件操作。</li>
+<li><strong>板级驱动工程师（或设备树编写者）</strong>：通过设备树 (Device Tree) 来配置特定板卡上，某个设备（如 I2C 控制器、UART 模块）需要使用哪些引脚，以及这些引脚的具体复用功能和电气配置。</li>
+<li><strong>设备驱动程序</strong>：通常不需要直接操作 Pinctrl API，而是由 Linux 内核的 Pinctrl 核心子系统在设备 probe 阶段根据设备树的配置，自动完成引脚的初始化。这使得设备驱动与底层硬件细节解耦，提高了代码的可移植性。</li>
+</ul>
+<hr />
+<h2 id="2-设备树device-tree中的-pinctrl-表示"><a class="markdownIt-Anchor" href="#2-设备树device-tree中的-pinctrl-表示"></a> 2. 设备树（Device Tree）中的 Pinctrl 表示</h2>
+<p>设备树是 Linux 内核用于描述硬件拓扑和配置的语言。Pinctrl 子系统通过设备树来获取引脚的配置信息。</p>
+<h3 id="21-pincontroller-节点的定义"><a class="markdownIt-Anchor" href="#21-pincontroller-节点的定义"></a> 2.1 Pincontroller 节点的定义</h3>
+<p>每个支持 Pinctrl 的 SoC 通常会在设备树中有一个或多个 Pincontroller 节点，描述了该 SoC 的引脚控制器硬件。在这个节点内部，会定义各种“引脚组”（Pin Group），并通过 <code>fsl,pins</code>（NXP <a target="_blank" rel="noopener" href="http://i.MX">i.MX</a> 系列）或类似属性来指定具体的引脚和默认配置。</p>
+<p><strong>设备树理想模型：</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/480a66c0ecd4d90b01f512400c738d8f.png" alt="Device Tree Modules" /></p>
+<p><strong>IMX6ULL 示例：</strong></p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">&amp;iomuxc</span> <span class="punctuation">&#123;</span> <span class="comment">// i.MX 6ULL 的 Pin Controller 节点</span></span><br><span class="line">    <span class="attr">pinctrl-names</span> <span class="operator">=</span> <span class="string">&quot;default&quot;</span><span class="punctuation">;</span></span><br><span class="line">    pinctrl<span class="number">-0</span> = <span class="params">&lt;<span class="variable">&amp;</span>BOARD_InitPins&gt;</span><span class="punctuation">;</span> <span class="comment">// 引用默认的初始化引脚组</span></span><br><span class="line"></span><br><span class="line">    <span class="title class_">imx6ull-board</span> <span class="punctuation">&#123;</span> <span class="comment">// 板级定义的引脚组</span></span><br><span class="line"><span class="symbol">        i2c1_pins:</span> <span class="title class_">i2c1_pins</span> <span class="punctuation">&#123;</span> <span class="comment">// 具体的引脚组定义节点</span></span><br><span class="line">            <span class="attr">fsl,pins</span> <span class="operator">=</span> <span class="params">&lt; // NXP i.MX 系列特有的引脚描述法</span></span><br><span class="line"><span class="params">                MX6UL_PAD_UART4_RX_DATA__I2C1_SDA          <span class="number">0x000018B0</span> // 定义SDA引脚及其配置</span></span><br><span class="line"><span class="params">                MX6UL_PAD_UART4_TX_DATA__I2C1_SCL          <span class="number">0x000018B0</span> // 定义SCL引脚及其配置</span></span><br><span class="line"><span class="params">            &gt;</span><span class="punctuation">;</span></span><br><span class="line">        <span class="punctuation">&#125;;</span></span><br><span class="line">        <span class="comment">// 更多引脚组...</span></span><br><span class="line">    <span class="punctuation">&#125;;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/9c66fa534748153c2c0187ab75c77d5f.png" alt="IMX6ULL Device Tree" /></p>
+<p><strong>STM32MP157 示例：</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/eaf283b25c9138b98a6af5b95bd3ca87.png" alt="STM32MP157 Device Tree" /></p>
+<h3 id="22-client-设备引用-pinctrl-配置"><a class="markdownIt-Anchor" href="#22-client-设备引用-pinctrl-配置"></a> 2.2 Client 设备引用 Pinctrl 配置</h3>
+<p>客户端设备（如 I2C 控制器、UART 模块、GPIO 外设等）通过其设备树节点来引用 PinController 中定义的引脚组。</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* For a client device requiring named states */</span></span><br><span class="line"><span class="title class_">device</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">pinctrl-names</span> <span class="operator">=</span> <span class="string">&quot;active&quot;</span>, <span class="string">&quot;idle&quot;</span>, <span class="string">&quot;suspend&quot;</span><span class="punctuation">;</span> <span class="comment">// 定义设备支持的引脚状态名称</span></span><br><span class="line">    pinctrl<span class="number">-0</span> = <span class="params">&lt;<span class="variable">&amp;state_0_node_a</span> <span class="variable">&amp;state_0_node_b</span>&gt;</span><span class="punctuation">;</span> <span class="comment">// &quot;active&quot; 状态对应的引脚组引用</span></span><br><span class="line">    pinctrl<span class="number">-1</span> = <span class="params">&lt;<span class="variable">&amp;state_1_node_c</span>&gt;</span><span class="punctuation">;</span>                 <span class="comment">// &quot;idle&quot; 状态对应的引脚组引用</span></span><br><span class="line">    pinctrl<span class="number">-2</span> = <span class="params">&lt;<span class="variable">&amp;state_2_node_d</span>&gt;</span><span class="punctuation">;</span>                 <span class="comment">// &quot;suspend&quot; 状态对应的引脚组引用</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>pinctrl-names</code>：一个字符串列表，定义了设备支持的所有命名状态。例如 &quot;default&quot;、&quot;active&quot;、&quot;idle&quot; 等。</li>
+<li><code>pinctrl-X</code>：一个 phandle 列表，指向 PinController 中定义的具体引脚组节点。<code>X</code> 是 <code>pinctrl-names</code> 中对应状态的索引（从 0 开始）。例如 <code>pinctrl-0</code> 对应 <code>pinctrl-names</code> 中的第一个状态。</li>
+</ul>
+<p><strong>示例：I2C 设备节点引用</strong></p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">&amp;i2c1</span> <span class="punctuation">&#123;</span> <span class="comment">// I2C1 设备节点</span></span><br><span class="line">    <span class="attr">clock-frequency</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">100000</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">pinctrl-names</span> <span class="operator">=</span> <span class="string">&quot;default&quot;</span><span class="punctuation">;</span> <span class="comment">// 定义了一个名为 &quot;default&quot; 的状态</span></span><br><span class="line">    pinctrl<span class="number">-0</span> = <span class="params">&lt;<span class="variable">&amp;i2c1_pins</span>&gt;</span><span class="punctuation">;</span>  <span class="comment">// 引用 PinController 中定义的 i2c1_pins 引脚组</span></span><br><span class="line">    <span class="attr">status</span> <span class="operator">=</span> <span class="string">&quot;okay&quot;</span><span class="punctuation">;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+<p><strong>Mermaid 图 illustrating Device Tree Pinctrl Structure:</strong></p>
+<pre class="mermaid">flowchart LR
+    subgraph Pincontroller
+        P[Pincontroller节点] --> G1[引脚组1: i2c1_pins]
+        P --> G2[引脚组2: uart2_pins]
+        G1 --> C1["fsl,pins = <pinA_mode_i2c pinB_mode_i2c>"]
+        G2 --> C2["fsl,pins = <pinC_mode_uart pinD_mode_uart>"]
+    end
+  
+    subgraph Client设备
+        D_I2C[i2c1节点] --> PN_I2C["pinctrl-names = default"]
+        D_I2C --> P0_I2C["pinctrl-0 = <&i2c1_pins>"]
+      
+        D_UART[uart2节点] --> PN_UART["pinctrl-names = idle, active"]
+        D_UART --> P0_UART["pinctrl-0 = <&uart2_pins_idle>"]
+        D_UART --> P1_UART["pinctrl-1 = <&uart2_pins_active>"]
+    end
+  
+    P0_I2C --> G1
+    P0_UART --> G2
+    P1_UART --> G2_Alt[uart2_pins_active]
+    style P fill:#f9f,stroke:#333,stroke-width:2px
+    style D_I2C fill:#afa,stroke:#333,stroke-width:2px
+    style D_UART fill:#faa,stroke:#333,stroke-width:2px</pre>
+<hr />
+<h2 id="3-核心数据结构详解"><a class="markdownIt-Anchor" href="#3-核心数据结构详解"></a> 3. 核心数据结构详解</h2>
+<p>Pinctrl 子系统内部定义了一系列互相关联的结构体，用于描述、管理和操作引脚。理解这些结构体是深入 Pinctrl 机制的关键。</p>
+<h3 id="31-pinctrl_desc-和-pinctrl_dev-pincontroller-的描述与实例"><a class="markdownIt-Anchor" href="#31-pinctrl_desc-和-pinctrl_dev-pincontroller-的描述与实例"></a> 3.1 <code>pinctrl_desc</code> 和 <code>pinctrl_dev</code> – Pincontroller 的描述与实例</h3>
+<ul>
+<li>
+<p><strong><code>struct pinctrl_desc</code></strong>:</p>
+<ul>
+<li>
+<p><strong>用途</strong>：这是一个 <strong>描述符</strong>，由 PinController 驱动程序提供，用于定义一个特定的 PinController 的能力和操作函数。它描述了 PinController 支持的所有引脚、引脚组以及可执行的操作（枚举、复用、配置）。</p>
+</li>
+<li>
+<p><strong>定义</strong>：位于 <code>include/linux/pinctrl/pinctrl.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_desc</span> &#123;</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *name;                 <span class="comment">// PinController 的名称，通常是其设备树兼容字符串</span></span><br><span class="line">    <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_pin_desc</span> *<span class="title">pins</span>;</span> <span class="comment">// 指向描述所有引脚的数组</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> npins;               <span class="comment">// `pins` 数组中引脚的数量</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">module</span> *<span class="title">owner</span>;</span>             <span class="comment">// 拥有此描述符的模块</span></span><br><span class="line">  </span><br><span class="line">    <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_ops</span> *<span class="title">pctlops</span>;</span> <span class="comment">// 指向引脚枚举和组操作的函数集合</span></span><br><span class="line">    <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">pinmux_ops</span> *<span class="title">pmxops</span>;</span>   <span class="comment">// 指向引脚复用操作的函数集合</span></span><br><span class="line">    <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">pinconf_ops</span> *<span class="title">confops</span>;</span> <span class="comment">// 指向引脚配置操作的函数集合</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">// ... (其他调试、DT 配置等成员，此处省略常见关键成员)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>示例:<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/13df38fa6058d35ff79c9dd1a0d7c35f.png" alt="pinctrl_desc example" /></p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>struct pinctrl_dev</code></strong>:</p>
+<ul>
+<li>
+<p><strong>用途</strong>：这是一个 PinController 硬件的 <strong>实例对象</strong>。当 PinController 驱动程序调用 <code>pinctrl_register()</code> 时，Pinctrl 核心会根据 <code>pinctrl_desc</code> 来分配和初始化一个 <code>pinctrl_dev</code> 实例。这个实例代表了内核中注册的一个 Pinctrl 硬件控制器。</p>
+</li>
+<li>
+<p><strong>定义</strong>：位于 <code>include/linux/pinctrl/pinctrl.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_dev</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_desc</span> *<span class="title">desc</span>;</span>       <span class="comment">// 指向其描述符 `pinctrl_desc`</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">node</span>;</span>           <span class="comment">// 用于将所有 `pinctrl_dev` 实例连接到全局链表 `pinctrldev_list`</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">device</span> *<span class="title">dev</span>;</span>              <span class="comment">// 指向 PinController 对应的 platform_device</span></span><br><span class="line">    <span class="type">void</span> *driver_data;               <span class="comment">// 驱动私有数据</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">module</span> *<span class="title">owner</span>;</span>            <span class="comment">// 拥有此设备的模块</span></span><br><span class="line">  </span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> nr_groups;          <span class="comment">// PinController 支持的引脚组数量</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> *group_pins;        <span class="comment">// 保存每个引脚组包含的引脚ID数组</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>关系图:</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/8932d7776b6785202bf377b408e2011f.png" alt="pinctrl_desc and pinctrl_dev" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="32-pinctrl_pin_desc-描述单个引脚"><a class="markdownIt-Anchor" href="#32-pinctrl_pin_desc-描述单个引脚"></a> 3.2 <code>pinctrl_pin_desc</code> – 描述单个引脚</h3>
+<ul>
+<li>
+<p><strong>用途</strong>：用于描述 PinController 管理的每一个具体引脚。它是 <code>pinctrl_desc</code> 中 <code>pins</code> 数组的元素。</p>
+</li>
+<li>
+<p><strong>定义</strong>：位于 <code>include/linux/pinctrl/pinctrl.h</code></p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_pin_desc</span> &#123;</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> number;       <span class="comment">// Pin ID，通常是其在硬件寄存器中的索引</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *name;          <span class="comment">// 引脚的字符串名称，如 &quot;GPIO_0&quot;, &quot;UART1_TX&quot;</span></span><br><span class="line">    <span class="comment">// ... (其他可选成员)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>示例:</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/c628f7206ce037e9b9b5fac68dd6a431.png" alt="pinctrl_pin_desc" /></p>
+</li>
+</ul>
+<h3 id="33-pinctrl_ops-引脚枚举与组操作"><a class="markdownIt-Anchor" href="#33-pinctrl_ops-引脚枚举与组操作"></a> 3.3 <code>pinctrl_ops</code> – 引脚枚举与组操作</h3>
+<ul>
+<li>
+<p><strong>用途</strong>：提供了 PinController 驱动程序必须实现的一组函数指针，用于 <strong>查询和操作引脚及其组</strong> 的信息。这是 Pinctrl 核心子系统与具体硬件驱动交互的接口之一。</p>
+</li>
+<li>
+<p><strong>定义</strong>：位于 <code>include/linux/pinctrl/pinctrl.h</code></p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_ops</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> (*get_groups_count)(<span class="keyword">struct</span> pinctrl_dev *pctldev); <span class="comment">// 获取引脚组的总数</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *(*get_group_name)(<span class="keyword">struct</span> pinctrl_dev *pctldev,</span><br><span class="line">                                  <span class="type">unsigned</span> <span class="type">int</span> selector); <span class="comment">// 获取指定引脚组的名称</span></span><br><span class="line">    <span class="type">int</span> (*get_group_pins)(<span class="keyword">struct</span> pinctrl_dev *pctldev,</span><br><span class="line">                          <span class="type">unsigned</span> <span class="type">int</span> selector,</span><br><span class="line">                          <span class="type">const</span> <span class="type">unsigned</span> <span class="type">int</span> **pins,</span><br><span class="line">                          <span class="type">unsigned</span> <span class="type">int</span> *num_pins); <span class="comment">// 获取指定引脚组包含的引脚ID列表</span></span><br><span class="line">  </span><br><span class="line">    <span class="type">int</span> (*dt_node_to_map)(<span class="keyword">struct</span> pinctrl_dev *pctldev,</span><br><span class="line">                          <span class="keyword">struct</span> device_node *np,</span><br><span class="line">                          <span class="keyword">struct</span> pinctrl_map **<span class="built_in">map</span>,</span><br><span class="line">                          <span class="type">unsigned</span> <span class="type">int</span> *num_maps); <span class="comment">// 将设备树节点解析为 pinctrl_map 列表</span></span><br><span class="line">    <span class="type">void</span> (*dt_free_map)(<span class="keyword">struct</span> pinctrl_dev *pctldev,</span><br><span class="line">                        <span class="keyword">struct</span> pinctrl_map *<span class="built_in">map</span>,</span><br><span class="line">                        <span class="type">unsigned</span> <span class="type">int</span> num_maps); <span class="comment">// 释放通过 dt_node_to_map 分配的资源</span></span><br><span class="line">    <span class="comment">// ... (其他用于调试、特定功能等成员)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>示例:</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/bc9df6c877601e78cfc360c898d71474.png" alt="pinctrl_ops" /></p>
+</li>
+</ul>
+<h3 id="34-pinmux_ops-引脚复用操作"><a class="markdownIt-Anchor" href="#34-pinmux_ops-引脚复用操作"></a> 3.4 <code>pinmux_ops</code> – 引脚复用操作</h3>
+<ul>
+<li>
+<p><strong>用途</strong>：提供了 PinController 驱动程序用于 <strong>设置引脚复用功能</strong> 的函数指针。</p>
+</li>
+<li>
+<p><strong>定义</strong>：位于 <code>include/linux/pinctrl/pinmux.h</code></p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pinmux_ops</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> (*get_functions_count)(<span class="keyword">struct</span> pinctrl_dev *pctldev); <span class="comment">// 获取支持的功能总数</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *(*get_function_name)(<span class="keyword">struct</span> pinctrl_dev *pctldev,</span><br><span class="line">                                     <span class="type">unsigned</span> <span class="type">int</span> selector); <span class="comment">// 获取指定功能的名称</span></span><br><span class="line">    <span class="type">int</span> (*get_function_groups)(<span class="keyword">struct</span> pinctrl_dev *pctldev,</span><br><span class="line">                               <span class="type">unsigned</span> <span class="type">int</span> selector,</span><br><span class="line">                               <span class="type">const</span> <span class="type">char</span> * <span class="type">const</span> **groups,</span><br><span class="line">                               <span class="type">unsigned</span> <span class="type">int</span> *num_groups); <span class="comment">// 获取支持指定功能的引脚组名称列表</span></span><br><span class="line">  </span><br><span class="line">    <span class="type">int</span> (*set_mux)(<span class="keyword">struct</span> pinctrl_dev *pctldev,</span><br><span class="line">                   <span class="type">unsigned</span> <span class="type">int</span> function,</span><br><span class="line">                   <span class="type">unsigned</span> <span class="type">int</span> group); <span class="comment">// 将指定的引脚组复用为指定功能（核心复用操作）</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">// ... (其他可选成员，如使能/禁用功能)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>示例:</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/490f2833fd7f4f4a5e019dedba15dcaf.png" alt="pinmux_ops" /></p>
+</li>
+</ul>
+<h3 id="35-pinconf_ops-引脚配置操作"><a class="markdownIt-Anchor" href="#35-pinconf_ops-引脚配置操作"></a> 3.5 <code>pinconf_ops</code> – 引脚配置操作</h3>
+<ul>
+<li>
+<p><strong>用途</strong>：提供了 PinController 驱动程序用于 <strong>设置引脚电气配置</strong> 的函数指针。</p>
+</li>
+<li>
+<p><strong>定义</strong>：位于 <code>include/linux/pinctrl/pinconf.h</code></p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pinconf_ops</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> (*pin_config_get)(<span class="keyword">struct</span> pinctrl_dev *pctldev,</span><br><span class="line">                          <span class="type">unsigned</span> <span class="type">int</span> pin,</span><br><span class="line">                          <span class="type">unsigned</span> <span class="type">long</span> *config); <span class="comment">// 获取单个引脚的配置</span></span><br><span class="line">    <span class="type">int</span> (*pin_config_set)(<span class="keyword">struct</span> pinctrl_dev *pctldev,</span><br><span class="line">                          <span class="type">unsigned</span> <span class="type">int</span> pin,</span><br><span class="line">                          <span class="type">unsigned</span> <span class="type">long</span> config); <span class="comment">// 设置单个引脚的配置（核心配置操作）</span></span><br><span class="line">  </span><br><span class="line">    <span class="type">int</span> (*pin_config_group_get)(<span class="keyword">struct</span> pinctrl_dev *pctldev,</span><br><span class="line">                                <span class="type">unsigned</span> <span class="type">int</span> group,</span><br><span class="line">                                <span class="type">unsigned</span> <span class="type">long</span> *configs); <span class="comment">// 获取引脚组的配置</span></span><br><span class="line">    <span class="type">int</span> (*pin_config_group_set)(<span class="keyword">struct</span> pinctrl_dev *pctldev,</span><br><span class="line">                                <span class="type">unsigned</span> <span class="type">int</span> group,</span><br><span class="line">                                <span class="type">unsigned</span> <span class="type">long</span> *configs); <span class="comment">// 设置引脚组的配置（核心配置操作）</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">// ... (其他可选成员，用于调试等)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>示例:</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/c3d6084b03fcf9983534a9d2fbf0145e.png" alt="pinconf_ops" /></p>
+</li>
+</ul>
+<h3 id="36-device-与-dev_pin_info-client-设备的-pinctrl-上下文"><a class="markdownIt-Anchor" href="#36-device-与-dev_pin_info-client-设备的-pinctrl-上下文"></a> 3.6 <code>device</code> 与 <code>dev_pin_info</code> – Client 设备的 Pinctrl 上下文</h3>
+<ul>
+<li>
+<p><strong><code>struct device</code></strong>:</p>
+<ul>
+<li>
+<p><strong>用途</strong>：Linux 设备模型的通用结构体，表示一个抽象的硬件设备。几乎所有驱动程序都围绕它展开。</p>
+</li>
+<li>
+<p><strong>关键成员</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">device</span> &#123;</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dev_pin_info</span> *<span class="title">pins</span>;</span> <span class="comment">// 指向设备的 Pinctrl 私有信息</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>示例:</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/fcf2ee8416fa5d0914de4e0928f8bc1f.png" alt="pinctrl_in_device" /></p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>struct dev_pin_info</code></strong>:</p>
+<ul>
+<li>
+<p><strong>用途</strong>：每个 <code>struct device</code> 都会嵌入或动态分配一个 <code>dev_pin_info</code> 结构体，用于保存该设备相关的 Pinctrl 信息，包括它引用的 PinController 实例和所有引脚状态。</p>
+</li>
+<li>
+<p><strong>定义</strong>：位于 <code>include/linux/pinctrl/consumer.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dev_pin_info</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl</span> *<span class="title">p</span>;</span>             <span class="comment">// 指向此设备持有的 pinctrl 实例（一个设备可能通过一个pinctrl实例引用多个pin controller）</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_state</span> *<span class="title">default_state</span>;</span> <span class="comment">// 指向默认状态的 pinctrl_state</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_state</span> **<span class="title">states</span>;</span> <span class="comment">// 指向所有命名状态的 pinctrl_state 数组</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> num_states;       <span class="comment">// 状态的数量</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>示例:</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/a6c72aa791f7178397836b613898fefe.png" alt="dev_pin_info" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="37-pinctrl-client-side-context"><a class="markdownIt-Anchor" href="#37-pinctrl-client-side-context"></a> 3.7 <code>pinctrl</code> (Client-side Context)</h3>
+<ul>
+<li>
+<p><strong>用途</strong>：<code>struct pinctrl</code> 是 Pinctrl 核心为每个客户端设备维护的一个上下文，它包含了该设备引用的所有 pin controller 信息，以及从设备树解析出的所有引脚状态 (<code>pinctrl_state</code>)。</p>
+</li>
+<li>
+<p><strong>定义</strong>：位于 <code>include/linux/pinctrl/pinctrl.h</code></p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pinctrl</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">device</span> *<span class="title">dev</span>;</span>                <span class="comment">// 指向关联的客户端设备</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">dt_maps</span>;</span>          <span class="comment">// 从设备树解析出的 pinctrl_map 链表</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">dt_node_list_entry</span>;</span> <span class="comment">// 用于将 pinctrl 实例连接到全局链表</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_state</span> *<span class="title">active_state</span>;</span> <span class="comment">// 当前激活的引脚状态</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_dev</span> *<span class="title">pctldev</span>;</span>       <span class="comment">// 指向实际的 pinctrl_dev 实例</span></span><br><span class="line">    <span class="comment">// ... (其他成员，如状态数量，查找表等)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>示例:</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/a90d3ff6a52e0c7b57d7e634cd79fe57.png" alt="pinctrl_maps" /></p>
+</li>
+</ul>
+<h3 id="38-pinctrl_state-pinctrl_map-和-pinctrl_setting"><a class="markdownIt-Anchor" href="#38-pinctrl_state-pinctrl_map-和-pinctrl_setting"></a> 3.8 <code>pinctrl_state</code>, <code>pinctrl_map</code> 和 <code>pinctrl_setting</code></h3>
+<ul>
+<li>
+<p><strong><code>struct pinctrl_state</code></strong>:</p>
+<ul>
+<li>
+<p><strong>用途</strong>：代表客户端设备的某个特定引脚配置状态（如 &quot;default&quot;, &quot;idle&quot;, &quot;active&quot;）。每个状态都包含一组 <code>pinctrl_setting</code>，这些 <code>setting</code> 描述了在该状态下需要对哪些引脚进行何种复用和配置。</p>
+</li>
+<li>
+<p><strong>定义</strong>：位于 <code>include/linux/pinctrl/pinctrl.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_state</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">node</span>;</span>         <span class="comment">// 用于连接到 `pinctrl` 的 `states` 数组中</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *name;              <span class="comment">// 状态名称 (如 &quot;default&quot;, &quot;idle&quot;)</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl</span> *<span class="title">p</span>;</span>             <span class="comment">// 指向所属的 pinctrl 实例</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">settings</span>;</span>     <span class="comment">// 链表头，存储该状态下所有要应用的 pinctrl_setting</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>struct pinctrl_map</code></strong>:</p>
+<ul>
+<li>
+<p><strong>用途</strong>：在内核解析设备树时，<code>dt_node_to_map</code> 函数会将设备树节点中的一个 Pinctrl 引用（例如 <code>&lt;&amp;i2c1_pins&gt;</code>），转换为一个或多个 <code>pinctrl_map</code> 实例。每个 <code>pinctrl_map</code> 描述了具体的一个复用功能或配置组。</p>
+</li>
+<li>
+<p><strong>定义</strong>：位于 <code>include/linux/pinctrl/pinctrl.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">pinctrl_map_type</span> &#123;</span></span><br><span class="line">    PIN_MAP_TYPE_MUX_GROUP,     <span class="comment">// 表示一个引脚组的复用映射</span></span><br><span class="line">    PIN_MAP_TYPE_CONFIGS_PIN,   <span class="comment">// 表示单个引脚的配置映射</span></span><br><span class="line">    PIN_MAP_TYPE_CONFIGS_GROUP, <span class="comment">// 表示引脚组的配置映射</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_map</span> &#123;</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *dev_name;       <span class="comment">// 关联的设备名称</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *name;           <span class="comment">// 状态名称 (如 &quot;default&quot;)</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">pinctrl_map_type</span> <span class="title">type</span>;</span> <span class="comment">// 映射类型</span></span><br><span class="line">    <span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_map_mux</span> &#123;</span></span><br><span class="line">            <span class="type">const</span> <span class="type">char</span> *group;  <span class="comment">// 组名称 (如 &quot;i2c1_pins&quot;)</span></span><br><span class="line">            <span class="type">const</span> <span class="type">char</span> *function;<span class="comment">// 功能名称 (如 &quot;i2c&quot;)</span></span><br><span class="line">        &#125; mux;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_map_configs</span> &#123;</span></span><br><span class="line">            <span class="type">unsigned</span> <span class="type">int</span> group_or_pin; <span class="comment">// 组ID或引脚ID</span></span><br><span class="line">            <span class="type">unsigned</span> <span class="type">long</span> *configs;    <span class="comment">// 配置值数组 (如上拉、驱动强度)</span></span><br><span class="line">            <span class="type">unsigned</span> <span class="type">int</span> num_configs;  <span class="comment">// 配置数量</span></span><br><span class="line">        &#125; configs;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>struct pinctrl_setting</code></strong>:</p>
+<ul>
+<li>
+<p><strong>用途</strong>：<code>pinctrl_map</code> 是从设备树解析出来的“原始”映射信息。而 <code>pinctrl_setting</code> 是在此基础上进一步处理和优化的结果，可以直接用于调用 PinController 驱动的 <code>ops</code> 函数来配置硬件。每个 <code>pinctrl_map</code> 会被转换为一个或多个 <code>pinctrl_setting</code>，然后添加到 <code>pinctrl_state</code> 的 <code>settings</code> 链表中。</p>
+</li>
+<li>
+<p><strong>定义</strong>：位于 <code>include/linux/pinctrl/pinctrl.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_setting</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">node</span>;</span>         <span class="comment">// 用于连接到 `pinctrl_state` 的 `settings` 链表</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_dev</span> *<span class="title">pctldev</span>;</span>   <span class="comment">// 指向对应的 pinctrl_dev (即哪个 PinController)</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">pinctrl_map_type</span> <span class="title">type</span>;</span>    <span class="comment">// 设置类型 (MUX 或 Configs)</span></span><br><span class="line">    <span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_setting_mux</span> &#123;</span></span><br><span class="line">            <span class="type">unsigned</span> <span class="type">int</span> function; <span class="comment">// 功能ID</span></span><br><span class="line">            <span class="type">unsigned</span> <span class="type">int</span> group;    <span class="comment">// 组ID</span></span><br><span class="line">        &#125; mux;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_setting_configs</span> &#123;</span></span><br><span class="line">            <span class="type">unsigned</span> <span class="type">int</span> group_or_pin; <span class="comment">// 组ID或引脚ID</span></span><br><span class="line">            <span class="type">unsigned</span> <span class="type">long</span> *configs;    <span class="comment">// 配置值数组</span></span><br><span class="line">            <span class="type">unsigned</span> <span class="type">int</span> num_configs;  <span class="comment">// 配置数量</span></span><br><span class="line">        &#125; configs;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>关系图:</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/169144e99aa06d8a41ff6a3e2ecd9673.png" alt="dt_to_map" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Mermaid 图 illustrating Core Data Structures Relationships:</strong></p>
+<pre class="mermaid">classDiagram
+    direction LR
+    class pinctrl_desc {
+        +name: string
+        +pins: pinctrl_pin_desc*
+        +npins: unsigned int
+        +pctlops: pinctrl_ops*
+        +pmxops: pinmux_ops*
+        +confops: pinconf_ops*
+    }
+    
+    class pinctrl_dev {
+        +desc: pinctrl_desc*
+        +node: list_head
+        +dev: device* (pinctrl_device)
+        +driver_data: void*
+    }
+
+    class pinctrl_pin_desc {
+        +number: unsigned int
+        +name: string
+    }
+
+    class pinctrl_ops {
+        +get_groups_count()
+        +get_group_name()
+        +get_group_pins()
+        +dt_node_to_map()
+        +dt_free_map()
+    }
+
+    class pinmux_ops {
+        +get_functions_count()
+        +get_function_name()
+        +get_function_groups()
+        +set_mux()
+    }
+
+    class pinconf_ops {
+        +pin_config_set()
+        +pin_config_group_set()
+    }
+
+    class device {
+        +pins: dev_pin_info*
+    }
+
+    class dev_pin_info {
+        +p: pinctrl*
+        +default_state: pinctrl_state*
+        +states: pinctrl_state**
+        +num_states: unsigned int
+    }
+    
+    class pinctrl {
+        +dev: device* (client_device)
+        +dt_maps: list_head (pinctrl_map)
+        +active_state: pinctrl_state*
+        +pctldev: pinctrl_dev*
+    }
+
+    class pinctrl_state {
+        +name: string
+        +settings: list_head (pinctrl_setting)
+    }
+
+    class pinctrl_map {
+        +dev_name: string
+        +name: string
+        +type: pinctrl_map_type
+        +union: mux/configs data
+    }
+
+    class pinctrl_setting {
+        +pctldev: pinctrl_dev*
+        +type: pinctrl_map_type
+        +union: mux/configs data
+    }
+
+    pinctrl_dev "1" *-- "1" pinctrl_desc : "描述"
+    pinctrl_desc "1" *-- "1" pinctrl_ops : "操作接口"
+    pinctrl_desc "1" *-- "1" pinmux_ops : "复用接口"
+    pinctrl_desc "1" *-- "1" pinconf_ops : "配置接口"
+    pinctrl_desc "1" *-- "N" pinctrl_pin_desc : "管理引脚"
+
+    device "1" *-- "1" dev_pin_info : "包含Pinctrl信息"
+    dev_pin_info "1" *-- "1" pinctrl : "关联Client Pinctrl上下文"
+    pinctrl "1" *-- "N" pinctrl_state : "管理状态"
+    pinctrl_state "1" *-- "N" pinctrl_setting : "包含设置"
+
+    pinctrl_map "N" <.. "1" pinctrl : "从设备树解析"
+    pinctrl_setting "N" <.. "N" pinctrl_map : "从Map转换"
+    pinctrl ..> pinctrl_dev : "引用已注册的PinController"</pre>
+<hr />
+<h2 id="4-pinctrl-子系统工作原理与初始化流程"><a class="markdownIt-Anchor" href="#4-pinctrl-子系统工作原理与初始化流程"></a> 4. Pinctrl 子系统工作原理与初始化流程</h2>
+<p>Pinctrl 子系统的工作可以分为两个主要阶段：<strong>PinController 驱动的注册</strong> 和 <strong>Client 设备的使用与引脚配置</strong>。</p>
+<h3 id="41-pincontroller-驱动构造过程"><a class="markdownIt-Anchor" href="#41-pincontroller-驱动构造过程"></a> 4.1 Pincontroller 驱动构造过程</h3>
+<p>PinController 驱动负责向 Pinctrl 核心注册其硬件能力，包括管理哪些引脚、支持哪些复用功能以及可以进行哪些配置。</p>
+<p>以 IMX6ULL 为例，其 PinController 驱动主要在 <code>drivers/pinctrl/freescale/pinctrl-imx6ul.c</code> 和 <code>pinctrl-imx.c</code> 中实现。</p>
+<p><strong>大致调用流程：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 PinController 驱动的 probe 函数中</span></span><br><span class="line">imx6ul_pinctrl_probe(<span class="keyword">struct</span> platform_device *pdev)</span><br><span class="line">    └─ imx_pinctrl_probe(pdev, pinctrl_info); <span class="comment">// pinctrl_info 包含 SoC 的引脚描述数组</span></span><br><span class="line">        <span class="comment">// 1. 准备 pinctrl_desc 结构体</span></span><br><span class="line">        <span class="comment">//    - 填充 name, pins, npins</span></span><br><span class="line">        <span class="comment">//    - 填充 pctlops, pmxops, confops 等操作函数指针</span></span><br><span class="line">        imx_pinctrl_desc-&gt;name = dev_name(&amp;pdev-&gt;dev);</span><br><span class="line">        imx_pinctrl_desc-&gt;pins = info-&gt;pins; <span class="comment">// 填写所有引脚的描述数组</span></span><br><span class="line">        imx_pinctrl_desc-&gt;npins = info-&gt;npins; <span class="comment">// 填写引脚数量</span></span><br><span class="line">        imx_pinctrl_desc-&gt;pctlops = &amp;imx_pctrl_ops; <span class="comment">// 注册引脚枚举和组操作</span></span><br><span class="line">        imx_pinctrl_desc-&gt;pmxops = &amp;imx_pmx_ops;     <span class="comment">// 注册引脚复用操作</span></span><br><span class="line">        imx_pinctrl_desc-&gt;confops = &amp;imx_pinconf_ops; <span class="comment">// 注册引脚配置操作</span></span><br><span class="line">        imx_pinctrl_desc-&gt;owner = THIS_MODULE;</span><br><span class="line">      </span><br><span class="line">        <span class="comment">// 2. 解析 PinController 设备树节点，获取引脚组信息</span></span><br><span class="line">        <span class="comment">//    - 实现 pinctrl_ops.dt_node_to_map 中的关键部分</span></span><br><span class="line">        ret = imx_pinctrl_probe_dt(pdev, info); <span class="comment">// 此函数会遍历 PinController 节点下的所有子节点 (引脚组)，并构建内部数据结构来存储这些组的信息。</span></span><br><span class="line">                                              <span class="comment">// 这些信息在 pinctrl_ops.get_groups_count/name/pins 中使用。</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 注册 pinctrl_dev 实例到 Pinctrl 核心</span></span><br><span class="line">        ipctl-&gt;pctl = devm_pinctrl_register(&amp;pdev-&gt;dev, imx_pinctrl_desc, ipctl);</span><br><span class="line">        <span class="comment">// pinctrl_register 会分配 struct pinctrl_dev，</span></span><br><span class="line">        <span class="comment">// 将 imx_pinctrl_desc 关联到它，并将其添加到全局 pinctrldev_list 链表。</span></span><br></pre></td></tr></table></figure>
+<p><strong>Mermaid 图 illustrating Pincontroller Probe Flow:</strong></p>
+<pre class="mermaid">sequenceDiagram
+    participant Driver as PinController驱动
+    participant PCore as Pinctrl核心
+  
+    Driver->>PCore: platform_driver_register()
+    PCore->>Driver: imx6ul_pinctrl_probe() (当其设备树匹配时)
+    Driver->>Driver: 准备 pinctrl_desc (填充 pins,ops等)
+    Driver->>Driver: imx_pinctrl_probe_dt() (解析自身DT节点,构建引脚组数据)
+    Driver->>PCore: devm_pinctrl_register(pdev, pinctrl_desc)
+    PCore->>PCore: 分配并初始化 pinctrl_dev
+    PCore->>PCore: 将 pinctrl_dev 加入全局链表 pinctrldev_list
+    PCore-->>Driver: 返回 pinctrl_dev 实例</pre>
+<h3 id="42-client-端使用与初始化过程"><a class="markdownIt-Anchor" href="#42-client-端使用与初始化过程"></a> 4.2 Client 端使用与初始化过程</h3>
+<p>当一个客户端设备（如 I2C 控制器）的驱动程序进行 probe 时，Pinctrl 核心子系统会自动介入，解析该设备的设备树节点，并应用其所需的引脚配置。驱动工程师通常无需手动调用 Pinctrl API。</p>
+<p><strong>大致调用流程：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在任何设备的 probe 函数被调用之前 (如 platform_device 的 really_probe)</span></span><br><span class="line">really_probe(...)</span><br><span class="line">    └─ pinctrl_bind_pins(dev); <span class="comment">// 内核自动为设备绑定 Pinctrl</span></span><br><span class="line">        <span class="comment">// 1. 为设备分配 dev_pin_info 结构体</span></span><br><span class="line">        dev-&gt;pins = devm_kzalloc(dev, <span class="keyword">sizeof</span>(*(dev-&gt;pins)), GFP_KERNEL);</span><br><span class="line">      </span><br><span class="line">        <span class="comment">// 2. 获取并创建设备的 pinctrl 上下文</span></span><br><span class="line">        dev-&gt;pins-&gt;p = devm_pinctrl_get(dev); <span class="comment">// 此处是核心</span></span><br><span class="line">            └─ pinctrl_get(...)</span><br><span class="line">                └─ create_pinctrl(dev);</span><br><span class="line">                    <span class="comment">// 2.1 从设备树解析 pinctrl 信息，转换为 pinctrl_map</span></span><br><span class="line">                    <span class="comment">// 遍历 dev-&gt;of_node 下的 pinctrl-names, pinctrl-X 属性</span></span><br><span class="line">                    <span class="comment">// 对于每个 pinctrl-X 引用的 PinController 节点</span></span><br><span class="line">                    ret = pinctrl_dt_to_map(pinctrl_context); <span class="comment">// p 是 struct pinctrl*</span></span><br><span class="line">                        <span class="comment">// 调用对应的 PinController 驱动的 pctlops-&gt;dt_node_to_map()</span></span><br><span class="line">                        <span class="comment">// This function will iterate through the pinctrl-X properties, find the referenced pin group nodes, </span></span><br><span class="line">                        <span class="comment">// and call the specific pin controller&#x27;s dt_node_to_map() operation for each.</span></span><br><span class="line">                        <span class="comment">// The dt_node_to_map() will then interpret the pin group definition (e.g., fsl,pins)</span></span><br><span class="line">                        <span class="comment">// and generate a list of pinctrl_map structures.</span></span><br><span class="line">                  </span><br><span class="line">                    <span class="comment">// 2.2 将 pinctrl_map 转换为 pinctrl_setting，并添加到 pinctrl_state</span></span><br><span class="line">                    for_each_maps(map_node, i, <span class="built_in">map</span>) &#123; <span class="comment">// 遍历所有解析到的 pinctrl_map</span></span><br><span class="line">                        ret = add_setting(pinctrl_context, <span class="built_in">map</span>);</span><br><span class="line">                        <span class="comment">// add_setting 将 pinctrl_map 转换为 pinctrl_setting，</span></span><br><span class="line">                        <span class="comment">// 并根据其类型 (MUX 或 CONFIGS) 归入对应的 pinctrl_state</span></span><br><span class="line">                        <span class="comment">// (例如，&quot;default&quot; 状态的 settings 链表)</span></span><br><span class="line">                    &#125;</span><br><span class="line">      </span><br><span class="line">        <span class="comment">// 3. 查找默认状态</span></span><br><span class="line">        dev-&gt;pins-&gt;default_state = pinctrl_lookup_state(dev-&gt;pins-&gt;p, PINCTRL_STATE_DEFAULT);</span><br><span class="line">      </span><br><span class="line">        <span class="comment">// 4. 选择并应用默认状态 (执行引脚复用和配置)</span></span><br><span class="line">        pinctrl_select_state(dev-&gt;pins-&gt;p, dev-&gt;pins-&gt;default_state);</span><br><span class="line">            <span class="comment">/* Apply all the settings for the new state */</span></span><br><span class="line">            list_for_each_entry(setting, &amp;state-&gt;settings, node) &#123; <span class="comment">// 遍历当前状态（如 default_state）下的所有 pinctrl_setting</span></span><br><span class="line">                <span class="keyword">switch</span> (setting-&gt;type) &#123;</span><br><span class="line">                <span class="keyword">case</span> PIN_MAP_TYPE_MUX_GROUP: <span class="comment">// 如果是引脚复用设置</span></span><br><span class="line">                    ret = pinmux_enable_setting(setting);</span><br><span class="line">                            ret = ops-&gt;set_mux(setting-&gt;pctldev, setting-&gt;mux.function, setting-&gt;mux.group); <span class="comment">// 调用 PinController 驱动的 set_mux</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> PIN_MAP_TYPE_CONFIGS_PIN: <span class="comment">// 如果是单个引脚配置</span></span><br><span class="line">                <span class="keyword">case</span> PIN_MAP_TYPE_CONFIGS_GROUP: <span class="comment">// 如果是引脚组配置</span></span><br><span class="line">                    ret = pinconf_apply_setting(setting);</span><br><span class="line">                            ret = ops-&gt;pin_config_group_set(setting-&gt;pctldev, setting-&gt;configs.group_or_pin, setting-&gt;configs.configs); <span class="comment">// 调用 PinController 驱动的 pin_config_group_set 或 pin_config_set</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    ret = -EINVAL;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/6068bb39ae94248821286ba6ddaf397d.png" alt="apply_setting" /><br />
+<strong>Mermaid 图 illustrating Client Device Probe Flow and Pinctrl Application:</strong></p>
+<pre class="mermaid">sequenceDiagram
+    participant K as 内核设备模型
+    participant Cdev as Client设备驱动 (e.g., I2C)
+    participant PCore as Pinctrl核心
+    participant PCtrD as PinController驱动
+
+    K->>Cdev: call probe()
+    K->>PCore: pinctrl_bind_pins(device) (pre-probe hook)
+    PCore->>PCore: Allocate dev_pin_info for device
+    PCore->>PCore: call devm_pinctrl_get(device)
+    PCore->>PCore: create_pinctrl(device) (Gets the pinctrl context for this client)
+    PCore->>PCore: pinctrl_dt_to_map(pinctrl_context)
+    PCore->>PCtrD: Calls dt_node_to_map() (for each referenced pin group in DT)
+    PCtrD-->>PCore: Returns pinctrl_map[] (parsed from PinController's own DT)
+    PCore->>PCore: Loop through pinctrl_map[]
+    PCore->>PCore: add_setting() (Converts pinctrl_map to pinctrl_setting and adds to pinctrl_state)
+    PCore->>PCore: pinctrl_lookup_state(pinctrl_ctx, "default")
+    PCore->>PCore: pinctrl_select_state(pinctrl_ctx, default_state)
+    PCore->>PCore: Loop through default_state.settings (pinctrl_setting list)
+    alt PIN_MAP_TYPE_MUX_GROUP
+        PCore->>PCtrD: pinmux_enable_setting() (calls ops->set_mux())
+    else PIN_MAP_TYPE_CONFIGS_GROUP/PIN
+        PCore->>PCtrD: pinconf_apply_setting() (calls ops->pin_config_group_set() or pin_config_set())
+    end
+    PCore-->>Cdev: pinctrl_bind_pins returns success
+    Cdev->>Cdev: Continues probe logic (pins are now configured)</pre>
+<hr />
+<h2 id="5-pinctrl-子系统使用示例"><a class="markdownIt-Anchor" href="#5-pinctrl-子系统使用示例"></a> 5. Pinctrl 子系统使用示例</h2>
+<p>设备树层面的配置是 Pinctrl 子系统最重要的使用方式。</p>
+<h3 id="51-生成-pincontroller-设备树信息"><a class="markdownIt-Anchor" href="#51-生成-pincontroller-设备树信息"></a> 5.1 生成 PinController 设备树信息</h3>
+<p>生成特定芯片的 Pinctrl 设备树信息通常有几种方法：</p>
+<ol>
+<li><strong>图形化工具</strong>：很多 SoC 厂商（如 NXP 的 MCUXpresso Config Tools）会提供图形界面工具，用户通过点击选择引脚功能和配置，工具会自动生成对应的设备树片段。</li>
+<li><strong>参考官方文档和示例</strong>：查阅 SoC 厂商提供的 Pinctrl 绑定文档或参考其官方板级设备树文件。</li>
+<li><strong>阅读驱动代码</strong>：在没有文档或工具时，可能需要直接阅读 PinController 驱动代码，理解其如何解析设备树属性。</li>
+</ol>
+<p><strong>IMX6ULL 引脚配置工具示例：</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/9314b4e7c344c6c509c1a0abad9c6c2b.png" alt="pins_tools" /></p>
+<p>配置结果（以 I2C1 为例）：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">&amp;iomuxc</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">pinctrl-names</span> <span class="operator">=</span> <span class="string">&quot;default&quot;</span><span class="punctuation">;</span></span><br><span class="line">    pinctrl<span class="number">-0</span> = <span class="params">&lt;<span class="variable">&amp;</span>BOARD_InitPins&gt;</span><span class="punctuation">;</span> <span class="comment">// IMX6ULL 通常有一个统一的初始化引脚组</span></span><br><span class="line"></span><br><span class="line">    <span class="title class_">imx6ull-board</span> <span class="punctuation">&#123;</span></span><br><span class="line"><span class="symbol">        i2c1_pins:</span> <span class="title class_">i2c1_pins</span> <span class="punctuation">&#123;</span>                  <span class="comment">/*!&lt; Function assigned for the core: Cortex-A7[ca7] */</span></span><br><span class="line">            <span class="attr">fsl,pins</span> <span class="operator">=</span> <span class="params">&lt;</span></span><br><span class="line"><span class="params">                MX6UL_PAD_UART4_RX_DATA__I2C1_SDA          <span class="number">0x000018B0</span> // SDA 引脚定义及配置</span></span><br><span class="line"><span class="params">                MX6UL_PAD_UART4_TX_DATA__I2C1_SCL          <span class="number">0x000018B0</span> // SCL 引脚定义及配置</span></span><br><span class="line"><span class="params">            &gt;</span><span class="punctuation">;</span></span><br><span class="line">        <span class="punctuation">&#125;;</span></span><br><span class="line">        <span class="comment">// 可能还有其他设备（如 UART、SPI 等）的引脚组定义</span></span><br><span class="line">    <span class="punctuation">&#125;;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+<p>这里的 <code>MX6UL_PAD_UART4_RX_DATA__I2C1_SDA</code> 通常是一个宏定义，包含了引脚的物理编号及其复用功能。 <code>0x000018B0</code> 是引脚的配置值，具体含义取决于芯片手册和 Pinctrl 驱动的解析方式（例如，可能编码了上拉/下拉、驱动强度、开漏/推挽等）。</p>
+<h3 id="52-在-client-设备节点中使用-pinctrl"><a class="markdownIt-Anchor" href="#52-在-client-设备节点中使用-pinctrl"></a> 5.2 在 Client 设备节点中使用 Pinctrl</h3>
+<p>在客户端设备的设备树节点中，通过 <code>pinctrl-names</code> 和 <code>pinctrl-X</code> 属性来引用上一步生成的引脚配置。</p>
+<p><strong>I2C 设备节点示例：</strong></p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">&amp;i2c1</span> <span class="punctuation">&#123;</span> <span class="comment">// 引用片上的 I2C1 控制器</span></span><br><span class="line">    <span class="attr">clock-frequency</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">100000</span>&gt;</span><span class="punctuation">;</span> <span class="comment">// I2C 总线频率</span></span><br><span class="line">    <span class="attr">pinctrl-names</span> <span class="operator">=</span> <span class="string">&quot;default&quot;</span><span class="punctuation">;</span>  <span class="comment">// 定义一个名为 &quot;default&quot; 的引脚状态</span></span><br><span class="line">    pinctrl<span class="number">-0</span> = <span class="params">&lt;<span class="variable">&amp;i2c1_pins</span>&gt;</span><span class="punctuation">;</span>   <span class="comment">// 将 &quot;default&quot; 状态映射到 i2c1_pins 引脚组</span></span><br><span class="line">    <span class="attr">status</span> <span class="operator">=</span> <span class="string">&quot;okay&quot;</span><span class="punctuation">;</span>            <span class="comment">// 启用此设备</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+<p>当 I2C1 驱动被加载时，Pinctrl 子系统会根据这个配置，自动将 <code>UART4_RX_DATA</code> 和 <code>UART4_TX_DATA</code> 这两个物理引脚复用为 I2C1 的 SDA 和 SCL 功能，并应用 <code>0x000018B0</code> 定义的电气配置。</p>
+<hr />
+<h2 id="6-编写虚拟的-pinctrl-驱动程序"><a class="markdownIt-Anchor" href="#6-编写虚拟的-pinctrl-驱动程序"></a> 6. 编写虚拟的 Pinctrl 驱动程序</h2>
+<p>编写一个虚拟的 Pinctrl 驱动有助于深入理解 Pinctrl 核心子系统与 PinController 驱动之间的接口。</p>
+<h3 id="61-pinctrl-驱动所需实现的功能"><a class="markdownIt-Anchor" href="#61-pinctrl-驱动所需实现的功能"></a> 6.1 Pinctrl 驱动所需实现的功能</h3>
+<p>一个完整的 PinController 驱动需要实现 Pinctrl 的三大功能对应的 <code>ops</code> 结构体：<code>pinctrl_ops</code>、<code>pinmux_ops</code> 和 <code>pinconf_ops</code>。</p>
+<p><strong>回顾 Pinctrl 的三大作用：</strong></p>
+<ul>
+<li><strong>引脚枚举与命名</strong> (由 <code>pinctrl_ops</code> 提供)
+<ul>
+<li>描述和获取单个引脚的信息 (<code>pinctrl_pin_desc</code> 数组)</li>
+<li>描述和获取某组引脚的信息 (<code>get_groups_count</code>, <code>get_group_name</code>, <code>get_group_pins</code>)</li>
+<li>将设备树节点解析为 Pinctrl 映射 (<code>dt_node_to_map</code>)</li>
+</ul>
+</li>
+<li><strong>引脚复用</strong> (由 <code>pinmux_ops</code> 提供)
+<ul>
+<li>将引脚组复用为某个功能 (<code>set_mux</code>)</li>
+</ul>
+</li>
+<li><strong>引脚配置</strong> (由 <code>pinconf_ops</code> 提供)
+<ul>
+<li>配置单个引脚或引脚组的电气特性 (<code>pin_config_set</code>, <code>pin_config_group_set</code>)</li>
+</ul>
+</li>
+</ul>
+<p><strong>核心是构造 <code>pinctrl_desc</code> 结构体，并填充其 <code>ops</code> 成员：</strong><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/23c82b3217663e05905d6bebead2e0c5.png" alt="pinctrl_driver_1_pin_and_group" /><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/926125fe12c67e22564d92a5480fe505.png" alt="pinctrl_driver_2_pinmux" /><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/4ca2ea95dbd77c4c142336877c2627e1.png" alt="pinctrl_driver_3_pinconf" /><br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/480a66c0ecd4d90b01f512400c738d8f.png" alt="pinctrl_dts_modules" /></p>
+<h3 id="62-虚拟硬件功能设计"><a class="markdownIt-Anchor" href="#62-虚拟硬件功能设计"></a> 6.2 虚拟硬件功能设计</h3>
+<p>假设我们有一个虚拟的 PinController，它有 4 个引脚（pin0, pin1, pin2, pin3），具备以下功能：<br />
+<img src="https://raw.githubusercontent.com/utmux/pictures/main/img/63651b3bbf0a20dab08f27b526d4d3a0.png" alt="virtual_pincontroller_hardware" /></p>
+<ul>
+<li><strong>pin0,1,2,3</strong>：都可以作为 <strong>GPIO</strong> 功能。</li>
+<li><strong>pin0,1</strong>：还可以作为 <strong>I2C</strong> 功能。</li>
+<li><strong>pin2,3</strong>：还可以作为 <strong>UART</strong> 功能。</li>
+</ul>
+<h3 id="63-编写设备树文件"><a class="markdownIt-Anchor" href="#63-编写设备树文件"></a> 6.3 编写设备树文件</h3>
+<p>为了测试这个虚拟驱动，我们需要在设备树中定义其节点和相关的引脚组。</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Pin Controller 节点</span></span><br><span class="line"><span class="title class_">virtual_pincontroller</span> <span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">compatible</span> <span class="operator">=</span> <span class="string">&quot;100ask,virtual_pinctrl&quot;</span><span class="punctuation">;</span> <span class="comment">// 匹配我们的虚拟驱动</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 定义一个引脚组，用于 I2C 功能</span></span><br><span class="line"><span class="symbol">	i2cgrp:</span> <span class="title class_">i2cgrp</span> <span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">functions</span> <span class="operator">=</span> <span class="string">&quot;i2c&quot;</span>, <span class="string">&quot;i2c&quot;</span><span class="punctuation">;</span>       <span class="comment">// 表明该组支持 &quot;i2c&quot; 功能 (通常会是单个功能)</span></span><br><span class="line">			<span class="attr">groups</span> <span class="operator">=</span> <span class="string">&quot;pin0&quot;</span>, <span class="string">&quot;pin1&quot;</span><span class="punctuation">;</span>     <span class="comment">// 该组包含 pin0 和 pin1 两个引脚</span></span><br><span class="line">			<span class="attr">configs</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">0x11223344</span>  <span class="number">0x55667788</span>&gt;</span><span class="punctuation">;</span> <span class="comment">// 示例配置值，pin0 对应 0x11223344，pin1 对应 0x55667788</span></span><br><span class="line">	<span class="punctuation">&#125;;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Client 设备节点 (虚拟 I2C 设备)</span></span><br><span class="line"><span class="title class_">virtual_i2c</span> <span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">compatible</span> <span class="operator">=</span> <span class="string">&quot;100ask,virtual_i2c&quot;</span><span class="punctuation">;</span> <span class="comment">// 匹配一个虚拟的 I2C 客户端驱动</span></span><br><span class="line">	<span class="attr">pinctrl-names</span> <span class="operator">=</span> <span class="string">&quot;default&quot;</span><span class="punctuation">;</span>       <span class="comment">// 定义一个默认状态</span></span><br><span class="line">	pinctrl<span class="number">-0</span> = <span class="params">&lt;<span class="variable">&amp;i2cgrp</span>&gt;</span><span class="punctuation">;</span>             <span class="comment">// &quot;default&quot; 状态引用 i2cgrp</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+<h3 id="64-编写-pinctrl-驱动程序骨架"><a class="markdownIt-Anchor" href="#64-编写-pinctrl-驱动程序骨架"></a> 6.4 编写 Pinctrl 驱动程序骨架</h3>
+<p>驱动程序的核心就是填充 <code>pinctrl_desc</code>，然后注册它。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/module.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/platform_device.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/of.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/pinctrl/pinctrl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/pinctrl/pinmux.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/pinctrl/pinconf.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/slab.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 虚拟 Pin Controller 的引脚描述</span></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_pin_desc</span> <span class="title">virtual_pins</span>[] =</span> &#123;</span><br><span class="line">    PIN_DESC(<span class="number">0</span>, <span class="string">&quot;pin0&quot;</span>),</span><br><span class="line">    PIN_DESC(<span class="number">1</span>, <span class="string">&quot;pin1&quot;</span>),</span><br><span class="line">    PIN_DESC(<span class="number">2</span>, <span class="string">&quot;pin2&quot;</span>),</span><br><span class="line">    PIN_DESC(<span class="number">3</span>, <span class="string">&quot;pin3&quot;</span>),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 虚拟 Pin Controller 的引脚组 (简单示例，每个引脚自身也是一个组)</span></span><br><span class="line"><span class="comment">// 实际驱动中，引脚组通常由设备树解析而来</span></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> * <span class="type">const</span> virtual_groups[<span class="number">4</span>][<span class="number">1</span>] = &#123;</span><br><span class="line">    &#123; <span class="string">&quot;pin0&quot;</span> &#125;, &#123; <span class="string">&quot;pin1&quot;</span> &#125;, &#123; <span class="string">&quot;pin2&quot;</span> &#125;, &#123; <span class="string">&quot;pin3&quot;</span> &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 假设有2个特殊组: i2cgrp包含pin0,pin1; uartgrp包含pin2,pin3</span></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">unsigned</span> <span class="type">int</span> i2c_pins[] = &#123;<span class="number">0</span>, <span class="number">1</span>&#125;; <span class="comment">// pin0, pin1</span></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">unsigned</span> <span class="type">int</span> uart_pins[] = &#123;<span class="number">2</span>, <span class="number">3</span>&#125;; <span class="comment">// pin2, pin3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 虚拟 Pin Controller 支持的功能 (GPIO, I2C, UART)</span></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> * <span class="type">const</span> functions_names[] = &#123;</span><br><span class="line">    <span class="string">&quot;gpio&quot;</span>, <span class="string">&quot;i2c&quot;</span>, <span class="string">&quot;uart&quot;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Pinctrl 操作集实现 (部分关键函数)</span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">vpctl_get_groups_count</span><span class="params">(<span class="keyword">struct</span> pinctrl_dev *pctldev)</span> &#123;</span><br><span class="line">    <span class="comment">// 实际业务中，可能根据解析设备树的结果动态返回组数量</span></span><br><span class="line">    <span class="comment">// 对于虚拟驱动，我们假设有4个单引脚组和2个特殊组 i2cgrp/uartgrp</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">4</span> + <span class="number">2</span>; <span class="comment">// For demonstration simplicity</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> *<span class="title function_">vpctl_get_group_name</span><span class="params">(<span class="keyword">struct</span> pinctrl_dev *pctldev, <span class="type">unsigned</span> <span class="type">int</span> selector)</span> &#123;</span><br><span class="line">    <span class="comment">// 实际业务中，根据selector返回组名称，可能从解析设备树的缓存中获取</span></span><br><span class="line">    <span class="keyword">if</span> (selector &lt; <span class="number">4</span>) <span class="keyword">return</span> virtual_pins[selector].name;</span><br><span class="line">    <span class="keyword">if</span> (selector == <span class="number">4</span>) <span class="keyword">return</span> <span class="string">&quot;i2cgrp&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span> (selector == <span class="number">5</span>) <span class="keyword">return</span> <span class="string">&quot;uartgrp&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">vpctl_get_group_pins</span><span class="params">(<span class="keyword">struct</span> pinctrl_dev *pctldev, <span class="type">unsigned</span> <span class="type">int</span> selector,</span></span><br><span class="line"><span class="params">                                <span class="type">const</span> <span class="type">unsigned</span> <span class="type">int</span> **pins, <span class="type">unsigned</span> <span class="type">int</span> *num_pins)</span> &#123;</span><br><span class="line">    <span class="comment">// 实际业务中，根据selector返回组内引脚ID列表</span></span><br><span class="line">    <span class="keyword">if</span> (selector &lt; <span class="number">4</span>) &#123; <span class="comment">// 单个引脚组</span></span><br><span class="line">        *pins = &amp;virtual_pins[selector].number;</span><br><span class="line">        *num_pins = <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (selector == <span class="number">4</span>) &#123; <span class="comment">// i2cgrp</span></span><br><span class="line">        *pins = i2c_pins;</span><br><span class="line">        *num_pins = ARRAY_SIZE(i2c_pins);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (selector == <span class="number">5</span>) &#123; <span class="comment">// uartgrp</span></span><br><span class="line">        *pins = uart_pins;</span><br><span class="line">        *num_pins = ARRAY_SIZE(uart_pins);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> -EINVAL;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">vpctl_dt_node_to_map</span><span class="params">(<span class="keyword">struct</span> pinctrl_dev *pctldev, <span class="keyword">struct</span> device_node *np,</span></span><br><span class="line"><span class="params">                                <span class="keyword">struct</span> pinctrl_map **<span class="built_in">map</span>, <span class="type">unsigned</span> <span class="type">int</span> *num_maps)</span> &#123;</span><br><span class="line">    <span class="comment">// 此函数负责解析 PinController 节点下的子节点 (引脚组)</span></span><br><span class="line">    <span class="comment">// 并将其转换为一系列 pinctrl_map 结构</span></span><br><span class="line">    <span class="comment">// 对于虚拟驱动，我们简化并打印日志</span></span><br><span class="line">    printk(KERN_INFO <span class="string">&quot;Virtual Pinctrl: dt_node_to_map for node &#x27;%s&#x27;\n&quot;</span>, np-&gt;name);</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 实际这里会遍历 DT 节点属性，如 &quot;functions&quot;, &quot;groups&quot;, &quot;configs&quot;</span></span><br><span class="line">    <span class="comment">// 然后根据这些属性创建 pinctrl_map 实例</span></span><br><span class="line">    <span class="comment">// 示例中，我们会从 DT 中读取 &quot;functions&quot;, &quot;groups&quot;, &quot;configs&quot;</span></span><br><span class="line">    <span class="comment">// 并动态构建 pinctrl_map 数组</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">// ... (此处省略实际解析逻辑, 仅作示例)</span></span><br><span class="line">    <span class="comment">// 假设简化处理，直接返回一个模拟的 map</span></span><br><span class="line">    *num_maps = <span class="number">1</span>;</span><br><span class="line">    *<span class="built_in">map</span> = kzalloc(<span class="keyword">sizeof</span>(**<span class="built_in">map</span>), GFP_KERNEL);</span><br><span class="line">    <span class="keyword">if</span> (!*<span class="built_in">map</span>) <span class="keyword">return</span> -ENOMEM;</span><br><span class="line">    (*<span class="built_in">map</span>)-&gt;type = PIN_MAP_TYPE_MUX_GROUP; <span class="comment">// 假设解析出一个MUX组</span></span><br><span class="line">    (*<span class="built_in">map</span>)-&gt;mux.group = <span class="string">&quot;i2cgrp&quot;</span>; <span class="comment">// 假设组名为i2cgrp</span></span><br><span class="line">    (*<span class="built_in">map</span>)-&gt;mux.function = <span class="string">&quot;i2c&quot;</span>; <span class="comment">// 假设功能为i2c</span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">vpctl_dt_free_map</span><span class="params">(<span class="keyword">struct</span> pinctrl_dev *pctldev,</span></span><br><span class="line"><span class="params">                              <span class="keyword">struct</span> pinctrl_map *<span class="built_in">map</span>, <span class="type">unsigned</span> <span class="type">int</span> num_maps)</span> &#123;</span><br><span class="line">    kfree(<span class="built_in">map</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_ops</span> <span class="title">vpctl_pctl_ops</span> =</span> &#123;</span><br><span class="line">    .get_groups_count = vpctl_get_groups_count,</span><br><span class="line">    .get_group_name = vpctl_get_group_name,</span><br><span class="line">    .get_group_pins = vpctl_get_group_pins,</span><br><span class="line">    .dt_node_to_map = vpctl_dt_node_to_map,</span><br><span class="line">    .dt_free_map = vpctl_dt_free_map,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Pinmux 操作集实现</span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">vpmx_get_functions_count</span><span class="params">(<span class="keyword">struct</span> pinctrl_dev *pctldev)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> ARRAY_SIZE(functions_names);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> *<span class="title function_">vpmx_get_function_name</span><span class="params">(<span class="keyword">struct</span> pinctrl_dev *pctldev, <span class="type">unsigned</span> <span class="type">int</span> selector)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> functions_names[selector];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">vpmx_get_function_groups</span><span class="params">(<span class="keyword">struct</span> pinctrl_dev *pctldev, <span class="type">unsigned</span> <span class="type">int</span> selector,</span></span><br><span class="line"><span class="params">                                    <span class="type">const</span> <span class="type">char</span> * <span class="type">const</span> **groups, <span class="type">unsigned</span> <span class="type">int</span> *num_groups)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">strcmp</span>(functions_names[selector], <span class="string">&quot;gpio&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">        *groups = virtual_groups[<span class="number">0</span>]; <span class="comment">// 所有引脚都支持GPIO，这里简化为第一个</span></span><br><span class="line">        *num_groups = <span class="number">4</span>; <span class="comment">// 假设所有4个引脚都作为自己的GPIO组</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">strcmp</span>(functions_names[selector], <span class="string">&quot;i2c&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">        *groups = &amp;virtual_groups[<span class="number">0</span>][<span class="number">0</span>]; <span class="comment">// 这是一个hack，实际应该返回i2cgrp的名称</span></span><br><span class="line">        *num_groups = <span class="number">2</span>; <span class="comment">// 假设i2c功能支持pin0,pin1所在的组</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">strcmp</span>(functions_names[selector], <span class="string">&quot;uart&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">        *groups = &amp;virtual_groups[<span class="number">2</span>][<span class="number">0</span>]; <span class="comment">// hack</span></span><br><span class="line">        *num_groups = <span class="number">2</span>; <span class="comment">// 假设uart功能支持pin2,pin3所在的组</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> -EINVAL;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">vpmx_set_mux</span><span class="params">(<span class="keyword">struct</span> pinctrl_dev *pctldev, <span class="type">unsigned</span> <span class="type">int</span> function, <span class="type">unsigned</span> <span class="type">int</span> group)</span> &#123;</span><br><span class="line">    printk(KERN_INFO <span class="string">&quot;Virtual Pinctrl: set_mux function &#x27;%s&#x27; for group &#x27;%s&#x27; (ID:%d)\n&quot;</span>,</span><br><span class="line">           functions_names[function], vpctl_get_group_name(pctldev, group), group);</span><br><span class="line">    <span class="comment">// 实际这里会操作硬件寄存器，将引脚组复用为指定功能</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">pinmux_ops</span> <span class="title">vpctl_pmx_ops</span> =</span> &#123;</span><br><span class="line">    .get_functions_count = vpmx_get_functions_count,</span><br><span class="line">    .get_function_name = vpmx_get_function_name,</span><br><span class="line">    .get_function_groups = vpmx_get_function_groups,</span><br><span class="line">    .set_mux = vpmx_set_mux,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Pinconf 操作集实现</span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">vpconf_pin_config_group_set</span><span class="params">(<span class="keyword">struct</span> pinctrl_dev *pctldev, <span class="type">unsigned</span> <span class="type">int</span> group,</span></span><br><span class="line"><span class="params">                                       <span class="type">unsigned</span> <span class="type">long</span> *configs)</span> &#123;</span><br><span class="line">    printk(KERN_INFO <span class="string">&quot;Virtual Pinctrl: pin_config_group_set for group &#x27;%s&#x27; (ID:%d), config: 0x%lx\n&quot;</span>,</span><br><span class="line">           vpctl_get_group_name(pctldev, group), group, configs[<span class="number">0</span>]);</span><br><span class="line">    <span class="comment">// 实际这里会操作硬件寄存器，配置引脚电气属性</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">pinconf_ops</span> <span class="title">vpctl_conf_ops</span> =</span> &#123;</span><br><span class="line">    .pin_config_group_set = vpconf_pin_config_group_set,</span><br><span class="line">    <span class="comment">// .pin_config_set 等其他函数也可以实现</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 核心 pinctrl_desc 定义</span></span><br><span class="line"><span class="type">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_desc</span> <span class="title">virtual_pinctrl_desc</span> =</span> &#123;</span><br><span class="line">    .name = <span class="string">&quot;virtual_pinctrl&quot;</span>, <span class="comment">// 唯一名称，由驱动定义</span></span><br><span class="line">    .pins = virtual_pins,      <span class="comment">// 指向所有Pin的描述数组</span></span><br><span class="line">    .npins = ARRAY_SIZE(virtual_pins), <span class="comment">// Pin数量</span></span><br><span class="line">    .pctlops = &amp;vpctl_pctl_ops, <span class="comment">// 填充 PinController 操作</span></span><br><span class="line">    .pmxops = &amp;vpctl_pmx_ops,   <span class="comment">// 填充 Pinmux 操作</span></span><br><span class="line">    .confops = &amp;vpctl_conf_ops, <span class="comment">// 填充 Pinconf 操作</span></span><br><span class="line">    .owner = THIS_MODULE,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// platform driver for virtual_pincontroller</span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">virtual_pinctrl_probe</span><span class="params">(<span class="keyword">struct</span> platform_device *pdev)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_dev</span> *<span class="title">pctldev</span>;</span></span><br><span class="line">    printk(KERN_INFO <span class="string">&quot;Virtual Pinctrl Device Probe!\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用 pinctrl_register 注册 Pin Controller</span></span><br><span class="line">    pctldev = devm_pinctrl_register(&amp;pdev-&gt;dev, &amp;virtual_pinctrl_desc, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span> (IS_ERR(pctldev)) &#123;</span><br><span class="line">        dev_err(&amp;pdev-&gt;dev, <span class="string">&quot;Could not register virtual pinctrl driver\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> PTR_ERR(pctldev);</span><br><span class="line">    &#125;</span><br><span class="line">    dev_set_drvdata(&amp;pdev-&gt;dev, pctldev);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">virtual_pinctrl_remove</span><span class="params">(<span class="keyword">struct</span> platform_device *pdev)</span> &#123;</span><br><span class="line">    printk(KERN_INFO <span class="string">&quot;Virtual Pinctrl Device Remove!\n&quot;</span>);</span><br><span class="line">    <span class="comment">// devm_pinctrl_register 会自动处理unregister</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">of_device_id</span> <span class="title">virtual_pinctrl_of_match</span>[] =</span> &#123;</span><br><span class="line">    &#123; .compatible = <span class="string">&quot;100ask,virtual_pinctrl&quot;</span>, &#125;,</span><br><span class="line">    &#123; &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">platform_driver</span> <span class="title">virtual_pinctrl_driver</span> =</span> &#123;</span><br><span class="line">    .probe          = virtual_pinctrl_probe,</span><br><span class="line">    .remove         = virtual_pinctrl_remove,</span><br><span class="line">    .driver = &#123;</span><br><span class="line">        .name       = <span class="string">&quot;virtual-pinctrl&quot;</span>,</span><br><span class="line">        .of_match_table = virtual_pinctrl_of_match,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module_platform_driver(virtual_pinctrl_driver);</span><br><span class="line"></span><br><span class="line">MODULE_LICENSE(<span class="string">&quot;GPL&quot;</span>);</span><br><span class="line">MODULE_AUTHOR(<span class="string">&quot;100ask.net&quot;</span>);</span><br><span class="line">MODULE_DESCRIPTION(<span class="string">&quot;Virtual Pinctrl Driver for Demonstration&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="65-编写测试用的-client-驱动"><a class="markdownIt-Anchor" href="#65-编写测试用的-client-驱动"></a> 6.5 编写测试用的 Client 驱动</h3>
+<p>为了验证 Pinctrl 子系统是否正常工作，我们还需要一个简单的 Client 驱动来触发 <code>really_probe</code> 流程。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/module.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/platform_device.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/of.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">virtual_i2c_probe</span><span class="params">(<span class="keyword">struct</span> platform_device *pdev)</span> &#123;</span><br><span class="line">    printk(KERN_INFO <span class="string">&quot;Virtual I2C Client Device Probe! Pinctrl should be applied.\n&quot;</span>);</span><br><span class="line">    <span class="comment">// 在这里，pinctrl_bind_pins 已经在 probe 之前被内核调用，引脚已被配置</span></span><br><span class="line">    <span class="comment">// 实际的 I2C 驱动会在这里初始化 I2C 控制器</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">virtual_i2c_remove</span><span class="params">(<span class="keyword">struct</span> platform_device *pdev)</span> &#123;</span><br><span class="line">    printk(KERN_INFO <span class="string">&quot;Virtual I2C Client Device Remove!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">of_device_id</span> <span class="title">virtual_i2c_of_match</span>[] =</span> &#123;</span><br><span class="line">    &#123; .compatible = <span class="string">&quot;100ask,virtual_i2c&quot;</span>, &#125;,</span><br><span class="line">    &#123; &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">platform_driver</span> <span class="title">virtual_i2c_driver</span> =</span> &#123;</span><br><span class="line">    .probe          = virtual_i2c_probe,</span><br><span class="line">    .remove         = virtual_i2c_remove,</span><br><span class="line">    .driver = &#123;</span><br><span class="line">        .name       = <span class="string">&quot;virtual-i2c&quot;</span>,</span><br><span class="line">        .of_match_table = virtual_i2c_of_match,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module_platform_driver(virtual_i2c_driver);</span><br><span class="line"></span><br><span class="line">MODULE_LICENSE(<span class="string">&quot;GPL&quot;</span>);</span><br><span class="line">MODULE_AUTHOR(<span class="string">&quot;100ask.net&quot;</span>);</span><br><span class="line">MODULE_DESCRIPTION(<span class="string">&quot;Virtual I2C Client Driver for Pinctrl Test&quot;</span>);</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="7-调试虚拟的-pinctrl-驱动程序"><a class="markdownIt-Anchor" href="#7-调试虚拟的-pinctrl-驱动程序"></a> 7. 调试虚拟的 Pinctrl 驱动程序</h2>
+<p>Linux 内核提供了 DebugFS 接口，用于查看 Pinctrl 子系统和各个 PinController 的状态，便于调试。</p>
+<h3 id="71-debugfs-文件系统"><a class="markdownIt-Anchor" href="#71-debugfs-文件系统"></a> 7.1 DebugFS 文件系统</h3>
+<p>当 Pinctrl 驱动成功加载后，可以在 <code>/sys/kernel/debug/pinctrl/</code> 目录下找到对应的 PinController 目录（例如 <code>virtual_pincontroller</code>）。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/sys/kernel/debug/pinctrl/</span><br><span class="line">├── pinctrl-devices         # 列出所有已注册的 PinController 设备</span><br><span class="line">├── pinctrl-handles         # 列出所有客户端设备及其Pinctrl句柄</span><br><span class="line">└── virtual_pincontroller   # 我们的虚拟 PinController 实例目录</span><br><span class="line">    ├── pins                # 所有引脚的详细信息</span><br><span class="line">    ├── pingroups           # 所有引脚组的详细信息</span><br><span class="line">    ├── pinmux-pins         # 各个引脚当前的复用状态</span><br><span class="line">    ├── pinmux-functions    # 所有支持的功能及其关联的引脚组</span><br><span class="line">    ├── pinconf-pins        # 各个引脚当前的配置值</span><br><span class="line">    ├── pinconf-groups      # 各个引脚组当前的配置值</span><br><span class="line">    └── pinconf-config      # 用于动态修改引脚配置的接口</span><br></pre></td></tr></table></figure>
+<p><strong>Mermaid 图 illustrating DebugFS Structure:</strong></p>
+<pre class="mermaid">graph TD
+    D[/sys/kernel/debug/pinctrl/] --> PDev[pinctrl-devices]
+    D --> PHan[pinctrl-handles]
+    D --> VPC[virtual_pincontroller]
+  
+    subgraph virtual_pincontroller
+        VPC --> Pins[pins]
+        VPC --> Pingroups[pingroups]
+        VPC --> PinmuxPins[pinmux-pins]
+        VPC --> PinmuxFunctions[pinmux-functions]
+        VPC --> PinconfPins[pinconf-pins]
+        VPC --> PinconfGroups[pinconf-groups]
+        VPC --> PinconfConfig[pinconf-config]
+    end
+  
+    Pins -.-> M1(所有注册引脚)
+    Pingroups -.-> M2(所有引脚组定义)
+    PinmuxPins -.-> M3(当前复用分配)
+    PinmuxFunctions -.-> M4(功能与组映射)
+    PinconfPins -.-> M5(引脚电气配置)
+    PinconfGroups -.-> M6(引脚组电气配置)
+    PinconfConfig -.-> M7(动态修改配置接口)</pre>
+<h3 id="72-观察输出示例"><a class="markdownIt-Anchor" href="#72-观察输出示例"></a> 7.2 观察输出示例</h3>
+<p><strong>加载驱动后，通过 <code>dmesg</code> 可以看到 Pinctrl 驱动的打印：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[  10.123456] Virtual Pinctrl Device Probe!</span><br><span class="line">[  10.123567] Virtual I2C Client Device Probe! Pinctrl should be applied.</span><br><span class="line">[  10.123678] Virtual Pinctrl: dt_node_to_map for node &#x27;i2cgrp&#x27;</span><br><span class="line">[  10.123789] Virtual Pinctrl: set_mux function &#x27;i2c&#x27; for group &#x27;i2cgrp&#x27; (ID:4)</span><br><span class="line">[  10.123890] Virtual Pinctrl: pin_config_group_set for group &#x27;i2cgrp&#x27; (ID:4), config: 0x11223344</span><br></pre></td></tr></table></figure>
+<p>这表明 Pinctrl 核心成功解析了 <code>virtual_i2c</code> 设备的设备树，并调用了虚拟 Pinctrl 驱动的 <code>dt_node_to_map</code>、<code>set_mux</code> 和 <code>pin_config_group_set</code> 函数。</p>
+<p><strong><code>/sys/kernel/debug/pinctrl/virtual_pincontroller/</code> 文件内容：</strong></p>
+<ul>
+<li>
+<p><strong><code>pins</code></strong></p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">cat</span> /sys/kernel/debug/pinctrl/virtual_pincontroller/pins</span></span><br><span class="line">registered pins: 4</span><br><span class="line">pin 0 (pin0) virtual_pincontroller</span><br><span class="line">pin 1 (pin1) virtual_pincontroller</span><br><span class="line">pin 2 (pin2) virtual_pincontroller</span><br><span class="line">pin 3 (pin3) virtual_pincontroller</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong><code>pingroups</code></strong></p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">cat</span> /sys/kernel/debug/pinctrl/virtual_pincontroller/pingroups</span></span><br><span class="line">registered pin groups:</span><br><span class="line">group: pin0</span><br><span class="line">pin 0 (pin0)</span><br><span class="line"></span><br><span class="line">group: pin1</span><br><span class="line">pin 1 (pin1)</span><br><span class="line"></span><br><span class="line">group: pin2</span><br><span class="line">pin 2 (pin2)</span><br><span class="line"></span><br><span class="line">group: pin3</span><br><span class="line">pin 3 (pin3)</span><br><span class="line"></span><br><span class="line">group: i2cgrp</span><br><span class="line">pin 0 (pin0)</span><br><span class="line">pin 1 (pin1)</span><br><span class="line"></span><br><span class="line">group: uartgrp</span><br><span class="line">pin 2 (pin2)</span><br><span class="line">pin 3 (pin3)</span><br></pre></td></tr></table></figure>
+<p>这里可以看到我们定义的 <code>i2cgrp</code> 组包含了 <code>pin0</code> 和 <code>pin1</code>。</p>
+</li>
+<li>
+<p><strong><code>pinmux-pins</code></strong></p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">cat</span> /sys/kernel/debug/pinctrl/virtual_pincontroller/pinmux-pins</span></span><br><span class="line">Pinmux settings per pin</span><br><span class="line">Format: pin (name): mux_owner gpio_owner hog?</span><br><span class="line">pin 0 (pin0): virtual_i2c (GPIO UNCLAIMED) function i2c group i2cgrp</span><br><span class="line">pin 1 (pin1): virtual_i2c (GPIO UNCLAIMED) function i2c group i2cgrp</span><br><span class="line">pin 2 (pin2): (MUX UNCLAIMED) (GPIO UNCLAIMED)</span><br><span class="line">pin 3 (pin3): (MUX UNCLAIMED) (GPIO UNCLAIMED)</span><br></pre></td></tr></table></figure>
+<p><code>pin0</code> 和 <code>pin1</code> 被 <code>virtual_i2c</code> 设备成功复用为 <code>i2c</code> 功能。</p>
+</li>
+<li>
+<p><strong><code>pinmux-functions</code></strong></p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">cat</span> /sys/kernel/debug/pinctrl/virtual_pincontroller/pinmux-functions</span></span><br><span class="line">function: gpio, groups = [ pin0 pin1 pin2 pin3 ]</span><br><span class="line">function: i2c, groups = [ i2cgrp ] // 实际根据你的实现可能是 [ pin0 pin1 ]</span><br><span class="line">function: uart, groups = [ uartgrp ] // 实际根据你的实现可能是 [ pin2 pin3 ]</span><br></pre></td></tr></table></figure>
+<p>列出了 PinController 支持的所有功能以及哪些组提供了这些功能。</p>
+</li>
+<li>
+<p><strong><code>pinconf-pins</code></strong></p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">cat</span> /sys/kernel/debug/pinctrl/virtual_pincontroller/pinconf-pins</span></span><br><span class="line">Pin config settings per pin</span><br><span class="line">Format: pin (name): configs</span><br><span class="line">pin 0 (pin0): 0x11223344</span><br><span class="line">pin 1 (pin1): 0x55667788</span><br><span class="line">pin 2 (pin2): 0x0</span><br><span class="line">pin 3 (pin3): 0x0</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong><code>pinconf-groups</code></strong></p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">cat</span> /sys/kernel/debug/pinctrl/virtual_pincontroller/pinconf-groups</span></span><br><span class="line">Pin config settings per pin group</span><br><span class="line">Format: group (name): configs</span><br><span class="line">0 (pin0): 0x11223344</span><br><span class="line">1 (pin1): 0x55667788</span><br><span class="line">2 (pin2): 0x0</span><br><span class="line">3 (pin3): 0x0</span><br><span class="line">4 (i2cgrp): 0x11223344</span><br><span class="line">5 (uartgrp): 0x0</span><br></pre></td></tr></table></figure>
+<p>可以看到 <code>i2cgrp</code> 组应用了第一个配置值 <code>0x11223344</code>。</p>
+</li>
+</ul>
+<h3 id="73-动态修改配置"><a class="markdownIt-Anchor" href="#73-动态修改配置"></a> 7.3 动态修改配置</h3>
+<p>如果 PinController 驱动的 <code>pinconf_ops</code> 实现了 <code>pin_config_dbg_parse_modify</code> 函数（通常用于调试），可以通过 <code>pinconf-config</code> 文件动态修改配置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 格式: modify &lt;config_type&gt; &lt;devicename&gt; &lt;state&gt; &lt;pin_name|group_name&gt; &lt;newvalue&gt;</span><br><span class="line">// 示例修改虚拟i2c设备的default状态下pin0的配置值为0xaabb</span><br><span class="line">echo &quot;modify config_pin virtual_i2c default pin0 0xaabb&quot; &gt; /sys/kernel/debug/pinctrl/virtual_pincontroller/pinconf-config</span><br><span class="line"></span><br><span class="line">// 再次查看 pinconf-pins 确认修改</span><br><span class="line">cat /sys/kernel/debug/pinctrl/virtual_pincontroller/pinconf-pins</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：这种修改通常只影响软件表示和可能调用的驱动钩子，不保证实际硬件寄存器会更新，具体取决于 PinController 驱动的实现。</p>
+<hr />
+<h2 id="8-总结"><a class="markdownIt-Anchor" href="#8-总结"></a> 8. 总结</h2>
+<p>Pinctrl 子系统为 Linux 内核中的引脚管理提供了一个统一、可扩展的框架。</p>
+<ul>
+<li><strong>核心功能</strong>：引脚枚举、复用和配置。</li>
+<li><strong>设备树驱动</strong>：大部分 Pinctrl 配置通过设备树完成，驱动工程师只需编写高层的设备驱动，无需直接操作底层引脚寄存器。</li>
+<li><strong>职责分离</strong>：SoC 厂商提供 PinController 驱动（实现 <code>pinctrl_ops</code>, <code>pinmux_ops</code>, <code>pinconf_ops</code>），板级工程师通过设备树配置引脚，客户端设备驱动则通常无感知地享受引脚配置服务。</li>
+<li><strong>调试</strong>：DebugFS 提供了强大的调试接口，可用于检查引脚的枚举、分组、复用和配置状态。</li>
+</ul>
+<p>掌握 Pinctrl 子系统对于进行嵌入式 Linux 设备开发至关重要，它确保了硬件引脚资源的正确和高效利用。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9F%A6%E4%B8%9C%E5%B1%B1-pinctrl-%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">1.</span> <span class="toc-text"> 韦东山 Pinctrl 系统参考文献</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-pinctrl-%E5%AD%90%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B%E4%B8%8E%E6%A0%B8%E5%BF%83%E4%BD%9C%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text"> 1. Pinctrl 子系统简介与核心作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%AE%BE%E5%A4%87%E6%A0%91device-tree%E4%B8%AD%E7%9A%84-pinctrl-%E8%A1%A8%E7%A4%BA"><span class="toc-number">1.2.</span> <span class="toc-text"> 2. 设备树（Device Tree）中的 Pinctrl 表示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#21-pincontroller-%E8%8A%82%E7%82%B9%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 2.1 Pincontroller 节点的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#22-client-%E8%AE%BE%E5%A4%87%E5%BC%95%E7%94%A8-pinctrl-%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 2.2 Client 设备引用 Pinctrl 配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%A0%B8%E5%BF%83%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.3.</span> <span class="toc-text"> 3. 核心数据结构详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#31-pinctrl_desc-%E5%92%8C-pinctrl_dev-pincontroller-%E7%9A%84%E6%8F%8F%E8%BF%B0%E4%B8%8E%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 3.1 pinctrl_desc 和 pinctrl_dev – Pincontroller 的描述与实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#32-pinctrl_pin_desc-%E6%8F%8F%E8%BF%B0%E5%8D%95%E4%B8%AA%E5%BC%95%E8%84%9A"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 3.2 pinctrl_pin_desc – 描述单个引脚</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#33-pinctrl_ops-%E5%BC%95%E8%84%9A%E6%9E%9A%E4%B8%BE%E4%B8%8E%E7%BB%84%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 3.3 pinctrl_ops – 引脚枚举与组操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#34-pinmux_ops-%E5%BC%95%E8%84%9A%E5%A4%8D%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.4.</span> <span class="toc-text"> 3.4 pinmux_ops – 引脚复用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#35-pinconf_ops-%E5%BC%95%E8%84%9A%E9%85%8D%E7%BD%AE%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.5.</span> <span class="toc-text"> 3.5 pinconf_ops – 引脚配置操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#36-device-%E4%B8%8E-dev_pin_info-client-%E8%AE%BE%E5%A4%87%E7%9A%84-pinctrl-%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">1.3.6.</span> <span class="toc-text"> 3.6 device 与 dev_pin_info – Client 设备的 Pinctrl 上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#37-pinctrl-client-side-context"><span class="toc-number">1.3.7.</span> <span class="toc-text"> 3.7 pinctrl (Client-side Context)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#38-pinctrl_state-pinctrl_map-%E5%92%8C-pinctrl_setting"><span class="toc-number">1.3.8.</span> <span class="toc-text"> 3.8 pinctrl_state, pinctrl_map 和 pinctrl_setting</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-pinctrl-%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E4%B8%8E%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%81%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text"> 4. Pinctrl 子系统工作原理与初始化流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#41-pincontroller-%E9%A9%B1%E5%8A%A8%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 4.1 Pincontroller 驱动构造过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#42-client-%E7%AB%AF%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 4.2 Client 端使用与初始化过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-pinctrl-%E5%AD%90%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.5.</span> <span class="toc-text"> 5. Pinctrl 子系统使用示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#51-%E7%94%9F%E6%88%90-pincontroller-%E8%AE%BE%E5%A4%87%E6%A0%91%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.1.</span> <span class="toc-text"> 5.1 生成 PinController 设备树信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#52-%E5%9C%A8-client-%E8%AE%BE%E5%A4%87%E8%8A%82%E7%82%B9%E4%B8%AD%E4%BD%BF%E7%94%A8-pinctrl"><span class="toc-number">1.5.2.</span> <span class="toc-text"> 5.2 在 Client 设备节点中使用 Pinctrl</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E7%BC%96%E5%86%99%E8%99%9A%E6%8B%9F%E7%9A%84-pinctrl-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.6.</span> <span class="toc-text"> 6. 编写虚拟的 Pinctrl 驱动程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#61-pinctrl-%E9%A9%B1%E5%8A%A8%E6%89%80%E9%9C%80%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-number">1.6.1.</span> <span class="toc-text"> 6.1 Pinctrl 驱动所需实现的功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#62-%E8%99%9A%E6%8B%9F%E7%A1%AC%E4%BB%B6%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.6.2.</span> <span class="toc-text"> 6.2 虚拟硬件功能设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#63-%E7%BC%96%E5%86%99%E8%AE%BE%E5%A4%87%E6%A0%91%E6%96%87%E4%BB%B6"><span class="toc-number">1.6.3.</span> <span class="toc-text"> 6.3 编写设备树文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#64-%E7%BC%96%E5%86%99-pinctrl-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E9%AA%A8%E6%9E%B6"><span class="toc-number">1.6.4.</span> <span class="toc-text"> 6.4 编写 Pinctrl 驱动程序骨架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#65-%E7%BC%96%E5%86%99%E6%B5%8B%E8%AF%95%E7%94%A8%E7%9A%84-client-%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.6.5.</span> <span class="toc-text"> 6.5 编写测试用的 Client 驱动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E8%B0%83%E8%AF%95%E8%99%9A%E6%8B%9F%E7%9A%84-pinctrl-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.7.</span> <span class="toc-text"> 7. 调试虚拟的 Pinctrl 驱动程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#71-debugfs-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.7.1.</span> <span class="toc-text"> 7.1 DebugFS 文件系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#72-%E8%A7%82%E5%AF%9F%E8%BE%93%E5%87%BA%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.7.2.</span> <span class="toc-text"> 7.2 观察输出示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#73-%E5%8A%A8%E6%80%81%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE"><span class="toc-number">1.7.3.</span> <span class="toc-text"> 7.3 动态修改配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%80%BB%E7%BB%93"><span class="toc-number">1.8.</span> <span class="toc-text"> 8. 总结</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&text=韦东山Pinctrl系统参考文献"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=韦东山Pinctrl系统参考文献"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&is_video=false&description=韦东山Pinctrl系统参考文献"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=韦东山Pinctrl系统参考文献&body=Check out this article: https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=韦东山Pinctrl系统参考文献"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=韦东山Pinctrl系统参考文献"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=韦东山Pinctrl系统参考文献"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&title=韦东山Pinctrl系统参考文献"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&name=韦东山Pinctrl系统参考文献&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2025/07/25/Embedded-Linux/Kernel/%E9%9F%A6%E4%B8%9C%E5%B1%B1Pinctrl%E7%B3%BB%E7%BB%9F%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/&t=韦东山Pinctrl系统参考文献"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

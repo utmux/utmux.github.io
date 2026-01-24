@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="天气：晴天 心情：好   类中的 const 函数和 const 变量 在类中如果要类的方法能够处理 const 定义的类变量，要求在方法后面加上 const 代表该函数不会修改类中成员变量等。例如： 1234567891011class Stock&#123;    private:    &#x2F;&#x2F; 变量成员和私有函数    public:    const Stock &amp; Stock::t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Cpp-16">
+<meta property="og:url" content="https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="天气：晴天 心情：好   类中的 const 函数和 const 变量 在类中如果要类的方法能够处理 const 定义的类变量，要求在方法后面加上 const 代表该函数不会修改类中成员变量等。例如： 1234567891011class Stock&#123;    private:    &#x2F;&#x2F; 变量成员和私有函数    public:    const Stock &amp; Stock::t">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-27T14:34:26.000Z">
+<meta property="article:modified_time" content="2026-01-24T15:38:54.518Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习Cpp-16</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/03/28/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-17/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/03/26/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-15/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&text=学习Cpp-16"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&title=学习Cpp-16"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&is_video=false&description=学习Cpp-16"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-16&body=Check out this article: https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&title=学习Cpp-16"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&title=学习Cpp-16"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&title=学习Cpp-16"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&title=学习Cpp-16"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&name=学习Cpp-16&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&t=学习Cpp-16"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E4%B8%AD%E7%9A%84-const-%E5%87%BD%E6%95%B0%E5%92%8C-const-%E5%8F%98%E9%87%8F"><span class="toc-number">1.</span> <span class="toc-text"> 类中的 const 函数和 const 变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c11-%E7%9A%84%E6%9E%9A%E4%B8%BE%E7%89%B9%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text"> C++11 的枚举特性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">3.</span> <span class="toc-text"> 运算符重载</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%8B%E5%85%83"><span class="toc-number">4.</span> <span class="toc-text"> 友元</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips"><span class="toc-number">5.</span> <span class="toc-text"> Tips</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        学习Cpp-16
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-03-27T14:34:26.000Z" class="dt-published" itemprop="datePublished">2024-03-27</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Programming/">Programming</a> › <a class="category-link" href="/categories/Programming/CPP-Core/">CPP-Core</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>天气：晴天 心情：好</p>
+<hr />
+<h5 id="类中的-const-函数和-const-变量"><a class="markdownIt-Anchor" href="#类中的-const-函数和-const-变量"></a> 类中的 const 函数和 const 变量</h5>
+<p>在类中如果要类的方法能够处理 const 定义的类变量，要求在方法后面加上 <code>const</code> 代表该函数不会修改类中成员变量等。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Stock</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// 变量成员和私有函数</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">const</span> Stock &amp; <span class="title">Stock::topval</span><span class="params">(<span class="type">const</span> Stock &amp; s)</span> <span class="type">const</span></span>; <span class="comment">// 注意这里后面也要加const</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">const</span> Stock &amp; <span class="title">Stock::topval</span><span class="params">(<span class="type">const</span> Stock &amp; s)</span> <span class="type">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">// 代表能够处理const</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类中并不能定义常量 const，这是因为 const 变量代表其分配了内存，类的在创建之前并不会分配存储空间，我们可以通过以下方法来让类中所有的变量和成员函数使用某些常量如下所示：</p>
+<p>批注：在模板 template 中也是这么说的，看来 const 确实不一样。不仅默认链接域为 static，需要 extern 拓展链接域。这里 const 还不能定义，值得注意的是类中是可以定义 static 变量和 static const 变量。此时两者都看作 static，不同的是，static 可以在.c 文件中再初始化，而 static const 在定义的时候就初始化。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Bakery</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">const</span> <span class="type">int</span> Months = <span class="number">12</span>; <span class="comment">// 无效,不能这么定义</span></span><br><span class="line">	<span class="type">double</span> costs[Months];</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 我们可以通过枚举的方法来实现</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bakery</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">enum</span> &#123;Months = <span class="number">12</span>&#125;; <span class="comment">// 无效,不能这么定义</span></span><br><span class="line">	<span class="type">double</span> costs[Months];</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 或者我们可以通过创建静态成员变量的方法</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bakery</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	staic <span class="type">const</span> <span class="type">int</span> Months = <span class="number">12</span>;; <span class="comment">// 此时该变量不再存储再类中,而是和程序中其他的静态变量一样存储再data或者bbs中</span></span><br><span class="line">	<span class="type">double</span> costs[Months];</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="c11-的枚举特性"><a class="markdownIt-Anchor" href="#c11-的枚举特性"></a> C++11 的枚举特性</h5>
+<p>C++中，给每个枚举也分了类，避免冲突，如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">egg</span>&#123;Small, Medium, Large, Jumbo&#125;;</span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">t_shirt</span>&#123;Small, Medium, Large, Xlarge&#125;;</span><br><span class="line">egg choice = egg:Large;</span><br></pre></td></tr></table></figure>
+<p>C++中为了提高枚举的安全性，还限制了枚举类型的整型转化，只有具体的枚举变量能够进行整形转化（也可以强制类型转换突破限制），例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = egg:Large; <span class="comment">// 不允许</span></span><br><span class="line"><span class="type">int</span> a = <span class="built_in">int</span>(egg:Large); <span class="comment">// 可以通过强制类型转化突破限制</span></span><br><span class="line">egg choice = egg:Large;</span><br><span class="line"><span class="type">int</span> b =  choice; <span class="comment">// 此时和具体的枚举变量是可以允许的</span></span><br><span class="line"><span class="comment">// 当然也可以进行强制类型转化</span></span><br></pre></td></tr></table></figure>
+<p>再 C++中可以改变 enum 的数据类型，默认情况下是 int 类型，但是可以改变成 short 等类型，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">class</span>: <span class="type">short</span> pizza &#123;Small, Medium&#125;; <span class="comment">// 从int变成short</span></span><br></pre></td></tr></table></figure>
+<h5 id="运算符重载"><a class="markdownIt-Anchor" href="#运算符重载"></a> 运算符重载</h5>
+<p>格式如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">operator</span> 运算符 (argument-list)</span><br></pre></td></tr></table></figure>
+<p>op 必须是有效的 C++运算符，即 C++常用的运算符，不能虚构一 个新的符号。例如 operator <a href=""></a> 函数 将重载 [ ] 运算符，因为 [ ] 是数组索引运算符。</p>
+<p>上面运算符重载即可看作一个函数，具体函数的定义和普通类函数定义是一样的，如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Time <span class="keyword">operator</span>+(<span class="type">const</span> Time &amp; t) <span class="type">const</span>;</span><br><span class="line">Time Time::<span class="keyword">operator</span>+(<span class="type">const</span> Time &amp; t) <span class="type">const</span> &#123;</span><br><span class="line">    Time sum;</span><br><span class="line">    sum.minutes = minutes + t.minutes;</span><br><span class="line">    sum.hours = hours + t.hours + sum.minutes / <span class="number">60</span>;</span><br><span class="line">    sum.minutes %= <span class="number">60</span>;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重载限制：</p>
+<ol>
+<li>
+<p>重载后的运算符必须至少有一个操作数是用户定义的类型，这将防止用户为标准类型重载运算符。因此，不能将减法运算符（−）重载为计算两个 double 值的和，而不是它们的差。虽然这种限制将对创造性有所影响，但可以确保程序正常运行。</p>
+</li>
+<li>
+<p>使用运算符时不能违反运算符原来的句法规则。例如，不能将求模运算符（%）重载成使用一个操作数。</p>
+</li>
+<li>
+<p>同样，不能修改运算符的优先级。因此，如果将加号运算符重载成将两个类相加，则新的运算符与原来的加号具有相同的优先级。</p>
+</li>
+<li>
+<p>不能创建新运算符。例如，不能定义 operator **( )函数来表示求幂。</p>
+</li>
+<li>
+<p>不能重载下面的运算符。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sizeof</span>：<span class="keyword">sizeof</span> 运算符。</span><br><span class="line">.：成员运算符。</span><br><span class="line">. *：成员指针运算符。</span><br><span class="line">::：作用域解析运算符。</span><br><span class="line">?:：条件运算符。</span><br><span class="line"><span class="keyword">typeid</span>：一个 RTTI 运算符。</span><br><span class="line"><span class="keyword">const_cast</span>：强制类型转换运算符。</span><br><span class="line"><span class="keyword">dynamic_cast</span>：强制类型转换运算符。</span><br><span class="line"><span class="keyword">reinterpret_cast</span>：强制类型转换运算符。</span><br><span class="line"><span class="keyword">static_cast</span>：强制类型转换运算符。</span><br></pre></td></tr></table></figure>
+<p>表 11.1 中的大多数运算符都可以通过成员或非成员函数进行重载，但下面的运算符只能通过成员函数进行重载。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">=：赋值运算符。</span><br><span class="line">( )：函数调用运算符。</span><br><span class="line">[ ]：下标运算符。</span><br><span class="line">-&gt;：通过指针访问类成员的运算符。</span><br></pre></td></tr></table></figure>
+<h5 id="友元"><a class="markdownIt-Anchor" href="#友元"></a> 友元</h5>
+<p>由于 public 和 private 的限制太过极端，例如重载运算符时，如果 B 是 time 类，其有 <code>*</code> 重载运算符：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">B * <span class="number">1.5</span>; <span class="comment">// 此时等同于B.operator*(1.5);</span></span><br><span class="line"><span class="comment">// 而对于1.5 * B,由于1.5不是类,不存在重载运算符方法,故会报错</span></span><br></pre></td></tr></table></figure>
+<p>通过非成员的重载运算符（即不是只有对该类生效重载运算符，而是全局重载运算符）即可解决，如下所示</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Time <span class="keyword">operator</span>*(<span class="type">double</span> m, Time time);</span><br></pre></td></tr></table></figure>
+<p>然而这里引出一个问题，这个重载运算函数不属于类，无法访问类中的私有数据和私有方法，就不好写这个函数，这是友元的作用就出来了，即给与其他数据结构也有访问 time 类的权限。</p>
+<p>友元的创立如下所示，注意具体定义部分不需要使用 friend 这个关键字：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">friend</span> Time <span class="keyword">operator</span>*(<span class="type">double</span> m, Time time);</span><br><span class="line">Time <span class="keyword">operator</span>*(<span class="type">double</span> m, Time time)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 友元定义函数没有friend关键字</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用友元可以无需修改之前的类，直接为原来的类添加新增的重载运算，例如如果我们要使用 cout 能够使用 <code>&lt;&lt;</code> 显示出 time 类，我们可以这样写：</p>
+<p>批注：友元函数也要定义在类成员中，尽管他不是成员函数，这样是为了便于划分这些友元函数和那些类有关。（当然，你想定义在外面或其他任何地方都行）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 记住类的运算符重载是将右边作为操作数</span></span><br><span class="line"><span class="comment">// cout &lt;&lt; time 相当于 cout.operator&lt;&lt;(time);</span></span><br><span class="line"><span class="comment">// 而友元运算符相当于将运算符两侧作为输入 cout &lt;&lt; time中,相当于operator&lt;&lt;(cout, time);</span></span><br><span class="line"><span class="keyword">friend</span> <span class="type">void</span> <span class="keyword">operator</span>&lt;&lt;(ostream &amp;os, Time &amp;time);</span><br><span class="line">ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream &amp;os, Time &amp;time)</span><br><span class="line">&#123;</span><br><span class="line">    os &lt;&lt; time.hours &lt;&lt; <span class="string">&quot;h &quot;</span> &lt;&lt; time.minutes &lt;&lt; <span class="string">&quot;minutes&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> os; <span class="comment">// 便于实现 os &lt;&lt; time1 &lt;&lt; time2;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="tips"><a class="markdownIt-Anchor" href="#tips"></a> Tips</h5>
+<p><strong>类中直接定义的函数将作为内联函数，如下所示。</strong></p>
+<p>友元可以放入类中，比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">class</span> <span class="title class_">Vector</span></span><br><span class="line">  &#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">      <span class="keyword">enum</span> <span class="title class_">Mode</span> &#123;RECT,POL&#125;;</span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">xval</span><span class="params">()</span> <span class="type">const</span> </span>&#123;<span class="keyword">return</span> x;&#125; <span class="comment">//这样直接定义该函数将成为内联函数,这里函数很短,确实适合做内联函数</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">      <span class="keyword">friend</span> Vector <span class="keyword">operator</span>*(<span class="type">double</span> n,<span class="type">const</span> Vector &amp; a);</span><br><span class="line">      <span class="keyword">friend</span> std::ostream &amp; <span class="keyword">operator</span>&lt;&lt;(std::ostream &amp; os,<span class="type">const</span> Vector &amp; v);</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E4%B8%AD%E7%9A%84-const-%E5%87%BD%E6%95%B0%E5%92%8C-const-%E5%8F%98%E9%87%8F"><span class="toc-number">1.</span> <span class="toc-text"> 类中的 const 函数和 const 变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c11-%E7%9A%84%E6%9E%9A%E4%B8%BE%E7%89%B9%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text"> C++11 的枚举特性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">3.</span> <span class="toc-text"> 运算符重载</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%8B%E5%85%83"><span class="toc-number">4.</span> <span class="toc-text"> 友元</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tips"><span class="toc-number">5.</span> <span class="toc-text"> Tips</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&text=学习Cpp-16"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&title=学习Cpp-16"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&is_video=false&description=学习Cpp-16"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习Cpp-16&body=Check out this article: https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&title=学习Cpp-16"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&title=学习Cpp-16"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&title=学习Cpp-16"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&title=学习Cpp-16"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&name=学习Cpp-16&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2024/03/27/Programming/CPP-Core/%E5%AD%A6%E4%B9%A0Cpp-16/&t=学习Cpp-16"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
