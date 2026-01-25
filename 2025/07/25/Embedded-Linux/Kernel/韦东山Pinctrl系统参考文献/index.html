@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/480a66c0ecd4d90b01f512400c738d8f.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/63651b3bbf0a20dab08f27b526d4d3a0.png">
 <meta property="article:published_time" content="2025-07-25T13:42:37.000Z">
-<meta property="article:modified_time" content="2026-01-24T15:38:54.020Z">
+<meta property="article:modified_time" content="2026-01-25T02:49:32.840Z">
 <meta property="article:author" content="YQX">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/b9666bf28d363477a140c38c599aa230.png">
@@ -273,19 +273,21 @@
     subgraph Pincontroller
         P[Pincontroller节点] --> G1[引脚组1: i2c1_pins]
         P --> G2[引脚组2: uart2_pins]
-        G1 --> C1["fsl,pins = <pinA_mode_i2c pinB_mode_i2c>"]
-        G2 --> C2["fsl,pins = <pinC_mode_uart pinD_mode_uart>"]
+        %% 注意这里：< 变成了 &lt; ， > 变成了 &gt;
+        G1 --> C1["fsl,pins = &lt;pinA_mode_i2c pinB_mode_i2c&gt;"]
+        G2 --> C2["fsl,pins = &lt;pinC_mode_uart pinD_mode_uart&gt;"]
     end
-  
+   
     subgraph Client设备
         D_I2C[i2c1节点] --> PN_I2C["pinctrl-names = default"]
-        D_I2C --> P0_I2C["pinctrl-0 = <&i2c1_pins>"]
-      
+        %% 注意这里：& 变成了 &amp;
+        D_I2C --> P0_I2C["pinctrl-0 = &lt;&amp;i2c1_pins&gt;"]
+       
         D_UART[uart2节点] --> PN_UART["pinctrl-names = idle, active"]
-        D_UART --> P0_UART["pinctrl-0 = <&uart2_pins_idle>"]
-        D_UART --> P1_UART["pinctrl-1 = <&uart2_pins_active>"]
+        D_UART --> P0_UART["pinctrl-0 = &lt;&amp;uart2_pins_idle&gt;"]
+        D_UART --> P1_UART["pinctrl-1 = &lt;&amp;uart2_pins_active&gt;"]
     end
-  
+   
     P0_I2C --> G1
     P0_UART --> G2
     P1_UART --> G2_Alt[uart2_pins_active]
