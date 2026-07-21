@@ -2098,27 +2098,6 @@
     
     
     <entry>
-      <title>QT以及Widget控件学习教程一</title>
-      <link href="/2024/03/21/Programming/GUI-Framework/QT%E4%BB%A5%E5%8F%8AWidget%E6%8E%A7%E4%BB%B6%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%E4%B8%80/"/>
-      <url>/2024/03/21/Programming/GUI-Framework/QT%E4%BB%A5%E5%8F%8AWidget%E6%8E%A7%E4%BB%B6%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%E4%B8%80/</url>
-      
-        <content type="html"><![CDATA[<p>天气：晴天 心情：差</p><hr /><h5 id="qt-以及-widget-控件学习教程一"><a class="markdownIt-Anchor" href="#qt-以及-widget-控件学习教程一"></a> QT 以及 Widget 控件学习教程一</h5><p>从我过去的经验来看，Widget 的学习应该是一个知道有这么一个功能，以及知道这些 Widget 能够实现哪些功能，收藏一些可用的 Widget 代码便可认为已经掌握的 QWidget。这是我的学习目标。</p><p>今天我首先仿照 Qwidget 的例子，写了一个时钟。感觉 Widget 控件和 Windows 以及现在各种主流的 gui 是类似的逻辑。QT 中的 Widget 相比他们可能方法更加偏门，以及自带更多实现。</p><p>Qt 和其他界面更新一样，通过定时器 timer 中的 timerout 事件来触发 update 事件。update 中就是渲染的逻辑。当然，根据我之前在 yuzu 模拟器中看到的，Qt 也可以通过监听控件的变化，或者类似于单片机中的终端来 call function。</p><p>今天只是实现了一个例子，初步对 Qt 有所了解，知道了 Qt 的实现逻辑，设置 timer，并绑定 update 事件-&gt; 初始化界面-&gt; 写 update 事件。</p><p>下面是我找到的一些学习资源：<br /><a href="https://doc.qt.io/qt-6.2/qwidget.html">https://doc.qt.io/qt-6.2/qwidget.html</a><br /><a href="https://github.com/feiyangqingyun/QWidgetDemo">https://github.com/feiyangqingyun/QWidgetDemo</a><br /><a href="https://www.bilibili.com/video/BV1EG4y167fk">https://www.bilibili.com/video/BV1EG4y167fk</a></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Programming </category>
-          
-          <category> GUI-Framework </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>今天休息</title>
       <link href="/2024/03/21/Journal/Monthly-Log/%E4%BB%8A%E5%A4%A9%E4%BC%91%E6%81%AF/"/>
       <url>/2024/03/21/Journal/Monthly-Log/%E4%BB%8A%E5%A4%A9%E4%BC%91%E6%81%AF/</url>
@@ -2131,6 +2110,27 @@
           <category> Journal </category>
           
           <category> Monthly-Log </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>QT以及Widget控件学习教程一</title>
+      <link href="/2024/03/21/Programming/GUI-Framework/QT%E4%BB%A5%E5%8F%8AWidget%E6%8E%A7%E4%BB%B6%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%E4%B8%80/"/>
+      <url>/2024/03/21/Programming/GUI-Framework/QT%E4%BB%A5%E5%8F%8AWidget%E6%8E%A7%E4%BB%B6%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%E4%B8%80/</url>
+      
+        <content type="html"><![CDATA[<p>天气：晴天 心情：差</p><hr /><h5 id="qt-以及-widget-控件学习教程一"><a class="markdownIt-Anchor" href="#qt-以及-widget-控件学习教程一"></a> QT 以及 Widget 控件学习教程一</h5><p>从我过去的经验来看，Widget 的学习应该是一个知道有这么一个功能，以及知道这些 Widget 能够实现哪些功能，收藏一些可用的 Widget 代码便可认为已经掌握的 QWidget。这是我的学习目标。</p><p>今天我首先仿照 Qwidget 的例子，写了一个时钟。感觉 Widget 控件和 Windows 以及现在各种主流的 gui 是类似的逻辑。QT 中的 Widget 相比他们可能方法更加偏门，以及自带更多实现。</p><p>Qt 和其他界面更新一样，通过定时器 timer 中的 timerout 事件来触发 update 事件。update 中就是渲染的逻辑。当然，根据我之前在 yuzu 模拟器中看到的，Qt 也可以通过监听控件的变化，或者类似于单片机中的终端来 call function。</p><p>今天只是实现了一个例子，初步对 Qt 有所了解，知道了 Qt 的实现逻辑，设置 timer，并绑定 update 事件-&gt; 初始化界面-&gt; 写 update 事件。</p><p>下面是我找到的一些学习资源：<br /><a href="https://doc.qt.io/qt-6.2/qwidget.html">https://doc.qt.io/qt-6.2/qwidget.html</a><br /><a href="https://github.com/feiyangqingyun/QWidgetDemo">https://github.com/feiyangqingyun/QWidgetDemo</a><br /><a href="https://www.bilibili.com/video/BV1EG4y167fk">https://www.bilibili.com/video/BV1EG4y167fk</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Programming </category>
+          
+          <category> GUI-Framework </category>
           
       </categories>
       
