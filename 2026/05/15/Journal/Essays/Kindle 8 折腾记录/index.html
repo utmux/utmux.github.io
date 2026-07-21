@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Kindle 558 &#x2F; Kindle 8 折腾记录：从安卓刷机、原厂恢复到 &#x2F;mnt&#x2F;wfm 波形文件损坏  设备：Kindle 558 &#x2F; Kindle 8th Gen &#x2F; KT3 &#x2F; Heisenberg，串口日志里显示 board&#x3D;eanab。 结论先写前面：这台机器最后不是 CPU、eMMC、bootloader 或 rootfs 死了，而是原厂系统依赖的 &#x2F;mnt&#x2F;wfm 波形文件损">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kindle 558&#x2F;Kindle 8 折腾记录：从安卓刷机、原厂恢复到&#x2F;mnt&#x2F;wfm波形文件损坏">
+<meta property="og:url" content="https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="混吃等死">
+<meta property="og:description" content="Kindle 558 &#x2F; Kindle 8 折腾记录：从安卓刷机、原厂恢复到 &#x2F;mnt&#x2F;wfm 波形文件损坏  设备：Kindle 558 &#x2F; Kindle 8th Gen &#x2F; KT3 &#x2F; Heisenberg，串口日志里显示 board&#x3D;eanab。 结论先写前面：这台机器最后不是 CPU、eMMC、bootloader 或 rootfs 死了，而是原厂系统依赖的 &#x2F;mnt&#x2F;wfm 波形文件损">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/8c0c452f1fcd5e5671fb2ec893ed6146.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/873114adb68fa243c1af2b398c0da936.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/9a924a8a8358f513a4112530a83f1722.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/9c818248ce79ab5784508bc0cc9d7167.jpg">
+<meta property="article:published_time" content="2026-05-15T08:19:03.000Z">
+<meta property="article:modified_time" content="2026-05-15T08:20:09.040Z">
+<meta property="article:author" content="YQX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/utmux/pictures/main/img/8c0c452f1fcd5e5671fb2ec893ed6146.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2026/06/06/Journal/Monthly-Log/%E6%97%A5%E8%AE%B0-2026-06-06/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2026/02/04/Journal/Monthly-Log/%E6%9C%AA%E6%9D%A5%E7%9A%84%E8%B7%AF%E8%AF%A5%E6%80%8E%E4%B9%88%E8%B5%B0/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&text=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&title=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&is_video=false&description=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏&body=Check out this article: https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&title=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&title=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&title=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&title=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&name=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&t=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#kindle-558-kindle-8-%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95%E4%BB%8E%E5%AE%89%E5%8D%93%E5%88%B7%E6%9C%BA-%E5%8E%9F%E5%8E%82%E6%81%A2%E5%A4%8D%E5%88%B0-mntwfm-%E6%B3%A2%E5%BD%A2%E6%96%87%E4%BB%B6%E6%8D%9F%E5%9D%8F"><span class="toc-number">1.</span> <span class="toc-text"> Kindle 558 &#x2F; Kindle 8 折腾记录：从安卓刷机、原厂恢复到 &#x2F;mnt&#x2F;wfm 波形文件损坏</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-%E5%85%88%E8%AF%B4%E5%85%8D%E8%B4%A3%E5%A3%B0%E6%98%8E"><span class="toc-number">1.1.</span> <span class="toc-text"> 0. 先说免责声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF%E4%BB%8E%E5%AE%89%E5%8D%93%E5%9B%9E%E5%8E%9F%E5%8E%82%E5%A4%B1%E8%B4%A5"><span class="toc-number">1.2.</span> <span class="toc-text"> 1. 背景：从安卓回原厂失败</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%9F%AD%E6%8E%A5%E6%95%91%E7%A0%96%E4%B8%8D%E4%B8%80%E5%AE%9A%E9%9C%80%E8%A6%81-ttl"><span class="toc-number">1.3.</span> <span class="toc-text"> 2. 短接救砖：不一定需要 TTL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ttl-%E6%98%AF%E5%90%A6%E5%BF%85%E9%A1%BB"><span class="toc-number">1.3.1.</span> <span class="toc-text"> TTL 是否必须？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-u-boot-%E5%92%8C-fastboot"><span class="toc-number">1.4.</span> <span class="toc-text"> 3. U-Boot 和 fastboot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%A6%82%E4%BD%95%E8%BF%9B%E5%85%A5-diags-recovery-menu"><span class="toc-number">1.5.</span> <span class="toc-text"> 4. 如何进入 diags &#x2F; recovery menu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%80%9A%E8%BF%87%E4%BF%AE%E6%94%B9-systembin-%E5%AE%9E%E7%8E%B0-root-%E4%B8%B2%E5%8F%A3%E7%99%BB%E5%BD%95"><span class="toc-number">1.6.</span> <span class="toc-text"> 6. 通过修改 system.bin 实现 root 串口登录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#61-%E6%8C%82%E8%BD%BD-systembin"><span class="toc-number">1.6.1.</span> <span class="toc-text"> 6.1 挂载 system.bin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#62-%E7%94%9F%E6%88%90-root-%E5%AF%86%E7%A0%81-hash"><span class="toc-number">1.6.2.</span> <span class="toc-text"> 6.2 生成 root 密码 hash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#63-%E4%BF%AE%E6%94%B9-etcpasswd-etcshadow-etcsecuretty"><span class="toc-number">1.6.3.</span> <span class="toc-text"> 6.3 修改 &#x2F;etc&#x2F;passwd、&#x2F;etc&#x2F;shadow、&#x2F;etc&#x2F;securetty</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%88%86%E5%8C%BA%E8%A7%82%E5%AF%9F"><span class="toc-number">1.7.</span> <span class="toc-text"> 7. 分区观察</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%BF%AE%E5%A4%8D-userstore-e-%E7%9B%98%E7%9A%84%E5%9D%91"><span class="toc-number">1.8.</span> <span class="toc-text"> 8. 修复 userstore &#x2F; E 盘的坑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E7%9C%9F%E6%AD%A3%E7%9A%84%E9%97%AE%E9%A2%98mntwfm-%E6%8D%9F%E5%9D%8F"><span class="toc-number">1.9.</span> <span class="toc-text"> 9 真正的问题：&#x2F;mnt&#x2F;wfm 损坏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%98%E6%96%B9-update-%E5%92%8C%E6%81%A2%E5%A4%8D%E5%8C%85%E6%95%91%E4%B8%8D%E5%9B%9E-mntwfm"><span class="toc-number">1.10.</span> <span class="toc-text"> 10. 为什么官方 update 和恢复包救不回 &#x2F;mnt&#x2F;wfm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-twrp-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%98%BE%E7%A4%BA"><span class="toc-number">1.11.</span> <span class="toc-text"> 11. TWRP 为什么能显示？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E6%9C%80%E7%BB%88%E9%80%89%E6%8B%A9%E5%88%B7%E5%9B%9E%E5%AE%89%E5%8D%93"><span class="toc-number">1.12.</span> <span class="toc-text"> 12. 最终选择：刷回安卓</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E5%A6%82%E6%9E%9C%E4%BD%A0%E4%B9%9F%E9%81%87%E5%88%B0%E8%BF%99%E4%B8%AA%E9%97%AE%E9%A2%98%E5%BA%94%E8%AF%A5%E4%BC%98%E5%85%88%E5%A4%87%E4%BB%BD%E4%BB%80%E4%B9%88"><span class="toc-number">1.13.</span> <span class="toc-text"> 13. 如果你也遇到这个问题，应该优先备份什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E4%BB%A5%E5%90%8E%E5%A6%82%E6%9E%9C%E8%A6%81%E6%89%BE%E5%88%AB%E4%BA%BA%E6%95%91%E5%8E%9F%E5%8E%82%E7%B3%BB%E7%BB%9F%E9%9C%80%E8%A6%81%E4%BB%80%E4%B9%88%E6%96%87%E4%BB%B6"><span class="toc-number">1.14.</span> <span class="toc-text"> 14. 以后如果要找别人救原厂系统，需要什么文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E9%99%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%B1%87%E6%80%BB"><span class="toc-number">1.15.</span> <span class="toc-text"> 15. 附：常用命令汇总</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#151-fastboot"><span class="toc-number">1.15.1.</span> <span class="toc-text"> 15.1 fastboot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#152-kindle-root-shell-%E6%8E%92%E6%9F%A5"><span class="toc-number">1.15.2.</span> <span class="toc-text"> 15.2 Kindle root shell 排查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#153-%E6%A3%80%E6%9F%A5-wfm-%E6%96%87%E4%BB%B6"><span class="toc-number">1.15.3.</span> <span class="toc-text"> 15.3 检查 wfm 文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#154-%E6%A3%80%E6%9F%A5-wfmimg-%E6%98%AF%E5%90%A6%E4%B8%BA%E7%A9%BA"><span class="toc-number">1.15.4.</span> <span class="toc-text"> 15.4 检查 wfm.img 是否为空</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#155-%E4%BB%8E-recoveryimg-%E6%90%9C-firmware"><span class="toc-number">1.15.5.</span> <span class="toc-text"> 15.5 从 recovery.img 搜 firmware</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-%E6%9C%80%E7%BB%88%E7%BB%93%E8%AE%BA"><span class="toc-number">1.16.</span> <span class="toc-text"> 16. 最终结论</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">YQX</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-05-15T08:19:03.000Z" class="dt-published" itemprop="datePublished">2026-05-15</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Journal/">Journal</a> › <a class="category-link" href="/categories/Journal/Essays/">Essays</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="kindle-558-kindle-8-折腾记录从安卓刷机-原厂恢复到-mntwfm-波形文件损坏"><a class="markdownIt-Anchor" href="#kindle-558-kindle-8-折腾记录从安卓刷机-原厂恢复到-mntwfm-波形文件损坏"></a> Kindle 558 / Kindle 8 折腾记录：从安卓刷机、原厂恢复到 <code>/mnt/wfm</code> 波形文件损坏</h1>
+<blockquote>
+<p>设备：Kindle 558 / Kindle 8th Gen / KT3 / Heisenberg，串口日志里显示 <code>board=eanab</code>。<br />
+结论先写前面：这台机器最后不是 CPU、eMMC、bootloader 或 rootfs 死了，而是原厂系统依赖的 <code>/mnt/wfm</code> 波形文件损坏。官方 update、恢复包第 3/4 步、diags 修复都没有把这个分区的数据恢复回来。最后我选择刷回安卓，用 KOReader 当阅读器。</p>
+</blockquote>
+<hr />
+<h2 id="0-先说免责声明"><a class="markdownIt-Anchor" href="#0-先说免责声明"></a> 0. 先说免责声明</h2>
+<p>本文不是通用教程，只是我这台 Kindle 558 的排障记录。不同批次、不同 bootloader、不同恢复包的分区名和 fastboot 映射可能不同。尤其是下面这些操作都可能导致设备变砖：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fastboot flash ...</span><br><span class="line">fdisk /dev/mmcblk0...</span><br><span class="line">dd of=/dev/mmcblk0...</span><br><span class="line">MfgTool 短接救砖</span><br><span class="line">修改 system.bin</span><br></pre></td></tr></table></figure>
+<p>如果你只是想刷机，请先完整备份。尤其要备份 <code>/mnt/wfm</code>，否则回原厂时可能遇到和我一样的问题。</p>
+<hr />
+<h2 id="1-背景从安卓回原厂失败"><a class="markdownIt-Anchor" href="#1-背景从安卓回原厂失败"></a> 1. 背景：从安卓回原厂失败</h2>
+<p>一开始我想把 Kindle 558 从安卓系统刷回原厂系统。恢复包里有类似这样的菜单：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">###系统管理菜单</span><br><span class="line">###<span class="number">1</span>、转换为/升级修改版安卓系统</span><br><span class="line">###<span class="number">2</span>、初始化分区</span><br><span class="line">###<span class="number">3</span>、恢复原厂系统（第一步）</span><br><span class="line">###<span class="number">4</span>、恢复原厂系统（第二步）</span><br><span class="line">###<span class="number">5</span>、写入咪咕U-Boot</span><br><span class="line">###Z、退出</span><br></pre></td></tr></table></figure>
+<p>我后来理解的安卓刷机流程大概是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">5、写入咪咕U-Boot</span><br><span class="line">→ 2、初始化分区</span><br><span class="line">→ 1、转换为/升级修改版安卓系统</span><br></pre></td></tr></table></figure>
+<p>我实际折腾时，有一次是先通过救砖包 / MfgTool 把带 fastboot 的 U-Boot 拉起来，然后直接走了选项 1。</p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/8c0c452f1fcd5e5671fb2ec893ed6146.png" alt="image-20260515161019794" /></p>
+<p>选项 1 对应脚本里的 <code>:update</code>：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">:update</span><br><span class="line">fastboot flash misc misc.img</span><br><span class="line">fastboot flash wfm wfm.img</span><br><span class="line">fastboot flash recovery recovery.img</span><br><span class="line">fastboot reboot</span><br><span class="line"><span class="built_in">ping</span> <span class="number">127</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">1</span> &gt;<span class="built_in">nul</span></span><br><span class="line">adb.exe -d wait-<span class="keyword">for</span>-recovery</span><br><span class="line">adb.exe -d get-state &gt;<span class="built_in">nul</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line"><span class="keyword">if</span> <span class="variable">%errorlevel%</span> <span class="keyword">neq</span> <span class="number">0</span> <span class="keyword">goto</span> con_ko</span><br><span class="line"><span class="keyword">if</span> <span class="variable">%errorlevel%</span> <span class="keyword">equ</span> <span class="number">0</span> <span class="keyword">goto</span> con_ok</span><br><span class="line">:con_ok</span><br><span class="line">adb shell mount /dev/block/mmcblk0p5 /system -w</span><br><span class="line">adb shell twrp remountrw /system</span><br><span class="line">adb push Migu  /sdcard/TWRP/Migu</span><br><span class="line">adb shell twrp <span class="built_in">restore</span> /sdcard/TWRP/Migu</span><br><span class="line">adb shell rm /sdcard/TWRP/Migu -rf</span><br><span class="line">adb reboot</span><br></pre></td></tr></table></figure>
+<p>后面证明，最坑的就是这一句：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastboot flash wfm wfm.img</span><br></pre></td></tr></table></figure>
+<p>我后来检查这个 <code>wfm.img</code>，它其实是一个 4MiB 的空 FAT32 镜像：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /mnt/d/kindle8230118/kindle8/Files</span><br><span class="line"><span class="built_in">ls</span> -lh wfm.img</span><br><span class="line">file wfm.img</span><br><span class="line">fdisk -l wfm.img</span><br><span class="line">hexdump -C wfm.img | <span class="built_in">head</span> -40</span><br></pre></td></tr></table></figure>
+<p>典型输出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-rwxrwxrwx 1 root root 4.0M Oct 19 2021 wfm.img</span><br><span class="line">wfm.img: DOS/MBR boot sector, OEM-ID &quot;mkdosfs&quot;, FAT (32 bit)</span><br><span class="line">Disk wfm.img: 4 MiB, 4194304 bytes, 8192 sectors</span><br><span class="line">...</span><br><span class="line">00000000  eb 58 90 6d 6b 64 6f 73 66 73 ...  |.X.mkdosfs|</span><br><span class="line">...</span><br><span class="line">00000050  ... 46 41 54 33 32 20 20 20 ...     |..FAT32   |</span><br></pre></td></tr></table></figure>
+<p>挂载后里面是空的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">mkdir</span> -p /tmp/wfm_img</span><br><span class="line"><span class="built_in">sudo</span> mount -o loop,ro -t vfat wfm.img /tmp/wfm_img</span><br><span class="line">find /tmp/wfm_img -maxdepth 5 -<span class="built_in">print</span> -<span class="built_in">exec</span> <span class="built_in">ls</span> -ldh &#123;&#125; \;</span><br><span class="line"><span class="built_in">sudo</span> umount /tmp/wfm_img</span><br></pre></td></tr></table></figure>
+<p>所以这个安卓包大概率把原厂 <code>/mnt/wfm</code> 波形分区覆盖成了一个空 FAT32 分区。</p>
+<hr />
+<h2 id="2-短接救砖不一定需要-ttl"><a class="markdownIt-Anchor" href="#2-短接救砖不一定需要-ttl"></a> 2. 短接救砖：不一定需要 TTL</h2>
+<p>这台 Kindle 558 是 i.MX6SL 平台。拆机短接后，可以让 SoC 进入 USB 下载模式，通过救砖包里的 MfgTool 从 PC 端加载并刷入 U-Boot。</p>
+<p>我的操作流程是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1. 打开 Kindle 8 救砖包</span><br><span class="line">2. 运行 mfg.exe</span><br><span class="line">3. 点击 Start</span><br><span class="line">4. 短接主板触点</span><br><span class="line">5. 长按电源键重启</span><br><span class="line">6. 观察灯光：绿灯闪烁三下，红灯闪烁五下</span><br><span class="line">7. MfgTool 自动刷入 U-Boot</span><br><span class="line">8. 设备进入 fastboot 模式</span><br><span class="line">9. Windows 设备管理器里可以看到对应设备</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/873114adb68fa243c1af2b398c0da936.jpg" alt="img" /></p>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/9a924a8a8358f513a4112530a83f1722.jpg" alt="img" /></p>
+<p>救砖包里的 MfgTool 配置大概是这样的：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[profiles]</span></span><br><span class="line"><span class="attr">chip</span>=Linux</span><br><span class="line"></span><br><span class="line"><span class="section">[LIST]</span></span><br><span class="line"><span class="attr">name</span> = i.MX6SL-Kindle</span><br></pre></td></tr></table></figure>
+<p><code>ucl2.xml</code> 类似：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">UCL</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">CFG</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">STATE</span> <span class="attr">name</span>=<span class="string">&quot;BootStrap&quot;</span> <span class="attr">dev</span>=<span class="string">&quot;MX6Q&quot;</span> <span class="attr">vid</span>=<span class="string">&quot;15A2&quot;</span> <span class="attr">pid</span>=<span class="string">&quot;0054&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">STATE</span> <span class="attr">name</span>=<span class="string">&quot;BootStrap&quot;</span> <span class="attr">dev</span>=<span class="string">&quot;MX6D&quot;</span> <span class="attr">vid</span>=<span class="string">&quot;15A2&quot;</span> <span class="attr">pid</span>=<span class="string">&quot;0061&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">STATE</span> <span class="attr">name</span>=<span class="string">&quot;BootStrap&quot;</span> <span class="attr">dev</span>=<span class="string">&quot;MX6SL&quot;</span> <span class="attr">vid</span>=<span class="string">&quot;15A2&quot;</span> <span class="attr">pid</span>=<span class="string">&quot;0063&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">STATE</span> <span class="attr">name</span>=<span class="string">&quot;Updater&quot;</span>   <span class="attr">dev</span>=<span class="string">&quot;MSC&quot;</span> <span class="attr">vid</span>=<span class="string">&quot;066F&quot;</span> <span class="attr">pid</span>=<span class="string">&quot;37FF&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">CFG</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">LIST</span> <span class="attr">name</span>=<span class="string">&quot;i.MX6SL-Kindle&quot;</span> <span class="attr">desc</span>=<span class="string">&quot;KT3 xu&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">CMD</span> <span class="attr">state</span>=<span class="string">&quot;BootStrap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;boot&quot;</span> <span class="attr">body</span>=<span class="string">&quot;BootStrap&quot;</span> <span class="attr">file</span>=<span class="string">&quot;u-boot.bin&quot;</span>&gt;</span>Loading U-boot<span class="tag">&lt;/<span class="name">CMD</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">CMD</span> <span class="attr">state</span>=<span class="string">&quot;BootStrap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;jump&quot;</span>&gt;</span>Jumping to OS image.<span class="tag">&lt;/<span class="name">CMD</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">LIST</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">UCL</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="ttl-是否必须"><a class="markdownIt-Anchor" href="#ttl-是否必须"></a> TTL 是否必须？</h3>
+<p>不一定。我的经验是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">短接 + MfgTool 可以把救砖包里的 U-Boot 拉起来；</span><br><span class="line">这个 U-Boot 会自动进入 fastboot；</span><br><span class="line">所以只是救砖/进 fastboot，不一定需要 TTL；</span><br><span class="line">如果要看日志、进 U-Boot 命令行、进 diags、手动排障，才需要 TTL。</span><br></pre></td></tr></table></figure>
+<p>TTL 串口参数：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">115200 8N1</span><br><span class="line">Flow control: none</span><br><span class="line">GND 必接</span><br><span class="line">TX/RX 交叉</span><br><span class="line">VCC 不接</span><br><span class="line">建议 1.8V TTL</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/utmux/pictures/main/img/9c818248ce79ab5784508bc0cc9d7167.jpg" alt="img" /></p>
+<hr />
+<h2 id="3-u-boot-和-fastboot"><a class="markdownIt-Anchor" href="#3-u-boot-和-fastboot"></a> 3. U-Boot 和 fastboot</h2>
+<p>我这里能看到 <code>fastboot</code> 命令，是因为使用了救砖包里 MfgTool 刷入/拉起的 U-Boot。注意：<strong>从 Amazon 官方 update.bin 解出来的新版 <code>u-boot.bin</code> 不一定有这个 fastboot 命令</strong>。我之前误刷官方 <code>u-boot.bin</code> 后，就遇到过进不了 fastboot 的情况。</p>
+<p>成功进入救砖包 U-Boot 后可以看到类似日志：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">U-Boot 2014.04-g48b6f11 (Apr 15 2019 - 19:15:09)</span><br><span class="line">CPU:   Freescale i.MX6SL rev1.3 at 792 MHz</span><br><span class="line">Board: Heisenberg</span><br><span class="line">Board Id: P00118077433096T</span><br><span class="line">S/N: G000K90500000000</span><br><span class="line">DRAM: 512 MiB</span><br><span class="line">MMC: FSL_SDHC: 0, FSL_SDHC: 1, FSL_SDHC: 2</span><br><span class="line">*** Warning - bad CRC, using default environment</span><br><span class="line">In: serial</span><br><span class="line">Out: serial</span><br><span class="line">Err: serial</span><br><span class="line">Normal Boot</span><br><span class="line">Hit any key to stop autoboot: 0</span><br><span class="line">uboot &gt;</span><br></pre></td></tr></table></figure>
+<p>查看命令：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uboot &gt; help</span><br></pre></td></tr></table></figure>
+<p>我这个救砖包 U-Boot 里能看到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fastboot - use USB Fastboot protocol</span><br><span class="line">mmc      - MMC sub system</span><br><span class="line">idme     - Set nv ram variables</span><br><span class="line">loady    - load binary file over serial line (ymodem mode)</span><br></pre></td></tr></table></figure>
+<p>如果停在 <code>uboot &gt;</code>，可以手动进入 fastboot：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uboot &gt; fastboot</span><br></pre></td></tr></table></figure>
+<p>PC 端确认：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fastboot devices</span><br><span class="line">fastboot getvar verflag</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="4-如何进入-diags-recovery-menu"><a class="markdownIt-Anchor" href="#4-如何进入-diags-recovery-menu"></a> 4. 如何进入 diags / recovery menu</h2>
+<p>我最后确认的进入方式是：<strong>正常启动内核，然后在出现提示时一直按 Enter</strong>。</p>
+<p>关键日志：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Press [ENTER] for recovery menu...       0 /</span><br></pre></td></tr></table></figure>
+<p>这个窗口很短，所以最好在串口工具里连续按 Enter。成功后会出现菜单：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Charge: 99% [##########################################################]</span><br><span class="line"></span><br><span class="line">Menu</span><br><span class="line">====</span><br><span class="line">0. Boot default</span><br><span class="line">4. Erase MMC</span><br><span class="line">I. Initialize Partition Table (fdisk) and format FAT</span><br><span class="line">O. Format and overwrite FAT partition</span><br><span class="line">E. Export FAT partition</span><br><span class="line">U. Update using update*.bin file on FAT partition</span><br><span class="line">D. dmesg / kernel printk ring buffer.</span><br><span class="line">Q. quit</span><br><span class="line">Choose:</span><br></pre></td></tr></table></figure>
+<p>各选项含义：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">0  Boot default</span><br><span class="line">   正常启动主系统。</span><br><span class="line"></span><br><span class="line">4  Erase MMC</span><br><span class="line">   擦 eMMC，高危，不建议碰。</span><br><span class="line"></span><br><span class="line">I  Initialize Partition Table (fdisk) and format FAT</span><br><span class="line">   初始化分区表并格式化 FAT，高危。除非确认分区表坏了，否则不要乱用。</span><br><span class="line"></span><br><span class="line">O  Format and overwrite FAT partition</span><br><span class="line">   格式化/覆盖用户 FAT 分区。比 I 稍微温和，但也会清用户区。</span><br><span class="line"></span><br><span class="line">E  Export FAT partition</span><br><span class="line">   导出 FAT 用户区给电脑，类似 U 盘模式。</span><br><span class="line"></span><br><span class="line">U  Update using update*.bin file on FAT partition</span><br><span class="line">   从 FAT 用户区里的 update*.bin 执行官方更新。</span><br><span class="line"></span><br><span class="line">D  dmesg / kernel printk ring buffer</span><br><span class="line">   查看内核日志。</span><br><span class="line"></span><br><span class="line">Q  quit</span><br><span class="line">   退出。</span><br></pre></td></tr></table></figure>
+<p>我的机器因为屏幕不刷新，所以菜单只能在串口里看；屏幕上没有可靠反馈。</p>
+<hr />
+<h2 id="6-通过修改-systembin-实现-root-串口登录"><a class="markdownIt-Anchor" href="#6-通过修改-systembin-实现-root-串口登录"></a> 6. 通过修改 system.bin 实现 root 串口登录</h2>
+<p>因为我的机器序列号疑似被改成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">G000K90500000000</span><br></pre></td></tr></table></figure>
+<p>KindleTool 算 root 密码失败，所以我直接修改了 <code>system.bin</code> 的 <code>/etc/shadow</code>。</p>
+<h3 id="61-挂载-systembin"><a class="markdownIt-Anchor" href="#61-挂载-systembin"></a> 6.1 挂载 system.bin</h3>
+<p>在 WSL 里操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/kindle_edit</span><br><span class="line"><span class="built_in">cp</span> /mnt/d/kindle8230118/kindle8/Files/restoresys/system.bin ~/kindle_edit/system.bin</span><br><span class="line"><span class="built_in">cd</span> ~/kindle_edit</span><br><span class="line"><span class="built_in">mkdir</span> -p mnt</span><br><span class="line"><span class="built_in">sudo</span> mount -o loop,rw,noload system.bin mnt</span><br></pre></td></tr></table></figure>
+<p>注意：<code>system.bin</code> 是 ext3 rootfs。挂载时我用了 <code>noload</code>，尽量避免 journal replay 自动改镜像。</p>
+<h3 id="62-生成-root-密码-hash"><a class="markdownIt-Anchor" href="#62-生成-root-密码-hash"></a> 6.2 生成 root 密码 hash</h3>
+<p>我把密码设成 <code>root</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl passwd -1 -salt kindle root</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$1$kindle$N0atR/ue/G7Jpm9PWoG1P/</span><br></pre></td></tr></table></figure>
+<h3 id="63-修改-etcpasswd-etcshadow-etcsecuretty"><a class="markdownIt-Anchor" href="#63-修改-etcpasswd-etcshadow-etcsecuretty"></a> 6.3 修改 <code>/etc/passwd</code>、<code>/etc/shadow</code>、<code>/etc/securetty</code></h3>
+<p>检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> grep <span class="string">&#x27;^root:&#x27;</span> mnt/etc/passwd</span><br><span class="line"><span class="built_in">sudo</span> grep <span class="string">&#x27;^root:&#x27;</span> mnt/etc/shadow</span><br><span class="line"><span class="built_in">sudo</span> grep -nE <span class="string">&#x27;ttymxc0|console|tty1&#x27;</span> mnt/etc/securetty 2&gt;/dev/null || <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>我最后改成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/etc/passwd:</span><br><span class="line">root:x:0:0:root:/tmp/root:/bin/sh</span><br><span class="line"></span><br><span class="line">/etc/shadow:</span><br><span class="line">root:$1$kindle$N0atR/ue/G7Jpm9PWoG1P/:10933:0:99999:7:::</span><br><span class="line"></span><br><span class="line">/etc/securetty:</span><br><span class="line">ttymxc0</span><br><span class="line">console</span><br><span class="line">tty1</span><br></pre></td></tr></table></figure>
+<p>可以用脚本改：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> python3 - &lt;&lt;<span class="string">&#x27;PY&#x27;</span></span><br><span class="line">from pathlib import Path</span><br><span class="line"></span><br><span class="line">root = Path(<span class="string">&quot;mnt&quot;</span>)</span><br><span class="line">hash_value = <span class="string">&quot;$1$kindle<span class="variable">$N0atR</span>/ue/G7Jpm9PWoG1P/&quot;</span></span><br><span class="line"></span><br><span class="line">passwd = root / <span class="string">&quot;etc/passwd&quot;</span></span><br><span class="line">shadow = root / <span class="string">&quot;etc/shadow&quot;</span></span><br><span class="line">securetty = root / <span class="string">&quot;etc/securetty&quot;</span></span><br><span class="line"></span><br><span class="line">lines = passwd.read_text().splitlines()</span><br><span class="line">new = []</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">    <span class="keyword">if</span> line.startswith(<span class="string">&quot;root:&quot;</span>):</span><br><span class="line">        parts = line.split(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">        parts[1] = <span class="string">&quot;x&quot;</span></span><br><span class="line">        parts[6] = <span class="string">&quot;/bin/sh&quot;</span></span><br><span class="line">        new.append(<span class="string">&quot;:&quot;</span>.<span class="built_in">join</span>(parts))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        new.append(line)</span><br><span class="line">passwd.write_text(<span class="string">&quot;\n&quot;</span>.<span class="built_in">join</span>(new) + <span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">lines = shadow.read_text().splitlines()</span><br><span class="line">new = []</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">    <span class="keyword">if</span> line.startswith(<span class="string">&quot;root:&quot;</span>):</span><br><span class="line">        parts = line.split(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">        parts[1] = hash_value</span><br><span class="line">        new.append(<span class="string">&quot;:&quot;</span>.<span class="built_in">join</span>(parts))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        new.append(line)</span><br><span class="line">shadow.write_text(<span class="string">&quot;\n&quot;</span>.<span class="built_in">join</span>(new) + <span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">existing = <span class="built_in">set</span>()</span><br><span class="line"><span class="keyword">if</span> securetty.exists():</span><br><span class="line">    existing = <span class="built_in">set</span>(securetty.read_text().splitlines())</span><br><span class="line"></span><br><span class="line">with securetty.open(<span class="string">&quot;a&quot;</span>) as f:</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> [<span class="string">&quot;ttymxc0&quot;</span>, <span class="string">&quot;console&quot;</span>, <span class="string">&quot;tty1&quot;</span>]:</span><br><span class="line">        <span class="keyword">if</span> item not <span class="keyword">in</span> existing:</span><br><span class="line">            f.write(item + <span class="string">&quot;\n&quot;</span>)</span><br><span class="line">PY</span><br></pre></td></tr></table></figure>
+<p>卸载并刷回：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sync</span></span><br><span class="line"><span class="built_in">sudo</span> umount mnt</span><br><span class="line"><span class="built_in">cp</span> system.bin /mnt/d/kindle8230118/kindle8/Files/restoresys/system.bin</span><br><span class="line"><span class="built_in">sha256sum</span> system.bin /mnt/d/kindle8230118/kindle8/Files/restoresys/system.bin</span><br></pre></td></tr></table></figure>
+<p>然后只跑恢复包的第 4 步，刷 <code>system/kernel/cache</code>：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d D:\kindle8230118\kindle8\Files\restoresys</span><br><span class="line"><span class="built_in">echo</span> <span class="number">1</span> | fastdownload.exe</span><br></pre></td></tr></table></figure>
+<p>启动后串口登录：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kindle login: root</span><br><span class="line">Password: root</span><br></pre></td></tr></table></figure>
+<p>登录成功后提示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Rootfs is mounted read-only. Invoke mntroot rw to</span><br><span class="line">switch back to a writable rootfs.</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="7-分区观察"><a class="markdownIt-Anchor" href="#7-分区观察"></a> 7. 分区观察</h2>
+<p>登录 root shell 后，我看到的分区：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /proc/partitions</span><br></pre></td></tr></table></figure>
+<p>输出类似：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">major minor  #blocks  name</span><br><span class="line"></span><br><span class="line">179        0    3817472 mmcblk0</span><br><span class="line">179        1     460800 mmcblk0p1</span><br><span class="line">179        2      65536 mmcblk0p2</span><br><span class="line">179        3      65536 mmcblk0p3</span><br><span class="line">179        4    3192832 mmcblk0p4</span><br><span class="line">179       24        512 mmcblk0rpmb</span><br><span class="line">179       16       4096 mmcblk0boot1</span><br><span class="line">179        8       4096 mmcblk0boot0</span><br></pre></td></tr></table></figure>
+<p>大致理解：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/dev/mmcblk0p1      原厂主系统 rootfs，约 450M</span><br><span class="line">/dev/mmcblk0p2      diags 分区，约 64M</span><br><span class="line">/dev/mmcblk0p3      /var/local，约 64M</span><br><span class="line">/dev/mmcblk0p4      用户区 / userstore，约 3.04G</span><br><span class="line">/dev/mmcblk0boot0   eMMC boot0，4M</span><br><span class="line">/dev/mmcblk0boot1   eMMC boot1，4M</span><br></pre></td></tr></table></figure>
+<p>挂载情况：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mount</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span> -h</span><br></pre></td></tr></table></figure>
+<p>可以看到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/dev/mmcblk0p3 on /var/local type ext3</span><br><span class="line">/dev/loop/1 on /mnt/wfm type vfat</span><br><span class="line">/dev/loop/0 on /mnt/base-us type vfat</span><br><span class="line">fsp on /mnt/us type fuse.fsp</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="8-修复-userstore-e-盘的坑"><a class="markdownIt-Anchor" href="#8-修复-userstore-e-盘的坑"></a> 8. 修复 userstore / E 盘的坑</h2>
+<p>一开始电脑上 E 盘只有 0.2G 或打不开。日志里出现过：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ERROR:Could not find partition 0x0b on /dev/mmcblk0p4</span><br><span class="line">ERROR:Unable to access /dev/mmcblk0p4:Cannot update OS</span><br><span class="line">ERROR:No userstore partition, cannot check for updates.</span><br></pre></td></tr></table></figure>
+<p>后来发现，Kindle 的 <code>/dev/mmcblk0p4</code> 不是直接 FAT，而是 <strong>p4 里面还套了一个 MBR 分区表</strong>，FAT32 分区从 LBA 16 开始。</p>
+<p>也就是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/dev/mmcblk0p4</span><br><span class="line">└── 内嵌 MBR</span><br><span class="line">    └── p1: type 0x0b W95 FAT32, StartLBA 16</span><br></pre></td></tr></table></figure>
+<p>我最后主要是通过 <strong>diags 模式里重建分区表 / 修复 FAT</strong> 这条路把 userstore / E 盘结构救回来的。进入 diags 菜单后，和 userstore 相关的选项是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">I. Initialize Partition Table (fdisk) and format FAT</span><br><span class="line">O. Format and overwrite FAT partition</span><br><span class="line">E. Export FAT partition</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">I  会重建分区表并格式化 FAT，风险较高；</span><br><span class="line">O  会格式化/覆盖 FAT 分区；</span><br><span class="line">E  会把 FAT 分区导出成 USB 盘。</span><br></pre></td></tr></table></figure>
+<p>修复后，diags 日志里能看到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">INFO:/dev/mmcblk0p4:</span><br><span class="line">INFO:CHS=4/16/99776 size=3269459968 bytes</span><br><span class="line">INFO:flag type      first       last  lba first   lba size</span><br><span class="line">INFO:Partition p1:</span><br><span class="line">INFO:0x00 0x0b         16 &lt;large&gt;            16    6385648      CHS: 0/1/1 - &lt;large&gt;</span><br><span class="line">INFO:Setup loop device /dev/loop0 for /dev/mmcblk0p4 + 8192</span><br></pre></td></tr></table></figure>
+<p>这说明 <code>/dev/mmcblk0p4</code> 里面的 0x0b FAT32 分区已经被识别出来了。</p>
+<p>我中途也手动用过 <code>fdisk /dev/mmcblk0p4</code> 验证这个结构，最终打印结果类似：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Device         Boot StartCHS    EndCHS        StartLBA     EndLBA    Sectors  Size Id Type</span><br><span class="line">/dev/mmcblk0p4p1    0,1,1       1023,3,16           16    6385663    6385648 3117M  b Win95 FAT32</span><br></pre></td></tr></table></figure>
+<p>但是如果能进 diags，优先用 diags 自带的分区表/FAT 修复功能，比在 shell 里手敲 <code>fdisk</code> 更直观。</p>
+<hr />
+<h2 id="9-真正的问题mntwfm-损坏"><a class="markdownIt-Anchor" href="#9-真正的问题mntwfm-损坏"></a> 9 真正的问题：<code>/mnt/wfm</code> 损坏</h2>
+<p>原厂系统可以启动，rootfs 能挂载，X 也能启动到语言选择，但屏幕始终不刷新。关键日志：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INFO:find_file:160 Found V220_C283_BDB501_ED060SCSU1_TC.wrf.gz</span><br><span class="line">ERROR:wfm_count=1</span><br><span class="line">mxc_epdc_eink: module license &#x27;proprietary&#x27; taints kernel.</span><br><span class="line">INFO:Loaded module /lib/modules/mxc_epdc_eink.ko</span><br><span class="line">Panel VCOM string: 2780</span><br><span class="line">imx_epdc_fb 20f4000.epdc: EPDC version = 2.1.0</span><br><span class="line">gunzip: error: Bad gzipped data</span><br><span class="line">imx_epdc_fb 20f4000.epdc: Can&#x27;t unzip waveform!</span><br><span class="line">imx_epdc_fb 20f4000.epdc: Display HW not properly initialized. Aborting update.</span><br></pre></td></tr></table></figure>
+<p>也就是说：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">驱动在</span><br><span class="line">脚本在</span><br><span class="line">文件名也找到了</span><br><span class="line">但 .wrf.gz 文件内容坏了，不是合法 gzip</span><br></pre></td></tr></table></figure>
+<p>在 shell 里验证：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gzip -t /mnt/wfm/waveform_to_use/V220_C283_BDB501_ED060SCSU1_TC.wrf.gz</span><br><span class="line"><span class="built_in">echo</span> $?</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gzip: invalid magic</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<p><code>/mnt/wfm</code> 目录结构：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lah /mnt/wfm</span><br><span class="line">find /mnt/wfm -maxdepth 2 -<span class="built_in">type</span> f -<span class="built_in">print</span> -<span class="built_in">exec</span> <span class="built_in">ls</span> -lh &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+<p>典型文件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/mnt/wfm/waveform_storage/V220_C283_BDB501_ED060SCSU1_TC.wrf.gz</span><br><span class="line">/mnt/wfm/waveform_to_use/V220_C283_BDB501_ED060SCSU1_TC.wrf.gz</span><br><span class="line">/mnt/wfm/images/splash.raw.gz</span><br><span class="line">/mnt/wfm/images/reboot.raw.gz</span><br><span class="line">/mnt/wfm/images/update_success.raw.gz</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><code>/mnt/wfm</code> 本身挂载为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/dev/loop/1 on /mnt/wfm type vfat</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="10-为什么官方-update-和恢复包救不回-mntwfm"><a class="markdownIt-Anchor" href="#10-为什么官方-update-和恢复包救不回-mntwfm"></a> 10. 为什么官方 update 和恢复包救不回 <code>/mnt/wfm</code></h2>
+<p>官方 <code>update_kindle_8th_5.16.2.1.1.bin</code> 能被 diags 识别、验签、解包：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">INFO:Found bundle /mnt-us/update_kindle_8th_5.16.2.1.1.bin</span><br><span class="line">INFO:Signature check succeeded.</span><br><span class="line">update-payload.dat:</span><br><span class="line">imx6sl_heisenberg/u-boot.bin ... bootloader_bin</span><br><span class="line">imx6sl_heisenberg/uImage ... main_kernel</span><br><span class="line">rootfs.img.gz ... update_image_rootfs</span><br></pre></td></tr></table></figure>
+<p>但是它里面没有恢复 <code>/mnt/wfm</code> 的原厂波形数据。</p>
+<p>恢复包第 3/4 步也只恢复这些：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">第 3 步：bootloader / userdata / diags / diags_kernel</span><br><span class="line">第 4 步：cache / kernel / system</span><br></pre></td></tr></table></figure>
+<p>没有真正恢复原厂 wfm 的步骤。</p>
+<p>安卓包第 1 步反而刷了：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastboot flash wfm wfm.img</span><br></pre></td></tr></table></figure>
+<p>而这个 <code>wfm.img</code> 是空 FAT32。于是逻辑就变成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">安卓包把原厂 wfm 覆盖为空 FAT32</span><br><span class="line">↓</span><br><span class="line">原厂恢复 3/4 不恢复 wfm</span><br><span class="line">↓</span><br><span class="line">官方 update 也不恢复 wfm</span><br><span class="line">↓</span><br><span class="line">原厂系统能启动，但屏幕 waveform 解压失败</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="11-twrp-为什么能显示"><a class="markdownIt-Anchor" href="#11-twrp-为什么能显示"></a> 11. TWRP 为什么能显示？</h2>
+<p>我后来怀疑：既然 TWRP 能显示，那 TWRP/recovery 里应该有自己的 EPDC firmware。检查 <code>recovery.img</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">strings -a recovery.img | grep -Ei <span class="string">&#x27;wrf|wbf|waveform|ED060|V220|C283|EANAB|epdc|firmware&#x27;</span> | <span class="built_in">head</span> -300</span><br><span class="line"></span><br><span class="line">grep -abo $<span class="string">&#x27;\x1f\x8b\x08&#x27;</span> recovery.img | <span class="built_in">head</span> -50</span><br></pre></td></tr></table></figure>
+<p>能看到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ro.build.product=eanab</span><br><span class="line">ro.product.device=eanab</span><br><span class="line">insmod /lib/modules/mxc_epdc_eink.ko</span><br><span class="line">insmod /lib/modules/mxc_epdc_fb.ko builtin_firmware=y</span><br><span class="line">lib/firmware/imx/epdc_builtin.fw.gz</span><br></pre></td></tr></table></figure>
+<p>这说明 TWRP/安卓 recovery 很可能不依赖原厂 <code>/mnt/wfm</code>，而是走 <code>builtin_firmware=y</code> 这条路径。</p>
+<p>但这个 <code>epdc_builtin.fw.gz</code> 是否能直接伪装成原厂 <code>.wrf.gz</code>，我没有最终验证成功。它解压后是二进制 <code>.fw</code>，这本身正常，但不一定兼容原厂 EANAB loader。</p>
+<hr />
+<h2 id="12-最终选择刷回安卓"><a class="markdownIt-Anchor" href="#12-最终选择刷回安卓"></a> 12. 最终选择：刷回安卓</h2>
+<p>折腾到最后，我判断原厂系统想恢复显示，必须拿到同型号机器的有效：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/mnt/wfm/waveform_storage/V220_C283_BDB501_ED060SCSU1_TC.wrf.gz</span><br><span class="line">/mnt/wfm/waveform_to_use/V220_C283_BDB501_ED060SCSU1_TC.wrf.gz</span><br></pre></td></tr></table></figure>
+<p>或者完整：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/mnt/wfm</span><br></pre></td></tr></table></figure>
+<p>如果没有这个文件，原厂系统基本会卡在：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Can&#x27;t unzip waveform</span><br><span class="line">Display HW not properly initialized</span><br></pre></td></tr></table></figure>
+<p>所以我最后选择刷回安卓，用 KOReader 看书。安卓/TWRP 能显示，大概率是因为它不依赖原厂 <code>/mnt/wfm</code> 的 <code>.wrf.gz</code>。</p>
+<hr />
+<h2 id="13-如果你也遇到这个问题应该优先备份什么"><a class="markdownIt-Anchor" href="#13-如果你也遇到这个问题应该优先备份什么"></a> 13. 如果你也遇到这个问题，应该优先备份什么</h2>
+<p>刷机前建议备份：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># boot0 / boot1</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/mmcblk0boot0 of=/mnt/us/mmcblk0boot0.img bs=1M</span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/mmcblk0boot1 of=/mnt/us/mmcblk0boot1.img bs=1M</span><br><span class="line"></span><br><span class="line"><span class="comment"># eMMC 前 32M，保存分区表和早期关键区域</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/mmcblk0 of=/mnt/us/mmcblk0_first32m.img bs=1M count=32</span><br><span class="line"></span><br><span class="line"><span class="comment"># 完整 eMMC，空间够的话最稳</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/mmcblk0 of=/mnt/us/full.img bs=4M</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最关键：wfm 波形分区目录</span></span><br><span class="line">tar czf /mnt/us/wfm_backup.tar.gz /mnt/wfm</span><br></pre></td></tr></table></figure>
+<p>如果只备份 boot0 和用户区，不备 <code>/mnt/wfm</code>，回原厂时可能遇到本文的问题。</p>
+<hr />
+<h2 id="14-以后如果要找别人救原厂系统需要什么文件"><a class="markdownIt-Anchor" href="#14-以后如果要找别人救原厂系统需要什么文件"></a> 14. 以后如果要找别人救原厂系统，需要什么文件</h2>
+<p>不要让别人给 full.img。full.img 太大，而且可能包含序列号、注册信息、个人数据。</p>
+<p>只需要同型号 Kindle 558 / Kindle 8th / KT3 / Heisenberg / board eanab 的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/mnt/wfm</span><br></pre></td></tr></table></figure>
+<p>可以让对方执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar czf /mnt/us/wfm_backup.tar.gz /mnt/wfm</span><br></pre></td></tr></table></figure>
+<p>然后发 <code>wfm_backup.tar.gz</code> 即可。</p>
+<p>发帖模板：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">求 Kindle 558 / Kindle 8th Gen / KT3 / Heisenberg / board eanab 的 /mnt/wfm 备份。</span><br><span class="line"></span><br><span class="line">我的机器 wfm 分区被安卓包刷坏，串口日志报：</span><br><span class="line">gunzip: error: Bad gzipped data</span><br><span class="line">imx_epdc_fb: Can&#x27;t unzip waveform</span><br><span class="line">Display HW not properly initialized</span><br><span class="line"></span><br><span class="line">需要文件：</span><br><span class="line">V220_C283_BDB501_ED060SCSU1_TC.wrf.gz</span><br><span class="line"></span><br><span class="line">路径：</span><br><span class="line">/mnt/wfm/waveform_storage/V220_C283_BDB501_ED060SCSU1_TC.wrf.gz</span><br><span class="line">/mnt/wfm/waveform_to_use/V220_C283_BDB501_ED060SCSU1_TC.wrf.gz</span><br><span class="line"></span><br><span class="line">同型号机器上执行：</span><br><span class="line">tar czf /mnt/us/wfm_backup.tar.gz /mnt/wfm</span><br><span class="line"></span><br><span class="line">发 wfm_backup.tar.gz 即可，不需要 full.img，不涉及账号数据。</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="15-附常用命令汇总"><a class="markdownIt-Anchor" href="#15-附常用命令汇总"></a> 15. 附：常用命令汇总</h2>
+<h3 id="151-fastboot"><a class="markdownIt-Anchor" href="#151-fastboot"></a> 15.1 fastboot</h3>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fastboot devices</span><br><span class="line">fastboot getvar verflag</span><br><span class="line">fastboot getvar all</span><br><span class="line">fastboot reboot</span><br></pre></td></tr></table></figure>
+<p>U-Boot 里进入 fastboot：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uboot &gt; fastboot</span><br></pre></td></tr></table></figure>
+<h3 id="152-kindle-root-shell-排查"><a class="markdownIt-Anchor" href="#152-kindle-root-shell-排查"></a> 15.2 Kindle root shell 排查</h3>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">id</span></span><br><span class="line"><span class="built_in">cat</span> /proc/partitions</span><br><span class="line">mount</span><br><span class="line"><span class="built_in">df</span> -h</span><br><span class="line"><span class="built_in">ls</span> -l /dev/mmcblk0*</span><br><span class="line"><span class="built_in">ls</span> -lah /mnt</span><br><span class="line"><span class="built_in">ls</span> -lah /mnt/us</span><br><span class="line"><span class="built_in">ls</span> -lah /mnt/wfm</span><br><span class="line"></span><br><span class="line">dmesg | grep -Ei <span class="string">&#x27;mntus|loop|FAT|mmcblk0p|userstore|fsck|epdc|wfm|waveform&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="153-检查-wfm-文件"><a class="markdownIt-Anchor" href="#153-检查-wfm-文件"></a> 15.3 检查 wfm 文件</h3>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">find /mnt/wfm -maxdepth 3 -<span class="built_in">type</span> f -<span class="built_in">exec</span> <span class="built_in">ls</span> -lh &#123;&#125; \;</span><br><span class="line">file /mnt/wfm/waveform_to_use/*</span><br><span class="line">gzip -t /mnt/wfm/waveform_to_use/V220_C283_BDB501_ED060SCSU1_TC.wrf.gz</span><br><span class="line"><span class="built_in">echo</span> $?</span><br><span class="line"><span class="built_in">od</span> -An -tx1 -N32 /mnt/wfm/waveform_to_use/V220_C283_BDB501_ED060SCSU1_TC.wrf.gz</span><br></pre></td></tr></table></figure>
+<p>合法 gzip 文件开头应该类似：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1f 8b 08</span><br></pre></td></tr></table></figure>
+<h3 id="154-检查-wfmimg-是否为空"><a class="markdownIt-Anchor" href="#154-检查-wfmimg-是否为空"></a> 15.4 检查 wfm.img 是否为空</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">file wfm.img</span><br><span class="line">fdisk -l wfm.img</span><br><span class="line"><span class="built_in">sudo</span> mount -o loop,ro -t vfat wfm.img /tmp/wfm_img</span><br><span class="line">find /tmp/wfm_img -maxdepth 5 -<span class="built_in">print</span> -<span class="built_in">exec</span> <span class="built_in">ls</span> -ldh &#123;&#125; \;</span><br><span class="line"><span class="built_in">sudo</span> umount /tmp/wfm_img</span><br><span class="line"></span><br><span class="line">strings -a wfm.img | grep -Ei <span class="string">&#x27;wrf|wbf|waveform|ED060|V220|C283|BDB|epdc|gzip|firmware|EANAB&#x27;</span></span><br><span class="line">grep -abo $<span class="string">&#x27;\x1f\x8b\x08&#x27;</span> wfm.img | <span class="built_in">head</span></span><br></pre></td></tr></table></figure>
+<h3 id="155-从-recoveryimg-搜-firmware"><a class="markdownIt-Anchor" href="#155-从-recoveryimg-搜-firmware"></a> 15.5 从 recovery.img 搜 firmware</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">strings -a recovery.img | grep -Ei <span class="string">&#x27;wrf|wbf|waveform|ED060|V220|C283|EANAB|epdc|firmware&#x27;</span> | <span class="built_in">head</span> -300</span><br><span class="line"></span><br><span class="line">grep -abo $<span class="string">&#x27;\x1f\x8b\x08&#x27;</span> recovery.img | <span class="built_in">head</span> -50</span><br></pre></td></tr></table></figure>
+<p>如果要解包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">binwalk -eM recovery.img</span><br><span class="line">find . -<span class="built_in">type</span> f \( -iname <span class="string">&#x27;*.wrf.gz&#x27;</span> -o -iname <span class="string">&#x27;*.wbf&#x27;</span> -o -iname <span class="string">&#x27;*epdc*&#x27;</span> -o -iname <span class="string">&#x27;*firmware*&#x27;</span> \) -<span class="built_in">exec</span> <span class="built_in">ls</span> -lh &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="16-最终结论"><a class="markdownIt-Anchor" href="#16-最终结论"></a> 16. 最终结论</h2>
+<p>这台 Kindle 558 最后不是完全砖了。实际状态是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">U-Boot / fastboot：可进</span><br><span class="line">MfgTool 短接救援：可用</span><br><span class="line">Diags menu：可进</span><br><span class="line">Root shell：通过修改 system.bin 可进</span><br><span class="line">Userstore / E 盘：可修</span><br><span class="line">原厂系统：能启动</span><br><span class="line">屏幕：因为 /mnt/wfm waveform 损坏而不能正常刷新</span><br></pre></td></tr></table></figure>
+<p>最终我选择放弃原厂系统，刷回安卓，用 KOReader 看书。以后如果能找到同型号 <code>/mnt/wfm</code> 备份，再考虑恢复原厂。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li>
+        
+          <li><a href="/categories/Programming/">编程算法</a></li>
+        
+          <li><a href="/categories/Research-AI/">学术研究</a></li>
+        
+          <li><a href="/categories/Journal/">生活随笔</a></li>
+        
+          <li><a href="/archives/">时间轴</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#kindle-558-kindle-8-%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95%E4%BB%8E%E5%AE%89%E5%8D%93%E5%88%B7%E6%9C%BA-%E5%8E%9F%E5%8E%82%E6%81%A2%E5%A4%8D%E5%88%B0-mntwfm-%E6%B3%A2%E5%BD%A2%E6%96%87%E4%BB%B6%E6%8D%9F%E5%9D%8F"><span class="toc-number">1.</span> <span class="toc-text"> Kindle 558 &#x2F; Kindle 8 折腾记录：从安卓刷机、原厂恢复到 &#x2F;mnt&#x2F;wfm 波形文件损坏</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-%E5%85%88%E8%AF%B4%E5%85%8D%E8%B4%A3%E5%A3%B0%E6%98%8E"><span class="toc-number">1.1.</span> <span class="toc-text"> 0. 先说免责声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF%E4%BB%8E%E5%AE%89%E5%8D%93%E5%9B%9E%E5%8E%9F%E5%8E%82%E5%A4%B1%E8%B4%A5"><span class="toc-number">1.2.</span> <span class="toc-text"> 1. 背景：从安卓回原厂失败</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%9F%AD%E6%8E%A5%E6%95%91%E7%A0%96%E4%B8%8D%E4%B8%80%E5%AE%9A%E9%9C%80%E8%A6%81-ttl"><span class="toc-number">1.3.</span> <span class="toc-text"> 2. 短接救砖：不一定需要 TTL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ttl-%E6%98%AF%E5%90%A6%E5%BF%85%E9%A1%BB"><span class="toc-number">1.3.1.</span> <span class="toc-text"> TTL 是否必须？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-u-boot-%E5%92%8C-fastboot"><span class="toc-number">1.4.</span> <span class="toc-text"> 3. U-Boot 和 fastboot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%A6%82%E4%BD%95%E8%BF%9B%E5%85%A5-diags-recovery-menu"><span class="toc-number">1.5.</span> <span class="toc-text"> 4. 如何进入 diags &#x2F; recovery menu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%80%9A%E8%BF%87%E4%BF%AE%E6%94%B9-systembin-%E5%AE%9E%E7%8E%B0-root-%E4%B8%B2%E5%8F%A3%E7%99%BB%E5%BD%95"><span class="toc-number">1.6.</span> <span class="toc-text"> 6. 通过修改 system.bin 实现 root 串口登录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#61-%E6%8C%82%E8%BD%BD-systembin"><span class="toc-number">1.6.1.</span> <span class="toc-text"> 6.1 挂载 system.bin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#62-%E7%94%9F%E6%88%90-root-%E5%AF%86%E7%A0%81-hash"><span class="toc-number">1.6.2.</span> <span class="toc-text"> 6.2 生成 root 密码 hash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#63-%E4%BF%AE%E6%94%B9-etcpasswd-etcshadow-etcsecuretty"><span class="toc-number">1.6.3.</span> <span class="toc-text"> 6.3 修改 &#x2F;etc&#x2F;passwd、&#x2F;etc&#x2F;shadow、&#x2F;etc&#x2F;securetty</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%88%86%E5%8C%BA%E8%A7%82%E5%AF%9F"><span class="toc-number">1.7.</span> <span class="toc-text"> 7. 分区观察</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%BF%AE%E5%A4%8D-userstore-e-%E7%9B%98%E7%9A%84%E5%9D%91"><span class="toc-number">1.8.</span> <span class="toc-text"> 8. 修复 userstore &#x2F; E 盘的坑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E7%9C%9F%E6%AD%A3%E7%9A%84%E9%97%AE%E9%A2%98mntwfm-%E6%8D%9F%E5%9D%8F"><span class="toc-number">1.9.</span> <span class="toc-text"> 9 真正的问题：&#x2F;mnt&#x2F;wfm 损坏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%98%E6%96%B9-update-%E5%92%8C%E6%81%A2%E5%A4%8D%E5%8C%85%E6%95%91%E4%B8%8D%E5%9B%9E-mntwfm"><span class="toc-number">1.10.</span> <span class="toc-text"> 10. 为什么官方 update 和恢复包救不回 &#x2F;mnt&#x2F;wfm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-twrp-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%98%BE%E7%A4%BA"><span class="toc-number">1.11.</span> <span class="toc-text"> 11. TWRP 为什么能显示？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E6%9C%80%E7%BB%88%E9%80%89%E6%8B%A9%E5%88%B7%E5%9B%9E%E5%AE%89%E5%8D%93"><span class="toc-number">1.12.</span> <span class="toc-text"> 12. 最终选择：刷回安卓</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E5%A6%82%E6%9E%9C%E4%BD%A0%E4%B9%9F%E9%81%87%E5%88%B0%E8%BF%99%E4%B8%AA%E9%97%AE%E9%A2%98%E5%BA%94%E8%AF%A5%E4%BC%98%E5%85%88%E5%A4%87%E4%BB%BD%E4%BB%80%E4%B9%88"><span class="toc-number">1.13.</span> <span class="toc-text"> 13. 如果你也遇到这个问题，应该优先备份什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E4%BB%A5%E5%90%8E%E5%A6%82%E6%9E%9C%E8%A6%81%E6%89%BE%E5%88%AB%E4%BA%BA%E6%95%91%E5%8E%9F%E5%8E%82%E7%B3%BB%E7%BB%9F%E9%9C%80%E8%A6%81%E4%BB%80%E4%B9%88%E6%96%87%E4%BB%B6"><span class="toc-number">1.14.</span> <span class="toc-text"> 14. 以后如果要找别人救原厂系统，需要什么文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E9%99%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%B1%87%E6%80%BB"><span class="toc-number">1.15.</span> <span class="toc-text"> 15. 附：常用命令汇总</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#151-fastboot"><span class="toc-number">1.15.1.</span> <span class="toc-text"> 15.1 fastboot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#152-kindle-root-shell-%E6%8E%92%E6%9F%A5"><span class="toc-number">1.15.2.</span> <span class="toc-text"> 15.2 Kindle root shell 排查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#153-%E6%A3%80%E6%9F%A5-wfm-%E6%96%87%E4%BB%B6"><span class="toc-number">1.15.3.</span> <span class="toc-text"> 15.3 检查 wfm 文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#154-%E6%A3%80%E6%9F%A5-wfmimg-%E6%98%AF%E5%90%A6%E4%B8%BA%E7%A9%BA"><span class="toc-number">1.15.4.</span> <span class="toc-text"> 15.4 检查 wfm.img 是否为空</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#155-%E4%BB%8E-recoveryimg-%E6%90%9C-firmware"><span class="toc-number">1.15.5.</span> <span class="toc-text"> 15.5 从 recovery.img 搜 firmware</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-%E6%9C%80%E7%BB%88%E7%BB%93%E8%AE%BA"><span class="toc-number">1.16.</span> <span class="toc-text"> 16. 最终结论</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&text=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&title=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&is_video=false&description=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏&body=Check out this article: https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&title=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&title=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&title=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&title=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&name=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://utmux.github.io/2026/05/15/Journal/Essays/Kindle%208%20%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/&t=Kindle 558/Kindle 8 折腾记录：从安卓刷机、原厂恢复到/mnt/wfm波形文件损坏"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2026
+    YQX
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/Embedded-Linux/">嵌入式/Linux</a></li><!--
+     --><!--
+       --><li><a href="/categories/Programming/">编程算法</a></li><!--
+     --><!--
+       --><li><a href="/categories/Research-AI/">学术研究</a></li><!--
+     --><!--
+       --><li><a href="/categories/Journal/">生活随笔</a></li><!--
+     --><!--
+       --><li><a href="/archives/">时间轴</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- Mermaid Support -->
+
+  <script src='https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
